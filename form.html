@@ -3,67 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>طريق العمرة | احجز رحلتك المباركة</title>
+  <title>سجل الآن | طريق العمرة</title>
   <style>
     body {
-      margin: 0;
       font-family: 'Tajawal', sans-serif;
-      background: url('https://i.imgur.com/Nu7TK0L.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
       text-align: center;
-    }
-
-    .overlay {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 100px 20px;
-      min-height: 100vh;
-    }
-
-    h1 {
-      font-size: 3em;
       margin-bottom: 20px;
-      color: #FFD700;
+      color: #333;
     }
 
-    p {
-      font-size: 1.5em;
-      margin-bottom: 30px;
+    label {
+      display: block;
+      margin-top: 15px;
+      color: #555;
     }
 
-    .btn {
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    button {
+      margin-top: 20px;
       background-color: #FFD700;
-      color: #000;
-      padding: 15px 30px;
-      font-size: 1.2em;
+      color: black;
+      padding: 12px;
+      width: 100%;
       border: none;
-      border-radius: 10px;
-      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1.1em;
       cursor: pointer;
-      transition: 0.3s;
     }
 
-    .btn:hover {
-      background-color: #fff;
-      color: #000;
-    }
-
-    footer {
-      margin-top: 50px;
-      font-size: 0.9em;
-      color: #ccc;
+    button:hover {
+      background-color: #f1c40f;
     }
   </style>
 </head>
 <body>
-  <div class="overlay">
-    <h1>🌙 طريق العمرة</h1>
-    <p>احجز رحلتك إلى البقاع المقدسة بكل سهولة وراحة</p>
-    <a href="form.html" class="btn">📌 سجّل الآن</a>
+  <div class="container">
+    <h2>📌 نموذج تسجيل العمرة</h2>
+    <form action="https://script.google.com/macros/s/AKfycbwd04oqYmvUwPuLzmJgNzSl1T_g0jmSe9ZtbTLzR46M3Gu3tAfXzEsRurmIylhgyJmHgQ/exec" method="post">
+      <label>الاسم الكامل</label>
+      <input type="text" name="name" required>
 
-    <footer>
-      <p>© 2025 طريق العمرة - جميع الحقوق محفوظة</p>
-    </footer>
+      <label>رقم الهاتف</label>
+      <input type="tel" name="phone" required>
+
+      <label>تاريخ الرحلة</label>
+      <input type="date" name="trip_date" required>
+
+      <label>مدة الرحلة</label>
+      <select name="duration">
+        <option>10 أيام</option>
+        <option>15 يومًا</option>
+        <option>20 يومًا</option>
+      </select>
+
+      <label>نوع الخطوط الجوية</label>
+      <select name="airline">
+        <option>الخطوط الجوية الجزائرية</option>
+        <option>الخطوط السعودية</option>
+        <option>الخطوط التركية</option>
+      </select>
+
+      <label>الفندق</label>
+      <select name="hotel">
+        <option>3 نجوم</option>
+        <option>4 نجوم</option>
+        <option>5 نجوم</option>
+      </select>
+
+      <label>تاريخ الإقلاع</label>
+      <input type="date" name="departure_date">
+
+      <label>مكان الإقامة في الجزائر</label>
+      <input type="text" name="location">
+
+      <label>الفرع الأقرب إليك</label>
+      <input type="text" name="branch">
+
+      <label>ملاحظات إضافية</label>
+      <textarea name="notes" rows="4"></textarea>
+
+      <button type="submit">✅ إرسال الطلب</button>
+    </form>
   </div>
 </body>
 </html>
+
