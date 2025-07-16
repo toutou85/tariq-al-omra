@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تفاصيل العرض | طريق العمرة</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      background: #FFD700;
+      padding: 12px;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #000;
+    }
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: #d4af37;
+      margin-top: 0;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li {
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #FFD700;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">🏠 الرئيسية</a>
+    <a href="offers.html">📢 العروض</a>
+    <a href="form.html">📝 التسجيل</a>
+    <a href="about.html">ℹ️ من نحن</a>
+    <a href="contact.html">📞 اتصل بنا</a>
+  </nav>
+
+  <div class="container" id="details-container">
+    <p style="text-align:center;">جاري تحميل التفاصيل...</p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    fetch("https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec")
+      .then(res => res.json())
+      .then(data => {
+        const offer = data.find(item => item.ID == id);
+        const container = document.getElementById("details-container");
+
+        if (!offer) {
+          container.innerHTML = "<p style='color:red;'>❌ العرض غير موجود</p>";
+          return;
+        }
+
+        container.innerHTML = `
+          <img src="${offer['رابط صورة الفندق']}" alt="صورة الفندق">
+          <h2>${offer['اسم العرض']}</h2>
+          <ul>
+            <li>✈️ الخطوط الجوية: ${offer['الخطوط الجوية']}</li>
+            <li>📆 مدة الرحلة: ${offer['مدة الرحلة']}</li>
+            <li>🏨 الفندق: ${offer['الفندق']} (${offer['عدد النجوم']})</li>
+            <li>📍 المسافة عن الحرم: ${offer['المسافة عن الحرم']}</li>
+            <li>🍽️ سعر الإطعام: ${offer['سعر الاطعام']}</li>
+            <li>💰 السعر الغرفة الجماعية: ${offer['السعر الغرفة الجماعية (دج)']} دج</li>
+            <li>💰 السعر الخماسية: ${offer['السعر الغرفة الخماسية (دج)']} دج</li>
+            <li>💰 السعر الرباعية: ${offer['السعر الغرفة الرباعية (دج)']} دج</li>
+            <li>💰 السعر الثلاثية: ${offer['السعر الغرفة الثلاثية (دج)']} دج</li>
+            <li>💰 السعر الثنائية: ${offer['السعر الغرفة الثنائية (دج)']} دج</li>
+            <li>👶 أقل من عامين: ${offer['سعر الاطفال اقل من عامين']} دج</li>
+            <li>🧒 أقل من 12 سنة: ${offer['سعر الاطفال الاقل من عامين الى 12 سنة']} دج</li>
+          </ul>
+          <a class="btn" href="form.html">احجز الآن</a>
+        `;
+      })
+      .catch(err => {
+        document.getElementById("details-container").innerHTML = "<p style='color:red;'>❌ فشل في تحميل التفاصيل</p>";
+        console.error(err);
+      });
+  </script>
+
+</body>
+</html>
