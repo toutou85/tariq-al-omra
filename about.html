@@ -5,50 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>من نحن | طريق العمرة</title>
   <style>
+    /* إعدادات أساسية */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Tajawal', sans-serif;
       background-color: #fff;
-      padding: 30px;
-      line-height: 2;
-      color: #333;
+      padding: 0;
       margin: 0;
+      color: #333;
+      line-height: 1.8;
     }
 
     nav {
       background: #FFD700;
-      padding: 10px;
+      padding: 15px 10px;
       text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     nav a {
-      margin: 0 10px;
+      margin: 5px 8px;
       text-decoration: none;
       font-weight: bold;
       color: #000;
+      font-size: 1em;
+      padding: 6px 12px;
+      border-radius: 10px;
+      background-color: #fff8dc;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background-color: #ffe066;
     }
 
     h2 {
       text-align: center;
       color: #d4af37;
-      margin-bottom: 30px;
+      margin: 25px 10px 15px;
+      font-size: 1.8em;
     }
 
     .container {
-      max-width: 850px;
+      padding: 20px;
+      max-width: 900px;
       margin: auto;
-      font-size: 1.2em;
     }
 
     p {
+      font-size: 1.1em;
       margin-bottom: 20px;
     }
 
     ul {
-      padding-right: 20px;
+      list-style: none;
+      padding: 0 15px;
     }
 
-    li {
-      margin-bottom: 8px;
+    ul li::before {
+      content: "✅ ";
+      color: green;
+      font-weight: bold;
+    }
+
+    ul ul li::before {
+      content: "🔹 ";
+      color: #007BFF;
+    }
+
+    @media (max-width: 600px) {
+      nav a {
+        font-size: 0.9em;
+        margin: 4px 6px;
+        padding: 5px 10px;
+      }
+
+      h2 {
+        font-size: 1.5em;
+      }
+
+      p, li {
+        font-size: 1em;
+      }
+
+      .container {
+        padding: 15px 10px;
+      }
     }
   </style>
 </head>
@@ -62,8 +109,8 @@
   </nav>
 
   <h2>من نحن - طريق العمرة</h2>
-  <div class="container">
 
+  <div class="container">
     <p>✨ <strong>طريق العمرة</strong> هي منصة جزائرية متخصصة في عرض وتنظيم رحلات العمرة إلى البقاع المقدسة، بلمسة تقنية مبتكرة تهدف إلى تسهيل عملية اكتشاف العروض والتسجيل الأولي، دون أي تعامل مالي إلكتروني.</p>
 
     <p>📍 <strong>تنويه مهم:</strong><br>
@@ -71,7 +118,7 @@
 
     <p>🔒 لا يستقبل الموقع ولا يرسل أي أموال – التسجيل يتم بشكل إلكتروني مبدئي، بينما تُستكمل إجراءات الحجز وتأكيد الرحلة فقط في الفرع الأقرب إليكم، وذلك بدفع المستحقات مباشرة لدى الوكالة.</p>
 
-    <p>🎯 <strong>أهدافنا</strong></p>
+    <p>🎯 <strong>أهدافنا:</strong></p>
     <ul>
       <li>تسهيل عملية اكتشاف العروض ومقارنة الأسعار.</li>
       <li>تقديم خيارات متنوعة من حيث:</li>
@@ -88,11 +135,11 @@
 
     <p>💡 <strong>لماذا اخترتنا؟</strong></p>
     <ul>
-      <li>✅ شراكة مع وكالات مرخصة</li>
-      <li>✅ عروض موثوقة ومحدثة باستمرار</li>
-      <li>✅ تسجيل إلكتروني مجاني</li>
-      <li>✅ واجهة سهلة وبسيطة لاختيار العرض الأنسب</li>
-      <li>✅ دعم مستمر واستقبال استفساراتكم عبر الفروع</li>
+      <li>شراكة مع وكالات مرخصة</li>
+      <li>عروض موثوقة ومحدثة باستمرار</li>
+      <li>تسجيل إلكتروني مجاني</li>
+      <li>واجهة سهلة وبسيطة لاختيار العرض الأنسب</li>
+      <li>دعم مستمر واستقبال استفساراتكم عبر الفروع</li>
     </ul>
 
     <p>نتمنى أن ينال هذا العمل إعجابكم وتقديركم، ونسعى دائمًا لتقديم الأفضل لمعتمرينا الكرام.</p>
