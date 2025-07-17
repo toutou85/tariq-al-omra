@@ -5,81 +5,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>طريق العمرة | احجز رحلتك المباركة</title>
   <style>
-  body {
-    margin: 0;
-    font-family: 'Tajawal', sans-serif;
-  }
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+      height: 100%;
+    }
 
-  .hero {
-    background-image: url('https://travilia.com/uploads/0000/8/2024/09/26/hajj-rituals-makkah-accorhotels.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 400px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 2.5em;
-    box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.4);
-  }
+    body {
+      background: url('https://travilia.com/uploads/0000/8/2024/09/26/hajj-rituals-makkah-accorhotels.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
 
-  nav {
-    background: #FFD700;
-    padding: 10px;
-    text-align: center;
-  }
+    .overlay {
+      background: rgba(0, 0, 0, 0.65); /* شفافية للخلفية */
+      min-height: 100vh;
+      padding-top: 100px;
+      text-align: center;
+      color: white;
+    }
 
-  nav a {
-    margin: 0 10px;
-    text-decoration: none;
-    font-weight: bold;
-    color: #000;
-  }
+    nav {
+      background: #FFD700;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+    }
 
-  .overlay {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 100px 20px;
-    min-height: 100vh;
-  }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #000;
+    }
 
-  h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
-    color: #FFD700;
-  }
+    .datetime {
+      position: fixed;
+      top: 50px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 1.1em;
+      z-index: 998;
+      padding: 10px;
+    }
 
-  p {
-    font-size: 1.5em;
-    margin-bottom: 30px;
-  }
+    h1 {
+      font-size: 3em;
+      color: #FFD700;
+      margin-bottom: 20px;
+    }
 
-  .btn {
-    background-color: #FFD700;
-    color: #000;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: 0.3s;
-  }
+    p {
+      font-size: 1.5em;
+      margin-bottom: 30px;
+    }
 
-  .btn:hover {
-    background-color: #fff;
-    color: #000;
-  }
+    .btn {
+      background-color: #FFD700;
+      color: #000;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-  footer {
-    margin-top: 50px;
-    font-size: 0.9em;
-    color: #ccc;
-  }
-</style>
+    .btn:hover {
+      background-color: #fff;
+      color: #000;
+    }
 
+    footer {
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2em; }
+      p { font-size: 1.2em; }
+      .btn { padding: 10px 20px; font-size: 1em; }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- ✅ شريط التنقل -->
   <nav>
     <a href="index.html">🏠 الرئيسية</a>
     <a href="offers.html">📢 العروض</a>
@@ -88,11 +105,10 @@
     <a href="contact.html">📞 اتصل بنا</a>
   </nav>
 
-  <!-- ✅ هذا الجزء كان ناقص -->
-  <div class="hero">
-    <div>مرحبا بكم في طريق العمرة</div>
-  </div>
+  <!-- ✅ التوقيت والتاريخ -->
+  <div class="datetime" id="datetime">جاري تحميل التوقيت...</div>
 
+  <!-- ✅ المحتوى -->
   <div class="overlay">
     <h1>🌙 طريق العمرة</h1>
     <p>احجز رحلتك إلى البقاع المقدسة بكل سهولة وراحة</p>
@@ -102,7 +118,28 @@
       <p>© 2025 طريق العمرة - جميع الحقوق محفوظة</p>
     </footer>
   </div>
+
+  <!-- ✅ سكريبت التوقيت والتاريخ الهجري والميلادي -->
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const time = now.toLocaleTimeString('ar-DZ');
+      const date = now.toLocaleDateString('ar-DZ', options);
+
+      // التاريخ الهجري
+      const hijriDate = new Intl.DateTimeFormat('ar-TN-u-ca-islamic', {
+        day: 'numeric', month: 'long', year: 'numeric'
+      }).format(now);
+
+      document.getElementById('datetime').innerHTML = `
+        🕓 ${time} | 📅 ${date} | 🕌 هجري: ${hijriDate}
+      `;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000); // تحديث كل ثانية
+  </script>
+
 </body>
-
 </html>
-
