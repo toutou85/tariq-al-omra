@@ -4,12 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>طريق العمرة | احجز رحلتك المباركة</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Tajawal', sans-serif;
-      overflow-x: hidden;
+    }
+
+    .hero {
+      position: relative;
+      background-image: url('https://travilia.com/uploads/0000/8/2024/09/26/hajj-rituals-makkah-accorhotels.jpg');
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      color: white;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1;
     }
 
     nav {
@@ -25,36 +42,18 @@
       text-decoration: none;
       font-weight: bold;
       color: #000;
-      font-size: 1em;
     }
 
-    .hero {
+    .logo {
       position: relative;
-      background-image: url('https://travilia.com/uploads/0000/8/2024/09/26/hajj-rituals-makkah-accorhotels.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 100vh;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      z-index: 3;
       text-align: center;
+      padding: 10px;
     }
 
-    .overlay {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 1;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      font-size: 2em;
+    .logo img {
+      max-width: 200px;
+      height: auto;
     }
 
     .flags {
@@ -73,9 +72,9 @@
     }
 
     .flags img {
-      width: 120px;
+      width: 100px;
       animation: waving 2s infinite ease-in-out;
-      opacity: 0.85;
+      opacity: 0.8;
     }
 
     @keyframes waving {
@@ -84,39 +83,31 @@
       100% { transform: rotateZ(0deg); }
     }
 
-    .center-image {
-      position: absolute;
-      top: 55%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-      width: 180px;
-      opacity: 0.95;
-      border-radius: 10px;
-    }
-
     .main-content {
-      padding: 50px 20px;
-      background-color: rgba(0,0,0,0.75);
+      padding: 60px 20px;
+      background-color: rgba(0,0,0,0.7);
       color: white;
       text-align: center;
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 3em;
+      margin-bottom: 20px;
       color: #FFD700;
     }
 
     p {
-      font-size: 1.2em;
+      font-size: 1.5em;
       margin-bottom: 30px;
     }
 
     .btn {
       background-color: #FFD700;
       color: #000;
-      padding: 12px 25px;
-      font-size: 1.1em;
+      padding: 15px 30px;
+      font-size: 1.2em;
       border: none;
       border-radius: 10px;
       text-decoration: none;
@@ -127,6 +118,12 @@
     .btn:hover {
       background-color: #fff;
       color: #000;
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: #ccc;
     }
 
     .datetime {
@@ -140,42 +137,28 @@
       padding: 5px 10px;
       border-radius: 5px;
     }
-
-    footer {
-      margin-top: 50px;
-      font-size: 0.9em;
-      color: #ccc;
-    }
-
-    @media (max-width: 768px) {
-      .hero-content {
-        font-size: 1.5em;
-      }
-      .flags img {
-        width: 60px;
-      }
-      .center-image {
-        width: 120px;
-      }
-      h1 {
-        font-size: 1.8em;
-      }
-    }
   </style>
 </head>
+
 <body>
-
-  <nav>
-    <a href="index.html">🏠 الرئيسية</a>
-    <a href="offers.html">📢 العروض</a>
-    <a href="form.html">📝 التسجيل</a>
-    <a href="about.html">ℹ️ من نحن</a>
-    <a href="contact.html">📞 اتصل بنا</a>
-  </nav>
-
   <div class="hero">
     <div class="overlay"></div>
 
+    <!-- شعار -->
+    <div class="logo">
+      <img src="https://your-logo-url.com/logo.png" alt="شعار طريق العمرة"> <!-- ← غيّر الرابط -->
+    </div>
+
+    <!-- شريط التنقل -->
+    <nav>
+      <a href="index.html">🏠 الرئيسية</a>
+      <a href="offers.html">📢 العروض</a>
+      <a href="form.html">📝 التسجيل</a>
+      <a href="about.html">ℹ️ من نحن</a>
+      <a href="contact.html">📞 اتصل بنا</a>
+    </nav>
+
+    <!-- الأعلام -->
     <div class="flags flag-left">
       <img src="https://scontent.falg7-2.fna.fbcdn.net/v/t39.30808-6/470779002_122126918918548922_1593403662378077679_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Rim9gznBZjkQ7kNvwF8huSQ&_nc_oc=AdnPbNAMnDaH61-I2_Z4el42LqQCwdOMFY-cMCw9hvVMhkb9a4j6M2DQDJyOW8KyJDA&_nc_zt=23&_nc_ht=scontent.falg7-2.fna&_nc_gid=BOZAXigI55A-im74T4HxPg&oh=00_AfR8IhqUXwXKv6sC1dBN1bdeg4ANzvL40N1p8Wn9_gx8xw&oe=687F54F0" alt="علم يرفرف">
     </div>
@@ -184,23 +167,19 @@
       <img src="https://scontent.falg7-2.fna.fbcdn.net/v/t39.30808-6/470779002_122126918918548922_1593403662378077679_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Rim9gznBZjkQ7kNvwF8huSQ&_nc_oc=AdnPbNAMnDaH61-I2_Z4el42LqQCwdOMFY-cMCw9hvVMhkb9a4j6M2DQDJyOW8KyJDA&_nc_zt=23&_nc_ht=scontent.falg7-2.fna&_nc_gid=BOZAXigI55A-im74T4HxPg&oh=00_AfR8IhqUXwXKv6sC1dBN1bdeg4ANzvL40N1p8Wn9_gx8xw&oe=687F54F0" alt="علم يرفرف">
     </div>
 
-    <img class="center-image" src="رابط_صورة_الوسط.jpg" alt="صورة في الوسط"> <!-- ← استبدل هذا لاحقًا -->
-
-    <div class="hero-content">
-      مرحبًا بكم في طريق العمرة
-    </div>
-
+    <!-- التاريخ والوقت -->
     <div class="datetime" id="datetime"></div>
-  </div>
 
-  <div class="main-content">
-    <h1>🌙 طريق العمرة</h1>
-    <p>احجز رحلتك إلى البقاع المقدسة بكل سهولة وراحة</p>
-    <a href="form.html" class="btn">📌 سجّل الآن</a>
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content">
+      <h1>🌙 طريق العمرة</h1>
+      <p>احجز رحلتك إلى البقاع المقدسة بكل سهولة وراحة</p>
+      <a href="form.html" class="btn">📌 سجّل الآن</a>
 
-    <footer>
-      <p>© 2025 طريق العمرة - جميع الحقوق محفوظة</p>
-    </footer>
+      <footer>
+        <p>© 2025 طريق العمرة - جميع الحقوق محفوظة</p>
+      </footer>
+    </div>
   </div>
 
   <script>
@@ -210,11 +189,16 @@
       const time = now.toLocaleTimeString('ar-DZ', { timeZone: 'Africa/Algiers' });
       const date = now.toLocaleDateString('ar-DZ', options);
       const hijriDate = new Intl.DateTimeFormat('ar-TN-u-ca-islamic', options).format(now);
-      document.getElementById('datetime').innerHTML = `🕒 ${time}<br>📅 ${date}<br>🕌 ${hijriDate}`;
+
+      document.getElementById('datetime').innerHTML = `
+        🕒 ${time}<br>
+        📅 ${date}<br>
+        🕌 ${hijriDate}
+      `;
     }
+
     updateTime();
     setInterval(updateTime, 1000);
   </script>
-
 </body>
 </html>
