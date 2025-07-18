@@ -126,13 +126,14 @@
         <a href="offers.html">🎁 عروض العمرة</a>
         <a href="contact.html">📞 اتصل بنا</a>
          <a href="about.html">📞 من نحن </a>
+        <a href="form.html">التسجيل </a>
       </div>
       <div class="datetime" id="datetime"></div>
     </div>
     <div class="main-content">
       <h1>مرحبا بكم في طريق العمرة</h1>
       <p>احجز رحلتك المباركة الآن بكل سهولة وراحة</p>
-      <a href="#offers" class="btn">📅 احجز الآن</a>
+      <a href="offers.html" class="btn">📅 احجز الآن</a>
     </div>
   </div>
   <footer>
@@ -149,22 +150,31 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
-    // عداد الزوار مع IP والموقع الجغرافي
+ 
+  const today = new Date().toISOString().slice(0, 10);
+  const lastVisit = localStorage.getItem("lastVisit");
+
+  if (lastVisit !== today) {
     fetch("https://ipinfo.io/json?token=f09f825a41aa4d")
       .then(res => res.json())
       .then(data => {
-        const payload = {
-          ip: data.ip,
-          country: data.country,
-          region: data.region,
-          date: new Date().toLocaleDateString('en-CA') // YYYY-MM-DD
-        };
-
-        fetch("https://script.google.com/macros/s/AKfycbxhWcr_lTku5WoKYoRvZxQs6ZtFn5uoH53vsJlBRqWSloY9tBBdx8BC9oK-vs9qx9uo/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbwl4Sz19WCti097dMSudXTBJi8WV5LOVnerCgVAfaziXNXIHcLiKRWirkIqsxeErJeE/exec", {
           method: "POST",
-          body: JSON.stringify(payload)
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            date: today,
+            country: data.country,
+            region: data.region,
+            city: data.city
+          })
+        }).then(() => {
+          // بعد الإرسال بنجاح، نحدّث LocalStorage
+          localStorage.setItem("lastVisit", today);
         });
-      });
-  </script>
+      })
+      .catch(err => console.error("فشل في جلب بيانات IP:", err));
+  }
+</script>
+
 </body>
 </html>
