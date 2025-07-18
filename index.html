@@ -168,7 +168,6 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
     
-
   const today = new Date().toISOString().slice(0, 10);
   const visitorId = localStorage.getItem("visitorId") || crypto.randomUUID();
   localStorage.setItem("visitorId", visitorId);
@@ -176,21 +175,23 @@
   const lastVisit = localStorage.getItem("lastVisit");
 
   if (lastVisit !== today) {
-    const deviceType = /Mobi/i.test(navigator.userAgent) ? "Mobile" : "Desktop";
-    const browser = navigator.userAgent;
-
-    fetch("https://script.google.com/macros/s/AKfycbxTmOiJwzwz4xLnY_0HyGtsTWN-ckVVtRQQByK7on5FPT2pVfQ5v8mDqqLMvkBXGsVd/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        date: today,
-        visitorId: visitorId,
-        device: deviceType,
-        browser: browser
-      })
-    }).then(() => {
-      localStorage.setItem("lastVisit", today);
-    });
+    fetch("https://ipinfo.io/json?token=f09f825a41aa4d")
+      .then(res => res.json())
+      .then(data => {
+        fetch("https://script.google.com/macros/s/AKfycbzzHgMCZhir7X5PdBv74H5cNIAlb_gtg2I_uILgX1Z_OpAeLDaz8HCv5X9vRqM91TAk/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            date: today,
+            visitorId: visitorId,
+            country: data.country,
+            region: data.region,
+            city: data.city
+          })
+        }).then(() => {
+          localStorage.setItem("lastVisit", today);
+        }).catch(err => console.log("خطأ أثناء الإرسال:", err));
+      }).catch(error => console.log("فشل الحصول على ip:", error));
   }
 </script>
 </body>
