@@ -7,9 +7,21 @@
   <link rel="icon" type="image/png" href="favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
+      padding: 0;
       font-family: 'Tajawal', sans-serif;
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     .hero {
@@ -17,8 +29,10 @@
       background-image: url('https://travilia.com/uploads/0000/8/2024/09/26/hajj-rituals-makkah-accorhotels.jpg');
       background-size: cover;
       background-position: center;
-      min-height: 100vh;
+      flex-grow: 1;
       color: white;
+      display: flex;
+      flex-direction: column;
     }
 
     .overlay {
@@ -75,6 +89,7 @@
       text-align: center;
       position: relative;
       z-index: 2;
+      flex-grow: 1;
     }
 
     h1 {
@@ -107,9 +122,11 @@
     }
 
     footer {
-      margin-top: 50px;
-      font-size: 0.9em;
+      background: #222;
       color: #ccc;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
     }
   </style>
 </head>
@@ -125,23 +142,25 @@
         <a href="index.html">🏠 الرئيسية</a>
         <a href="offers.html">🎁 عروض العمرة</a>
         <a href="contact.html">📞 اتصل بنا</a>
-         <a href="about.html">📞 من نحن </a>
-        <a href="form.html">التسجيل </a>
+        <a href="about.html">📖 من نحن</a>
+        <a href="form.html">📝 التسجيل</a>
       </div>
       <div class="datetime" id="datetime"></div>
     </div>
+
     <div class="main-content">
       <h1>مرحبا بكم في طريق العمرة</h1>
       <p>احجز رحلتك المباركة الآن بكل سهولة وراحة</p>
       <a href="offers.html" class="btn">📅 احجز الآن</a>
     </div>
   </div>
+
   <footer>
     &copy; 2025 جميع الحقوق محفوظة | طريق العمرة
   </footer>
 
   <script>
-    // عرض الوقت والتاريخ
+    // تحديث الوقت والتاريخ
     function updateDateTime() {
       const now = new Date();
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -150,31 +169,29 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
- 
-  const today = new Date().toISOString().slice(0, 10);
-  const lastVisit = localStorage.getItem("lastVisit");
+    // تسجيل الزائر مرة واحدة فقط في اليوم
+    const today = new Date().toISOString().slice(0, 10);
+    const lastVisit = localStorage.getItem("lastVisit");
 
-  if (lastVisit !== today) {
-    fetch("https://ipinfo.io/json?token=f09f825a41aa4d")
-      .then(res => res.json())
-      .then(data => {
-        fetch("https://script.google.com/macros/s/AKfycbwIpceMxdLy8ERpUlPR8dzRXa95r3fLIN6FYSnBnM-_Hr4CgXmWwXQ1AQVlbi3pTdq5/exec", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            date: today,
-            country: data.country,
-            region: data.region,
-            city: data.city
-          })
-        }).then(() => {
-          // بعد الإرسال بنجاح، نحدّث LocalStorage
-          localStorage.setItem("lastVisit", today);
-        });
-      })
-      .catch(err => console.error("فشل في جلب بيانات IP:", err));
-  }
-</script>
-
+    if (lastVisit !== today) {
+      fetch("https://ipinfo.io/json?token=f09f825a41aa4d")
+        .then(res => res.json())
+        .then(data => {
+          fetch("https://script.google.com/macros/s/AKfycbwIpceMxdLy8ERpUlPR8dzRXa95r3fLIN6FYSnBnM-_Hr4CgXmWwXQ1AQVlbi3pTdq5/exec", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              date: today,
+              country: data.country,
+              region: data.region,
+              city: data.city
+            })
+          }).then(() => {
+            localStorage.setItem("lastVisit", today);
+          });
+        })
+        .catch(err => console.error("فشل في جلب بيانات IP:", err));
+    }
+  </script>
 </body>
 </html>
