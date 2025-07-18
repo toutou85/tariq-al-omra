@@ -86,7 +86,7 @@
       const formData = new FormData(this);
       const data = Object.fromEntries(formData.entries());
 
-      fetch("https://script.google.com/macros/s/AKfycbz5lhQuxto1AuZfArISiSersJ9b8SuV2yPn44jL211ggv1nnDmodjnEYwhM1qUKBqoH/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbyA1vDmTuU2leka-tBseTEjlsZiCGfWGqt4facEBphf86VYsZ0SdnGJVbP-RQULFpx-/exec", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -96,7 +96,10 @@
         document.getElementById('successMessage').textContent = "✅ تم التسجيل بنجاح! ترقّب جديدنا.";
         document.getElementById('joinForm').reset();
       })
-      .catch(err => alert("حدث خطأ، حاول لاحقاً."));
+      .catch(err => {
+        console.error(err);
+        alert("❌ حدث خطأ، حاول لاحقاً.");
+      });
     });
   </script>
 </body>
