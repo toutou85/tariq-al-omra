@@ -129,22 +129,81 @@
       font-size: 0.9em;
     }
   </style>
+<style>
+  .sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    background-color: #222;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    direction: rtl;
+  }
+
+  .sidebar a {
+    padding: 10px 25px;
+    text-decoration: none;
+    font-size: 1.2em;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+  }
+
+  .sidebar a:hover {
+    background-color: #444;
+  }
+
+  .sidebar .closebtn {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+  }
+
+  .openbtn {
+    font-size: 26px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: black;
+    padding: 5px 15px;
+  }
+
+  @media (max-width: 768px) {
+    .top-bar .nav-links {
+      display: none;
+    }
+    .openbtn {
+      display: inline;
+    }
+  }
+</style>
 </head>
 <body>
   <div class="hero">
+<!-- القائمة الجانبية -->
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
+  <a href="index.html">🏠 الرئيسية</a>
+  <a href="offers.html">🎁 عروض العمرة</a>
+  <a href="contact.html">📞 اتصل بنا</a>
+  <a href="about.html">📖 من نحن</a>
+  <a href="form.html">📝 التسجيل</a>
+</div>
     <div class="overlay"></div>
     <div class="top-bar">
       <div class="logo-container">
         <img src="logo.png" alt="Logo">
         <strong>🚍 طريق العمرة</strong>
       </div>
-      <div class="nav-links">
-        <a href="index.html">🏠 الرئيسية</a>
-        <a href="offers.html">🎁 عروض العمرة</a>
-        <a href="contact.html">📞 اتصل بنا</a>
-        <a href="about.html">📖 من نحن</a>
-        <a href="form.html">📝 التسجيل</a>
-      </div>
+     <!-- زر فتح القائمة الجانبية -->
+<button class="openbtn" onclick="openSidebar()">☰</button>
       <div class="datetime" id="datetime"></div>
     </div>
 
@@ -188,6 +247,14 @@ fetch("https://script.google.com/macros/s/AKfycbzdnJfRAjuYSjPlghaON5b_wiMEE1QgdJ
 .then(txt => console.log(txt))
 .catch(err => console.error("خطأ:", err));
 </script>
+<script>
+  function openSidebar() {
+    document.getElementById("mySidebar").style.width = "250px";
+  }
 
+  function closeSidebar() {
+    document.getElementById("mySidebar").style.width = "0";
+  }
+</script>
 </body>
 </html>
