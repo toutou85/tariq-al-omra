@@ -14,38 +14,46 @@
 
     nav {
       background: #FFD700;
-      text-align: center;
-      padding: 10px 0;
+      padding: 10px 20px;
     }
 
-    nav .logo-section {
+    nav .nav-top {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .logo-box {
+      display: flex;
       align-items: center;
     }
 
-    nav .logo-section img {
-      height: 60px;
+    .logo-box img {
+      height: 50px;
+      margin-left: 10px;
     }
 
-    nav .logo-section span {
+    .logo-box span {
       font-size: 24px;
       font-weight: bold;
-      margin-top: 5px;
+      color: #000;
     }
 
-    nav .links {
+    .links {
       margin-top: 10px;
+      text-align: center;
     }
 
-    nav .links a {
+    .links a {
       margin: 0 15px;
       text-decoration: none;
       color: black;
       font-weight: bold;
+      font-size: 16px;
     }
 
-    nav .info-bar {
+    .info-bar {
       margin-top: 10px;
       font-size: 14px;
       display: flex;
@@ -114,26 +122,39 @@
       font-size: 0.9em;
       color: #ccc;
     }
+
+    @media (max-width: 600px) {
+      nav .nav-top {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .links {
+        margin-top: 10px;
+      }
+    }
   </style>
 </head>
 <body>
 
   <nav>
-    <!-- السطر الأول: الشعار واسم الموقع -->
-    <div class="logo-section">
-      <img src="logo.png" alt="شعار طريق العمرة">
-      <span>طريق العمرة</span>
+    <!-- الشعار والاسم -->
+    <div class="nav-top">
+      <div class="logo-box">
+        <img src="logo.png" alt="شعار">
+        <span>طريق العمرة</span>
+      </div>
     </div>
 
-    <!-- السطر الثاني: روابط التنقل -->
+    <!-- روابط -->
     <div class="links">
-      <a href="#">الرئيسية</a>
-      <a href="#">العروض</a>
-      <a href="#">الحجز</a>
-      <a href="#">اتصل بنا</a>
+      <a href="index.html">الرئيسية</a>
+      <a href="offers.html">العروض</a>
+      <a href="booking.html">الحجز</a>
+      <a href="contact.html">اتصل بنا</a>
     </div>
 
-    <!-- السطر الثالث: التاريخ والوقت وعداد الزوار -->
+    <!-- الوقت + عداد الزوار -->
     <div class="info-bar">
       <span id="datetime">🕒</span>
       <span id="counter">👁️ عدد الزوار: <span id="visitCount">0</span></span>
@@ -145,7 +166,7 @@
     <div class="main-content">
       <h1>احجز رحلتك المباركة الآن</h1>
       <p>نحن نسهر على راحتك ونسهّل لك الطريق نحو بيت الله الحرام.</p>
-      <a href="#الحجز" class="btn">احجز الآن</a>
+      <a href="booking.html" class="btn">احجز الآن</a>
     </div>
   </div>
 
@@ -154,7 +175,7 @@
   </footer>
 
   <script>
-    // تحديث التاريخ والوقت
+    // الوقت
     function updateDateTime() {
       const now = new Date();
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -165,7 +186,7 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
-    // عداد الزوار المحلي (للتجربة فقط)
+    // عداد الزوار المحلي (للتجربة)
     if (localStorage.getItem('visits')) {
       localStorage.setItem('visits', Number(localStorage.getItem('visits')) + 1);
     } else {
