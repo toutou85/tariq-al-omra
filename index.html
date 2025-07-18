@@ -169,32 +169,22 @@
     updateDateTime();
     </script>
   <script>
-
 const today = new Date().toISOString().slice(0, 10);
 const visitorId = localStorage.getItem("visitorId") || crypto.randomUUID();
 localStorage.setItem("visitorId", visitorId);
 
-const lastVisit = localStorage.getItem("lastVisit-" + window.location.pathname);
+fetch("https://script.google.com/macros/s/AKfycbwEuq-PUoc_uUJfuoyWR8GWUbcpFB2w7I-VDJbyz5v20DB9lJpoH8zAtHJ27ssxKIOw/exec", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    date: today,
+    visitorId: visitorId,
+    page: "index.html", // اسم الصفحة الجديد مثلا
+    country: "DZ",
+    city: "Algiers"
+  })
+});
 
-if (lastVisit !== today) {
-  fetch("https://ipinfo.io/json?token=f09f825a41aa4d")
-    .then(res => res.json())
-    .then(data => {
-      fetch("https://script.google.com/macros/s/AKfycbxbFsiT5oaIb8zsowhuWaCDvSm0UMctW3wW8OI3u9N0IaUZAA_jgYOnn8btDz3DsWv6/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          date: today,
-          visitorId: visitorId,
-          page: window.location.pathname.replace("/", "") || "home",
-          country: data.country,
-          city: data.city
-        })
-      }).then(() => {
-        localStorage.setItem("lastVisit-" + window.location.pathname, today);
-      }).catch(err => console.log("خطأ أثناء الإرسال:", err));
-    }).catch(error => console.log("فشل الحصول على ip:", error));
-}
 </script>
 
 </body>
