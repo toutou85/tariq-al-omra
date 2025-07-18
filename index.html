@@ -173,7 +173,7 @@ const today = new Date().toISOString().slice(0, 10);
 const visitorId = localStorage.getItem("visitorId") || crypto.randomUUID();
 localStorage.setItem("visitorId", visitorId);
 
-fetch("https://script.google.com/macros/s/AKfycbwEuq-PUoc_uUJfuoyWR8GWUbcpFB2w7I-VDJbyz5v20DB9lJpoH8zAtHJ27ssxKIOw/exec", {
+fetch("https://script.google.com/macros/s/AKfycby6bNNchAQiJwmJFcZbyU_aU3F77e_y9l_btD0s9uEqVL1SqBHTD1rkh2V3eqxRvaSr/exec", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
