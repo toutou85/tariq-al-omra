@@ -122,9 +122,10 @@
         <strong>🚍 طريق العمرة</strong>
       </div>
       <div class="nav-links">
-        <a href="#">🏠 الرئيسية</a>
-        <a href="#offers">🎁 عروض العمرة</a>
-        <a href="#contact">📞 اتصل بنا</a>
+        <a href="index.html">🏠 الرئيسية</a>
+        <a href="offers.html">🎁 عروض العمرة</a>
+        <a href="contact.html">📞 اتصل بنا</a>
+         <a href="about.html">📞 من نحن </a>
       </div>
       <div class="datetime" id="datetime"></div>
     </div>
@@ -159,7 +160,7 @@
           date: new Date().toLocaleDateString('en-CA') // YYYY-MM-DD
         };
 
-        fetch("https://script.google.com/macros/s/AKfycbzIeEsV3IIdGoPBK87zemX7_YQeU45EqFK9XvMqRTjNoeOT-CZgPYF-YsBMjpBwSBN2/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbxhWcr_lTku5WoKYoRvZxQs6ZtFn5uoH53vsJlBRqWSloY9tBBdx8BC9oK-vs9qx9uo/exec", {
           method: "POST",
           body: JSON.stringify(payload)
         });
