@@ -129,27 +129,34 @@
     <div class="success-message" id="successMessage">✅ تم التسجيل بنجاح! سنوافيك بكل جديد قريبًا.</div>
   </div>
 
-  <script>
-    document.getElementById("joinForm").addEventListener("submit", function (e) {
-      e.preventDefault();
+ <script>
+  document.getElementById("joinForm").addEventListener("submit", function (e) {
+    e.preventDefault();
 
-      const form = e.target;
-      const formData = new FormData(form);
-      const scriptURL = "https://script.google.com/macros/s/AKfycbyMx7LKfjGwu6YYU2gA121Gz-y_vc7bYlu2JDpeTUj3shCzGEcKNG1FnDdPf3o5Tufy/exec";
+    const form = e.target;
+    const formData = new FormData(form);
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyMx7LKfjGwu6YYU2gA121Gz-y_vc7bYlu2JDpeTUj3shCzGEcKNG1FnDdPf3o5Tufy/exec";
 
-      fetch(scriptURL, {
-        method: "POST",
-        body: formData
-      })
-      .then(response => {
-        form.reset();
-        document.getElementById("successMessage").style.display = "block";
-      })
-      .catch(error => {
-        alert("❌ حدث خطأ أثناء الإرسال، حاول مجددًا.");
-        console.error("Error!", error.message);
-      });
+    fetch(scriptURL, {
+      method: "POST",
+      body: formData
+    })
+    .then(response => {
+      form.reset();
+      const message = document.getElementById("successMessage");
+      message.style.display = "block";
+
+      // الانتظار 3 ثوانٍ ثم الانتقال إلى index.html
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 3000); // 3000 ملي ثانية = 3 ثوانٍ
+    })
+    .catch(error => {
+      alert("❌ حدث خطأ أثناء الإرسال، حاول مجددًا.");
+      console.error("Error!", error.message);
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
