@@ -1,34 +1,28 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>انضم إلى قافلتنا | طريق العمرة</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <title>انضم إلى قافلة طريق العمرة</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      margin: 0;
       font-family: 'Tajawal', sans-serif;
       background: linear-gradient(to bottom, #fdf6e3, #fceabb);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
 
     .form-container {
       background-color: #fff;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
       padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
       width: 90%;
       max-width: 400px;
       text-align: center;
-    }
-
-    .form-container h2 {
-      color: #d4af37;
-      margin-bottom: 20px;
     }
 
     input, select, button {
@@ -45,7 +39,6 @@
       color: white;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
 
     button:hover {
@@ -62,7 +55,7 @@
 <body>
   <div class="form-container">
     <h2>🚍 انضم إلى قافلة طريق العمرة</h2>
-    <form id="joinForm">
+    <form id="joinForm" action="https://script.google.com/macros/s/AKfycbyMx7LKfjGwu6YYU2gA121Gz-y_vc7bYlu2JDpeTUj3shCzGEcKNG1FnDdPf3o5Tufy/exec" method="POST" target="hidden_iframe">
       <input type="text" name="name" placeholder="👤 الاسم الكامل" required>
       <input type="email" name="email" placeholder="📧 البريد الإلكتروني" required>
       <input type="number" name="age" placeholder="🎂 العمر" required min="10" max="100">
@@ -73,34 +66,12 @@
         <option value="وهران">وهران</option>
         <option value="قسنطينة">قسنطينة</option>
         <option value="عنابة">عنابة</option>
-        <!-- أضف باقي الولايات حسب الحاجة -->
+        <option value="باقي الولايات">ولاية أخرى</option>
       </select>
       <button type="submit">📩 سجّل الآن</button>
       <div class="success-message" id="successMessage"></div>
     </form>
+    <iframe name="hidden_iframe" style="display:none;" onload="document.getElementById('successMessage').innerText='✅ تم التسجيل بنجاح!'"></iframe>
   </div>
-
-  <script>
-    document.getElementById('joinForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData.entries());
-
-      fetch("https://script.google.com/macros/s/AKfycbyA1vDmTuU2leka-tBseTEjlsZiCGfWGqt4facEBphf86VYsZ0SdnGJVbP-RQULFpx-/exec", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(res => res.text())
-      .then(res => {
-        document.getElementById('successMessage').textContent = "✅ تم التسجيل بنجاح! ترقّب جديدنا.";
-        document.getElementById('joinForm').reset();
-      })
-      .catch(err => {
-        console.error(err);
-        alert("❌ حدث خطأ، حاول لاحقاً.");
-      });
-    });
-  </script>
 </body>
 </html>
