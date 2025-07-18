@@ -1,199 +1,178 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>طريق العمرة | احجز رحلتك المباركة</title>
   <link rel="icon" type="image/png" href="favicon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Tajawal', sans-serif;
+      background-image: url('https://travilia.com/uploads/0000/8/2024/09/26/hajj-rituals-makkah-accorhotels.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      position: relative;
     }
 
-    nav {
-      background: #FFD700;
+    .overlay {
+      background: rgba(0, 0, 0, 0.6);
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 1;
+    }
+
+    .header-bar {
+      background-color: #FFD700;
+      color: black;
       padding: 10px 20px;
-    }
-
-    nav .nav-top {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 3;
     }
 
-    .logo-box {
+    .header-bar .logo-container {
       display: flex;
       align-items: center;
     }
 
-    .logo-box img {
+    .header-bar img {
       height: 50px;
       margin-left: 10px;
     }
 
-    .logo-box span {
-      font-size: 24px;
-      font-weight: bold;
-      color: #000;
+    .header-bar h1 {
+      margin: 0;
+      font-size: 1.8em;
     }
 
-    .links {
-      margin-top: 10px;
+    nav {
+      background-color: #FFD700;
+      padding: 10px;
       text-align: center;
+      position: relative;
+      z-index: 3;
     }
 
-    .links a {
+    nav a {
       margin: 0 15px;
       text-decoration: none;
-      color: black;
       font-weight: bold;
-      font-size: 16px;
+      color: #000;
+      font-size: 1.1em;
     }
 
-    .info-bar {
-      margin-top: 10px;
-      font-size: 14px;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-    }
-
-    .hero {
+    .datetime {
+      background-color: #FFD700;
+      padding: 8px;
+      text-align: center;
+      font-size: 1em;
+      font-weight: bold;
       position: relative;
-      background-image: url('https://travilia.com/uploads/0000/8/2024/09/26/hajj-rituals-makkah-accorhotels.jpg');
-      background-size: cover;
-      background-position: center;
-      min-height: 100vh;
-      color: white;
-    }
-
-    .overlay {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 1;
+      z-index: 3;
     }
 
     .main-content {
-      padding: 60px 20px;
-      color: white;
       text-align: center;
+      color: white;
       position: relative;
       z-index: 2;
+      padding: 100px 20px;
     }
 
-    h1 {
+    .main-content h2 {
       font-size: 3em;
-      margin-bottom: 20px;
       color: #FFD700;
     }
 
-    p {
-      font-size: 1.5em;
-      margin-bottom: 30px;
+    .main-content p {
+      font-size: 1.4em;
     }
 
     .btn {
+      margin-top: 20px;
       background-color: #FFD700;
-      color: #000;
+      color: black;
       padding: 15px 30px;
-      font-size: 1.2em;
       border: none;
       border-radius: 10px;
-      text-decoration: none;
+      font-size: 1.2em;
       cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #fff;
-      color: #000;
+      text-decoration: none;
     }
 
     footer {
-      text-align: center;
-      margin-top: 50px;
-      font-size: 0.9em;
+      background: rgba(0, 0, 0, 0.8);
       color: #ccc;
-    }
-
-    @media (max-width: 600px) {
-      nav .nav-top {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .links {
-        margin-top: 10px;
-      }
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
+  <div class="overlay"></div>
 
-  <nav>
-    <!-- الشعار والاسم -->
-    <div class="nav-top">
-      <div class="logo-box">
-        <img src="logo.png" alt="شعار">
-        <span>طريق العمرة</span>
-      </div>
-    </div>
-
-    <!-- روابط -->
-    <div class="links">
-      <a href="index.html">الرئيسية</a>
-      <a href="offers.html">العروض</a>
-      <a href="booking.html">الحجز</a>
-      <a href="contact.html">اتصل بنا</a>
-    </div>
-
-    <!-- الوقت + عداد الزوار -->
-    <div class="info-bar">
-      <span id="datetime">🕒</span>
-      <span id="counter">👁️ عدد الزوار: <span id="visitCount">0</span></span>
-    </div>
-  </nav>
-
-  <div class="hero">
-    <div class="overlay"></div>
-    <div class="main-content">
-      <h1>احجز رحلتك المباركة الآن</h1>
-      <p>نحن نسهر على راحتك ونسهّل لك الطريق نحو بيت الله الحرام.</p>
-      <a href="booking.html" class="btn">احجز الآن</a>
+  <div class="header-bar">
+    <div class="logo-container">
+      <img src="favicon.png" alt="Logo">
+      <h1>طريق العمرة</h1>
     </div>
   </div>
 
+  <nav>
+    <a href="#">الرئيسية</a>
+    <a href="#">العروض</a>
+    <a href="#">الحجز</a>
+    <a href="#">من نحن</a>
+    <a href="#">اتصل بنا</a>
+  </nav>
+
+  <div class="datetime" id="datetime"></div>
+
+  <div class="main-content">
+    <h2>احجز رحلتك المباركة الآن</h2>
+    <p>نرافقكم في رحلات عمرة مريحة وآمنة، بأفضل الخدمات والعروض.</p>
+    <a class="btn" href="#">احجز الآن</a>
+  </div>
+
   <footer>
-    &copy; 2025 طريق العمرة - جميع الحقوق محفوظة.
+    &copy; 2025 طه برقيقة - جميع الحقوق محفوظة
   </footer>
 
   <script>
-    // الوقت
+    // تحديث التاريخ والوقت
     function updateDateTime() {
       const now = new Date();
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const date = now.toLocaleDateString('ar-DZ', options);
       const time = now.toLocaleTimeString('ar-DZ');
-      document.getElementById("datetime").textContent = `📅 ${date} - ${time}`;
+      const date = now.toLocaleDateString('ar-DZ', options);
+      document.getElementById("datetime").textContent = date + " - " + time;
     }
     setInterval(updateDateTime, 1000);
     updateDateTime();
-
-    // عداد الزوار المحلي (للتجربة)
-    if (localStorage.getItem('visits')) {
-      localStorage.setItem('visits', Number(localStorage.getItem('visits')) + 1);
-    } else {
-      localStorage.setItem('visits', 1);
-    }
-    document.getElementById("visitCount").textContent = localStorage.getItem('visits');
   </script>
 
+  <script>
+    // عداد الزوار اليومي الحقيقي (مرة واحدة في اليوم فقط)
+    const counterUrl = "https://script.google.com/macros/s/AKfycbz0teoZLHyYfJhg8wTH_P6c9yrK2CU3_lOCWSWmnFbsYNTnnXR3BqE9dsuLBj5ufFX6/exec";
+    const todayKey = 'visited_' + new Date().toISOString().slice(0, 10);
+
+    if (!localStorage.getItem(todayKey)) {
+      fetch(counterUrl)
+        .then(res => res.text())
+        .then(data => {
+          localStorage.setItem(todayKey, 'true');
+          console.log("✅ تم تسجيل زيارة اليوم");
+        })
+        .catch(err => console.error("❌ خطأ في تسجيل الزيارة:", err));
+    }
+  </script>
 </body>
 </html>
