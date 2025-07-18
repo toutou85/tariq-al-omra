@@ -159,39 +159,30 @@
     &copy; 2025 جميع الحقوق محفوظة | طريق العمرة
   </footer>
 
-  <script>
-    // تحديث الوقت والتاريخ
-    function updateDateTime() {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById("datetime").textContent = now.toLocaleDateString('ar-DZ', options) + ' - ' + now.toLocaleTimeString('ar-DZ');
-    }
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
+    <script>
+  const today = new Date().toISOString().slice(0, 10);
+  const visitorId = localStorage.getItem("visitorId") || crypto.randomUUID();
+  localStorage.setItem("visitorId", visitorId);
 
-    // تسجيل الزائر مرة واحدة فقط في اليوم
-    const today = new Date().toISOString().slice(0, 10);
-    const lastVisit = localStorage.getItem("lastVisit");
+  const lastVisit = localStorage.getItem("lastVisit");
 
-    if (lastVisit !== today) {
-      fetch("https://ipinfo.io/json?token=f09f825a41aa4d")
-        .then(res => res.json())
-        .then(data => {
-           fetch("https://script.google.com/macros/s/AKfycbxCwgl3v9xXkJBP_4ChrATSNA7InRPs3-2zieqRPwr-qgGOSS0SGfGhyQhFPPdU6BNe/exec", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              date: today,
-              country: data.country,
-              region: data.region,
-              city: data.city
-            })
-          }).then(() => {
-            localStorage.setItem("lastVisit", today);
-          });
-        })
-        .catch(err => console.error("فشل في جلب بيانات IP:", err));
-    }
-  </script>
+  if (lastVisit !== today) {
+    const deviceType = /Mobi/i.test(navigator.userAgent) ? "Mobile" : "Desktop";
+    const browser = navigator.userAgent;
+
+    fetch("https://script.google.com/macros/s/AKfycbxTmOiJwzwz4xLnY_0HyGtsTWN-ckVVtRQQByK7on5FPT2pVfQ5v8mDqqLMvkBXGsVd/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        date: today,
+        visitorId: visitorId,
+        device: deviceType,
+        browser: browser
+      })
+    }).then(() => {
+      localStorage.setItem("lastVisit", today);
+    });
+  }
+</script>
 </body>
 </html>
