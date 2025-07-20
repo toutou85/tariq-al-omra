@@ -72,7 +72,7 @@
       document.getElementById("notif-container").innerHTML = "<p>❌ لم يتم العثور على بريد إلكتروني. يرجى التسجيل أولاً.</p>";
     } else {
       // استرجاع الإشعارات
-      fetch(`https://script.google.com/macros/s/AKfycb.../exec?email=${email}`)
+      fetch(`https://script.google.com/macros/s/AKfycbzr9XTABt-6PkmU2WzqhRAzB5e2NpwBfxwribjz5wZSm6v4QqOJ5FH563IfqGZpznZV6A/exec?email=${encodeURIComponent(email)}`)
         .then(res => res.json())
         .then(data => {
           const container = document.getElementById("notif-container");
@@ -94,7 +94,7 @@
           }
 
           // تعليم الإشعارات كمقروءة
-          fetch("https://script.google.com/macros/s/AKfycb.../exec", {
+          fetch("https://script.google.com/macros/s/AKfycbzr9XTABt-6PkmU2WzqhRAzB5e2NpwBfxwribjz5wZSm6v4QqOJ5FH563IfqGZpznZV6A/exec", {
             method: "POST",
             body: JSON.stringify({ email }),
             headers: { "Content-Type": "application/json" }
