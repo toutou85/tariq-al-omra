@@ -65,46 +65,47 @@
 
   <a class="back" href="index.html">⬅️ الرجوع إلى الصفحة الرئيسية</a>
 
-  <script>
-    const email = localStorage.getItem("userEmail");
+ <script>
+  const email = localStorage.getItem("umrahUserEmail"); // ✅ تعديل الاسم
 
-    if (!email) {
-      document.getElementById("notif-container").innerHTML = "<p>❌ لم يتم العثور على بريد إلكتروني. يرجى التسجيل أولاً.</p>";
-    } else {
-      // استرجاع الإشعارات
-      fetch(`https://script.google.com/macros/s/AKfycbzr9XTABt-6PkmU2WzqhRAzB5e2NpwBfxwribjz5wZSm6v4QqOJ5FH563IfqGZpznZV6A/exec?email=${encodeURIComponent(email)}`)
-        .then(res => res.json())
-        .then(data => {
-          const container = document.getElementById("notif-container");
-          container.innerHTML = "";
+  if (!email) {
+    document.getElementById("notif-container").innerHTML = "<p>❌ لم يتم العثور على بريد إلكتروني. يرجى التسجيل أولاً.</p>";
+  } else {
+    // استرجاع الإشعارات
+    fetch(`https://script.google.com/macros/s/AKfycbzr9XTABt-6PkmU2WzqhRAzB5e2NpwBfxwribjz5wZSm6v4QqOJ5FH563IfqGZpznZV6A/exec?email=${encodeURIComponent(email)}`)
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("notif-container");
+        container.innerHTML = "";
 
-          if (data.length === 0) {
-            container.innerHTML = "<p>📭 لا توجد إشعارات حالياً.</p>";
-          } else {
-            data.reverse().forEach(notif => {
-              const box = document.createElement("div");
-              box.className = "notif";
-              box.innerHTML = `
-                <h3>${notif.title}</h3>
-                <p>${notif.body}</p>
-                <small>📅 ${new Date(notif.timestamp).toLocaleString("ar-DZ")}</small>
-              `;
-              container.appendChild(box);
-            });
-          }
-
-          // تعليم الإشعارات كمقروءة
-          fetch("https://script.google.com/macros/s/AKfycbzr9XTABt-6PkmU2WzqhRAzB5e2NpwBfxwribjz5wZSm6v4QqOJ5FH563IfqGZpznZV6A/exec", {
-            method: "POST",
-            body: JSON.stringify({ email }),
-            headers: { "Content-Type": "application/json" }
+        if (data.length === 0) {
+          container.innerHTML = "<p>📭 لا توجد إشعارات حالياً.</p>";
+        } else {
+          data.reverse().forEach(notif => {
+            const box = document.createElement("div");
+            box.className = "notif";
+            box.innerHTML = `
+              <h3>${notif.title}</h3>
+              <p>${notif.body}</p>
+              <small>📅 ${new Date(notif.timestamp).toLocaleString("ar-DZ")}</small>
+            `;
+            container.appendChild(box);
           });
-        })
-        .catch(err => {
-          document.getElementById("notif-container").innerHTML = "<p>❌ حدث خطأ في تحميل الإشعارات.</p>";
+        }
+
+        // تعليم الإشعارات كمقروءة
+        fetch("https://script.google.com/macros/s/AKfycbzr9XTABt-6PkmU2WzqhRAzB5e2NpwBfxwribjz5wZSm6v4QqOJ5FH563IfqGZpznZV6A/exec", {
+          method: "POST",
+          body: JSON.stringify({ email }),
+          headers: { "Content-Type": "application/json" }
         });
-    }
-  </script>
+      })
+      .catch(err => {
+        document.getElementById("notif-container").innerHTML = "<p>❌ حدث خطأ في تحميل الإشعارات.</p>";
+      });
+  }
+</script>
+
 
 </body>
 </html>
