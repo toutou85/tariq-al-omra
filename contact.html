@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>اتصل بنا | طريق العمرة</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
       background-color: #f9f9f9;
-      padding: 30px;
-      color: #333;
       margin: 0;
+      padding: 30px 15px;
+      color: #333;
     }
 
     nav {
@@ -36,14 +37,23 @@
       max-width: 600px;
       margin: auto;
       background: white;
-      padding: 20px;
+      padding: 25px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       font-size: 1.1em;
     }
 
     .contact-info p {
-      margin: 10px 0;
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .contact-info i {
+      margin-left: 10px;
+      color: #d4af37;
+      min-width: 24px;
+      text-align: center;
     }
 
     .contact-info a {
@@ -58,9 +68,21 @@
     .social-links {
       margin-top: 20px;
     }
+
+    .social-links a {
+      display: inline-block;
+      margin-left: 15px;
+      font-size: 1.2em;
+      color: #333;
+    }
+
+    .social-links a:hover {
+      color: #007BFF;
+    }
   </style>
 </head>
 <body>
+
   <nav>
     <a href="index.html">🏠 الرئيسية</a>
     <a href="offers.html">📢 العروض</a>
@@ -70,18 +92,35 @@
   </nav>
 
   <h2>📞 اتصل بنا</h2>
+
   <div class="contact-info">
-    <p>📍 الجزائر العاصمة، شارع الحرمين، الطابق 2</p>
-    <p>📱 الهاتف 1: <a href="tel:+213656450486">0656 45 04 86</a></p>
-    <p>📱 الهاتف 2: <a href="tel:+213674141379">0674 14 13 79</a></p>
-    <p>💬 واتساب: <a href="https://wa.me/213656450486" target="_blank">راسلنا عبر واتساب</a></p>
-    <p>📧 البريد الإلكتروني: <a href="mailto:omra@tariq.dz">omra@tariq.dz</a></p>
+    <p><i class="fas fa-location-dot"></i> الجزائر العاصمة، شارع الحرمين، الطابق 2</p>
+    
+    <p>
+      <i class="fab fa-whatsapp"></i>
+      <a href="https://wa.me/213656450486" target="_blank">راسلنا على واتساب (0656 45 04 86)</a>
+    </p>
+
+    <p>
+      <i class="fab fa-whatsapp"></i>
+      <a href="https://wa.me/213674141379" target="_blank">راسلنا على واتساب (0674 14 13 79)</a>
+    </p>
+
+    <p>
+      <i class="fas fa-envelope"></i>
+      <a href="mailto:taha.berguiga99@gmail.com">taha.berguiga99@gmail.com</a>
+    </p>
 
     <div class="social-links">
-      <p>📱 تابعنا على:</p>
-      <p>🔵 فيسبوك: <a href="https://www.facebook.com/profile.php?id=61566467677935&mibextid=ZbWKwL" target="_blank">صفحتنا على فيسبوك</a></p>
-      <p>📸 إنستغرام: <a href="https://www.instagram.com/taha.omra99?igsh=Zndnb2dvbm9xanFi" target="_blank">حسابنا على إنستغرام</a></p>
+      <p><i class="fas fa-hashtag"></i> تابعنا على:</p>
+      <a href="https://www.facebook.com/profile.php?id=61566467677935&mibextid=ZbWKwL" target="_blank">
+        <i class="fab fa-facebook-square"></i> فيسبوك
+      </a>
+      <a href="https://www.instagram.com/taha.omra99?igsh=Zndnb2dvbm9xanFi" target="_blank">
+        <i class="fab fa-instagram"></i> إنستغرام
+      </a>
     </div>
   </div>
+
 </body>
 </html>
