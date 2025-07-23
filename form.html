@@ -179,12 +179,10 @@
         <option>المنيعة</option>
       </select>
 
-    <label for="branch">الفرع الأقرب إليك:</label>
-<select id="branch" name="الفرع" required>
-  <option value="">-- اختر الفرع الأقرب إليك --</option>
-</select>
-
-  
+      <label for="branch">الفرع الأقرب إليك:</label>
+      <select id="branch" name="الفرع" required>
+        <option value="">-- اختر الفرع الأقرب إليك --</option>
+      </select>
 
       <label>ملاحظات إضافية</label>
       <textarea name="notes" rows="4"></textarea>
@@ -192,38 +190,35 @@
       <button type="submit">✅ إرسال الطلب</button>
     </form>
   </div>
-  </script>
+
+  <!-- سكربتات -->
   <script>
-  // استخراج الوكالة من رابط URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const agency = urlParams.get("agency");
+    const branchesByAgency = {
+      "وكالة تقرت لسياحة و سفر": ["تقرت", "بومرداس", "الجزائر العاصمة", "مستغانم", "المدية", "الجلفة", "المغير", "تمنراست", "الشلف", "بشار", "عنابة"],
+      "وكالة السقيفة للسياحة و سفر": ["قسنطينة", "عنابة", "سوق اهراس", "ميلة", "ام البواقي"],
+      "وكالة الانسية لسياحة و سفر": ["عنابة", "الشلف", "وهران", "تلمسان"]
+    };
 
-  if (agency) {
-    fillBranchesByAgency(agency);
-  }
-</script>
-
-  <script>
-  const branchesByAgency = {
-    "وكالة تقرت لسياحة و سفر": ["تقرت", "بومرداس", "الجزائر العاصمة", "مستغانم", "المدية", "الجلفة", "المغير", "تمنراست", "الشلف", "بشار", "عنابة"],
-    "وكالة السقيفة للسياحة و سفر": ["قسنطينة", "عنابة", "سوق اهراس", "ميلة", "ام البواقي"],
-    "وكالة الانسية لسياحة و سفر": ["عنابة", "الشلف", "وهران", "تلمسان" ]
-  };
-
-  function fillBranchesByAgency(agency) {
-    const branchSelect = document.getElementById("branch");
-    branchSelect.innerHTML = '<option value="">-- اختر الفرع الأقرب إليك --</option>';
-
-    const branches = branchesByAgency[agency];
-    if (branches) {
-      branches.forEach(branch => {
-        const option = document.createElement("option");
-        option.value = branch;
-        option.textContent = branch;
-        branchSelect.appendChild(option);
-      });
+    function fillBranchesByAgency(agency) {
+      const branchSelect = document.getElementById("branch");
+      branchSelect.innerHTML = '<option value="">-- اختر الفرع الأقرب إليك --</option>';
+      const branches = branchesByAgency[agency];
+      if (branches) {
+        branches.forEach(branch => {
+          const option = document.createElement("option");
+          option.value = branch;
+          option.textContent = branch;
+          branchSelect.appendChild(option);
+        });
+      }
     }
-  }
-</script>
+
+    // استخراج اسم الوكالة من رابط الصفحة
+    const urlParams = new URLSearchParams(window.location.search);
+    const agency = urlParams.get("agency");
+    if (agency) {
+      fillBranchesByAgency(agency);
+    }
+  </script>
 </body>
 </html>
