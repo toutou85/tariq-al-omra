@@ -119,11 +119,11 @@ container.innerHTML = `
   </div>
           <a class="btn" href="form.html">احجز الآن</a>
         `;
-        fillBranchesByAgency(offer['الوكالة']);
       })
       .catch(err => {
         document.getElementById("details-container").innerHTML = "<p style='color:red;'>❌ فشل في تحميل التفاصيل</p>";
         console.error(err);
+         fillBranchesByAgency(offer['الوكالة']);
       });
   </script>
 <script>
