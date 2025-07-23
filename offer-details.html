@@ -91,7 +91,7 @@
 container.innerHTML = `
   <img src="${offer['رابط صورة الفندق']}" alt="صورة الفندق">
   <h2>${offer['اسم العرض']}</h2>
-  fillBranchesByAgency(offer['الوكالة']);
+  
   <ul>
     <li>🏢 الوكالة: ${offer['الوكالة']}</li>
     <li>🛬 المطار: ${offer['المطار']}</li>
@@ -119,6 +119,7 @@ container.innerHTML = `
   </div>
           <a class="btn" href="form.html">احجز الآن</a>
         `;
+        fillBranchesByAgency(offer['الوكالة']);
       })
       .catch(err => {
         document.getElementById("details-container").innerHTML = "<p style='color:red;'>❌ فشل في تحميل التفاصيل</p>";
