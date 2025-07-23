@@ -179,10 +179,9 @@
         <option>المنيعة</option>
       </select>
 
-      <label>الفرع الأقرب إليك</label>
-      <label for="branch">أقرب فرع إليك</label>
-<select name="branch" id="branch" required>
-  <option value="">-- اختر الفرع --</option>
+    <label for="branch">الفرع الأقرب إليك:</label>
+<select id="branch" name="الفرع" required>
+  <option value="">-- اختر الفرع الأقرب إليك --</option>
 </select>
 
   
@@ -194,6 +193,16 @@
     </form>
   </div>
   </script>
+  <script>
+  // استخراج الوكالة من رابط URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const agency = urlParams.get("agency");
+
+  if (agency) {
+    fillBranchesByAgency(agency);
+  }
+</script>
+
   <script>
   const branchesByAgency = {
     "وكالة تقرت لسياحة و سفر": ["تقرت", "بومرداس", "الجزائر العاصمة", "مستغانم", "المدية", "الجلفة", "المغير", "تمنراست", "الشلف", "بشار", "عنابة"],
