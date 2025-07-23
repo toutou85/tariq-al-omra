@@ -91,6 +91,7 @@
 container.innerHTML = `
   <img src="${offer['رابط صورة الفندق']}" alt="صورة الفندق">
   <h2>${offer['اسم العرض']}</h2>
+  fillBranchesByAgency(offer['الوكالة']);
   <ul>
     <li>🏢 الوكالة: ${offer['الوكالة']}</li>
     <li>🛬 المطار: ${offer['المطار']}</li>
@@ -124,6 +125,28 @@ container.innerHTML = `
         console.error(err);
       });
   </script>
+<script>
+  const branchesByAgency = {
+    "وكالة تقرت لسياحة و سفر": ["تقرت", "بومرداس", "الجزائر العاصمة", "مستغانم", "المدية", "الجلفة", "المغير", "تمنراست", "الشلف", "بشار", "عنابة"],
+    "وكالة السقيفة للسياحة و سفر": ["قسنطينة", "عنابة", "سوق اهراس", "ميلة", "ام البواقي"],
+    "وكالة الانسية لسياحة و سفر": ["عنابة", "الشلف", "وهران", "تلمسان" ]
+  };
+
+  function fillBranchesByAgency(agency) {
+    const branchSelect = document.getElementById("branch");
+    branchSelect.innerHTML = '<option value="">-- اختر الفرع الأقرب إليك --</option>';
+
+    const branches = branchesByAgency[agency];
+    if (branches) {
+      branches.forEach(branch => {
+        const option = document.createElement("option");
+        option.value = branch;
+        option.textContent = branch;
+        branchSelect.appendChild(option);
+      });
+    }
+  }
+</script>
 
 </body>
 </html>
