@@ -308,12 +308,21 @@ function updateBadge(count) {
       });
   }
 </script>
-  <script>  
-  // عند دخول الزبون للصفحة يتم تسجيل زيارة  
-  fetch("https://script.google.com/macros/s/AKfycbzj9e2xKlAUTzxej6ZZCAhTLnYyM8LU1m6oKGpN4_70dCddoy-X0IBtDf705gbV0erH/exec", {  
-    method: "POST"  
-  });  
-</script>
+<script>
+  const URL = "https://script.google.com/macros/s/AKfycbyT0Euxqsi7wvMdVwN1M56sP8r_3V8HIjqaS3i7sDy_nTad7catfjnRcYLHdZVPKf20/exec";
 
+  window.addEventListener("load", () => {
+    if (!localStorage.getItem("visitedOnce")) {
+      fetch(URL, { method: "POST" })
+        .then(() => {
+          localStorage.setItem("visitedOnce", "true");
+          console.log("✅ زيارة مسجلة");
+        })
+        .catch((e) => console.error("⚠️ خطأ في التسجيل", e));
+    } else {
+      console.log("⛔ تم تسجيل هذه الزيارة من قبل");
+    }
+  });
+</script>
 </body>
 </html>
