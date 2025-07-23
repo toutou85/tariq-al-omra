@@ -253,26 +253,7 @@
     updateDateTime();
   </script>
 
-  <script>
-    const today = new Date().toISOString().slice(0, 10);
-    const visitorId = localStorage.getItem("visitorId") || crypto.randomUUID();
-    localStorage.setItem("visitorId", visitorId);
-
-    fetch("https://script.google.com/macros/s/AKfycbzdnJfRAjuYSjPlghaON5b_wiMEE1QgdJeDGWFcjwmlRr1HJAbqFj8Dav99qM8Jzygv/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        date: today,
-        visitorId: visitorId,
-        page: "index.html", 
-        country: "DZ",
-        city: "Algiers"
-      })
-    })
-    .then(res => res.text())
-    .then(txt => console.log(txt))
-    .catch(err => console.error("خطأ:", err));
-  </script>
+ 
 
   <script>
     function openSidebar() {
