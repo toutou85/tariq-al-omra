@@ -117,13 +117,14 @@ container.innerHTML = `
     <img src="${offer['رابطصورة 2']}" alt="صورة إضافية 2">
     <img src="${offer['رابط صورة 3']}" alt="صورة إضافية 3">
   </div>
-          <a class="btn" href="form.html">احجز الآن</a>
+        <a class="btn" href="form.html?agency=${encodeURIComponent(offer['الوكالة'])}">احجز الآن</a>
+
         `;
       })
       .catch(err => {
         document.getElementById("details-container").innerHTML = "<p style='color:red;'>❌ فشل في تحميل التفاصيل</p>";
         console.error(err);
-         fillBranchesByAgency(offer['الوكالة']);
+        
       });
   </script>
 
