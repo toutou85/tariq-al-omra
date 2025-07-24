@@ -326,6 +326,22 @@
         });
     });
   </script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const agency = params.get("agency");
+  const offerId = params.get("offerId");
 
+  document.addEventListener("DOMContentLoaded", () => {
+    if (agency) {
+      document.getElementById("agencyField").value = agency;
+      document.getElementById("displayAgency").value = agency;
+    }
+
+    if (offerId) {
+      document.getElementById("offerIdField").value = offerId;
+      document.getElementById("displayOfferId").value = offerId;
+    }
+  });
+</script>
 </body>
 </html>
