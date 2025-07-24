@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -9,262 +10,252 @@
       background: #f9f9f9;
       margin: 0;
       padding: 0;
-    }.step {
-  display: none;
-  padding: 20px;
-}
-
-.step.active {
-  display: block;
-}
-
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.form-section {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  padding: 20px;
-  margin: 20px;
-}
-
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-h2 {
-  margin-bottom: 20px;
-  color: #333;
-}
-
-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background: #007bff;
-  color: white;
-  font-size: 16px;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-.remove-companion-btn {
-  background: red;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-
+    }
+    .step {
+      display: none;
+      padding: 20px;
+    }
+    .step.active {
+      display: block;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .form-section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin: 20px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .remove-companion-btn {
+      background: red;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
   <form id="umrahForm">
-    <!-- <!-- الخطوة 2: بيانات الزبون -->
-<div class="form-step" id="step2" style="display: none;">
-  <h2>معلومات الزبون</h2>
+    <!-- الخطوة 1: بيانات الزبون -->
+    <div class="step" id="step1">
+      <h2>معلومات الزبون</h2>
+      <input type="hidden" id="agencyName" name="agency">
+      <label for="offerNumber">رقم العرض:</label>
+      <input type="text" id="offerNumber" name="offerNumber" readonly>
 
-  <label for="firstName">الاسم:</label>
-  <input type="text" id="firstName" name="firstName" required>
+      <label for="firstName">الاسم:</label>
+      <input type="text" id="firstName" name="firstName" required>
 
-  <label for="lastName">اللقب:</label>
-  <input type="text" id="lastName" name="lastName" required>
+      <label for="lastName">اللقب:</label>
+      <input type="text" id="lastName" name="lastName" required>
 
-  <label for="phone">رقم الهاتف:</label>
-  <input type="tel" id="phone" name="phone" required>
+      <label for="phone">رقم الهاتف:</label>
+      <input type="tel" id="phone" name="phone" required>
 
-  <label for="email">البريد الإلكتروني:</label>
-  <input type="email" id="email" name="email" required>
+      <label for="email">البريد الإلكتروني:</label>
+      <input type="email" id="email" name="email" required>
 
-  <label for="age">العمر:</label>
-  <input type="number" id="age" name="age" min="0" required>
+      <label for="age">العمر:</label>
+      <input type="number" id="age" name="age" min="0" required>
 
-  <label for="passportExpiry">تاريخ انتهاء جواز السفر:</label>
-  <input type="date" id="passportExpiry" name="passportExpiry" required>
+      <label for="passportExpiry">تاريخ انتهاء جواز السفر:</label>
+      <input type="date" id="passportExpiry" name="passportExpiry" required>
 
-  <div class="step-buttons">
-    <button type="button" onclick="prevStep()">السابق</button>
-    <button type="button" onclick="nextStep()">التالي</button>
-  </div>
+      <div class="buttons">
+        <button type="button" onclick="nextStep()">التالي</button>
+      </div>
+    </div>
 
+    <!-- الخطوة 2: الولاية والفرع -->
+    <div class="step" id="step2">
+      <h2>اختيار الولاية والفرع</h2>
+      <label for="wilaya">الولاية:</label>
+      <select id="wilaya" name="wilaya" required></select>
 
-<!-- الخطوة 3: الولاية والفرع -->
-<div class="form-step" id="step3" style="display: none;">
-  <h2>اختيار الولاية والفرع</h2>
+      <label for="branch">الفرع الأقرب:</label>
+      <select id="branch" name="branch" required></select>
 
-  <label for="wilaya">الولاية:</label>
-  <select id="wilaya" name="wilaya" required>
-    <option value="">-- اختر الولاية --</option>
-    <!-- سيتم إدراج الـ58 ولاية لاحقًا -->
-  </select>
+      <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="button" onclick="nextStep()">التالي</button>
+      </div>
+    </div>
 
-  <label for="branch">الفرع الأقرب:</label>
-  <select id="branch" name="branch" required>
-    <option value="">-- اختر الفرع --</option>
-    <!-- سيتم ملء الفروع تلقائيًا حسب الوكالة -->
-  </select>
+    <!-- الخطوة 3: المرافقون -->
+    <div class="step" id="step3">
+      <h2>المرافقون</h2>
+      <div id="companionsContainer"></div>
+      <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
 
-  <div class="step-buttons">
-    <button type="button" onclick="prevStep()">السابق</button>
-    <button type="button" onclick="nextStep()">التالي</button>
-  </div>
+      <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="button" onclick="nextStep()">التالي</button>
+      </div>
+    </div>
 
-<!-- الخطوة 4: إضافة مرافقين -->
-<div class="form-step" id="step4" style="display: none;">
-  <h2>المرافقون</h2>
-  <div id="companionsList"></div>
+    <!-- الخطوة 4: الشروط -->
+    <div class="step" id="step4">
+      <h2>الشروط والأحكام</h2>
+      <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+        <p>يرجى قراءة الشروط بعناية قبل الإرسال...</p>
+      </div>
+      <label>
+        <input type="checkbox" id="agree" required> أوافق على الشروط والأحكام
+      </label>
 
-  <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
+      <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="submit">إرسال</button>
+      </div>
+    </div>
+  </form>
 
-  <div class="step-buttons">
-    <button type="button" onclick="prevStep()">السابق</button>
-    <button type="button" onclick="nextStep()">التالي</button>
-  </div>
-</div>
+  <script>
+    let currentStep = 0;
+    const steps = document.querySelectorAll('.step');
+    showStep(currentStep);
 
-<!-- الخطوة 5: تأكيد المعلومات -->
-<div class="step" id="step5">
-  <h2>الموافقة على الشروط</h2>
-  <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
-    <p>يرجى قراءة الشروط التالية بعناية...</p>
-    <!-- يمكنك استيراد نص from about.html هنا -->
-  </div>
-
-  <label>
-    <input type="checkbox" id="agree" required> أوافق على الشروط والأحكام
-  </label>
-
-  <button type="button" onclick="prevStep()">السابق</button>
-  <button type="submit">إرسال الطلب</button>
-</div>
-
-</div>سيتم ملء النموذج هنا -->
-  </form>  <div id="companions"></div>  <script>
-
-<script>
-document.getElementById("umrahForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const form = e.target;
-  const formData = new FormData(form);
-  formData.append("companionCount", companionCount);
-
-  fetch("https://script.google.com/macros/s/PASTE_YOUR_DEPLOYED_URL_HERE/exec", {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.text())
-  .then(response => {
-    alert("تم إرسال تسجيلكم بنجاح!");
-    window.location.href = "index.html"; // إعادة التوجيه
-  })
-  .catch(err => {
-    alert("حدث خطأ أثناء الإرسال: " + err.message);
-  });
-});
-</script>
-
-<script>
-// 🔄 التنقل بين الخطوات
-let currentStep = 0;
-const steps = document.querySelectorAll('.step');
-
-function showStep(index) {
-  steps.forEach((step, i) => {
-    step.style.display = i === index ? 'block' : 'none';
-  });
-}
-
-function nextStep() {
-  const inputs = steps[currentStep].querySelectorAll('input, select');
-  for (let input of inputs) {
-    if (input.hasAttribute('required') && !input.value) {
-      alert('يرجى ملء جميع الحقول المطلوبة');
-      return;
+    function showStep(index) {
+      steps.forEach((step, i) => step.classList.toggle('active', i === index));
     }
-  }
-  if (currentStep < steps.length - 1) {
-    currentStep++;
-    showStep(currentStep);
-  }
-}
 
-function prevStep() {
-  if (currentStep > 0) {
-    currentStep--;
-    showStep(currentStep);
-  }
-}
+    function nextStep() {
+      const inputs = steps[currentStep].querySelectorAll('input, select');
+      for (let input of inputs) {
+        if (input.required && !input.value) {
+          alert('يرجى ملء جميع الحقول');
+          return;
+        }
+      }
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    }
 
-showStep(currentStep);
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    }
 
-// 🏢 استخراج اسم الوكالة من الرابط + عرض الفروع المناسبة
-const urlParams = new URLSearchParams(window.location.search);
-const agency = urlParams.get("agency");
-document.getElementById("agencyName").value = agency || '';
+    // استخراج اسم الوكالة والعرض من الرابط
+    const params = new URLSearchParams(window.location.search);
+    const agency = decodeURIComponent(params.get("agency") || "");
+    const offerID = decodeURIComponent(params.get("offerID") || "");
+    document.getElementById("agencyName").value = agency;
+    document.getElementById("offerNumber").value = offerID;
 
-const branches = {
-  "النجاح": ["الدار البيضاء", "برج الكيفان", "باب الزوار", "وهران", "قسنطينة"],
-  "صفا ومروة": ["تيارت", "تيسمسيلت", "غليزان", "سيدي بلعباس", "الشلف"],
-  "البيت الجميل": ["بوفاريك", "البليدة", "الأبيار", "باب الزوار", "بومرداس"]
-};
+    // ملء الولايات
+    const wilayas = ["أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة","تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة","سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة","وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة","سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت","غرداية","غليزان","تميمون","برج باجي مختار","أولاد جلال","بني عباس","عين صالح","عين قزام","تقرت","جانت","المغير","المنيعة"];
+    const wilayaSelect = document.getElementById("wilaya");
+    wilayas.forEach(w => {
+      let opt = document.createElement("option");
+      opt.value = w;
+      opt.textContent = w;
+      wilayaSelect.appendChild(opt);
+    });
 
-const branchSelect = document.getElementById("branch");
-if (agency && branches[agency]) {
-  branches[agency].forEach(branch => {
-    const option = document.createElement("option");
-    option.value = branch;
-    option.textContent = branch;
-    branchSelect.appendChild(option);
-  });
-}
+    // عرض الفروع حسب اسم الوكالة
+    const agencyBranches = {
+      "وكالة النجاح": ["الجزائر", "باب الزوار", "سطيف", "قسنطينة"],
+      "وكالة تقرت للسياحة و سفر": ["تقرت", "ورقلة", "المغير", "جانت"]
+    };
 
-// 🧒 إضافة مرافقين
-let companionCount = 0;
-function addCompanion() {
-  companionCount++;
-  const container = document.getElementById("companionsContainer");
-  const div = document.createElement("div");
-  div.innerHTML = `
-    <fieldset style="margin: 10px 0; border: 1px solid #ccc; padding: 10px;">
-      <legend>المرافق ${companionCount}</legend>
-      <label>الصفة:</label>
-      <select name="companionRelation${companionCount}" required>
-        <option value="">اختر</option>
-        <option value="زوجة">زوجة</option>
-        <option value="ابن">ابن</option>
-        <option value="صديق">صديق</option>
-        <option value="طفل أقل من سنتين">طفل أقل من سنتين</option>
-        <option value="طفل بين 2 و12 سنة">طفل بين 2 و12 سنة</option>
-      </select>
-      <label>الاسم الكامل:</label>
-      <input type="text" name="companionName${companionCount}" required>
-      <label>تاريخ الميلاد:</label>
-      <input type="date" name="companionBirth${companionCount}" required>
-      <label>تاريخ انتهاء جواز السفر:</label>
-      <input type="date" name="companionPassport${companionCount}" required>
-      <button type="button" onclick="this.parentElement.remove()">🗑️ إزالة</button>
-    </fieldset>
-  `;
-  container.appendChild(div);
-}
-</script>
+    const branchSelect = document.getElementById("branch");
+    if (agency && agencyBranches[agency]) {
+      agencyBranches[agency].forEach(branch => {
+        let opt = document.createElement("option");
+        opt.value = branch;
+        opt.textContent = branch;
+        branchSelect.appendChild(opt);
+      });
+    }
 
-    // هنا يتم تحميل النموذج من ملف خارجي أو بناءه مباشرة
-    // لتبسيط المثال نعتبر أن النموذج موجود ومُهيأ
-  </script></body>
+    // إضافة مرافق
+    let companionCount = 0;
+    function addCompanion() {
+      companionCount++;
+      const container = document.getElementById("companionsContainer");
+      const div = document.createElement("div");
+      div.innerHTML = `
+        <fieldset style="margin:10px 0;padding:10px;border:1px solid #ccc;">
+          <legend>المرافق ${companionCount}</legend>
+          <label>الصفة:</label>
+          <select name="companionRelation${companionCount}" required>
+            <option value="">اختر</option>
+            <option value="زوجة">زوجة</option>
+            <option value="ابن">ابن</option>
+            <option value="ابنة">ابنة</option>
+            <option value="أخ">أخ</option>
+            <option value="أخت">أخت</option>
+            <option value="أم">أم</option>
+            <option value="أب">أب</option>
+          </select>
+          <label>الاسم الكامل:</label>
+          <input type="text" name="companionName${companionCount}" required>
+          <label>تاريخ الميلاد:</label>
+          <input type="date" name="companionBirth${companionCount}" required>
+          <label>تاريخ انتهاء الجواز:</label>
+          <input type="date" name="companionPassport${companionCount}" required>
+          <button type="button" class="remove-companion-btn" onclick="this.parentElement.remove()">🗑️ إزالة</button>
+        </fieldset>
+      `;
+      container.appendChild(div);
+    }
+
+    // إرسال البيانات
+    document.getElementById("umrahForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      formData.append("companionCount", companionCount);
+
+      fetch("https://script.google.com/macros/s/PASTE_YOUR_DEPLOYED_URL_HERE/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(response => {
+        alert("تم إرسال التسجيل بنجاح");
+        window.location.href = "index.html";
+      })
+      .catch(err => {
+        alert("خطأ في الإرسال: " + err.message);
+      });
+    });
+  </script>
+</body>
 </html>
