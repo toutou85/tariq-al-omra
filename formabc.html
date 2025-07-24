@@ -98,29 +98,43 @@
 <label>رقم العرض:</label>
 <input type="text" id="displayOfferId" readonly>
 
-<label>اسم الوكالة:</label>
-<input type="text" id="displayAgency" readonly>
-      <label>نوع الغرفة:
-        <select name="نوع الغرفة" required>
-          <option value="">اختر نوع الغرفة</option>
-          <option>غرفة جامعية</option>
-          <option>غرفة خماسية</option>
-          <option>غرفة رباعية</option>
-          <option>غرفة ثلاثية</option>
-          <option>غرفة ثنائية</option>
-        </select>
-      </label>
-      <label>صفة الحجز:
-        <select name="صفة الحجز" required>
-          <option value="">اختر صفة الحجز</option>
-          <option>منفرد</option>
-          <option>مع الأسرة</option>
-          <option>مع أصدقاء</option>
-        </select>
-      </label>
-      <div class="buttons">
-        <button type="button" onclick="nextStep()">التالي</button>
-      </div>
+<div class="step active" id="step1">
+  <h2>معلومات العرض</h2>
+
+  <!-- الحقول الخاصة بالعرض -->
+  <input type="hidden" name="رقم العرض" id="offerIdField">
+  <input type="hidden" name="اسم الوكالة" id="agencyField">
+
+  <label>رقم العرض:</label>
+  <input type="text" id="displayOfferId" readonly>
+
+  <label>اسم الوكالة:</label>
+  <input type="text" id="displayAgency" readonly>
+
+  <label>نوع الغرفة:
+    <select name="نوع الغرفة" required>
+      <option value="">اختر نوع الغرفة</option>
+      <option>غرفة جامعية</option>
+      <option>غرفة خماسية</option>
+      <option>غرفة رباعية</option>
+      <option>غرفة ثلاثية</option>
+      <option>غرفة ثنائية</option>
+    </select>
+  </label>
+
+  <label>صفة الحجز:
+    <select name="صفة الحجز" required>
+      <option value="">اختر صفة الحجز</option>
+      <option>منفرد</option>
+      <option>مع الأسرة</option>
+      <option>مع أصدقاء</option>
+    </select>
+  </label>
+
+  <div class="buttons">
+    <button type="button" onclick="nextStep()">التالي</button>
+  </div>
+
     </div>
 
     <!-- الخطوة 2: بيانات الزبون -->
@@ -264,16 +278,26 @@
     </div>
   </form>
 <script>
+  // استقبل معلومات العرض من الرابط
   const params = new URLSearchParams(window.location.search);
   const agency = params.get("agency");
   const offerId = params.get("offerId");
 
-  // مثال: وضع القيم داخل حقول مخفية إن كنت ترسلها إلى Google Sheets
   document.addEventListener("DOMContentLoaded", () => {
-    if (agency) document.getElementById("agencyField").value = agency;
-    if (offerId) document.getElementById("offerIdField").value = offerId;
+    if (agency) {
+      document.getElementById("agencyField").value = agency;
+      document.getElementById("displayAgency").value = agency;
+    }
+
+    if (offerId) {
+      document.getElementById("offerIdField").value = offerId;
+      document.getElementById("displayOfferId").value = offerId;
+    }
+
+    showStep(currentStep); // عرض أول خطوة تلقائيًا
   });
 </script>
+
   <script>
     const steps = document.querySelectorAll(".step");
     let currentStep = 0;
