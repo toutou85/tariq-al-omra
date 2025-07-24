@@ -271,9 +271,9 @@
   </form>
 <script>
   // استقبل معلومات العرض من الرابط
-  const params = new URLSearchParams(window.location.search);
-  const agency = params.get("agency");
-  const offerId = params.get("offerId");
+  const urlParams = new URLSearchParams(window.location.search);
+const agency = urlParams.get("agency");
+const offerId = urlParams.get("offerId") || urlParams.get("offerID");
 
   document.addEventListener("DOMContentLoaded", () => {
     if (agency) {
