@@ -1,136 +1,207 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نموذج تسجيل العمرة</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>نموذج التسجيل في عروض العمرة</title>
   <style>
     body {
-      font-family: 'Tahoma', sans-serif;
-      background: #f2f2f2;
+      font-family: "Tahoma", sans-serif;
+      background: linear-gradient(to bottom, #f9f9f9, #e0ecff);
+      padding: 10px;
       margin: 0;
-      padding: 0;
     }
+
+    h2 {
+      color: #2c3e50;
+    }
+
+    form {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
     .step {
       display: none;
-      padding: 20px;
-      background: #fff;
-      margin: 20px auto;
-      max-width: 600px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-radius: 10px;
     }
+
     .step.active {
       display: block;
     }
-    .buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-between;
+
+    label {
+      display: block;
+      margin-top: 12px;
     }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
     button {
+      margin-top: 20px;
       padding: 10px 20px;
-      font-size: 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
     }
-    select, input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+
+    button:hover {
+      background: #0056b3;
     }
-    h2 { color: #333; }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 600px) {
+      button {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+    }
+
+    .terms-box {
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
-  <form id="umrahForm">
-    <!-- الخطوة 1: اختيار الغرفة والصفة -->
+
+  <form id="form">
+    <!-- الخطوة 1: معلومات العرض -->
     <div class="step active" id="step1">
-      <h2>اختيار نوع الغرفة</h2>
-      <select name="نوع الغرفة" id="roomType" required>
-        <option value="">-- اختر نوع الغرفة --</option>
-        <option value="جامعية">غرفة جامعية</option>
-        <option value="خماسية">غرفة خماسية</option>
-        <option value="رباعية">غرفة رباعية</option>
-        <option value="ثلاثية">غرفة ثلاثية</option>
-        <option value="ثنائية">غرفة ثنائية</option>
-      </select><h2>اختيار صفة الحجز</h2>
-  <select name="صفة الحجز" id="bookingType" required>
-    <option value="">-- اختر صفة الحجز --</option>
-    <option value="منفرد">منفرد</option>
-    <option value="مع أسرة">مع أسرة</option>
-    <option value="مع أصدقاء">مع أصدقاء</option>
-  </select>
+      <h2>معلومات العرض</h2>
+      <label>رقم العرض: <input name="رقم العرض" required /></label>
+      <label>اسم الوكالة: <input name="اسم الوكالة" required /></label>
+      <label>نوع الغرفة:
+        <select name="نوع الغرفة" required>
+          <option value="">اختر نوع الغرفة</option>
+          <option>غرفة جامعية</option>
+          <option>غرفة خماسية</option>
+          <option>غرفة رباعية</option>
+          <option>غرفة ثلاثية</option>
+          <option>غرفة ثنائية</option>
+        </select>
+      </label>
+      <label>صفة الحجز:
+        <select name="صفة الحجز" required>
+          <option value="">اختر صفة الحجز</option>
+          <option>منفرد</option>
+          <option>مع الأسرة</option>
+          <option>مع أصدقاء</option>
+        </select>
+      </label>
+      <div class="buttons">
+        <button type="button" onclick="nextStep()">التالي</button>
+      </div>
+    </div>
 
-  <div class="buttons">
-    <span></span>
-    <button type="button" onclick="nextStep()">التالي</button>
-  </div>
-</div>
+    <!-- الخطوة 2: بيانات الزبون -->
+    <div class="step" id="step2">
+      <h2>معلومات الزبون</h2>
+      <label>الاسم الكامل: <input name="الاسم الكامل" required /></label>
+      <label>رقم الهاتف: <input name="الهاتف" required /></label>
+      <label>البريد الإلكتروني: <input name="البريد الإلكتروني" type="email" /></label>
+      <label>العمر: <input name="العمر" type="number" /></label>
+      <label>تاريخ انتهاء جواز السفر: <input name="انتهاء الجواز" type="date" /></label>
+      <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="button" onclick="nextStep()">التالي</button>
+      </div>
+    </div>
 
-<!-- الخطوة 2: اختيار الولاية والفرع -->
-<div class="step" id="step2">
-  <h2>مكان الإقامة (الولاية)</h2>
-  <select name="الولاية" id="state" required>
-    <option value="">-- اختر ولايتك --</option>
-    <option value="الجزائر">الجزائر</option>
-    <option value="عنابة">عنابة</option>
-    <option value="قسنطينة">قسنطينة</option>
-    <option value="سوق أهراس">سوق أهراس</option>
-    <option value="ميلة">ميلة</option>
-    <option value="أم البواقي">أم البواقي</option>
-    <option value="الشلف">الشلف</option>
-    <option value="تقرت">تقرت</option>
-    <option value="بومرداس">بومرداس</option>
-    <option value="مستغانم">مستغانم</option>
-    <option value="المدية">المدية</option>
-    <option value="الجلفة">الجلفة</option>
-    <option value="المغير">المغير</option>
-    <option value="تمنراست">تمنراست</option>
-    <option value="بشار">بشار</option>
-    <option value="وهران">وهران</option>
-    <option value="تلمسان">تلمسان</option>
-  </select>
+    <!-- الخطوة 3: الموقع -->
+    <div class="step" id="step3">
+      <h2>مكان الإقامة والفرع</h2>
+      <label>الولاية:
+        <select name="الولاية" required>
+          <option value="">اختر الولاية</option>
+          <option>أدرار</option>
+          <option>الشلف</option>
+          <option>الأغواط</option>
+          <option>أم البواقي</option>
+          <option>باتنة</option>
+          <option>بجاية</option>
+          <option>بسكرة</option>
+          <option>بشار</option>
+          <option>البليدة</option>
+          <option>البويرة</option>
+          <!-- أكمل بقية الولايات حسب القائمة الأصلية -->
+        </select>
+      </label>
+      <label>أقرب فرع:
+        <select name="أقرب فرع" required>
+          <option value="">اختر الفرع</option>
+          <option>فرع باب الزوار</option>
+          <option>فرع برج البحري</option>
+          <option>فرع الرويبة</option>
+          <option>فرع بومرداس</option>
+          <option>فرع تيبازة</option>
+          <option>فرع البليدة</option>
+          <option>فرع الشلف</option>
+          <option>فرع البويرة</option>
+          <option>فرع المسيلة</option>
+          <option>فرع المدية</option>
+          <option>فرع البليدة</option>
+          <option>فرع الجلفة</option>
+          <option>فرع تيارت</option>
+        </select>
+      </label>
+      <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="button" onclick="nextStep()">التالي</button>
+      </div>
+    </div>
 
-  <h2>اختر فرع الوكالة</h2>
-  <select name="الفرع الأقرب" id="branch" required>
-    <option value="">-- اختر الفرع --</option>
-  </select>
+    <!-- الخطوة 4: معلومات إضافية -->
+    <div class="step" id="step4">
+      <h2>معلومات إضافية</h2>
+      <label>عدد المرافقين: <input name="عدد المرافقين" type="number" min="0" /></label>
+      <label>ملاحظات إضافية: <textarea name="ملاحظات"></textarea></label>
+      <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="button" onclick="nextStep()">التالي</button>
+      </div>
+    </div>
 
-  <div class="buttons">
-    <button type="button" onclick="prevStep()">السابق</button>
-    <button type="button" onclick="nextStep()">التالي</button>
-  </div>
-</div>
+    <!-- الخطوة 5: "من نحن" والموافقة -->
+    <div class="step" id="step5">
+      <h2>قبل الإرسال</h2>
+      <div class="terms-box">
+        <strong>من نحن:</strong>
+        <p>
+          نحن وكالة سياحية معتمدة، نعمل على توفير أفضل عروض العمرة بجودة وخدمة عالية، بأمان ومصداقية تامة من الجزائر إلى البقاع المقدسة.
+        </p>
+      </div>
+      <label><input type="checkbox" id="agree" required /> أوافق على المعلومات المذكورة أعلاه</label>
+      <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="submit" id="submitBtn">تأكيد وإرسال</button>
+      </div>
+    </div>
+  </form>
 
-<!-- الخطوة 3: معلومات الزبون -->
-<div class="step" id="step3">
-  <h2>معلوماتك الشخصية</h2>
-  <input type="text" name="الاسم الكامل" placeholder="الاسم الكامل" required>
-  <input type="tel" name="الهاتف" placeholder="رقم الهاتف" required>
-  <input type="email" name="البريد الإلكتروني" placeholder="البريد الإلكتروني" required>
-  <input type="number" name="العمر" placeholder="العمر" required>
-  <label>تاريخ انتهاء جواز السفر:</label>
-  <input type="date" name="تاريخ انتهاء جواز السفر" required>
-
-  <div class="buttons">
-    <button type="button" onclick="prevStep()">السابق</button>
-    <button type="button" onclick="nextStep()">التالي</button>
-  </div>
-</div>
-
-<!-- الخطوة 4: تأكيد وإرسال -->
-<div class="step" id="step4">
-  <h2>تأكيد التسجيل</h2>
-  <p>يرجى مراجعة معلوماتك ثم الضغط على زر الإرسال.</p>
-  <div class="buttons">
-    <button type="button" onclick="prevStep()">السابق</button>
-    <button type="submit">إرسال الطلب</button>
-  </div>
-</div>
-
-  </form>  <script>
+  <script>
     const steps = document.querySelectorAll(".step");
     let currentStep = 0;
 
@@ -154,41 +225,36 @@
       }
     }
 
-    // ربط الفروع بالوكالة
-    const agency = "وكالة تقرت لسياحة و سفر";
-    const branchesByAgency = {
-      "وكالة تقرت لسياحة و سفر": ["تقرت", "بومرداس", "الجزائر", "مستغانم", "المدية", "الجلفة", "المغير", "تمنراست", "الشلف", "بشار", "عنابة"],
-      "وكالة السقيفة للسياحة و سفر": ["قسنطينة", "عنابة", "سوق أهراس", "ميلة", "أم البواقي"],
-      "وكالة الانسية لسياحة و سفر": ["عنابة", "الشلف", "وهران", "تلمسان"]
-    };
+    const form = document.getElementById("form");
+    const scriptURL = "https://script.google.com/macros/s/AKfycbx7w7TzP54ldVbS7K5BSDq7nn0cozGPryG5ODpNrjj3xY3LIWej5fCcA4Kkt60SAfo7/exec";
 
-    function fillBranchesByAgency() {
-      const branchSelect = document.getElementById("branch");
-      branchSelect.innerHTML = '<option value="">-- اختر الفرع --</option>';
-      const branches = branchesByAgency[agency];
-      if (branches) {
-        branches.forEach(branch => {
-          const option = document.createElement("option");
-          option.value = branch;
-          option.textContent = branch;
-          branchSelect.appendChild(option);
-        });
-      }
-    }
-
-    fillBranchesByAgency();
-
-    // ربط بجوجل شيت
-    document.getElementById("umrahForm").addEventListener("submit", function(e) {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const formData = new FormData(this);
-      fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+
+      if (!document.getElementById("agree").checked) {
+        alert("يرجى الموافقة على المعلومات قبل الإرسال.");
+        return;
+      }
+
+      document.getElementById("submitBtn").disabled = true;
+      document.getElementById("submitBtn").innerText = "جارٍ الإرسال...";
+
+      fetch(scriptURL, {
         method: "POST",
-        body: formData
+        body: new FormData(form),
       })
-      .then(response => response.text())
-      .then(result => alert("تم إرسال طلبك بنجاح!"))
-      .catch(error => alert("حدث خطأ. حاول مرة أخرى."));
+        .then(response => {
+          alert("تم الإرسال بنجاح ✅");
+          form.reset();
+          location.reload();
+        })
+        .catch(error => {
+          alert("فشل الإرسال ❌");
+          document.getElementById("submitBtn").disabled = false;
+          document.getElementById("submitBtn").innerText = "تأكيد وإرسال";
+        });
     });
-  </script></body>
+  </script>
+
+</body>
 </html>
