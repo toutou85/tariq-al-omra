@@ -236,7 +236,7 @@
     font-size: 16px;
   }
 </style>
-
+<script>
 <!-- الخطوة 4: معلومات إضافية -->  
 <div class="step" id="step4">  
   <h2>معلومات إضافية</h2>  
@@ -254,7 +254,7 @@ id="companions-section">
   <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
 </div>
 
-<script>
+
 let companionIndex = 1;
 
 function addCompanion() {
@@ -304,7 +304,8 @@ function addCompanion() {
         <button type="button" onclick="nextStep()">التالي</button>
       </div>
     </div>
-
+        </script>
+<script>
     <!-- الخطوة 5: "من نحن" والموافقة -->
     <div class="step" id="step5">
       <h2>قبل الإرسال</h2>
@@ -321,6 +322,7 @@ function addCompanion() {
       </div>
     </div>
   </form>
+       </script> 
 <script>
   // استقبل معلومات العرض من الرابط
   const urlParams = new URLSearchParams(window.location.search);
