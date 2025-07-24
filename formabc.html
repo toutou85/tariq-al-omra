@@ -100,6 +100,58 @@ button:hover {
     <button type="button" onclick="prevStep()">السابق</button>
     <button type="button" onclick="nextStep()">التالي</button>
   </div>
+
+
+<!-- الخطوة 3: الولاية والفرع -->
+<div class="form-step" id="step3" style="display: none;">
+  <h2>اختيار الولاية والفرع</h2>
+
+  <label for="wilaya">الولاية:</label>
+  <select id="wilaya" name="wilaya" required>
+    <option value="">-- اختر الولاية --</option>
+    <!-- سيتم إدراج الـ58 ولاية لاحقًا -->
+  </select>
+
+  <label for="branch">الفرع الأقرب:</label>
+  <select id="branch" name="branch" required>
+    <option value="">-- اختر الفرع --</option>
+    <!-- سيتم ملء الفروع تلقائيًا حسب الوكالة -->
+  </select>
+
+  <div class="step-buttons">
+    <button type="button" onclick="prevStep()">السابق</button>
+    <button type="button" onclick="nextStep()">التالي</button>
+  </div>
+
+<!-- الخطوة 4: إضافة مرافقين -->
+<div class="form-step" id="step4" style="display: none;">
+  <h2>المرافقون</h2>
+  <div id="companionsList"></div>
+
+  <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
+
+  <div class="step-buttons">
+    <button type="button" onclick="prevStep()">السابق</button>
+    <button type="button" onclick="nextStep()">التالي</button>
+  </div>
+</div>
+
+<!-- الخطوة 5: تأكيد المعلومات -->
+<div class="step" id="step5">
+  <h2>الموافقة على الشروط</h2>
+  <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+    <p>يرجى قراءة الشروط التالية بعناية...</p>
+    <!-- يمكنك استيراد نص from about.html هنا -->
+  </div>
+
+  <label>
+    <input type="checkbox" id="agree" required> أوافق على الشروط والأحكام
+  </label>
+
+  <button type="button" onclick="prevStep()">السابق</button>
+  <button type="submit">إرسال الطلب</button>
+</div>
+
 </div>سيتم ملء النموذج هنا -->
   </form>  <div id="companions"></div>  <script>
     // هنا يتم تحميل النموذج من ملف خارجي أو بناءه مباشرة
