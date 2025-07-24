@@ -74,6 +74,10 @@
       <label for="offerNumber">رقم العرض:</label>
       <input type="text" id="offerNumber" name="offerNumber" readonly>
 
+<label for="agencyDisplay">اسم الوكالة:</label>
+<input type="text" id="agencyDisplay" readonly>
+<input type="hidden" id="agencyName" name="agency">
+
       <label for="firstName">الاسم:</label>
       <input type="text" id="firstName" name="firstName" required>
 
@@ -257,5 +261,21 @@
       });
     });
   </script>
+<script>
+  window.onload = function () {
+    const params = new URLSearchParams(window.location.search);
+    const agency = params.get("agency");
+    const offerID = params.get("offerID");
+
+    if (agency) {
+      document.getElementById("agencyDisplay").value = decodeURIComponent(agency);
+      document.getElementById("agencyName").value = decodeURIComponent(agency);
+    }
+
+    if (offerID) {
+      document.getElementById("offerNumber").value = offerID;
+    }
+  };
+</script>
 </body>
 </html>
