@@ -208,6 +208,11 @@
   <select id="branch" name="branch" required>
     <option value="">اختر أقرب فرع</option>
 
+
+<select id="branch" name="branch" required>
+  <option value="">اختر أقرب فرع</option>
+</select>
+
     <optgroup label="وكالة تقرت للسياحة و سفر">
       <option value="فرع الجزائر (وكالة تقرت للسياحة و سفر)">فرع الجزائر</option>
       <option value="فرع تقرت (وكالة طيبة)">فرع تقرت</option>
@@ -291,6 +296,53 @@ const offerId = urlParams.get("offerId") || urlParams.get("offerID");
     }
 
     showStep(currentStep); // عرض أول خطوة تلقائيًا
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const agency = urlParams.get("agency");
+
+    // الكائن الذي يحتوي على الوكالات وفروعها
+    const agencyBranches = {
+      "وكالة طيبة": [
+        "فرع الجزائر (وكالة طيبة)",
+        "فرع البليدة (وكالة طيبة)",
+        "فرع تيزي وزو (وكالة طيبة)"
+      ],
+      "وكالة الإيمان": [
+        "فرع وهران (وكالة الإيمان)",
+        "فرع سطيف (وكالة الإيمان)"
+      ],
+      "وكالة الرشاد": [
+        "فرع قسنطينة (وكالة الرشاد)",
+        "فرع بسكرة (وكالة الرشاد)"
+      ],
+      "وكالة السقيفة للسياحة و سفر": [
+        "فرع الجزائر (وكالة السقيفة)",
+        "فرع البويرة (وكالة السقيفة)",
+        "فرع بجاية (وكالة السقيفة)"
+      ]
+      // أضف باقي الوكالات وفروعها هنا
+    };
+
+    // عرض الفروع التابعة للوكالة فقط
+    const branchSelect = document.getElementById("branch");
+    if (agency && agencyBranches[agency]) {
+      agencyBranches[agency].forEach(branch => {
+        const option = document.createElement("option");
+        option.value = branch;
+        option.textContent = branch;
+        branchSelect.appendChild(option);
+      });
+    } else {
+      // في حال لم تُعرف الوكالة أو لم تكن مسجلة
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "لا توجد فروع متاحة لهذه الوكالة";
+      branchSelect.appendChild(option);
+    }
   });
 </script>
 
