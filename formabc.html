@@ -237,75 +237,31 @@
   }
 </style>
 <script>
-<!-- الخطوة 4: معلومات إضافية -->  
-<div class="step" id="step4">  
-  <h2>معلومات إضافية</h2>  
-  <label>عدد المرافقين: <input name="عدد المرافقين" type="number" min="0" /></label>  
-  <label>ملاحظات إضافية: <textarea name="ملاحظات"></textarea></label>  
-  <div class="buttons">  
-    <button type="button" onclick="prevStep()">السابق</button>  
-    <button type="button" onclick="nextStep()">التالي</button>  
-  </div>  
-</div>  
+<!-- الخطوة 4: معلومات إضافية -->  <!-- الخطوة 5: تسجيل المرافقين -->
+<div class="step" id="step5">
+  <h2>إضافة مرافقين (إن وجد)</h2>
 
-id="companions-section">
-  <h3>المرافقون</h3>
-  <div id="companions-container"></div>
+  <div id="companionsContainer">
+    <!-- سيتم إضافة حقول المرافقين هنا تلقائيًا -->
+  </div>
+
   <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
+
+  <div class="buttons">
+    <button type="button" onclick="prevStep()">السابق</button>
+    <button type="button" onclick="nextStep()">التالي</button>
+  </div>
 </div>
 
-
-let companionIndex = 1;
-
-function addCompanion() {
-  const container = document.getElementById('companions-container');
-
-  const companion = document.createElement('div');
-  companion.className = 'companion-block';
-  companion.innerHTML = `
-    <hr />
-    <h4>المرافق رقم ${companionIndex}</h4>
-    
-    <label>صفة المرافق:</label>
-    <select name="companion_role_${companionIndex}" required>
-      <option value="">اختر الصفة</option>
-      <option value="زوجة">زوجة</option>
-      <option value="زوج">زوج</option>
-      <option value="أخ">أخ</option>
-      <option value="أخت">أخت</option>
-      <option value="ابن">ابن</option>
-      <option value="ابنة">ابنة</option>
-      <option value="صديق">صديق</option>
-      <option value="طفل أقل من سنتين">طفل أقل من سنتين</option>
-      <option value="طفل من 2 إلى 12 سنة">طفل من 2 إلى 12 سنة</option>
-    </select>
-
-    <label>الاسم:</label>
-    <input type="text" name="companion_name_${companionIndex}" required />
-
-    <label>اللقب:</label>
-    <input type="text" name="companion_lastname_${companionIndex}" required />
-
-    <label>رقم الهاتف:</label>
-    <input type="tel" name="companion_phone_${companionIndex}" required />
-
-    <label>العمر:</label>
-    <input type="number" name="companion_age_${companionIndex}" min="0" required />
-
-    <label>تاريخ انتهاء جواز السفر:</label>
-    <input type="date" name="companion_passport_expiry_${companionIndex}" required />
-  `;
-
-  container.appendChild(companion);
-  companionIndex++;
-}
-      <div class="buttons">
-        <button type="button" onclick="prevStep()">السابق</button>
-        <button type="button" onclick="nextStep()">التالي</button>
-      </div>
-    </div>
-        </script>
-<script>
+<style>
+  .companion-block {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+  }
+</style>
     <!-- الخطوة 5: "من نحن" والموافقة -->
     <div class="step" id="step5">
       <h2>قبل الإرسال</h2>
@@ -399,7 +355,52 @@ const offerId = urlParams.get("offerId") || urlParams.get("offerID");
     }
   });
 </script>
+<script>
+let companionCount = 0;
 
+function addCompanion() {
+  companionCount++;
+
+  const container = document.getElementById("companionsContainer");
+  const block = document.createElement("div");
+  block.className = "companion-block";
+
+  block.innerHTML = `
+    <h3>مرافق رقم ${companionCount}</h3>
+
+    <label>صفة المرافق:</label>
+    <select name="companion_relation_${companionCount}" required>
+      <option value="">اختر الصفة</option>
+      <option value="زوجة">زوجة</option>
+      <option value="زوج">زوج</option>
+      <option value="ابن">ابن</option>
+      <option value="ابنة">ابنة</option>
+      <option value="أخ">أخ</option>
+      <option value="أخت">أخت</option>
+      <option value="صديق">صديق</option>
+      <option value="طفل أقل من سنتين">طفل أقل من سنتين</option>
+      <option value="طفل بين 2 و12 سنة">طفل بين 2 و12 سنة</option>
+    </select>
+
+    <label>الاسم الكامل:</label>
+    <input type="text" name="companion_name_${companionCount}" required />
+
+    <label>رقم الهاتف:</label>
+    <input type="tel" name="companion_phone_${companionCount}" required />
+
+    <label>البريد الإلكتروني:</label>
+    <input type="email" name="companion_email_${companionCount}" />
+
+    <label>العمر:</label>
+    <input type="number" name="companion_age_${companionCount}" required />
+
+    <label>تاريخ انتهاء جواز السفر:</label>
+    <input type="date" name="companion_passport_expiry_${companionCount}" required />
+  `;
+
+  container.appendChild(block);
+}
+</script>
   <script>
     const steps = document.querySelectorAll(".step");
     let currentStep = 0;
