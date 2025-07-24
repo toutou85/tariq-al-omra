@@ -1,185 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>خطوة 3 - اختيار الولاية والفرع</title>
-  <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
-      text-align: center;
-    }
-
-    h2 {
-      color: #333;
-    }
-
-    .form-group {
-      margin: 20px auto;
-      max-width: 500px;
-      text-align: right;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #555;
-    }
-
-    select {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    .buttons {
-      margin-top: 30px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #FFD700;
-      color: black;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #f1c40f;
-    }
-  </style>
-</head>
-<body>
-  <h2>📍 اختر الولاية و الفرع الأقرب</h2>
-
-  <form action="step4.html" onsubmit="saveSelection()">
-    <div class="form-group">
-      <label for="state">اختر ولايتك:</label>
-      <select id="state" required>
-        <option value="">-- اختر الولاية --</option>
-        <option>أدرار</option>
-        <option>الشلف</option>
-        <option>الأغواط</option>
-        <option>أم البواقي</option>
-        <option>باتنة</option>
-        <option>بجاية</option>
-        <option>بسكرة</option>
-        <option>بشار</option>
-        <option>البليدة</option>
-        <option>البويرة</option>
-        <option>تمنراست</option>
-        <option>تبسة</option>
-        <option>تلمسان</option>
-        <option>تيارت</option>
-        <option>تيزي وزو</option>
-        <option>الجزائر</option>
-        <option>الجلفة</option>
-        <option>جيجل</option>
-        <option>سطيف</option>
-        <option>سعيدة</option>
-        <option>سكيكدة</option>
-        <option>سيدي بلعباس</option>
-        <option>عنابة</option>
-        <option>قالمة</option>
-        <option>قسنطينة</option>
-        <option>المدية</option>
-        <option>مستغانم</option>
-        <option>المسيلة</option>
-        <option>معسكر</option>
-        <option>ورقلة</option>
-        <option>وهران</option>
-        <option>البيض</option>
-        <option>إليزي</option>
-        <option>برج بوعريريج</option>
-        <option>بومرداس</option>
-        <option>الطارف</option>
-        <option>تندوف</option>
-        <option>تيسمسيلت</option>
-        <option>الوادي</option>
-        <option>خنشلة</option>
-        <option>سوق أهراس</option>
-        <option>تيبازة</option>
-        <option>ميلة</option>
-        <option>عين الدفلى</option>
-        <option>النعامة</option>
-        <option>عين تموشنت</option>
-        <option>غرداية</option>
-        <option>غليزان</option>
-        <option>تميمون</option>
-        <option>أولاد جلال</option>
-        <option>بني عباس</option>
-        <option>عين صالح</option>
-        <option>عين قزام</option>
-        <option>تقرت</option>
-        <option>جانت</option>
-        <option>المغير</option>
-        <option>المنيعة</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="branch">اختر الفرع الأقرب إليك:</label>
-      <select id="branch" required>
-        <option value="">-- اختر الفرع --</option>
-      </select>
-    </div>
-
-    <div class="buttons">
-      <button type="button" onclick="history.back()">⬅ السابق</button>
-      <button type="submit">التالي ➡</button>
-    </div>
-  </form>
-
-  <script>
-    const branchesByAgency = {
-      "وكالة تقرت لسياحة و سفر": ["تقرت", "بومرداس", "الجزائر العاصمة", "مستغانم", "المدية", "الجلفة", "المغير", "تمنراست", "الشلف", "بشار", "عنابة"],
-      "وكالة السقيفة للسياحة و سفر": ["قسنطينة", "عنابة", "سوق اهراس", "ميلة", "ام البواقي"],
-      "وكالة الانسية لسياحة و سفر": ["عنابة", "الشلف", "وهران", "تلمسان"]
-    };
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const agency = localStorage.getItem("agency") || urlParams.get("agency");
-
-    function populateBranches() {
-      const select = document.getElementById("branch");
-      select.innerHTML = '<option value="">-- اختر الفرع --</option>';
-      const branches = branchesByAgency[agency];
-      if (branches) {
-        branches.forEach(branch => {
-          const opt = document.createElement("option");
-          opt.value = branch;
-          opt.textContent = branch;
-          select.appendChild(opt);
-        });
-      }
-    }
-
-    function saveSelection() {
-      const state = document.getElementById("state").value;
-      const branch = document.getElementById("branch").value;
-      localStorage.setItem("state", state);
-      localStorage.setItem("branch", branch);
-    }
-
-    // عند التحميل
-    window.onload = () => {
-      populateBranches();
-
-      // إعادة تعبئة البيانات إن وُجدت
-      const savedState = localStorage.getItem("state");
-      const savedBranch = localStorage.getItem("branch");
-
-      if (savedState) document.getElementById("state").value = savedState;
-      if (savedBranch) document.getElementById("branch").value = savedBranch;
-    };
-  </script>
-</body>
-</html>
