@@ -154,6 +154,116 @@ button:hover {
 
 </div>سيتم ملء النموذج هنا -->
   </form>  <div id="companions"></div>  <script>
+
+<script>
+document.getElementById("umrahForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const formData = new FormData(form);
+  formData.append("companionCount", companionCount);
+
+  fetch("https://script.google.com/macros/s/PASTE_YOUR_DEPLOYED_URL_HERE/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(response => {
+    alert("تم إرسال تسجيلكم بنجاح!");
+    window.location.href = "index.html"; // إعادة التوجيه
+  })
+  .catch(err => {
+    alert("حدث خطأ أثناء الإرسال: " + err.message);
+  });
+});
+</script>
+
+<script>
+// 🔄 التنقل بين الخطوات
+let currentStep = 0;
+const steps = document.querySelectorAll('.step');
+
+function showStep(index) {
+  steps.forEach((step, i) => {
+    step.style.display = i === index ? 'block' : 'none';
+  });
+}
+
+function nextStep() {
+  const inputs = steps[currentStep].querySelectorAll('input, select');
+  for (let input of inputs) {
+    if (input.hasAttribute('required') && !input.value) {
+      alert('يرجى ملء جميع الحقول المطلوبة');
+      return;
+    }
+  }
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    showStep(currentStep);
+  }
+}
+
+function prevStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    showStep(currentStep);
+  }
+}
+
+showStep(currentStep);
+
+// 🏢 استخراج اسم الوكالة من الرابط + عرض الفروع المناسبة
+const urlParams = new URLSearchParams(window.location.search);
+const agency = urlParams.get("agency");
+document.getElementById("agencyName").value = agency || '';
+
+const branches = {
+  "النجاح": ["الدار البيضاء", "برج الكيفان", "باب الزوار", "وهران", "قسنطينة"],
+  "صفا ومروة": ["تيارت", "تيسمسيلت", "غليزان", "سيدي بلعباس", "الشلف"],
+  "البيت الجميل": ["بوفاريك", "البليدة", "الأبيار", "باب الزوار", "بومرداس"]
+};
+
+const branchSelect = document.getElementById("branch");
+if (agency && branches[agency]) {
+  branches[agency].forEach(branch => {
+    const option = document.createElement("option");
+    option.value = branch;
+    option.textContent = branch;
+    branchSelect.appendChild(option);
+  });
+}
+
+// 🧒 إضافة مرافقين
+let companionCount = 0;
+function addCompanion() {
+  companionCount++;
+  const container = document.getElementById("companionsContainer");
+  const div = document.createElement("div");
+  div.innerHTML = `
+    <fieldset style="margin: 10px 0; border: 1px solid #ccc; padding: 10px;">
+      <legend>المرافق ${companionCount}</legend>
+      <label>الصفة:</label>
+      <select name="companionRelation${companionCount}" required>
+        <option value="">اختر</option>
+        <option value="زوجة">زوجة</option>
+        <option value="ابن">ابن</option>
+        <option value="صديق">صديق</option>
+        <option value="طفل أقل من سنتين">طفل أقل من سنتين</option>
+        <option value="طفل بين 2 و12 سنة">طفل بين 2 و12 سنة</option>
+      </select>
+      <label>الاسم الكامل:</label>
+      <input type="text" name="companionName${companionCount}" required>
+      <label>تاريخ الميلاد:</label>
+      <input type="date" name="companionBirth${companionCount}" required>
+      <label>تاريخ انتهاء جواز السفر:</label>
+      <input type="date" name="companionPassport${companionCount}" required>
+      <button type="button" onclick="this.parentElement.remove()">🗑️ إزالة</button>
+    </fieldset>
+  `;
+  container.appendChild(div);
+}
+</script>
+
     // هنا يتم تحميل النموذج من ملف خارجي أو بناءه مباشرة
     // لتبسيط المثال نعتبر أن النموذج موجود ومُهيأ
   </script></body>
