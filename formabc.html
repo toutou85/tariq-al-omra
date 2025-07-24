@@ -235,12 +235,58 @@
     margin-top: 10px;
     font-size: 16px;
   }
-</style>
-    <!-- الخطوة 4: معلومات إضافية -->
-    <div class="step" id="step4">
-      <h2>معلومات إضافية</h2>
-      <label>عدد المرافقين: <input name="عدد المرافقين" type="number" min="0" /></label>
-      <label>ملاحظات إضافية: <textarea name="ملاحظات"></textarea></label>
+</style><div 
+id="companions-section">
+  <h3>المرافقون</h3>
+  <div id="companions-container"></div>
+  <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
+</div>
+
+<script>
+let companionIndex = 1;
+
+function addCompanion() {
+  const container = document.getElementById('companions-container');
+
+  const companion = document.createElement('div');
+  companion.className = 'companion-block';
+  companion.innerHTML = `
+    <hr />
+    <h4>المرافق رقم ${companionIndex}</h4>
+    
+    <label>صفة المرافق:</label>
+    <select name="companion_role_${companionIndex}" required>
+      <option value="">اختر الصفة</option>
+      <option value="زوجة">زوجة</option>
+      <option value="زوج">زوج</option>
+      <option value="أخ">أخ</option>
+      <option value="أخت">أخت</option>
+      <option value="ابن">ابن</option>
+      <option value="ابنة">ابنة</option>
+      <option value="صديق">صديق</option>
+      <option value="طفل أقل من سنتين">طفل أقل من سنتين</option>
+      <option value="طفل من 2 إلى 12 سنة">طفل من 2 إلى 12 سنة</option>
+    </select>
+
+    <label>الاسم:</label>
+    <input type="text" name="companion_name_${companionIndex}" required />
+
+    <label>اللقب:</label>
+    <input type="text" name="companion_lastname_${companionIndex}" required />
+
+    <label>رقم الهاتف:</label>
+    <input type="tel" name="companion_phone_${companionIndex}" required />
+
+    <label>العمر:</label>
+    <input type="number" name="companion_age_${companionIndex}" min="0" required />
+
+    <label>تاريخ انتهاء جواز السفر:</label>
+    <input type="date" name="companion_passport_expiry_${companionIndex}" required />
+  `;
+
+  container.appendChild(companion);
+  companionIndex++;
+}
       <div class="buttons">
         <button type="button" onclick="prevStep()">السابق</button>
         <button type="button" onclick="nextStep()">التالي</button>
