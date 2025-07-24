@@ -235,7 +235,19 @@
     margin-top: 10px;
     font-size: 16px;
   }
-</style><div 
+</style>
+
+<!-- الخطوة 4: معلومات إضافية -->  
+<div class="step" id="step4">  
+  <h2>معلومات إضافية</h2>  
+  <label>عدد المرافقين: <input name="عدد المرافقين" type="number" min="0" /></label>  
+  <label>ملاحظات إضافية: <textarea name="ملاحظات"></textarea></label>  
+  <div class="buttons">  
+    <button type="button" onclick="prevStep()">السابق</button>  
+    <button type="button" onclick="nextStep()">التالي</button>  
+  </div>  
+</div>  
+
 id="companions-section">
   <h3>المرافقون</h3>
   <div id="companions-container"></div>
