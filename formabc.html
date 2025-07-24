@@ -130,49 +130,105 @@
       </div>
     </div>
 
-    <!-- الخطوة 3: الموقع -->
-    <div class="step" id="step3">
-      <h2>مكان الإقامة والفرع</h2>
-      <label>الولاية:
-        <select name="الولاية" required>
-          <option value="">اختر الولاية</option>
-          <option>أدرار</option>
-          <option>الشلف</option>
-          <option>الأغواط</option>
-          <option>أم البواقي</option>
-          <option>باتنة</option>
-          <option>بجاية</option>
-          <option>بسكرة</option>
-          <option>بشار</option>
-          <option>البليدة</option>
-          <option>البويرة</option>
-          <!-- أكمل بقية الولايات حسب القائمة الأصلية -->
-        </select>
-      </label>
-      <label>أقرب فرع:
-        <select name="أقرب فرع" required>
-          <option value="">اختر الفرع</option>
-          <option>فرع باب الزوار</option>
-          <option>فرع برج البحري</option>
-          <option>فرع الرويبة</option>
-          <option>فرع بومرداس</option>
-          <option>فرع تيبازة</option>
-          <option>فرع البليدة</option>
-          <option>فرع الشلف</option>
-          <option>فرع البويرة</option>
-          <option>فرع المسيلة</option>
-          <option>فرع المدية</option>
-          <option>فرع البليدة</option>
-          <option>فرع الجلفة</option>
-          <option>فرع تيارت</option>
-        </select>
-      </label>
-      <div class="buttons">
-        <button type="button" onclick="prevStep()">السابق</button>
-        <button type="button" onclick="nextStep()">التالي</button>
-      </div>
-    </div>
+    <!-- الخطوة 3: اختيار الولاية والفرع الأقرب -->
+<div class="step" id="step3">
+  <h2>اختر ولايتك و الفرع الأقرب إليك</h2>
 
+  <label for="state">الولاية:</label>
+  <select id="state" name="state" required>
+    <option value="">اختر ولايتك</option>
+    <option value="أدرار">أدرار</option>
+    <option value="الشلف">الشلف</option>
+    <option value="الأغواط">الأغواط</option>
+    <option value="أم البواقي">أم البواقي</option>
+    <option value="باتنة">باتنة</option>
+    <option value="بجاية">بجاية</option>
+    <option value="بسكرة">بسكرة</option>
+    <option value="بشار">بشار</option>
+    <option value="البليدة">البليدة</option>
+    <option value="البويرة">البويرة</option>
+    <option value="تمنراست">تمنراست</option>
+    <option value="تبسة">تبسة</option>
+    <option value="تلمسان">تلمسان</option>
+    <option value="تيارت">تيارت</option>
+    <option value="تيزي وزو">تيزي وزو</option>
+    <option value="الجزائر">الجزائر</option>
+    <option value="الجلفة">الجلفة</option>
+    <option value="جيجل">جيجل</option>
+    <option value="سطيف">سطيف</option>
+    <option value="سعيدة">سعيدة</option>
+    <option value="سكيكدة">سكيكدة</option>
+    <option value="سيدي بلعباس">سيدي بلعباس</option>
+    <option value="عنابة">عنابة</option>
+    <option value="قالمة">قالمة</option>
+    <option value="قسنطينة">قسنطينة</option>
+    <option value="المدية">المدية</option>
+    <option value="مستغانم">مستغانم</option>
+    <option value="المسيلة">المسيلة</option>
+    <option value="معسكر">معسكر</option>
+    <option value="ورقلة">ورقلة</option>
+    <option value="وهران">وهران</option>
+    <option value="البيض">البيض</option>
+    <option value="إليزي">إليزي</option>
+    <option value="برج بوعريريج">برج بوعريريج</option>
+    <option value="بومرداس">بومرداس</option>
+    <option value="الطارف">الطارف</option>
+    <option value="تندوف">تندوف</option>
+    <option value="تيسمسيلت">تيسمسيلت</option>
+    <option value="الوادي">الوادي</option>
+    <option value="خنشلة">خنشلة</option>
+    <option value="سوق أهراس">سوق أهراس</option>
+    <option value="تيبازة">تيبازة</option>
+    <option value="ميلة">ميلة</option>
+    <option value="عين الدفلى">عين الدفلى</option>
+    <option value="النعامة">النعامة</option>
+    <option value="عين تموشنت">عين تموشنت</option>
+    <option value="غرداية">غرداية</option>
+    <option value="غليزان">غليزان</option>
+  </select>
+
+  <label for="branch">أقرب فرع:</label>
+  <select id="branch" name="branch" required>
+    <option value="">اختر أقرب فرع</option>
+
+    <optgroup label="وكالة طيبة">
+      <option value="فرع الجزائر (وكالة طيبة)">فرع الجزائر</option>
+      <option value="فرع البليدة (وكالة طيبة)">فرع البليدة</option>
+      <option value="فرع المدية (وكالة طيبة)">فرع المدية</option>
+      <option value="فرع عين الدفلى (وكالة طيبة)">فرع عين الدفلى</option>
+      <option value="فرع الشلف (وكالة طيبة)">فرع الشلف</option>
+    </optgroup>
+
+    <optgroup label="وكالة الإيمان">
+      <option value="فرع وهران (وكالة الإيمان)">فرع وهران</option>
+      <option value="فرع مستغانم (وكالة الإيمان)">فرع مستغانم</option>
+      <option value="فرع غليزان (وكالة الإيمان)">فرع غليزان</option>
+      <option value="فرع سيدي بلعباس (وكالة الإيمان)">فرع سيدي بلعباس</option>
+      <option value="فرع سطيف (وكالة الإيمان)">فرع سطيف</option>
+    </optgroup>
+
+    <optgroup label="وكالة الرشاد">
+      <option value="فرع قسنطينة (وكالة الرشاد)">فرع قسنطينة</option>
+      <option value="فرع باتنة (وكالة الرشاد)">فرع باتنة</option>
+      <option value="فرع خنشلة (وكالة الرشاد)">فرع خنشلة</option>
+      <option value="فرع بسكرة (وكالة الرشاد)">فرع بسكرة</option>
+    </optgroup>
+  </select>
+
+  <div class="buttons">
+    <button type="button" onclick="prevStep()">السابق</button>
+    <button type="button" onclick="nextStep()">التالي</button>
+  </div>
+</div>
+
+<style>
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+  }
+</style>
     <!-- الخطوة 4: معلومات إضافية -->
     <div class="step" id="step4">
       <h2>معلومات إضافية</h2>
