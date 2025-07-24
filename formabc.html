@@ -87,14 +87,17 @@
 </head>
 <body>
 
-  <form id="form">
-<input type="hidden" name="الوكالة" id="agencyField">
-<input type="hidden" name="رقم العرض" id="offerIdField">
     <!-- الخطوة 1: معلومات العرض -->
-    <div class="step active" id="step1">
-      <h2>معلومات العرض</h2>
-      <label>رقم العرض: <input name="رقم العرض" required /></label>
-      <label>اسم الوكالة: <input name="اسم الوكالة" required /></label>
+    <!-- حقول مخفية تُرسل مع النموذج -->
+<input type="hidden" name="رقم العرض" id="offerIdField">
+<input type="hidden" name="اسم الوكالة" id="agencyField">
+
+<!-- عرض رقم العرض واسم الوكالة فقط بدون إدخال -->
+<label>رقم العرض:</label>
+<input type="text" id="displayOfferId" readonly>
+
+<label>اسم الوكالة:</label>
+<input type="text" id="displayAgency" readonly>
       <label>نوع الغرفة:
         <select name="نوع الغرفة" required>
           <option value="">اختر نوع الغرفة</option>
