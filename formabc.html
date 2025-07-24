@@ -88,6 +88,8 @@
 <body>
 
   <form id="form">
+<input type="hidden" name="الوكالة" id="agencyField">
+<input type="hidden" name="رقم العرض" id="offerIdField">
     <!-- الخطوة 1: معلومات العرض -->
     <div class="step active" id="step1">
       <h2>معلومات العرض</h2>
@@ -256,7 +258,17 @@
       </div>
     </div>
   </form>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const agency = params.get("agency");
+  const offerId = params.get("offerId");
 
+  // مثال: وضع القيم داخل حقول مخفية إن كنت ترسلها إلى Google Sheets
+  document.addEventListener("DOMContentLoaded", () => {
+    if (agency) document.getElementById("agencyField").value = agency;
+    if (offerId) document.getElementById("offerIdField").value = offerId;
+  });
+</script>
   <script>
     const steps = document.querySelectorAll(".step");
     let currentStep = 0;
