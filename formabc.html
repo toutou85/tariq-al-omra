@@ -1,100 +1,85 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+<!DOCTYPE html><html lang="ar" dir="rtl">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نموذج التسجيل</title>
+  <title>تسجيل العمرة</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
   <style>
     body {
-      font-family: Tahoma, sans-serif;
-      background: #f0f0f0;
+      background-color: #f5f5f5;
+      font-family: 'Tahoma', sans-serif;
+    }
+    .container {
+      max-width: 700px;
+      margin-top: 20px;
+      margin-bottom: 40px;
+      background: #fff;
       padding: 20px;
-    }.step {
-  display: none;
-}
-
-.step.active {
-  display: block;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-.buttons {
-  margin-top: 20px;
-}
-
-.buttons button {
-  padding: 10px 20px;
-  margin: 5px;
-}
-
-.companion {
-  padding: 15px;
-  margin: 10px 0;
-  background: #fff;
-  border: 1px solid #ccc;
-}
-
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+    .form-step {
+      display: none;
+    }
+    .form-step.active {
+      display: block;
+    }
+    .step-buttons {
+      margin-top: 20px;
+    }
   </style>
-</head><body>
-  <form id="registrationForm">
-    <div class="step active" id="step1">
-      <h2>معلومات العرض</h2>
-      <div class="form-group">
-        <label for="offer">اختر العرض:</label>
-        <select id="offer" name="offer" required>
-          <option value="" disabled selected>اختر العرض</option>
-          <option value="عرض 001 - وكالة تقرت للسياحة والسفر">عرض 001 - وكالة تقرت للسياحة والسفر</option>
-          <option value="عرض 002 - وكالة الجزائر للسياحة">عرض 002 - وكالة الجزائر للسياحة</option>
-        </select>
+</head>
+<body>
+<div class="container">
+  <h2 class="text-center">نموذج تسجيل العمرة</h2>
+  <form id="umrahForm">
+    <!-- الخطوة 1: معلومات العرض -->
+    <div class="form-step active">
+      <div class="mb-3">
+        <label for="agency" class="form-label">اسم الوكالة</label>
+        <input type="text" id="agency" name="agency" class="form-control" readonly>
       </div>
-      <div class="form-group">
-        <label>رقم العرض:</label>
-        <input type="text" id="offerNumber" name="offerNumber" readonly>
+      <div class="mb-3">
+        <label for="offerID" class="form-label">رقم العرض</label>
+        <input type="text" id="offerID" name="offerID" class="form-control" readonly>
       </div>
-      <div class="form-group">
-        <label>اسم الوكالة:</label>
-        <input type="text" id="agencyName" name="agencyName" readonly>
-      </div>
-    </div><div class="step" id="step2">
-  <h2>معلومات الزبون</h2>
-  <div class="form-group">
-    <label for="fullName">الاسم الكامل:</label>
-    <input type="text" id="fullName" name="fullName" required>
+    </div><!-- الخطوة 2: بيانات الزبون -->
+<div class="form-step">
+  <div class="mb-3">
+    <label class="form-label">الاسم</label>
+    <input type="text" name="firstName" class="form-control" required>
   </div>
-  <div class="form-group">
-    <label for="phone">رقم الهاتف:</label>
-    <input type="tel" id="phone" name="phone" required>
+  <div class="mb-3">
+    <label class="form-label">اللقب</label>
+    <input type="text" name="lastName" class="form-control" required>
   </div>
-  <div class="form-group">
-    <label for="email">البريد الإلكتروني:</label>
-    <input type="email" id="email" name="email">
+  <div class="mb-3">
+    <label class="form-label">الهاتف</label>
+    <input type="tel" name="phone" class="form-control" required>
   </div>
-  <div class="form-group">
-    <label for="passportExpiry">تاريخ انتهاء جواز السفر:</label>
-    <input type="date" id="passportExpiry" name="passportExpiry" required>
+  <div class="mb-3">
+    <label class="form-label">البريد الإلكتروني</label>
+    <input type="email" name="email" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">العمر</label>
+    <input type="number" name="age" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">تاريخ انتهاء جواز السفر</label>
+    <input type="date" name="passportExpiry" class="form-control">
   </div>
 </div>
 
-<div class="step" id="step3">
-  <h2>اختر ولايتك والفرع الأقرب</h2>
-  <div class="form-group">
-    <label for="state">الولاية:</label>
-    <select id="state" name="state" required>
-      <option value="">اختر الولاية</option>
+<!-- الخطوة 3: الولاية والفرع -->
+<div class="form-step">
+  <div class="mb-3">
+    <label class="form-label">الولاية</label>
+    <select name="wilaya" class="form-select">
       <option value="أدرار">أدرار</option>
       <option value="الشلف">الشلف</option>
       <option value="الأغواط">الأغواط</option>
@@ -144,6 +129,7 @@ textarea {
       <option value="غرداية">غرداية</option>
       <option value="غليزان">غليزان</option>
       <option value="تميمون">تميمون</option>
+      <option value="برج باجي مختار">برج باجي مختار</option>
       <option value="أولاد جلال">أولاد جلال</option>
       <option value="بني عباس">بني عباس</option>
       <option value="عين صالح">عين صالح</option>
@@ -154,154 +140,117 @@ textarea {
       <option value="المنيعة">المنيعة</option>
     </select>
   </div>
-  <div class="form-group">
-    <label for="branch">الفرع الأقرب:</label>
-    <select id="branch" name="branch" required>
-      <option value="">يرجى اختيار وكالة أولاً</option>
+  <div class="mb-3">
+    <label class="form-label">اختر الفرع الأقرب</label>
+    <select name="branch" class="form-select" id="branchSelect">
+      <!-- يتم تعبئتها ديناميكياً حسب الوكالة -->
     </select>
   </div>
 </div>
 
-<div class="step" id="step5">
-  <h2>المرافقون</h2>
-  <div id="companionsContainer"></div>
-  <button type="button" onclick="addCompanion()">إضافة مرافق</button>
+<!-- الخطوة 4: إضافة مرافقين -->
+<div class="form-step">
+  <div id="companionsSection"></div>
+  <button type="button" class="btn btn-secondary" onclick="addCompanion()">إضافة مرافق</button>
 </div>
 
-<div class="step" id="step6">
-  <h2>شروط وأحكام</h2>
-  <p>يرجى قراءة الشروط والأحكام قبل إرسال الطلب.</p>
-  <textarea readonly>هنا نص صفحة "<p>
-  <div class="container">
-    <p>✨ <strong>طريق العمرة</strong> هي منصة جزائرية متخصصة في عرض وتنظيم رحلات العمرة إلى البقاع المقدسة، بلمسة تقنية مبتكرة تهدف إلى تسهيل عملية اكتشاف العروض والتسجيل الأولي، دون أي تعامل مالي إلكتروني.</p>
-
-    <p>📍 <strong>تنويه مهم:</strong><br>
-    هذا الموقع هو مشروع شخصي من إنجاز <strong>طه برقيقة</strong>، مرافق معتمد لدى وكالة <strong>تقرت للسياحة والسفر</strong>، وهو مخصص فقط لعرض عروض العمرة المتوفرة لدى الوكالة وبعض العروض الداعمة الأخرى.</p>
-
-    <p>🔒 لا يستقبل الموقع ولا يرسل أي أموال – التسجيل يتم بشكل إلكتروني مبدئي، بينما تُستكمل إجراءات الحجز وتأكيد الرحلة فقط في الفرع الأقرب إليكم، وذلك بدفع المستحقات مباشرة لدى الوكالة.</p>
-
-    <p>🎯 <strong>أهدافنا:</strong></p>
-    <ul>
-      <li>تسهيل عملية اكتشاف العروض ومقارنة الأسعار.</li>
-      <li>تقديم خيارات متنوعة من حيث:</li>
-      <ul>
-        <li>مدة الرحلة</li>
-        <li>نوع الخطوط الجوية</li>
-        <li>مستوى الفنادق</li>
-        <li>تواريخ الإقلاع والعودة</li>
-        <li>مكان الإقامة في الجزائر</li>
-      </ul>
-      <li>تغطية كامل المطارات الوطنية لتوفير أقصى راحة للمعتمر.</li>
-      <li>تقديم تجربة روحانية مميزة وفق المعايير الشرعية والتنظيمية.</li>
-    </ul>
-
-    <p>💡 <strong>لماذا اخترتنا؟</strong></p>
-    <ul>
-      <li>شراكة مع وكالات مرخصة</li>
-      <li>عروض موثوقة ومحدثة باستمرار</li>
-      <li>تسجيل إلكتروني مجاني</li>
-      <li>واجهة سهلة وبسيطة لاختيار العرض الأنسب</li>
-      <li>دعم مستمر واستقبال استفساراتكم عبر الفروع</li>
-    </ul>
-
-    <p>نتمنى أن ينال هذا العمل إعجابكم وتقديركم، ونسعى دائمًا لتقديم الأفضل لمعتمرينا الكرام.</p>
-
-    <p>✍️ كتبه: <strong>طه برقيقة</strong></p>" أو الشروط التي يجب قراءتها.</textarea>
-  <div class="form-group">
-    <input type="checkbox" id="acceptTerms" required>
-    <label for="acceptTerms">أوافق على الشروط والأحكام</label>
+<!-- الخطوة 5: الموافقة على الشروط -->
+<div class="form-step">
+  <div class="mb-3">
+    <label class="form-label">يرجى قراءة صفحة "من نحن" قبل الإرسال</label>
+    <iframe src="about.html" width="100%" height="200"></iframe>
+  </div>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="agree" required>
+    <label class="form-check-label" for="agree">أوافق على الشروط والأحكام</label>
   </div>
 </div>
 
-<div class="buttons">
-  <button type="button" onclick="prevStep()">السابق</button>
-  <button type="button" onclick="nextStep()">التالي</button>
-  <button type="submit" style="display: none">إرسال</button>
+<!-- الأزرار -->
+<div class="step-buttons d-flex justify-content-between">
+  <button type="button" class="btn btn-outline-primary" onclick="prevStep()">السابق</button>
+  <button type="button" class="btn btn-primary" onclick="nextStep()">التالي</button>
+  <button type="submit" class="btn btn-success d-none" id="submitBtn">إرسال</button>
 </div>
 
-  </form>  <script>
-    const steps = document.querySelectorAll('.step');
-    let currentStep = 0;
+  </form>
+</div><script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const agency = urlParams.get('agency');
+  const offerID = urlParams.get('offerID');
+  document.getElementById('agency').value = agency || '';
+  document.getElementById('offerID').value = offerID || '';
 
-    function showStep(step) {
-      steps.forEach((s, i) => s.classList.toggle('active', i === step));
-      document.querySelector('button[type="submit"]').style.display = (step === steps.length - 1) ? 'inline-block' : 'none';
-    }
-
-    function nextStep() {
-      if (currentStep < steps.length - 1) {
-        currentStep++;
-        showStep(currentStep);
-      }
-    }
-
-    function prevStep() {
-      if (currentStep > 0) {
-        currentStep--;
-        showStep(currentStep);
-      }
-    }
-
-    document.getElementById('offer').addEventListener('change', function () {
-      const value = this.value;
-      const [offerNumber, agencyName] = value.split(' - ');
-      document.getElementById('offerNumber').value = offerNumber;
-      document.getElementById('agencyName').value = agencyName;
-
-      const branches = {
-        "وكالة تقرت للسياحة والسفر": ["فرع تقرت", "فرع ورقلة", "فرع الوادي"],
-        "وكالة الجزائر للسياحة": ["فرع الجزائر وسط", "فرع باب الزوار", "فرع بئر مراد رايس"]
-      };
-
-      const branchSelect = document.getElementById("branch");
-      branchSelect.innerHTML = "";
-
-      if (branches[agencyName]) {
-        branches[agencyName].forEach(branch => {
-          const option = document.createElement("option");
-          option.value = branch;
-          option.textContent = branch;
-          branchSelect.appendChild(option);
-        });
-      } else {
-        const option = document.createElement("option");
-        option.value = "";
-        option.textContent = "الرجاء اختيار وكالة صحيحة أولاً";
-        branchSelect.appendChild(option);
-      }
+  const steps = document.querySelectorAll(".form-step");
+  let currentStep = 0;
+  function showStep(step) {
+    steps.forEach((el, index) => {
+      el.classList.toggle("active", index === step);
     });
-
-    function addCompanion() {
-      const container = document.getElementById("companionsContainer");
-      const div = document.createElement("div");
-      div.className = "companion";
-      div.innerHTML = `
-        <div class="form-group">
-          <label>صفة المرافق:</label>
-          <select name="companionRelation[]" required>
-            <option value="زوجة">زوجة</option>
-            <option value="ابن">ابن</option>
-            <option value="ابنة">ابنة</option>
-            <option value="أب">أب</option>
-            <option value="أم">أم</option>
-            <option value="أخ">أخ</option>
-            <option value="أخت">أخت</option>
-            <option value="صديق">صديق</option>
-            <option value="طفل أقل من سنتين">طفل أقل من سنتين</option>
-            <option value="طفل من 2 إلى 12 سنة">طفل من 2 إلى 12 سنة</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>الاسم الكامل للمرافق:</label>
-          <input type="text" name="companionName[]" required>
-        </div>
-        <div class="form-group">
-          <label>تاريخ انتهاء جواز السفر:</label>
-          <input type="date" name="companionPassportExpiry[]" required>
-        </div>
-      `;
-      container.appendChild(div);
+    document.getElementById("submitBtn").classList.toggle("d-none", step !== steps.length - 1);
+  }
+  function nextStep() {
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      showStep(currentStep);
     }
-  </script>
-</body>
+  }
+  function prevStep() {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  }
+
+  function addCompanion() {
+    const container = document.createElement("div");
+    container.className = "border p-3 my-2 rounded";
+    container.innerHTML = `
+      <div class="mb-2">
+        <label>صفة المرافق</label>
+        <select name="companionRole[]" class="form-select">
+          <option value="زوجة">زوجة</option>
+          <option value="ابن">ابن</option>
+          <option value="ابنة">ابنة</option>
+          <option value="أخ">أخ</option>
+          <option value="أخت">أخت</option>
+          <option value="صديق">صديق</option>
+          <option value="طفل أقل من سنتين">طفل أقل من سنتين</option>
+          <option value="طفل بين 2 و12 سنة">طفل بين 2 و12 سنة</option>
+        </select>
+      </div>
+      <div class="mb-2">
+        <input type="text" name="companionFirstName[]" class="form-control" placeholder="الاسم">
+      </div>
+      <div class="mb-2">
+        <input type="text" name="companionLastName[]" class="form-control" placeholder="اللقب">
+      </div>
+      <div class="mb-2">
+        <input type="tel" name="companionPhone[]" class="form-control" placeholder="الهاتف">
+      </div>
+      <div class="mb-2">
+        <input type="number" name="companionAge[]" class="form-control" placeholder="العمر">
+      </div>
+      <div class="mb-2">
+        <input type="date" name="companionPassportExpiry[]" class="form-control" placeholder="تاريخ انتهاء الجواز">
+      </div>
+    `;
+    document.getElementById("companionsSection").appendChild(container);
+  }
+
+  document.getElementById("umrahForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    fetch("https://script.google.com/macros/s/AKfycbx7w7TzP54ldVbS7K5BSDq7nn0cozGPryG5ODpNrjj3xY3LIWej5fCcA4Kkt60SAfo7/exec", {
+      method: "POST",
+      body: formData
+    })
+      .then(res => res.text())
+      .then(data => {
+        alert("تم إرسال طلبك بنجاح");
+        location.reload();
+      })
+      .catch(err => alert("حدث خطأ: " + err));
+  });
+</script></body>
 </html>
