@@ -178,20 +178,51 @@
 
     // إرسال البيانات
     document.getElementById("umrahForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      document.getElementById("message").style.display = "block";
-      fetch("https://script.google.com/macros/s/AKfycbw1cucY8dWrYgh2GRukXO72d-cYYkGoWMGfZtwCtMWw91lp8BN3mcPD09q7nPX1CDgqgA/exec", {  // ضع رابط Apps Script هنا
-        method: "POST",
-        body: new FormData(this)
-      })
-      .then(res => res.text())
-      .then(res => { 
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+
+  // جمع بيانات المرافقين
+  const companions = [];
+  document.querySelectorAll("#companionsContainer fieldset").forEach((fieldset, i) => {
+    const relation = fieldset.querySelector(`select[name="companionRelation${i+1}"]`)?.value || "";
+    const name = fieldset.querySelector(`input[name="companionName${i+1}"]`)?.value || "";
+    const birth = fieldset.querySelector(`input[name="companionBirth${i+1}"]`)?.value || "";
+    const passport = fieldset.querySelector(`input[name="companionPassport${i+1}"]`)?.value || "";
+    if (name) companions.push(`${relation}: ${name} - ميلاد: ${birth} - انتهاء جواز: ${passport}`);
+  });
+
+  formData.append("companions", companions.join(" | "));
+
+  document.getElementById("message").style.display = "block";
+  form.style.display = "none";
+
+  fetch("https://script.google.com/macros/s/AKfycbxF5BbTUbpkwp7pVkOlrDFtt4-hhnscMfgqwNHCd1jW3eGbpkrhzOhALymHb44a16wB8g/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(res => {
+    let counter = 10;
+    const countdownElem = document.getElementById("countdown");
+    const interval = setInterval(() => {
+      counter--;
+      countdownElem.textContent = counter;
+      if (counter === 0) {
+        clearInterval(interval);
+        alert("✅ تم إرسال طلبك بنجاح!");
         document.getElementById("message").style.display = "none";
-        document.getElementById("umrahForm").style.display = "none";
         document.getElementById("passportChoice").style.display = "block";
-      })
-      .catch(err => alert("❌ خطأ: " + err.message));
-    });
+      }
+    }, 1000);
+  })
+  .catch(err => {
+    alert("❌ حدث خطأ: " + err.message);
+    form.style.display = "block";
+    document.getElementById("message").style.display = "none";
+  });
+});
+
 
  // ملء قائمة الولايات
 const wilayas = [
