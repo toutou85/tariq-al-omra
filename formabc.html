@@ -60,20 +60,22 @@
       </div>
     </div>
 
-    <!-- الخطوة 2: الولاية والفرع -->
-    <div class="step" id="step2">
-      <h2>اختيار الولاية والفرع</h2>
-      <label>الولاية:</label>
-      <select name="wilaya" id="wilaya" required></select>
+   <!-- الخطوة 2: الولاية والفرع -->
+<div class="step" id="step2">
+  <h2>اختيار الولاية والفرع</h2>
+  
+  <label for="wilaya">الولاية:</label>
+  <select id="wilaya" name="wilaya" required></select>
 
-      <label>الفرع الأقرب:</label>
-      <select name="branch" id="branch" required></select>
+  <label for="branch">الفرع الأقرب:</label>
+  <select id="branch" name="branch" required></select>
 
-      <div class="buttons">
-        <button type="button" onclick="prevStep()">السابق</button>
-        <button type="button" onclick="nextStep()">التالي</button>
-      </div>
-    </div>
+  <div class="buttons">
+    <button type="button" onclick="prevStep()">السابق</button>
+    <button type="button" onclick="nextStep()">التالي</button>
+  </div>
+</div>
+
 
     <!-- الخطوة 3: المرافقون -->
     <div class="step" id="step3">
@@ -191,10 +193,42 @@
       .catch(err => alert("❌ خطأ: " + err.message));
     });
 
-    // ملء الولايات
-    const wilayas = ["أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة","تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة","سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة","وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة","سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت","غرداية","غليزان"];
-    const wilayaSelect = document.getElementById("wilaya");
-    wilayas.forEach(w => { let opt = document.createElement("option"); opt.value = w; opt.textContent = w; wilayaSelect.appendChild(opt); });
+ // ملء قائمة الولايات
+const wilayas = [
+  "أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة",
+  "البويرة","تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل",
+  "سطيف","سعيدة","سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم",
+  "المسيلة","معسكر","ورقلة","وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف",
+  "تندوف","تيسمسيلت","الوادي","خنشلة","سوق أهراس","تيبازة","ميلة","عين الدفلى",
+  "النعامة","عين تموشنت","غرداية","غليزان","تميمون","برج باجي مختار","أولاد جلال",
+  "بني عباس","عين صالح","عين قزام","تقرت","جانت","المغير","المنيعة"
+];
+
+const wilayaSelect = document.getElementById("wilaya");
+wilayas.forEach(w => {
+  let opt = document.createElement("option");
+  opt.value = w;
+  opt.textContent = w;
+  wilayaSelect.appendChild(opt);
+});
+
+// الفروع حسب الوكالة
+const agencyBranches = {
+  "وكالة السقيفة للسياحة و سفر": ["الجزائر", "باب الزوار", "سطيف", "قسنطينة"],
+  "وكالة تقرت للسياحة و سفر": ["تقرت", "ورقلة", "المغير", "جانت"]
+};
+
+const branchSelect = document.getElementById("branch");
+const agency = decodeURIComponent(new URLSearchParams(window.location.search).get("agency") || "");
+
+if (agency && agencyBranches[agency]) {
+  agencyBranches[agency].forEach(branch => {
+    let opt = document.createElement("option");
+    opt.value = branch;
+    opt.textContent = branch;
+    branchSelect.appendChild(opt);
+  });
+}
 
     // استرجاع باراميترات الوكالة ورقم العرض
     window.onload = function () {
