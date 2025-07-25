@@ -68,15 +68,15 @@
 <body>
   <form id="umrahForm">
     <!-- الخطوة 1: بيانات الزبون -->
-    <div class="step" id="step1">
+    <div class="step active" id="step1">
       <h2>معلومات الزبون</h2>
       <input type="hidden" id="agencyName" name="agency">
+
       <label for="offerNumber">رقم العرض:</label>
       <input type="text" id="offerNumber" name="offerNumber" readonly>
 
-<label for="agencyDisplay">اسم الوكالة:</label>
-<input type="text" id="agencyDisplay" readonly>
-<input type="hidden" id="agencyName" name="agency">
+      <label for="agencyDisplay">اسم الوكالة:</label>
+      <input type="text" id="agencyDisplay" readonly>
 
       <label for="firstName">الاسم:</label>
       <input type="text" id="firstName" name="firstName" required>
@@ -116,60 +116,48 @@
       </div>
     </div>
 
- <!-- الخطوة 3: المرافقون -->
-<div class="step" id="step3">
-  <h2>المرافقون</h2>
+    <!-- الخطوة 3: المرافقون -->
+    <div class="step" id="step3">
+      <h2>المرافقون</h2>
+      <label for="roomType">نوع الغرفة:</label>
+      <select id="roomType" name="roomType" required>
+        <option value="" disabled selected>اختر نوع الغرفة</option>
+        <option value="غرفة ثنائية">غرفة ثنائية</option>
+        <option value="غرفة ثلاثية">غرفة ثلاثية</option>
+        <option value="غرفة رباعية">غرفة رباعية</option>
+        <option value="غرفة خماسية">غرفة خماسية</option>
+        <option value="غرفة جماعية">غرفة جماعية</option>
+      </select>
 
-  <!-- ✅ اختيار نوع الغرفة -->
-  <label for="roomType">نوع الغرفة:</label>
-  <select id="roomType" name="roomType" required>
-    <option value="" disabled selected>اختر نوع الغرفة</option>
-    <option value="غرفة ثنائية">غرفة ثنائية</option>
-    <option value="غرفة ثلاثية">غرفة ثلاثية</option>
-    <option value="غرفة رباعية">غرفة رباعية</option>
-    <option value="غرفة خماسية">غرفة خماسية</option>
-    <option value="غرفة جماعية">غرفة جماعية</option>
-  </select>
+      <label for="reservationType">صفة الحجز:</label>
+      <select id="reservationType" name="reservationType" required onchange="toggleCompanionSection()">
+        <option value="" disabled selected>اختر صفة الحجز</option>
+        <option value="منفرد">منفرد</option>
+        <option value="مع صديق">مع صديق</option>
+        <option value="مع الأسرة">مع الأسرة</option>
+      </select>
 
-  <!-- ✅ اختيار صفة الحجز -->
-  <label for="reservationType">صفة الحجز:</label>
-  <select id="reservationType" name="reservationType" required onchange="toggleCompanionSection()">
-    <option value="" disabled selected>اختر صفة الحجز</option>
-    <option value="منفرد">منفرد</option>
-    <option value="مع صديق">مع صديق</option>
-    <option value="مع الأسرة">مع الأسرة</option>
-  </select>
+      <div id="companionsSection" style="display: none;">
+        <div id="companionsContainer"></div>
+        <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
+      </div>
 
-  <!-- ✅ قسم المرافقين -->
-  <div id="companionsSection" style="display: none;">
-    <div id="companionsContainer"></div>
-    <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
-  </div>
-
-  <!-- أزرار التنقل -->
-  <div class="buttons">
-    <button type="button" onclick="prevStep()">السابق</button>
-    <button type="button" onclick="nextStep()">التالي</button>
-  </div>
-</div>
+      <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="button" onclick="nextStep()">التالي</button>
+      </div>
+    </div>
 
     <!-- الخطوة 4: الشروط -->
     <div class="step" id="step4">
       <h2>الشروط والأحكام</h2>
       <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
-<div class="confirmation-message" style="margin-top: 30px; padding: 20px; border: 1px solid #ccc; border-radius: 12px; background-color: #f9f9f9;">
-       
-    <p>✨ <strong>طريق العمرة</strong> هي منصة جزائرية لتسهيل استكشاف عروض العمرة والتسجيل الأولي بدون دفع إلكتروني.</p>
-    <p>📍 هذا المشروع من إنجاز <strong>طه برقيقة</strong>، مرافق معتمد لدى وكالة <strong>تقرت للسياحة والسفر</strong>.</p>
-    <p>🕌 التسجيل الإلكتروني مجاني، ويتم تأكيد الحجز فقط عند التوجه إلى الفرع المعتمد ودفع المستحقات.</p>
-    <p style="color: red; font-weight: bold;">
-      ⚠️ تنبيه: يبقى تسجيلكم شكليًا إلى حين دفع مستحقات الرحلة في مقر الوكالة، ثم يتم تأكيد الحجز نهائيًا.
-    
-
-
-
-
-يرجى قراءة الشروط بعناية قبل الإرسال...</p>
+        <p>✨ <strong>طريق العمرة</strong> هي منصة جزائرية لتسهيل استكشاف عروض العمرة والتسجيل الأولي بدون دفع إلكتروني.</p>
+        <p>📍 هذا المشروع من إنجاز <strong>طه برقيقة</strong>، مرافق معتمد لدى وكالة <strong>تقرت للسياحة والسفر</strong>.</p>
+        <p>🕌 التسجيل الإلكتروني مجاني، ويتم تأكيد الحجز فقط عند التوجه إلى الفرع المعتمد ودفع المستحقات.</p>
+        <p style="color: red; font-weight: bold;">
+          ⚠️ تنبيه: يبقى تسجيلكم شكليًا إلى حين دفع مستحقات الرحلة في مقر الوكالة، ثم يتم تأكيد الحجز نهائيًا.
+        </p>
       </div>
       <label>
         <input type="checkbox" id="agree" required> أوافق على الشروط والأحكام
@@ -182,22 +170,18 @@
     </div>
   </form>
 
-<!-- نافذة منبثقة بعد التسجيل -->
-<div id="passportChoice" style="display:none; text-align:center; padding: 20px;">
-  <h3>📄 هل ترغب في تحميل صور جواز السفر الآن؟</h3>
-  <button onclick="location.href='upload.html'">📤 نعم، أريد تحميل الصور</button>
-  <button onclick="location.href='index.html'">⏭️ لا، سأحملها لاحقًا</button>
-</div>
+  <div id="message" style="display:none; text-align:center; margin-top:20px;">
+    <h3>⏳ الرجاء الانتظار 10 ثواني...</h3>
+    <p>✨ لا تنسَ الاستغفار أثناء الانتظار ✨</p>
+  </div>
 
   <script>
     let currentStep = 0;
     const steps = document.querySelectorAll('.step');
-    showStep(currentStep);
 
     function showStep(index) {
       steps.forEach((step, i) => step.classList.toggle('active', i === index));
     }
-
     function nextStep() {
       const inputs = steps[currentStep].querySelectorAll('input, select');
       for (let input of inputs) {
@@ -211,7 +195,6 @@
         showStep(currentStep);
       }
     }
-
     function prevStep() {
       if (currentStep > 0) {
         currentStep--;
@@ -219,11 +202,12 @@
       }
     }
 
-    // استخراج اسم الوكالة والعرض من الرابط
+    // استخراج بيانات الرابط
     const params = new URLSearchParams(window.location.search);
     const agency = decodeURIComponent(params.get("agency") || "");
     const offerID = decodeURIComponent(params.get("offerID") || "");
     document.getElementById("agencyName").value = agency;
+    document.getElementById("agencyDisplay").value = agency;
     document.getElementById("offerNumber").value = offerID;
 
     // ملء الولايات
@@ -236,12 +220,11 @@
       wilayaSelect.appendChild(opt);
     });
 
-    // عرض الفروع حسب اسم الوكالة
+    // عرض الفروع
     const agencyBranches = {
       "وكالة السقيفة للسياحة و سفر": ["الجزائر", "باب الزوار", "سطيف", "قسنطينة"],
       "وكالة تقرت للسياحة و سفر": ["تقرت", "ورقلة", "المغير", "جانت"]
     };
-
     const branchSelect = document.getElementById("branch");
     if (agency && agencyBranches[agency]) {
       agencyBranches[agency].forEach(branch => {
@@ -252,7 +235,7 @@
       });
     }
 
-    // إضافة مرافق
+    // المرافقين
     let companionCount = 0;
     function addCompanion() {
       companionCount++;
@@ -283,88 +266,38 @@
       `;
       container.appendChild(div);
     }
-
+    function toggleCompanionSection() {
+      const type = document.getElementById("reservationType").value;
+      const companionsDiv = document.getElementById("companionsSection");
+      companionsDiv.style.display = type === "منفرد" ? "none" : "block";
+    }
 
     // إرسال البيانات
-    
-<h2>🕋 نموذج تسجيل للعمرة</h2>
-<form id="umrahForm">
-  رقم العرض: <input name="offerNumber" required><br>
-  اسم الوكالة: <input name="agency" required><br>
-  نوع الغرفة: <input name="roomType" required><br>
-  السعر: <input name="price" required><br>
-  صفة الحجز: <input name="bookingType" required><br>
-  الولاية: <input name="state" required><br>
-  الفرع: <input name="branch" required><br>
-  الاسم: <input name="firstName" required><br>
-  اللقب: <input name="lastName" required><br>
-  الهاتف: <input name="phone" required><br>
-  البريد: <input name="email" type="email" required><br>
-  العمر: <input name="age" type="number" required><br>
-  تاريخ انتهاء الجواز: <input name="passportExpiry" type="date" required><br>
-  <button type="submit">📨 إرسال</button>
-</form>
+    document.getElementById("umrahForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
 
-<div id="message" style="display:none; text-align:center; margin-top:20px;">
-  <h3>⏳ الرجاء الانتظار 10 ثواني...</h3>
-  <p>✨ لا تنسَ الاستغفار أثناء الانتظار ✨</p>
-</div>
+      document.getElementById("message").style.display = "block";
+      form.style.display = "none";
 
-<script>
-document.getElementById("umrahForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const form = e.target;
-  const formData = new FormData(form);
-
-  document.getElementById("message").style.display = "block";
-  form.style.display = "none";
-
-  fetch("https://script.google.com/macros/s/AKfycbxF5BbTUbpkwp7pVkOlrDFtt4-hhnscMfgqwNHCd1jW3eGbpkrhzOhALymHb44a16wB8g/exec", {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.text())
-  .then(res => {
-    setTimeout(() => {
-      alert("✅ تم إرسال طلبك بنجاح!");
-      window.location.href = "index.html";
-    }, 10000);
-  })
-  .catch(err => {
-    alert("❌ حدث خطأ: " + err.message);
-    form.style.display = "block";
-    document.getElementById("message").style.display = "none";
-  });
-});
-
-
+      fetch("https://script.google.com/macros/s/AKfycbxF5BbTUbpkwp7pVkOlrDFtt4-hhnscMfgqwNHCd1jW3eGbpkrhzOhALymHb44a16wB8g/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(res => {
+        setTimeout(() => {
+          alert("✅ تم إرسال طلبك بنجاح!");
+          window.location.href = "index.html";
+        }, 5000);
+      })
+      .catch(err => {
+        alert("❌ حدث خطأ: " + err.message);
+        form.style.display = "block";
+        document.getElementById("message").style.display = "none";
+      });
+    });
   </script>
-<script>
-  window.onload = function () {
-    const params = new URLSearchParams(window.location.search);
-    const agency = params.get("agency");
-    const offerID = params.get("offerID");
-
-    if (agency) {
-      document.getElementById("agencyDisplay").value = decodeURIComponent(agency);
-      document.getElementById("agencyName").value = decodeURIComponent(agency);
-    }
-
-    if (offerID) {
-      document.getElementById("offerNumber").value = offerID;
-    }
-  };
-</script>
-<script>
-  function toggleCompanionSection() {
-    const type = document.getElementById("reservationType").value;
-    const companionsDiv = document.getElementById("companionsSection");
-    if (type === "منفرد") {
-      companionsDiv.style.display = "none";
-    } else {
-      companionsDiv.style.display = "block";
-    }
-  }
-</script>
 </body>
 </html>
