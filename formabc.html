@@ -116,17 +116,42 @@
       </div>
     </div>
 
-    <!-- الخطوة 3: المرافقون -->
-    <div class="step" id="step3">
-      <h2>المرافقون</h2>
-      <div id="companionsContainer"></div>
-      <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
+ <!-- الخطوة 3: المرافقون -->
+<div class="step" id="step3">
+  <h2>المرافقون</h2>
 
-      <div class="buttons">
-        <button type="button" onclick="prevStep()">السابق</button>
-        <button type="button" onclick="nextStep()">التالي</button>
-      </div>
-    </div>
+  <!-- ✅ اختيار نوع الغرفة -->
+  <label for="roomType">نوع الغرفة:</label>
+  <select id="roomType" name="roomType" required>
+    <option value="" disabled selected>اختر نوع الغرفة</option>
+    <option value="غرفة ثنائية">غرفة ثنائية</option>
+    <option value="غرفة ثلاثية">غرفة ثلاثية</option>
+    <option value="غرفة رباعية">غرفة رباعية</option>
+    <option value="غرفة خماسية">غرفة خماسية</option>
+    <option value="غرفة جماعية">غرفة جماعية</option>
+  </select>
+
+  <!-- ✅ اختيار صفة الحجز -->
+  <label for="reservationType">صفة الحجز:</label>
+  <select id="reservationType" name="reservationType" required onchange="toggleCompanionSection()">
+    <option value="" disabled selected>اختر صفة الحجز</option>
+    <option value="منفرد">منفرد</option>
+    <option value="مع صديق">مع صديق</option>
+    <option value="مع الأسرة">مع الأسرة</option>
+  </select>
+
+  <!-- ✅ قسم المرافقين -->
+  <div id="companionsSection" style="display: none;">
+    <div id="companionsContainer"></div>
+    <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
+  </div>
+
+  <!-- أزرار التنقل -->
+  <div class="buttons">
+    <button type="button" onclick="prevStep()">السابق</button>
+    <button type="button" onclick="nextStep()">التالي</button>
+  </div>
+</div>
 
     <!-- الخطوة 4: الشروط -->
     <div class="step" id="step4">
@@ -276,6 +301,17 @@
       document.getElementById("offerNumber").value = offerID;
     }
   };
+</script>
+<script>
+  function toggleCompanionSection() {
+    const type = document.getElementById("reservationType").value;
+    const companionsDiv = document.getElementById("companionsSection");
+    if (type === "منفرد") {
+      companionsDiv.style.display = "none";
+    } else {
+      companionsDiv.style.display = "block";
+    }
+  }
 </script>
 </body>
 </html>
