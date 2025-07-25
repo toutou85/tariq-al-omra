@@ -277,6 +277,19 @@
       container.appendChild(div);
     }
 
+
+
+<form/>
+
+<!-- نافذة منبثقة بعد التسجيل -->
+<div id="passportChoice" style="display:none; text-align:center; padding: 20px;">
+  <h3>📄 هل ترغب في تحميل صور جواز السفر الآن؟</h3>
+  <button onclick="location.href='upload.html'">📤 نعم، أريد تحميل الصور</button>
+  <button onclick="location.href='index.html'">⏭️ لا، سأحملها لاحقًا</button>
+</div>
+
+<script>
+
     // إرسال البيانات
     document.getElementById("umrahForm").addEventListener("submit", function(e) {
       e.preventDefault();
@@ -300,12 +313,6 @@ document.getElementById("passportChoice").style.display = "block";
     });
 
 
-<!-- نافذة منبثقة بعد التسجيل -->
-<div id="passportChoice" style="display:none; text-align:center; padding: 20px;">
-  <h3>📄 هل ترغب في تحميل صور جواز السفر الآن؟</h3>
-  <button onclick="location.href='upload.html'">📤 نعم، أريد تحميل الصور</button>
-  <button onclick="location.href='index.html'">⏭️ لا، سأحملها لاحقًا</button>
-</div>
 
 
   </script>
