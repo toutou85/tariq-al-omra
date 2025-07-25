@@ -221,7 +221,7 @@
 
     // استخراج اسم الوكالة والعرض من الرابط
     const params = new URLSearchParams(window.location.search);
-   
+    const agency = decodeURIComponent(params.get("agency") || "");
       document.getElementById("agencyDisplay").value = decodeURIComponent(params.get("agency") || "");
       document.getElementById("offerNumber").value = decodeURIComponent(params.get("offerID") || "");
     // ملء الولايات
