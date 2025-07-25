@@ -49,35 +49,6 @@
       margin-bottom: 20px;
     }
 
-    label {
-      display: block;
-      margin: 10px 0 5px;
-      color: #333;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #FFD700;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    button:hover {
-      background-color: #f1c40f;
-    }
-
     .offers {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -126,28 +97,32 @@
     .btn:hover {
       background-color: #f1c40f;
     }
+
     .search-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  padding: 15px 20px;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 12px;
-  margin: 20px auto 10px;
-  max-width: 900px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      margin: 20px auto 10px;
+      max-width: 100%;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow-x: auto;
+    }
 
-.search-bar select {
-  padding: 8px 12px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  min-width: 180px;
-}
-
+    .search-bar select,
+    .search-bar button {
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
   </style>
 </head>
 <body>
@@ -155,78 +130,98 @@
   <nav>
     <a href="index.html">🏠 الرئيسية</a>
   </nav>
-   <div>
-<div class="search-bar">
-  <select id="airport-select">
-    <option value="">🛫 اختر المطار</option>
-    <option value="الجزائر">مطار الجزائر الدولي</option>
-    <option value="وهران">مطار وهران</option>
-    <option value="قسنطينة">مطار قسنطينة</option>
-    <option value="عنابة">مطار عنابة</option>
-    <option value="بشار">مطار بشار</option>
-    <!-- أضف المزيد حسب الحاجة -->
-  </select>
 
-  <select id="duration-select">
-    <option value="">📆 مدة الرحلة</option>
-    <option value="15">15 يوم</option>
-    <option value="21">21 يوم</option>
-    <option value="28">28 يوم</option>
-    <option value="30">شهر</option>
-    <option value="أكثر من شهر">أكثر من شهر</option>
-  </select>
+  <!-- ✅ شريط البحث في سطر واحد -->
+  <div class="search-bar">
+    <select id="airport-select">
+      <option value="">🛫 اختر المطار</option>
+      <option value="الجزائر">مطار الجزائر الدولي</option>
+      <option value="وهران">مطار وهران</option>
+      <option value="قسنطينة">مطار قسنطينة</option>
+      <option value="عنابة">مطار عنابة</option>
+      <option value="بشار">مطار بشار</option>
+    </select>
 
-  <select id="direct-select">
-    <option value="">🔁 نوع الرحلة</option>
-    <option value="مباشرة">مباشرة</option>
-    <option value="غير مباشرة">غير مباشرة</option>
-  </select>
-</div>
+    <select id="duration-select">
+      <option value="">📆 مدة الرحلة</option>
+      <option value="15">15 يوم</option>
+      <option value="21">21 يوم</option>
+      <option value="28">28 يوم</option>
+      <option value="30">شهر</option>
+      <option value="أكثر من شهر">أكثر من شهر</option>
+    </select>
 
+    <select id="direct-select">
+      <option value="">🔁 نوع الرحلة</option>
+      <option value="مباشرة">مباشرة</option>
+      <option value="غير مباشرة">غير مباشرة</option>
+    </select>
 
-      <button type="submit">🔎 ابحث الآن</button>
-    </form>
+    <button type="button" onclick="filterOffers()">🔎 ابحث الآن</button>
   </div>
 
-  <!-- 🟡 العروض -->
   <h2>📢 عروض العمرة الحالية</h2>
   <div class="offers" id="offers-container">
     <p style="text-align:center;">جاري تحميل العروض...</p>
   </div>
 
   <script>
+    let allOffers = [];
+
     fetch("https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec")
       .then(response => response.json())
       .then(data => {
-        const container = document.getElementById("offers-container");
-        container.innerHTML = "";
-
-        data.forEach(item => {
-          const card = document.createElement("div");
-          card.className = "card";
-
-          card.innerHTML = `
-            <img src="${item['رابط صورة الفندق']}" alt="صورة الفندق">
-            <div class="card-content">
-              <h3>${item['اسم العرض']}</h3>
-              <p>✈️ ${item['الخطوط الجوية']}</p>
-              <p>🛫 ${item['المطار']}</p>
-              <p>📆 ${item['مدة الرحلة']}</p>
-              <p>💰 غرفة جماعية: ${item['السعر الغرفة الجماعية (دج)']} دج</p>
-              <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
-            </div>
-          `;
-          container.appendChild(card);
-        });
+        allOffers = data;
+        displayOffers(allOffers);
       })
       .catch(err => {
         document.getElementById("offers-container").innerHTML = "<p style='color:red; text-align:center;'>❌ حدث خطأ أثناء تحميل العروض</p>";
         console.error("فشل في جلب البيانات:", err);
       });
+
+    function displayOffers(offers) {
+      const container = document.getElementById("offers-container");
+      container.innerHTML = "";
+
+      if (offers.length === 0) {
+        container.innerHTML = "<p style='text-align:center;'>لا توجد عروض مطابقة</p>";
+        return;
+      }
+
+      offers.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <img src="${item['رابط صورة الفندق']}" alt="صورة الفندق">
+          <div class="card-content">
+            <h3>${item['اسم العرض']}</h3>
+            <p>✈️ ${item['الخطوط الجوية']}</p>
+            <p>🛫 ${item['المطار']}</p>
+            <p>📆 ${item['مدة الرحلة']}</p>
+            <p>💰 غرفة جماعية: ${item['السعر الغرفة الجماعية (دج)']} دج</p>
+            <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterOffers() {
+      const airport = document.getElementById("airport-select").value;
+      const duration = document.getElementById("duration-select").value;
+      const direct = document.getElementById("direct-select").value;
+
+      const filtered = allOffers.filter(item => {
+        const matchAirport = !airport || item["المطار"]?.includes(airport);
+        const matchDuration = !duration || item["مدة الرحلة"]?.includes(duration);
+        const matchDirect = !direct || item["الخطوط الجوية"]?.includes(direct);
+        return matchAirport && matchDuration && matchDirect;
+      });
+
+      displayOffers(filtered);
+    }
   </script>
-<!-- أضف هذا الجزء داخل <body> قبل <h2> -->
-
-
 
 </body>
 </html>
