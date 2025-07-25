@@ -15,7 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 50vh;
 }
 
     .container {
@@ -65,7 +65,7 @@
       document.getElementById("status").innerText = "جاري الإرسال...";
 
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbwEebADLwihFKuqrSo_rB9eFcl3MzhlRPA0_PgZv4sL8Sd9WEsqWNqK4ctUf9OVlJKz/exec", {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbyOwnkhfYFq_FEH82kijMQi7OAynFkFKwetmD_fmkLEZeZEt7RrcLHdqKGdKxSlZPQ2/exec", {
           method: "POST",
           body: formData,
         });
