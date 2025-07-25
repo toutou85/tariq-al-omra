@@ -67,13 +67,36 @@
 </head>
 <body>
   <form id="umrahForm">
-    <!-- الخطوة 1: بيانات الزبون -->
-    <div class="step" id="step1">
-    https://script.google.com/macros/s/AKfycbxFdrmIKITA0_7-KLgioLdYrwBxCoY9JWbMa_VnJj2JAqpmi5gJ-VslNlMWczoMlk9v/exec
+    <!-- الخطوة 1: بيانات الزبون -->  
+    <div class="step" id="step1">  
+      <h2>معلومات الزبون</h2>  
+      <input type="hidden" id="agencyName" name="agency">  
+      <label for="offerNumber">رقم العرض:</label>  
+      <input type="text" id="offerNumber" name="offerNumber" readonly>  <label for="agencyDisplay">اسم الوكالة:</label>
+<input type="text" id="agencyDisplay" readonly>
+<input type="hidden" id="agencyName" name="agency">
 
-      <div class="buttons">
-        <button type="button" onclick="nextStep()">التالي</button>
-      </div>
+<label for="firstName">الاسم:</label>  
+  <input type="text" id="firstName" name="firstName" required>  
+
+  <label for="lastName">اللقب:</label>  
+  <input type="text" id="lastName" name="lastName" required>  
+
+  <label for="phone">رقم الهاتف:</label>  
+  <input type="tel" id="phone" name="phone" required>  
+
+  <label for="email">البريد الإلكتروني:</label>  
+  <input type="email" id="email" name="email" required>  
+
+  <label for="age">العمر:</label>  
+  <input type="number" id="age" name="age" min="0" required>  
+
+  <label for="passportExpiry">تاريخ انتهاء جواز السفر:</label>  
+  <input type="date" id="passportExpiry" name="passportExpiry" required>  
+
+  <div class="buttons">  
+    <button type="button" onclick="nextStep()">التالي</button>  
+  </div>  
     </div>
 
     <!-- الخطوة 2: الولاية والفرع -->
