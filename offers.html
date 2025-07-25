@@ -155,23 +155,34 @@
   <nav>
     <a href="index.html">🏠 الرئيسية</a>
   </nav>
+   <div>
+<div class="search-bar">
+  <select id="airport-select">
+    <option value="">🛫 اختر المطار</option>
+    <option value="الجزائر">مطار الجزائر الدولي</option>
+    <option value="وهران">مطار وهران</option>
+    <option value="قسنطينة">مطار قسنطينة</option>
+    <option value="عنابة">مطار عنابة</option>
+    <option value="بشار">مطار بشار</option>
+    <!-- أضف المزيد حسب الحاجة -->
+  </select>
 
-  <!-- 🔍 نموذج البحث -->
-  <div class="container">
-    <h2>🔍 البحث عن رحلة</h2>
-    <form>
-      <label for="airport">أقرب مطار</label>
-      <input type="text" id="airport" placeholder="مثال: مطار الجزائر الدولي">
+  <select id="duration-select">
+    <option value="">📆 مدة الرحلة</option>
+    <option value="15">15 يوم</option>
+    <option value="21">21 يوم</option>
+    <option value="28">28 يوم</option>
+    <option value="30">شهر</option>
+    <option value="أكثر من شهر">أكثر من شهر</option>
+  </select>
 
-      <label for="duration">مدة الرحلة (بالساعات)</label>
-      <input type="number" id="duration" placeholder="مثال: 3">
+  <select id="direct-select">
+    <option value="">🔁 نوع الرحلة</option>
+    <option value="مباشرة">مباشرة</option>
+    <option value="غير مباشرة">غير مباشرة</option>
+  </select>
+</div>
 
-      <label for="direct">نوع الرحلة</label>
-      <select id="direct">
-        <option value="">اختر نوع الرحلة</option>
-        <option value="direct">مباشرة</option>
-        <option value="indirect">غير مباشرة</option>
-      </select>
 
       <button type="submit">🔎 ابحث الآن</button>
     </form>
@@ -215,32 +226,7 @@
   </script>
 <!-- أضف هذا الجزء داخل <body> قبل <h2> -->
 
-<div class="search-bar">
-  <select id="airport-select">
-    <option value="">🛫 اختر المطار</option>
-    <option value="الجزائر">مطار الجزائر الدولي</option>
-    <option value="وهران">مطار وهران</option>
-    <option value="قسنطينة">مطار قسنطينة</option>
-    <option value="عنابة">مطار عنابة</option>
-    <option value="بشار">مطار بشار</option>
-    <!-- أضف المزيد حسب الحاجة -->
-  </select>
 
-  <select id="duration-select">
-    <option value="">📆 مدة الرحلة</option>
-    <option value="15">15 يوم</option>
-    <option value="21">21 يوم</option>
-    <option value="28">28 يوم</option>
-    <option value="30">شهر</option>
-    <option value="أكثر من شهر">أكثر من شهر</option>
-  </select>
-
-  <select id="direct-select">
-    <option value="">🔁 نوع الرحلة</option>
-    <option value="مباشرة">مباشرة</option>
-    <option value="غير مباشرة">غير مباشرة</option>
-  </select>
-</div>
 
 </body>
 </html>
