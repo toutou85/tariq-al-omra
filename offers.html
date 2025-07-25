@@ -5,6 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>عروض العمرة | طريق العمرة</title>
   <style>
+     * {
+    box-sizing: border-box;
+  }
+  body {
+    background: url('https://i.postimg.cc/JhKnMv57/FB-IMG-1753464094985.jpg') no-repeat center center fixed;
+    background-size: cover;            /* تغطية كاملة للشاشة */
+    background-position: center;
+    background-repeat: no-repeat;
+
+    margin: 0;
+    padding: 0;
+    font-family: 'Tahoma', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .container {
+    background: rgba(255, 255, 255, 0.85); /* شفافية متوسطة */
+    backdrop-filter: blur(5px);
+    max-width: 450px;
+    width: 90%;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+  }
     body {
       font-family: 'Tajawal', sans-serif;
       background-color: #f2f2f2;
@@ -109,6 +136,7 @@
             <div class="card-content">
               <h3>${item['اسم العرض']}</h3>
               <p>✈️ ${item['الخطوط الجوية']}</p>
+              <p>✈️ ${item['المطار']}</p>
               <p>📆 ${item['مدة الرحلة']}</p>
               <p>💰 غرفة جماعية: ${item['السعر الغرفة الجماعية (دج)']} دج</p>
               <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
