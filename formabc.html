@@ -284,66 +284,78 @@
       container.appendChild(div);
     }
 
+let بيانات_المرافقين = [];
+document.querySelectorAll("#companionsContainer fieldset").forEach(fieldset => {
+  const relation = fieldset.querySelector("select").value;
+  const name = fieldset.querySelector("input[name^='companionName']").value;
+  const birth = fieldset.querySelector("input[name^='companionBirth']").value;
+  const passport = fieldset.querySelector("input[name^='companionPassport']").value;
 
+  بيانات_المرافقين.push({
+    relation, name, birth, passport
+  });
+});
 
     // إرسال البيانات
     
   document.getElementById("umrahForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    const formData = new FormData(this);
+  const formData = new FormData(this);
 
-    // استخراج القيم من الحقول
-    const العرض = document.getElementById("offerNumber").value;
-    const اسم_الوكالة = document.getElementById("agencyName").value;
-    const نوع_الغرفة = document.getElementById("roomType").value;
-    const السعر = document.getElementById("price").value;
-    const صفة_الحجز = document.getElementById("bookingType").value;
-    const الولاية = document.getElementById("state").value;
-    const الفرع = document.getElementById("branch").value;
-    const الاسم = document.getElementById("firstName").value;
-    const اللقب = document.getElementById("lastName").value;
-    const الهاتف = document.getElementById("phone").value;
-    const البريد = document.getElementById("email").value;
-    const العمر = document.getElementById("age").value;
-    const تاريخ_انتهاء_الجواز = document.getElementById("passportExpiry").value;
-    const بيانات_المرافقين = document.getElementById("accompanying").value || "";  // تأكد أنه موجود
+  const العرض = document.getElementById("offerNumber").value;
+  const اسم_الوكالة = document.getElementById("agencyName").value;
+  const نوع_الغرفة = document.getElementById("roomType").value;
+  const صفة_الحجز = document.getElementById("reservationType").value;
+  const الولاية = document.getElementById("wilaya").value;
+  const الفرع = document.getElementById("branch").value;
+  const الاسم = document.getElementById("firstName").value;
+  const اللقب = document.getElementById("lastName").value;
+  const الهاتف = document.getElementById("phone").value;
+  const البريد = document.getElementById("email").value;
+  const العمر = document.getElementById("age").value;
+  const تاريخ_انتهاء_الجواز = document.getElementById("passportExpiry").value;
 
-    const companionCount = document.querySelectorAll(".companion").length;
-
-    // إضافتها يدويًا
-    formData.append("offerNumber", العرض);
-    formData.append("agency", اسم_الوكالة);
-    formData.append("roomType", نوع_الغرفة);
-    formData.append("price", السعر);
-    formData.append("bookingType", صفة_الحجز);
-    formData.append("state", الولاية);
-    formData.append("branch", الفرع);
-    formData.append("firstName", الاسم);
-    formData.append("lastName", اللقب);
-    formData.append("phone", الهاتف);
-    formData.append("email", البريد);
-    formData.append("age", العمر);
-    formData.append("passportExpiry", تاريخ_انتهاء_الجواز);
-    formData.append("accompanying", بيانات_المرافقين);
-    formData.append("companionCount", companionCount);
-
-    // إرسال البيانات
-    fetch("https://script.google.com/macros/s/AKfycbwhRy256icgyGjcGFMTBOcPzn8FpeNUo_aBqVfq0dqtdc3Kz44tBOTaLHp3Ny0Upq5l_g/exec", {
-      method: "POST",
-      body: formData
-    })
-    .then(res => res.text())
-    .then(response => {
-      alert("تم إرسال التسجيل بنجاح");
-      document.getElementById("umrahForm").style.display = "none";
-      document.getElementById("passportChoice").style.display = "block";
-    })
-    .catch(err => {
-      alert("خطأ في الإرسال: " + err.message);
-    });
+  // جمع بيانات المرافقين
+  let بيانات_المرافقين = [];
+  document.querySelectorAll("#companionsContainer fieldset").forEach(fieldset => {
+    const relation = fieldset.querySelector("select").value;
+    const name = fieldset.querySelector("input[name^='companionName']").value;
+    const birth = fieldset.querySelector("input[name^='companionBirth']").value;
+    const passport = fieldset.querySelector("input[name^='companionPassport']").value;
+    بيانات_المرافقين.push({ relation, name, birth, passport });
   });
 
+  // تجميع البيانات
+  formData.append("offerNumber", العرض);
+  formData.append("agency", اسم_الوكالة);
+  formData.append("roomType", نوع_الغرفة);
+  formData.append("bookingType", صفة_الحجز);
+  formData.append("state", الولاية);
+  formData.append("branch", الفرع);
+  formData.append("firstName", الاسم);
+  formData.append("lastName", اللقب);
+  formData.append("phone", الهاتف);
+  formData.append("email", البريد);
+  formData.append("age", العمر);
+  formData.append("passportExpiry", تاريخ_انتهاء_الجواز);
+  formData.append("accompanying", JSON.stringify(بيانات_المرافقين));
+  formData.append("companionCount", بيانات_المرافقين.length);
+
+  fetch("https://script.google.com/macros/s/AKfycbwhRy256icgyGjcGFMTBOcPzn8FpeNUo_aBqVfq0dqtdc3Kz44tBOTaLHp3Ny0Upq5l_g/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(response => {
+    alert("تم إرسال التسجيل بنجاح");
+    document.getElementById("umrahForm").style.display = "none";
+    document.getElementById("passportChoice").style.display = "block";
+  })
+  .catch(err => {
+    alert("خطأ في الإرسال: " + err.message);
+  });
+});
 
 
 
