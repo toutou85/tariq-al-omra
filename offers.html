@@ -126,6 +126,28 @@
     .btn:hover {
       background-color: #f1c40f;
     }
+    .search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  margin: 20px auto 10px;
+  max-width: 900px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.search-bar select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  min-width: 180px;
+}
+
   </style>
 </head>
 <body>
@@ -191,6 +213,34 @@
         console.error("فشل في جلب البيانات:", err);
       });
   </script>
+<!-- أضف هذا الجزء داخل <body> قبل <h2> -->
+
+<div class="search-bar">
+  <select id="airport-select">
+    <option value="">🛫 اختر المطار</option>
+    <option value="الجزائر">مطار الجزائر الدولي</option>
+    <option value="وهران">مطار وهران</option>
+    <option value="قسنطينة">مطار قسنطينة</option>
+    <option value="عنابة">مطار عنابة</option>
+    <option value="بشار">مطار بشار</option>
+    <!-- أضف المزيد حسب الحاجة -->
+  </select>
+
+  <select id="duration-select">
+    <option value="">📆 مدة الرحلة</option>
+    <option value="15">15 يوم</option>
+    <option value="21">21 يوم</option>
+    <option value="28">28 يوم</option>
+    <option value="30">شهر</option>
+    <option value="أكثر من شهر">أكثر من شهر</option>
+  </select>
+
+  <select id="direct-select">
+    <option value="">🔁 نوع الرحلة</option>
+    <option value="مباشرة">مباشرة</option>
+    <option value="غير مباشرة">غير مباشرة</option>
+  </select>
+</div>
 
 </body>
 </html>
