@@ -136,11 +136,31 @@ label {
   border-radius: 6px;
   margin-top: 15px;
 }
+    .message-box {
+  text-align: center;
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.7); /* شفافية السحابة */
+  backdrop-filter: blur(4px); /* تمويه الخلفية */
+  border-radius: 25px; /* شكل سحابي ناعم */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* ظل لطيف */
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.message-box h3 {
+  color: #333;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.message-box p {
+  color: #444;
+  font-size: 16px;
+}
 
 </style>
-
-
-
 </head>
 <body>
 
@@ -192,8 +212,6 @@ label {
         <button type="button" onclick="nextStep()">التالي</button>
       </div>
     </div>
-
-  
 
     <!-- الخطوة 2: الولاية والفرع -->
     <div class="step" id="step2">
