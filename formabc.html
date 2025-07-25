@@ -158,40 +158,55 @@ label {
   backdrop-filter: blur(4px);
 }
 
+.popup-box {
+  display: none; /* تظهر عند الحاجة فقط */
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9); /* خلفية بيضاء شبه شفافة */
+  margin: 30px auto;
+  max-width: 500px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(6px); /* تأثير الضباب */
+  color: #222; /* لون نص واضح */
+  font-size: 18px;
+  position: relative;
+  z-index: 1000;
+}
+
 .popup-box h3 {
-  color: #333;
+  font-size: 22px;
+  font-weight: bold;
+  color: #111;
   margin-bottom: 15px;
-  font-size: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 12px;
+  border-radius: 10px;
+  backdrop-filter: blur(3px);
 }
 
 .popup-box p {
-  font-size: 18px;
-  color: #666;
+  font-size: 17px;
+  color: #444;
+  margin: 10px 0;
 }
 
-.btn-group {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-top: 15px;
-}
-
-.btn-group button {
-  padding: 10px 18px;
+.popup-box button {
+  margin: 8px;
+  padding: 10px 20px;
   border: none;
   border-radius: 8px;
-  background-color: #FFD700;
+  background-color: #007bff;
+  color: white;
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s ease;
 }
 
-.btn-group button:hover {
-  background-color: #f1c40f;
+.popup-box button:hover {
+  background-color: #0056b3;
 }
-
 
 </style>
 </head>
@@ -323,18 +338,19 @@ label {
     </div>
   </form>
 
-  <!-- نافذة منبثقة بعد التسجيل -->
-  <div id="passportChoice" style="display:none; text-align:center; padding: 20px;">
-    <h3>📄 هل ترغب في تحميل صور جواز السفر الآن؟</h3>
-    <button onclick="location.href='upload.html'">📤 نعم، أريد تحميل الصور</button>
-    <button onclick="location.href='index.html'">⏭️ لا، سأحملها لاحقًا</button>
-  </div>
+ <!-- نافذة الانتظار -->
+<div id="message" class="popup-box">
+  <h3>⏳ الرجاء الانتظار <span id="countdown">10</span> ثواني...</h3>
+  <p>✨ لا تنسَ الاستغفار أثناء الانتظار ✨</p>
+</div>
 
-  <!-- رسالة الانتظار -->
-  <div id="message" style="display:none; text-align:center; margin-top:20px;">
-    <h3>⏳ الرجاء الانتظار <span id="countdown">10</span> ثواني...</h3>
-    <p>✨ لا تنسَ الاستغفار أثناء الانتظار ✨</p>
-  </div>
+<!-- نافذة اختيار تحميل جواز السفر -->
+<div id="passportChoice" class="popup-box">
+  <h3>📄 هل ترغب في تحميل صور جواز السفر الآن؟</h3>
+  <button onclick="location.href='upload.html'">📤 نعم، أريد تحميل الصور</button>
+  <button onclick="location.href='index.html'">⏭️ لا، سأحملها لاحقًا</button>
+</div>
+
 
   <script>
     let currentStep = 0;
