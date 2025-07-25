@@ -223,7 +223,7 @@
     const params = new URLSearchParams(window.location.search);
     const agency = decodeURIComponent(params.get("agency") || "");
     const offerID = decodeURIComponent(params.get("offerID") || "");
-    document.getElementById("agencyName").value = agency;
+    document.getElementById("agencyName").value = agencyID;
     document.getElementById("offerNumber").value = offerID;
 
     // ملء الولايات
