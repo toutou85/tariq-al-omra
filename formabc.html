@@ -284,17 +284,6 @@
       container.appendChild(div);
     }
 
-let بيانات_المرافقين = [];
-document.querySelectorAll("#companionsContainer fieldset").forEach(fieldset => {
-  const relation = fieldset.querySelector("select").value;
-  const name = fieldset.querySelector("input[name^='companionName']").value;
-  const birth = fieldset.querySelector("input[name^='companionBirth']").value;
-  const passport = fieldset.querySelector("input[name^='companionPassport']").value;
-
-  بيانات_المرافقين.push({
-    relation, name, birth, passport
-  });
-});
 
     // إرسال البيانات
     
@@ -318,6 +307,18 @@ document.querySelectorAll("#companionsContainer fieldset").forEach(fieldset => {
 
   // جمع بيانات المرافقين
   let بيانات_المرافقين = [];
+let بيانات_المرافقين = [];
+document.querySelectorAll("#companionsContainer fieldset").forEach(fieldset => {
+  const relation = fieldset.querySelector("select").value;
+  const name = fieldset.querySelector("input[name^='companionName']").value;
+  const birth = fieldset.querySelector("input[name^='companionBirth']").value;
+  const passport = fieldset.querySelector("input[name^='companionPassport']").value;
+
+  بيانات_المرافقين.push({
+    relation, name, birth, passport
+  });
+});
+
   document.querySelectorAll("#companionsContainer fieldset").forEach(fieldset => {
     const relation = fieldset.querySelector("select").value;
     const name = fieldset.querySelector("input[name^='companionName']").value;
