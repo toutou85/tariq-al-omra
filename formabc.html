@@ -63,6 +63,13 @@
       cursor: pointer;
       margin-bottom: 10px;
     }
+    body {
+  font-family: 'Tahoma', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url('background.jpg') no-repeat center center fixed; /*https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQer7U0vr_gUvl46hCSVgAfCXMSdsLaUiQq3DofBgzfuQWY6FH2C2-yIRSlflem6SSV2z4&usqp=CAU*/
+  background-size: cover;
+}
   </style>
 </head>
 <body>
@@ -224,6 +231,7 @@
     const agency = decodeURIComponent(params.get("agency") || "");
       document.getElementById("agencyDisplay").value = decodeURIComponent(params.get("agency") || "");
       document.getElementById("offerNumber").value = decodeURIComponent(params.get("offerID") || "");
+    document.getElementById("agencyName").value = agency;
     // ملء الولايات
     const wilayas = ["أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة","تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة","سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة","وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة","سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت","غرداية","غليزان","تميمون","برج باجي مختار","أولاد جلال","بني عباس","عين صالح","عين قزام","تقرت","جانت","المغير","المنيعة"];
     const wilayaSelect = document.getElementById("wilaya");
@@ -303,7 +311,7 @@
       document.getElementById("message").style.display = "block";
       form.style.display = "none";
 
-      fetch("https://script.google.com/macros/s/AKfycbxAJNzXD4pPiBcqJyFx7_hl_vg4_LqBmkjpNXIeDcv84anssqwmrLejQV5FlU_BC6DhpQ/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbwHt5rZwfiO1V0uUT0kAHaTgogQXP9cte4SdW6DwdcaHheLmXak56eEl7lMboYaRJEq1A/exec", {
         method: "POST",
         body: formData
       })
