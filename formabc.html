@@ -287,45 +287,55 @@
 
     // إرسال البيانات
     
- document.getElementById("umrahForm").addEventListener("submit", function(e) {
+<h2>🕋 نموذج تسجيل للعمرة</h2>
+<form id="umrahForm">
+  رقم العرض: <input name="offerNumber" required><br>
+  اسم الوكالة: <input name="agency" required><br>
+  نوع الغرفة: <input name="roomType" required><br>
+  السعر: <input name="price" required><br>
+  صفة الحجز: <input name="bookingType" required><br>
+  الولاية: <input name="state" required><br>
+  الفرع: <input name="branch" required><br>
+  الاسم: <input name="firstName" required><br>
+  اللقب: <input name="lastName" required><br>
+  الهاتف: <input name="phone" required><br>
+  البريد: <input name="email" type="email" required><br>
+  العمر: <input name="age" type="number" required><br>
+  تاريخ انتهاء الجواز: <input name="passportExpiry" type="date" required><br>
+  <button type="submit">📨 إرسال</button>
+</form>
+
+<div id="message" style="display:none; text-align:center; margin-top:20px;">
+  <h3>⏳ الرجاء الانتظار 10 ثواني...</h3>
+  <p>✨ لا تنسَ الاستغفار أثناء الانتظار ✨</p>
+</div>
+
+<script>
+document.getElementById("umrahForm").addEventListener("submit", function(e) {
   e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
 
-  // اجمع القيم بترتيب الأعمدة في الجدول
-  const data = [
-    العرض,            // العمود 1
-    اسم_الوكالة,       // العمود 2
-    نوع_الغرفة,        // العمود 3
-    السعر,            // العمود 4
-    صفة_الحجز,         // العمود 5
-    الولاية,           // العمود 6
-    الفرع,            // العمود 7
-    الاسم,            // العمود 8
-    اللقب,            // العمود 9
-    الهاتف,           // العمود 10
-    البريد,           // العمود 11
-    العمر,            // العمود 12
-    تاريخ_انتهاء_الجواز, // العمود 13
-    بيانات_المرافقين   // العمود 14 (مثلاً JSON)
-  ];
+  document.getElementById("message").style.display = "block";
+  form.style.display = "none";
 
-  const formData = new FormData();
-  formData.append("data", JSON.stringify(data));
-
-  fetch("https://script.google.com/macros/s/AKfycbxiWyOyaPmHppZV8NnpU6qorZW2DthihhwDiLbaNnP51z2txUwckxb0qW_wKpt2A82RDw/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbw6pZB8Rs5EBPfy3aos57DuEQ-OwlctKGxas7iIYwFRqmfecuTMwVOLu0suHCgEMwekMw/exec", {
     method: "POST",
     body: formData
   })
   .then(res => res.text())
-  .then(response => {
-    alert("تم إرسال التسجيل بنجاح");
-    document.getElementById("umrahForm").style.display = "none";
-    document.getElementById("passportChoice").style.display = "block";
+  .then(res => {
+    setTimeout(() => {
+      alert("✅ تم إرسال طلبك بنجاح!");
+      window.location.href = "index.html";
+    }, 10000);
   })
   .catch(err => {
-    alert("فشل في الإرسال: " + err.message);
+    alert("❌ حدث خطأ: " + err.message);
+    form.style.display = "block";
+    document.getElementById("message").style.display = "none";
   });
 });
-
 
 
   </script>
