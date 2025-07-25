@@ -287,61 +287,31 @@
 
     // إرسال البيانات
     
-  document.getElementById("umrahForm").addEventListener("submit", function(e) {
+ document.getElementById("umrahForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
-  const formData = new FormData(this);
+  // اجمع القيم بترتيب الأعمدة في الجدول
+  const data = [
+    العرض,            // العمود 1
+    اسم_الوكالة,       // العمود 2
+    نوع_الغرفة,        // العمود 3
+    السعر,            // العمود 4
+    صفة_الحجز,         // العمود 5
+    الولاية,           // العمود 6
+    الفرع,            // العمود 7
+    الاسم,            // العمود 8
+    اللقب,            // العمود 9
+    الهاتف,           // العمود 10
+    البريد,           // العمود 11
+    العمر,            // العمود 12
+    تاريخ_انتهاء_الجواز, // العمود 13
+    بيانات_المرافقين   // العمود 14 (مثلاً JSON)
+  ];
 
-  const العرض = document.getElementById("offerNumber").value;
-  const اسم_الوكالة = document.getElementById("agencyName").value;
-  const نوع_الغرفة = document.getElementById("roomType").value;
-  const صفة_الحجز = document.getElementById("reservationType").value;
-  const الولاية = document.getElementById("wilaya").value;
-  const الفرع = document.getElementById("branch").value;
-  const الاسم = document.getElementById("firstName").value;
-  const اللقب = document.getElementById("lastName").value;
-  const الهاتف = document.getElementById("phone").value;
-  const البريد = document.getElementById("email").value;
-  const العمر = document.getElementById("age").value;
-  const تاريخ_انتهاء_الجواز = document.getElementById("passportExpiry").value; 
+  const formData = new FormData();
+  formData.append("data", JSON.stringify(data));
 
-let بيانات_المرافقين = [];
-document.querySelectorAll("#companionsContainer fieldset").forEach(fieldset => {
-  const relation = fieldset.querySelector("select").value;
-  const name = fieldset.querySelector("input[name^='companionName']").value;
-  const birth = fieldset.querySelector("input[name^='companionBirth']").value;
-  const passport = fieldset.querySelector("input[name^='companionPassport']").value;
-
-  بيانات_المرافقين.push({
-    relation, name, birth, passport
-  });
-});
-
-  document.querySelectorAll("#companionsContainer fieldset").forEach(fieldset => {
-    const relation = fieldset.querySelector("select").value;
-    const name = fieldset.querySelector("input[name^='companionName']").value;
-    const birth = fieldset.querySelector("input[name^='companionBirth']").value;
-    const passport = fieldset.querySelector("input[name^='companionPassport']").value;
-    بيانات_المرافقين.push({ relation, name, birth, passport });
-  });
-
-  // تجميع البيانات
-  formData.append("offerNumber", العرض);
-  formData.append("agency", اسم_الوكالة);
-  formData.append("roomType", نوع_الغرفة);
-  formData.append("bookingType", صفة_الحجز);
-  formData.append("state", الولاية);
-  formData.append("branch", الفرع);
-  formData.append("firstName", الاسم);
-  formData.append("lastName", اللقب);
-  formData.append("phone", الهاتف);
-  formData.append("email", البريد);
-  formData.append("age", العمر);
-  formData.append("passportExpiry", تاريخ_انتهاء_الجواز);
-  formData.append("accompanying", JSON.stringify(بيانات_المرافقين));
-  formData.append("companionCount", بيانات_المرافقين.length);
-
-  fetch("https://script.google.com/macros/s/AKfycbwhRy256icgyGjcGFMTBOcPzn8FpeNUo_aBqVfq0dqtdc3Kz44tBOTaLHp3Ny0Upq5l_g/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxiWyOyaPmHppZV8NnpU6qorZW2DthihhwDiLbaNnP51z2txUwckxb0qW_wKpt2A82RDw/exec", {
     method: "POST",
     body: formData
   })
@@ -352,10 +322,9 @@ document.querySelectorAll("#companionsContainer fieldset").forEach(fieldset => {
     document.getElementById("passportChoice").style.display = "block";
   })
   .catch(err => {
-    alert("خطأ في الإرسال: " + err.message);
+    alert("فشل في الإرسال: " + err.message);
   });
 });
-
 
 
 
