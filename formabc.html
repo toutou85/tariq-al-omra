@@ -70,13 +70,20 @@
     <!-- الخطوة 1: بيانات الزبون -->
     <div class="step" id="step1">
       <h2>معلومات الزبون</h2>
-<input type="hidden" id="agencyName" name="agency">
+window.onload = function () {
+  const params = new URLSearchParams(window.location.search);
+  const agency = params.get("agency");
+  const offerID = params.get("offerID");
 
-<label for="offerNumber">رقم العرض:</label>
-<input type="text" id="offerNumber" name="offerNumber" readonly>
+  if (agency) {
+    document.getElementById("agencyDisplay").value = decodeURIComponent(agency);
+    document.getElementById("agencyName").value = decodeURIComponent(agency);
+  }
 
-<label for="agencyDisplay">اسم الوكالة:</label>
-<input type="text" id="agencyDisplay" readonly>
+  if (offerID) {
+    document.getElementById("offerNumber").value = decodeURIComponent(offerID);
+  }
+};
 
       <label for="firstName">الاسم:</label>
       <input type="text" id="firstName" name="firstName" required>
