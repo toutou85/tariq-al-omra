@@ -121,18 +121,29 @@
 
 </head>
 <body>
-  <div class="container">
-  <form id="umrahForm">
-    <!-- الخطوة 1: بيانات الزبون -->  
-    <div class="step active" id="step1">
-      <h2>معلومات الزبون</h2>  
-      <input type="hidden" id="agencyName" name="agency">  
-      <label for="offerNumber">رقم العرض:</label>  
-      <input type="text" id="offerNumber" name="offerNumber" readonly>  <label for="agencyDisplay">اسم الوكالة:</label>
-<input type="text" id="agencyDisplay" readonly>
-<input type="hidden" id="agencyName" name="agency">
 
-<label for="firstName">الاسم:</label>  
+
+<div class="step active" id="step0">
+  <h2>معلومات العرض</h2>
+
+  <label for="offerNumber">رقم العرض:</label>  
+  <input type="text" id="offerNumber" name="offerNumber" readonly>
+
+  <label for="agencyDisplay">اسم الوكالة:</label>
+  <input type="text" id="agencyDisplay" readonly>
+
+  <!-- قيمة اسم الوكالة المخفية للإرسال -->
+  <input type="hidden" id="agencyName" name="agency">  
+
+  <div class="buttons">
+    <button type="button" onclick="nextStep()">التالي</button>
+  </div>
+</div>
+
+<div class="step" id="step1">
+  <h2>معلومات الزبون</h2>
+
+  <label for="firstName">الاسم:</label>  
   <input type="text" id="firstName" name="firstName" required>  
 
   <label for="lastName">اللقب:</label>  
@@ -150,10 +161,13 @@
   <label for="passportExpiry">تاريخ انتهاء جواز السفر:</label>  
   <input type="date" id="passportExpiry" name="passportExpiry" required>  
 
-  <div class="buttons">  
-    <button type="button" onclick="nextStep()">التالي</button>  
-  </div>  
-    </div>
+  <div class="buttons">
+    <button type="button" onclick="prevStep()">السابق</button>
+    <button type="submit">إرسال</button>
+  </div>
+</div>
+
+  
 
     <!-- الخطوة 2: الولاية والفرع -->
     <div class="step" id="step2">
