@@ -55,26 +55,27 @@
   </div>
 
  <script>
-document.getElementById("passportForm").addEventListener("submit", async function (e) {
+<form id="tester" enctype="multipart/form-data">
+  <input type="text" name="name" value="Test User" required>
+  <input type="tel" name="phone" value="123456" required>
+  <input type="file" name="passport" required>
+  <button type="submit">تجربة</button>
+</form>
+<p id="stat"></p>
+<script>
+document.getElementById("tester").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const form = e.target;
-  const formData = new FormData(form);
-  document.getElementById("status").innerText = "جاري الإرسال...";
-
-  try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbzHRUuTN4CFvKr9L5Bo1lujhfV10T2Src_OwiBpqROnemjOhowrgqyrVaZyoV4yOqo_/exec", {
-      method: "POST",
-      body: formData,
-    });
-
-    const result = await response.json();
-    document.getElementById("status").innerText = result.success ? result.message : "❌ حدث خطأ";
-    form.reset();
-  } catch (err) {
-    document.getElementById("status").innerText = "❌ فشل في الاتصال بالخادم.";
- 
-  }
+  const res = await fetch(
+    "https://script.google.com/macros/s/AKfycbzoTZUGH25AKwm2PHr53ZXv9UpZ41inTGhiL-BBbGiQWDOy9o7xK_eFlO-d39NtzH4r/exec",
+    { method: "POST", body: new FormData(e.target) }
+  );
+  const json = await res.json().catch(() => null);
+  document.getElementById("stat").innerText = json
+    ? (json.success ? json.message : json.message)
+    : "لا توجد استجابة JSON";
 });
+</script>
+
 </script>
 
 </body>
