@@ -187,11 +187,21 @@
         display: inline;
       }
     }
+
+/* الحركة الموجية */
+@keyframes wave {
+  0%   { transform: rotate(2deg) translateY(0px); }
+  25%  { transform: rotate(-2deg) translateY(2px); }
+  50%  { transform: rotate(3deg) translateY(0px); }
+  75%  { transform: rotate(-3deg) translateY(-2px); }
+  100% { transform: rotate(2deg) translateY(0px); }
+}
 .flag {
   position: fixed;
   top: 50%;
   left: 50%;
   width: 100px;
+z-index: 999; /* لإظهار العلم فوق جميع الطبقات */
   animation: wave 2.5s infinite ease-in-out;
   transform: translate(-50%, -50%);
 }
