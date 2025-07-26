@@ -45,38 +45,32 @@
 <body>
   <div class="container">
     <h2>تحميل جواز السفر</h2>
-    <form id="passportForm">
+    <form id="tester" enctype="multipart/form-data">
       <input type="text" name="name" placeholder="الاسم الكامل" required>
       <input type="tel" name="phone" placeholder="رقم الهاتف" required>
       <input type="file" name="passport" accept=".pdf,.jpg,.jpeg,.png" required>
       <button type="submit">إرسال</button>
     </form>
-    <p id="status"></p>
+    <p id="stat"></p>
   </div>
 
- <script>
-<form id="tester" enctype="multipart/form-data">
-  <input type="text" name="name" value="Test User" required>
-  <input type="tel" name="phone" value="123456" required>
-  <input type="file" name="passport" required>
-  <button type="submit">تجربة</button>
-</form>
-<p id="stat"></p>
-<script>
-document.getElementById("tester").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const res = await fetch(
-    "https://script.google.com/macros/s/AKfycbzoTZUGH25AKwm2PHr53ZXv9UpZ41inTGhiL-BBbGiQWDOy9o7xK_eFlO-d39NtzH4r/exec",
-    { method: "POST", body: new FormData(e.target) }
-  );
-  const json = await res.json().catch(() => null);
-  document.getElementById("stat").innerText = json
-    ? (json.success ? json.message : json.message)
-    : "لا توجد استجابة JSON";
-});
-</script>
+  <script>
+    document.getElementById("tester").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      document.getElementById("stat").innerText = "جاري الإرسال...";
 
-</script>
+      try {
+        const res = await fetch(
+          "https://script.google.com/macros/s/AKfycbzoTZUGH25AKwm2PHr53ZXv9UpZ41inTGhiL-BBbGiQWDOy9o7xK_eFlO-d39NtzH4r/exec",
+          { method: "POST", body: new FormData(e.target) }
+        );
 
+        const text = await res.text();
+        document.getElementById("stat").innerText = text || "تم الإرسال.";
+      } catch (err) {
+        document.getElementById("stat").innerText = "❌ فشل في الاتصال بالخادم.";
+      }
+    });
+  </script>
 </body>
 </html>
