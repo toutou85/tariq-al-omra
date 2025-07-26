@@ -170,6 +170,18 @@
         min-width: auto;
       }
     }
+.fog-box {
+  background: rgba(255, 255, 255, 0.2); /* خلفية ضبابية شبه شفافة */
+  backdrop-filter: blur(8px);           /* تطبيق تأثير ضبابي */
+  -webkit-backdrop-filter: blur(8px);   /* دعم لمتصفح Safari */
+  border-radius: 12px;                  /* زوايا دائرية */
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* ظل خفيف لتعزيز الرؤية */
+}
   </style>
 </head>
 <body>
@@ -194,10 +206,12 @@
     <button type="button" onclick="filterOffers()">🔎 ابحث الآن</button>
   </div>
 
+  <div class="fog-box">
   <h2>📢 عروض العمرة الحالية</h2>
   <div class="offers" id="offers-container">
     <p style="text-align:center;">جاري تحميل العروض...</p>
   </div>
+</div>
 
   <script>
     let allOffers = [];
