@@ -54,25 +54,28 @@
     <p id="status"></p>
   </div>
 
-  <script>
-    document.getElementById("passportForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      document.getElementById("status").innerText = "⏳ جاري الإرسال...";
+ <script>
+document.getElementById("passportForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+  document.getElementById("status").innerText = "جاري الإرسال...";
 
-      try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbzoTZUGH25AKwm2PHr53ZXv9UpZ41inTGhiL-BBbGiQWDOy9o7xK_eFlO-d39NtzH4r/exec", {
-          method: "POST",
-          body: formData
-        });
+  try {
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbxX-fzMT1TNa1ggkjHCZw4xOf4B0B_7Tn450PL_-rEd0Na8yeR45pm1_Mm-vhMt0e3U/exec",
+      { method: "POST", body: formData }
+    );
 
-        const result = await response.text();
-        document.getElementById("status").innerText = result;
-        if (result.includes("تم رفع الجواز بنجاح")) this.reset();
-      } catch (err) {
-        document.getElementById("status").innerText = "❌ فشل في الاتصال بالخادم.";
-      }
-    });
-  </script>
+    const result = await response.text();
+    document.getElementById("status").innerText =
+      result.includes("نجاح") ? "✅ تم الإرسال بنجاح" : "❌ حدث خطأ أثناء الإرسال";
+    if (result.includes("نجاح")) form.reset();
+  } catch (err) {
+    document.getElementById("status").innerText = "❌ فشل في الاتصال بالخادم.";
+  }
+});
+</script>
+
 </body>
 </html>
