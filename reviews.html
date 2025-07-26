@@ -1,142 +1,72 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>آراء المعتمرين | طريق العمرة</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>آراء وتعليقات المعتمرين | طريق العمرة</title>
   <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background-color: #f9f9f9;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background-color: #2c3e50;
-      color: white;
-      padding: 30px 10px;
-      text-align: center;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 30px auto;
-      padding: 0 15px;
-    }
-
-    h2 {
-      color: #27ae60;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    form {
-      background-color: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #333;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-family: inherit;
-    }
-
-    button {
-      background-color: #27ae60;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #219150;
-    }
-
-    .comments-list {
-      margin-top: 40px;
-    }
-
-    .comment {
-      background-color: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    }
-
-    .comment h4 {
-      margin: 0 0 5px;
-      color: #2c3e50;
-    }
-
-    .comment small {
-      color: #888;
-    }
-
-    .btn-back {
-      display: block;
-      text-align: center;
-      margin: 40px auto 0;
-      background-color: #2c3e50;
-      color: white;
-      padding: 10px 25px;
-      text-decoration: none;
-      border-radius: 8px;
-    }
-
-    .btn-back:hover {
-      background-color: #1a252f;
-    }
+    body { font-family: 'Tajawal', sans-serif; background: #f9f9f9; margin: 0; padding: 0; }
+    header { background: #2c3e50; color: white; padding: 30px 10px; text-align: center; }
+    .container { max-width: 800px; margin: 30px auto; padding: 0 15px; }
+    h2 { color: #27ae60; text-align: center; margin-bottom:20px; }
+    form { background: white; padding: 20px; border-radius:12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    label { display: block; margin-bottom:5px; font-weight: bold; color:#333; }
+    input, textarea, select { width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:8px; }
+    button { background: #27ae60; color: white; padding:12px 20px; border:none; border-radius:8px; cursor:pointer; }
+    button:hover { background: #219150; }
+    .comments-list { margin-top:40px; }
+    .comment { background: #fff; padding:15px; border-radius:8px; margin-bottom:20px; position: relative; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+    .comment h4 { margin:0 0 5px; color:#2c3e50; }
+    .comment small { color:#888; }
+    .comment p { margin:10px 0; }
+    .comment button { margin-right:5px; font-size:0.9em; }
+    .reply-list { margin-left:20px; margin-top:10px; }
+    .reply { background: #f5f5f5; padding:10px; border-radius:6px; margin-bottom:10px; }
+    .site-like { text-align:center; margin:20px 0; }
+    .btn-back { display: block; text-align:center; margin:40px auto 0; background:#2c3e50; color:white; padding:10px 25px; text-decoration:none; border-radius:8px; }
+    .btn-back:hover { background:#1a252f; }
   </style>
 </head>
 <body>
-
   <header>
     <h1>آراء وتعليقات المعتمرين</h1>
-    <p>شاركنا تجربتك في رحلات العمرة</p>
+    <p>شاركنا تجربتك وضغط إعجاب 👍</p>
   </header>
 
   <div class="container">
     <h2>🗣️ أضف تعليقك</h2>
     <form id="commentForm">
       <label for="name">الاسم الكامل:</label>
-      <input type="text" id="name" name="name" required>
+      <input type="text" id="name" required>
 
       <label for="wilaya">الولاية:</label>
-      <select id="wilaya" name="wilaya" required>
+      <select id="wilaya" required>
         <option value="">اختر ولايتك</option>
-        <option value="الجزائر">الجزائر</option>
-        <option value="سطيف">سطيف</option>
-        <option value="قسنطينة">قسنطينة</option>
-        <option value="ورقلة">ورقلة</option>
-        <option value="تلمسان">تلمسان</option>
-        <!-- أضف باقي الولايات حسب الحاجة -->
+        <!-- 58 ولاية -->
+        <script>
+          const wilayas = ["أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة",
+            "تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة","سكيكدة","سيدي بلعباس",
+            "عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة","وهران","البيض","إليزي","برج بوعريريج",
+            "بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة","سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت",
+            "غرداية","غليزان","تميمونت","برج باجي مختار","أولاد جلال","بني عباس","عين صالح","عين قزام","تقرت","جانت","المغير","المنيعة"];
+          wilayas.forEach(w=>{
+            document.write(`<option value="${w}">${w}</option>`);
+          });
+        </script>
       </select>
 
       <label for="message">رسالتك:</label>
-      <textarea id="message" name="message" rows="4" required></textarea>
+      <textarea id="message" rows="4" required></textarea>
 
       <button type="submit">📨 إرسال التعليق</button>
     </form>
 
-    <div class="comments-list" id="commentsList">
-      <!-- التعليقات ستُعرض هنا -->
+    <div class="site-like">
+      <button id="siteLikeBtn">👍 أحببت الموقع؟</button>
+      <div>Likes: <span id="siteLikes">0</span></div>
     </div>
+
+    <div class="comments-list" id="commentsList"></div>
 
     <a href="index.html" class="btn-back">⬅️ الرجوع إلى الصفحة الرئيسية</a>
   </div>
@@ -144,28 +74,93 @@
   <script>
     const form = document.getElementById('commentForm');
     const commentsList = document.getElementById('commentsList');
+    const siteLikeBtn = document.getElementById('siteLikeBtn');
+    const siteLikesSpan = document.getElementById('siteLikes');
 
-    // عند إرسال التعليق
-    form.addEventListener('submit', function(e) {
+    // تحميل عداد إعجاب الموقع من التخزين
+    let siteLiked = localStorage.getItem('siteLiked') === 'true';
+    let siteLikes = parseInt(localStorage.getItem('siteLikes')) || 0;
+    siteLikesSpan.textContent = siteLikes;
+    if (siteLiked) siteLikeBtn.disabled = true;
+
+    siteLikeBtn.addEventListener('click', () => {
+      if (!siteLiked) {
+        siteLikes++;
+        siteLikesSpan.textContent = siteLikes;
+        localStorage.setItem('siteLikes', siteLikes);
+        localStorage.setItem('siteLiked', 'true');
+        siteLikeBtn.disabled = true;
+      }
+    });
+
+    form.addEventListener('submit', e => {
       e.preventDefault();
+      const name = form.name.value.trim();
+      const wilaya = form.wilaya.value;
+      const message = form.message.value.trim();
+      if (!name || !wilaya || !message) return;
 
-      const name = document.getElementById('name').value;
-      const wilaya = document.getElementById('wilaya').value;
-      const message = document.getElementById('message').value;
-
-      const commentBox = document.createElement('div');
-      commentBox.classList.add('comment');
-      commentBox.innerHTML = `
-        <h4>${name}</h4>
-        <small>من ولاية ${wilaya}</small>
-        <p>${message}</p>
-      `;
-
-      commentsList.prepend(commentBox);
-
+      const comment = {
+        id: 'c_' + Date.now(),
+        name, wilaya, message,
+        likes: 0,
+        replies: []
+      };
+      addComment(comment);
       form.reset();
     });
-  </script>
 
+    function addComment(c) {
+      const box = document.createElement('div');
+      box.className = 'comment';
+      box.dataset.id = c.id;
+      box.innerHTML = `
+        <h4>${c.name}</h4><small>من ولاية ${c.wilaya}</small>
+        <p>${c.message}</p>
+        <button class="like-comment">👍 <span>${c.likes}</span></button>
+        <button class="reply-btn">رد</button>
+        <button class="delete-btn">🗑️ حذف</button>
+        <div class="reply-list"></div>
+      `;
+      commentsList.prepend(box);
+
+      const likeBtn = box.querySelector('.like-comment');
+      likeBtn.addEventListener('click', () => {
+        c.likes++;
+        likeBtn.querySelector('span').textContent = c.likes;
+      });
+
+      const deleteBtn = box.querySelector('.delete-btn');
+      deleteBtn.addEventListener('click', () => {
+        box.remove();
+      });
+
+      const replyBtn = box.querySelector('.reply-btn');
+      replyBtn.addEventListener('click', () => {
+        showReplyForm(box, c);
+      });
+    }
+
+    function showReplyForm(box, c) {
+      if (box.querySelector('.reply-form')) return;
+      const formR = document.createElement('div');
+      formR.className = 'reply-form';
+      formR.innerHTML = `
+        <textarea rows="2" placeholder="ردك..." required></textarea>
+        <button>أرسل الرد</button>
+      `;
+      box.appendChild(formR);
+      formR.querySelector('button').addEventListener('click', () => {
+        const txt = formR.querySelector('textarea').value.trim();
+        if (!txt) return;
+        c.replies.push(txt);
+        const replyDiv = document.createElement('div');
+        replyDiv.className = 'reply';
+        replyDiv.textContent = txt;
+        box.querySelector('.reply-list').appendChild(replyDiv);
+        formR.remove();
+      });
+    }
+  </script>
 </body>
 </html>
