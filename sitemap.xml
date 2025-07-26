@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://tariq-al-omra.netlify.app/</loc>
+    <lastmod>2025-07-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url><loc>https://tariq-al-omra.netlify.app/about.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/achievements.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/admin.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/contact.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/footer.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/form.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/formabc.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/googleef276568d519a6be.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/index.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/join.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/notifications.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/offer-details.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/offers.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/reviews.html</loc></url>
+  <url><loc>https://tariq-al-omra.netlify.app/upload.html</loc></url>
+
+</urlset>
