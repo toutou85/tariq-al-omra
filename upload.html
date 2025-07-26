@@ -66,10 +66,12 @@
       document.getElementById("status").innerText = "جاري الإرسال...";
 
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbxAddzWxtLdIGRdwbp8pJnhC9vubKERjwJ0dqR1E33trB69KCzkOOVedJxHKhr984oZ/exec", {
-          method: "POST",
-          body: formData,
-        });
+      const response = await fetch("https://script.google.com/macros/s/AKfycbxd06aJqGXNXNZIE_TYcTE6a14rGTOKcfaY02Vq6zA-sOAeuAkiJcp2ayE615Gikeg/exec", {
+  method: "POST",
+  body: formData,
+  mode: "no-cors"
+});
+
 
         const result = await response.text();
         document.getElementById("status").innerText = result.includes("نجاح") ? "تم الإرسال بنجاح" : "حدث خطأ أثناء الإرسال";
