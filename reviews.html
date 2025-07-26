@@ -2,119 +2,158 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>آراء المعتمرين | طريق العمرة</title>
+  <title>آراء المعتمرين</title>
   <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    .comment-box, .comment {
-      background: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .comment .meta {
-      font-size: 14px;
-      color: #555;
-    }
-    .comment .content {
-      margin: 10px 0;
-    }
-    .btn {
-      padding: 5px 10px;
-      background: #2c3e50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .like-count {
-      margin-right: 10px;
-      color: green;
-    }
-    select, input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .reply-box {
-      margin-top: 10px;
-    }
+    body { font-family: 'Tahoma', sans-serif; background: #f9f9f9; padding: 20px; }
+    .comment-box, .comment { background: #fff; padding: 10px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 0 3px #ccc; }
+    input, textarea, select { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 6px; }
+    button { padding: 5px 12px; border: none; border-radius: 6px; background: #007bff; color: #fff; cursor: pointer; margin-top: 5px; }
+    button:hover { background: #0056b3; }
+    .reply-box { margin-right: 20px; margin-top: 10px; background: #f1f1f1; padding: 5px; border-radius: 5px; }
+    .likes { color: #e91e63; margin-right: 10px; }
+    .delete-btn { background: red; }
+    .site-like { margin-bottom: 15px; }
   </style>
 </head>
 <body>
-  <h1>آراء وتعليقات المعتمرين</h1>
 
-  <div class="comment-box">
-    <input type="text" id="name" placeholder="اسمك الكامل">
-    <select id="wilaya">
-      <option disabled selected>اختر ولايتك</option>
-      <option>أدرار</option><option>الشلف</option><option>الأغواط</option><option>أم البواقي</option><option>باتنة</option><option>بجاية</option><option>بسكرة</option><option>بشار</option><option>البليدة</option><option>البويرة</option><option>تمنراست</option><option>تبسة</option><option>تلمسان</option><option>تيارت</option><option>تيزي وزو</option><option>الجزائر</option><option>الجلفة</option><option>جيجل</option><option>سطيف</option><option>سعيدة</option><option>سكيكدة</option><option>سيدي بلعباس</option><option>عنابة</option><option>قالمة</option><option>قسنطينة</option><option>المدية</option><option>مستغانم</option><option>المسيلة</option><option>معسكر</option><option>ورقلة</option><option>وهران</option><option>البيض</option><option>إليزي</option><option>برج بوعريريج</option><option>بومرداس</option><option>الطارف</option><option>تندوف</option><option>تيسمسيلت</option><option>الوادي</option><option>خنشلة</option><option>سوق أهراس</option><option>تيبازة</option><option>ميلة</option><option>عين الدفلى</option><option>النعامة</option><option>عين تموشنت</option><option>غرداية</option><option>غليزان</option><option>تميمون</option><option>برج باجي مختار</option><option>أولاد جلال</option><option>بني عباس</option><option>عين صالح</option><option>عين قزام</option><option>تقرت</option><option>جانت</option><option>المغير</option><option>المنيعة</option>
-    </select>
-    <textarea id="comment" placeholder="اكتب تعليقك هنا..."></textarea>
-    <button class="btn" onclick="sendComment()">نشر التعليق</button>
-  </div>
+<h2>آراء المعتمرين</h2>
 
-  <div id="all-comments"></div>
+<div class="site-like">
+  <button onclick="likeSite()">❤️ أعجبني الموقع</button> <span id="siteLikeStatus"></span>
+</div>
 
-  <div style="text-align:center; margin-top:30px">
-    <span id="site-like-count" class="like-count">0</span>
-    <button class="btn" onclick="likeSite()">👍 إعجاب للموقع</button>
-  </div>
+<div class="comment-box">
+  <input type="text" id="name" placeholder="الاسم">
+  <select id="wilaya">
+    <option value="">اختر ولايتك</option>
+  
+  const wilayas = [
+    "أدرار", "الشلف", "الأغواط", "أم البواقي", "باتنة", "بجاية", "بسكرة", "بشار", "البليدة", "البويرة",
+    "تمنراست", "تبسة", "تلمسان", "تيارت", "تيزي وزو", "الجزائر", "الجلفة", "جيجل", "سطيف", "سعيدة",
+    "سكيكدة", "سيدي بلعباس", "عنابة", "قالمة", "قسنطينة", "المدية", "مستغانم", "المسيلة", "معسكر", "ورقلة",
+    "وهران", "البيض", "إليزي", "برج بوعريريج", "بومرداس", "الطارف", "تندوف", "تيسمسيلت", "الوادي", "خنشلة",
+    "سوق أهراس", "تيبازة", "ميلة", "عين الدفلى", "النعامة", "عين تموشنت", "غرداية", "غليزان", "تميمون", "برج باجي مختار",
+    "أولاد جلال", "بني عباس", "عين قزام", "تقرت", "جانت", "المغير", "المنيعة", "دار البيضاء"
+  ];
+  wilayas.forEach(w => {
+    document.write(`<option value="${w}">${w}</option>`);
+  });
+</script>
 
-  <script>
-    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbw9F5lK_HnuR-_scEkDrQ5tbyBEOJ2KAB9qWTtZv_k0s1MbIEw2WtC_fSFhyRHEeUAD/exec';
-    const browserId = localStorage.getItem('umrah_user_id') || crypto.randomUUID();
-    localStorage.setItem('umrah_user_id', browserId);
+    </script>
+  </select>
+  <textarea id="comment" placeholder="اكتب تعليقك هنا..."></textarea>
+  <button onclick="addComment()">إرسال التعليق</button>
+</div>
 
-    function sendComment() {
-      const name = document.getElementById('name').value;
-      const wilaya = document.getElementById('wilaya').value;
-      const comment = document.getElementById('comment').value;
-      if (!name || !wilaya || !comment) return alert("يرجى ملء كل الحقول");
+<div id="commentsContainer"></div>
 
-      const form = new FormData();
-      form.append('type', 'comment');
-      form.append('name', name);
-      form.append('wilaya', wilaya);
-      form.append('comment', comment);
-      form.append('browserId', browserId);
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyg12OY9fPQiM62-c0zznhiDKh1DGrm-YM5nuefk-gxKswCR0b4alqm_ueltKWopp1E/exec';
+const clientID = localStorage.getItem("clientID") || (function() {
+  const id = Date.now() + "-" + Math.random().toString(36).substring(2);
+  localStorage.setItem("clientID", id);
+  return id;
+})();
 
-      fetch(SHEET_URL, { method: 'POST', body: form })
-        .then(() => { alert("تم إرسال تعليقك بنجاح"); location.reload(); });
-    }
+function addComment() {
+  const name = document.getElementById("name").value.trim();
+  const wilaya = document.getElementById("wilaya").value.trim();
+  const comment = document.getElementById("comment").value.trim();
 
-    function likeComment(id) {
-      if (localStorage.getItem('liked_' + id)) return;
-      const form = new FormData();
-      form.append('type', 'like');
-      form.append('commentId', id);
-      form.append('browserId', browserId);
+  if (!name || !wilaya || !comment) return alert("يرجى تعبئة جميع الحقول");
 
-      fetch(SHEET_URL, { method: 'POST', body: form })
-        .then(() => { localStorage.setItem('liked_' + id, '1'); location.reload(); });
-    }
+  fetch(scriptURL, {
+    method: 'POST',
+    body: new URLSearchParams({
+      action: 'addComment',
+      name, wilaya, comment,
+      client: clientID
+    })
+  }).then(() => {
+    document.getElementById("comment").value = "";
+    getComments();
+  });
+}
 
-    function likeSite() {
-      if (localStorage.getItem('site_liked')) return;
-      const form = new FormData();
-      form.append('type', 'site_like');
-      fetch(SHEET_URL, { method: 'POST', body: form })
-        .then(() => { localStorage.setItem('site_liked', '1'); document.getElementById('site-like-count').innerText++; });
-    }
+function getComments() {
+  fetch(scriptURL)
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("commentsContainer");
+      container.innerHTML = "";
+      data.reverse().forEach(c => {
+        const commentEl = document.createElement("div");
+        commentEl.className = "comment";
+        commentEl.innerHTML = `
+          <strong>${c.name} (${c.wilaya})</strong><br>
+          <small>${new Date(c.date).toLocaleString()}</small><br><br>
+          ${c.comment}<br><br>
+          <span class="likes">❤️ ${c.likes}</span>
+          <button onclick="likeComment(${c.row})">أعجبني</button>
+          <button onclick="showReply(${c.row})">رد</button>
+          ${c.client === clientID ? `<button class="delete-btn" onclick="deleteComment(${c.row})">🗑️ حذف</button>` : ""}
+          <div class="reply-box" id="replies-${c.row}">
+            ${c.replies.filter(r => r).map(r => `<div>↪️ ${r}</div>`).join("")}
+          </div>
+        `;
+        container.appendChild(commentEl);
+      });
+    });
+}
 
-    // مبدئيًا بدون جلب التعليقات، سيضاف لاحقًا
-  </script>
+function likeComment(row) {
+  fetch(scriptURL, {
+    method: 'POST',
+    body: new URLSearchParams({
+      action: 'likeComment',
+      row, client: clientID
+    })
+  }).then(() => getComments());
+}
+
+function showReply(row) {
+  const reply = prompt("اكتب ردك:");
+  if (reply) {
+    const name = document.getElementById("name").value || "زائر";
+    const wilaya = document.getElementById("wilaya").value || "؟";
+    fetch(scriptURL, {
+      method: 'POST',
+      body: new URLSearchParams({
+        action: 'addReply',
+        row, reply, name, wilaya
+      })
+    }).then(() => getComments());
+  }
+}
+
+function deleteComment(row) {
+  if (confirm("هل أنت متأكد أنك تريد حذف تعليقك؟")) {
+    fetch(scriptURL, {
+      method: 'POST',
+      body: new URLSearchParams({
+        action: 'deleteComment',
+        row, client: clientID
+      })
+    }).then(() => getComments());
+  }
+}
+
+function likeSite() {
+  fetch(scriptURL, {
+    method: 'POST',
+    body: new URLSearchParams({
+      action: 'likeSite',
+      client: clientID
+    })
+  }).then(() => {
+    document.getElementById("siteLikeStatus").innerText = "شكراً لإعجابك ❤️";
+  });
+}
+
+window.onload = getComments;
+</script>
+
 </body>
 </html>
