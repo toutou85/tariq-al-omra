@@ -5,24 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تحميل جواز السفر</title>
   <style>
-    body {
-      background: url('https://i.postimg.cc/JhKnMv57/FB-IMG-1753464094985.jpg') no-repeat center center fixed;
-      background-size: cover;
-      margin: 0;
-      padding: 0;
-      font-family: 'Tahoma', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+   body {
+  background: url('https://i.postimg.cc/JhKnMv57/FB-IMG-1753464094985.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+  font-family: 'Tahoma', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+
     .container {
-      background: rgba(255, 255, 255, 0.85);
+      background: white;
+      background-color: rgba(255, 255, 255, 0.8); /* 50% شفافية */
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 0 10px #ccc;
-      max-width: 320px;
-      text-align: center;
+      max-width: 200px;
+      margin: auto;
     }
     input, button {
       margin: 10px 0;
@@ -85,14 +88,19 @@
         payload.append("fileData", base64File);
 
         try {
-          const res = await fetch("https://script.google.com/macros/s/AKfycbw6gUcR6SZ229Hffv6eKlDST8kBTMrTZPfC6CfYDkwkeKEoFXzLZYhEPHw7USqe5KEN/exec", {
+          const res = await fetch("https://script.google.com/macros/s/AKfycbxmyDIfVMDB0cd2_djSa-OwutSEJAAZc2rxoC94zWgoiIB6owweuTYgJM3tS13-ZaFd/exec", {
             method: "POST",
             body: payload,
           });
+             const result = await response.json();
+    document.getElementById("status").innerText = result.message;
 
-          const json = await res.json();
-          document.getElementById("status").innerText = json.message;
-          if (json.success) e.target.reset();
+    if (result.success && result.redirect) {
+      setTimeout(() => {
+        window.location.href = result.redirect;
+      }, 3000); // الانتقال بعد 3 ثواني
+    }
+
         } catch (err) {
           document.getElementById("status").innerText = "❌ فشل في الاتصال بالخادم.";
         }
