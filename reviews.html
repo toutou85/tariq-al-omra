@@ -200,21 +200,29 @@
     }
   }
 
-function updateLikeCount() {
-  fetch(scriptURL + "?action=getSiteLikes")
-    .then(res => res.text())
-    .then(count => {
-      document.getElementById("siteLikeStatus").innerText = `إعجاب الموقع: ❤️ ${count}`;
-    });
-}
+  // دالة إرسال إعجاب الموقع
+  function likeSite() {
+    fetch(scriptURL, {
+      method: 'POST',
+      body: new URLSearchParams({
+        action: 'likeSite',
+        client: clientID
+      })
+    }).then(() => updateLikeCount());
+  }
 
+  function updateLikeCount() {
+    fetch(scriptURL + "?action=getSiteLikes")
+      .then(res => res.text())
+      .then(count => {
+        document.getElementById("siteLikeStatus").innerText = `إعجاب الموقع: ❤️ ${count}`;
+      });
+  }
 
-  window.onload = getComments;
   window.onload = function() {
-  getComments();
-  updateLikeCount();
-};
-
+    getComments();
+    updateLikeCount();
+  };
 </script>
 
 </body>
