@@ -56,6 +56,12 @@
       gap: 20px;
       padding: 20px;
     }
+    .date-duration {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
 
     .card {
       background: white;
@@ -241,14 +247,17 @@
         card.className = "card";
 
         card.innerHTML = `
-          <img src="${item['رابط صورة الفندق']}" alt="صورة الفندق">
-          <div class="card-content">
-            <h3>${item['اسم العرض']}</h3>
-            <p>✈️ ${item['الخطوط الجوية']}</p>
-            <p>🛫 ${item['المطار']}</p>
-            <p>📆 ${item['مدة الرحلة']}</p>
-           <li>📅 تاريخ الرحلة: ${offer['تاريخ الرحلة']} | 💰 السعر الغرفة الجماعية (دج): ${offer['السعر الغرفة الجماعية (دج)']}</li>
-            <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
+  <img src="${item['رابط صورة الفندق']}" alt="صورة الفندق">
+  <div class="card-content">
+    <h3>${item['اسم العرض']}</h3>
+    <p>✈️ ${item['الخطوط الجوية']}</p>
+    <p>🛫 ${item['المطار']}</p>
+    <p class="date-duration">
+      📅 ${item['تاريخ الرحلة']} | 📆 ${item['مدة الرحلة']}
+    </p>
+    <p>💰 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
+    <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
+
           </div>
         `;
         container.appendChild(card);
