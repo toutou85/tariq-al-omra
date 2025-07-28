@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>عروض العمرة | طريق العمرة</title>
   <style>
-card-content {
+.card-content {
   padding: 15px;
-  text-align: center; /* لتوسيط النص */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card-buttons {
@@ -237,66 +240,65 @@ card-content {
   </div>
 </div>
 
-  <script>
-    let allOffers = [];
+ <script>
+  let allOffers = [];
 
-    fetch("https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec")
-      .then(response => response.json())
-      .then(data => {
-        allOffers = data;
-        displayOffers(allOffers);
-      })
-      .catch(err => {
-        document.getElementById("offers-container").innerHTML = "<p style='color:red; text-align:center;'>❌ حدث خطأ أثناء تحميل العروض</p>";
-        console.error("فشل في جلب البيانات:", err);
-      });
+  fetch("https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec")
+    .then(response => response.json())
+    .then(data => {
+      allOffers = data;
+      displayOffers(allOffers);
+    })
+    .catch(err => {
+      document.getElementById("offers-container").innerHTML = "<p style='color:red; text-align:center;'>❌ حدث خطأ أثناء تحميل العروض</p>";
+      console.error("فشل في جلب البيانات:", err);
+    });
 
-    function displayOffers(offers) {
-      const container = document.getElementById("offers-container");
-      container.innerHTML = "";
+  function displayOffers(offers) {
+    const container = document.getElementById("offers-container");
+    container.innerHTML = "";
 
-      if (offers.length === 0) {
-        container.innerHTML = "<p style='text-align:center;'>لا توجد عروض مطابقة</p>";
-        return;
-      }
-
-      offers.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "card";
-
-        card.innerHTML = `
-  <img src="${item['رابط صورة الفندق']}" alt="صورة الفندق">
-  <div class="card-content">
-    <h3>${item['اسم العرض']}</h3>
-    <p>✈️ ${item['الخطوط الجوية']}</p>
-    <p>🛫 ${item['المطار']}</p>
-    <p class="date-duration">
-      📅 ${item['تاريخ  الر حلة']}  ⏳ ${item['مدة الرحلة']}
-    </p>
-    <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
-    
-    <div class="card-buttons">
-      <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
-      <a class="btn" href="formabc.html?agency=${encodeURIComponent(item['الوكالة'])}&offerID=${encodeURIComponent(item['ID'])}">احجز الآن</a>
-    </div>
-  </div>
-`;
-
-    function filterOffers() {
-      const airport = document.getElementById("airport-select").value;
-      const duration = document.getElementById("duration-select").value;
-      const direct = document.getElementById("direct-select").value;
-
-      const filtered = allOffers.filter(item => {
-        const matchAirport = !airport || item["المطار"]?.includes(airport);
-        const matchDuration = !duration || item["مدة الرحلة"]?.includes(duration);
-        const matchDirect = !direct || item["الخطوط الجوية"]?.includes(direct);
-        return matchAirport && matchDuration && matchDirect;
-      });
-
-      displayOffers(filtered);
+    if (offers.length === 0) {
+      container.innerHTML = "<p style='text-align:center;'>لا توجد عروض مطابقة</p>";
+      return;
     }
-  </script>
+
+    offers.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${item['رابط صورة الفندق']}" alt="صورة الفندق">
+        <div class="card-content">
+          <h3>${item['اسم العرض']}</h3>
+          <p>✈️ ${item['الخطوط الجوية']}</p>
+          <p>🛫 ${item['المطار']}</p>
+          <p class="date-duration">
+            📅 ${item['تاريخ  الر حلة']}  ⏳ ${item['مدة الرحلة']}
+          </p>
+          <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
+          
+          <div class="card-buttons">
+            <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
+            <a class="btn" href="formabc.html?agency=${encodeURIComponent(item['الوكالة'])}&offerID=${encodeURIComponent(item['ID'])}">احجز الآن</a>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function filterOffers() {
+    const airport = document.getElementById("airport-select").value;
+
+    const filtered = allOffers.filter(item => {
+      const matchAirport = !airport || item["المطار"]?.includes(airport);
+      return matchAirport;
+    });
+
+    displayOffers(filtered);
+  }
+</script>
 
 </body>
 </html>
