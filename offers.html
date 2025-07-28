@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>عروض العمرة | طريق العمرة</title>
   <style>
+card-content {
+  padding: 15px;
+  text-align: center; /* لتوسيط النص */
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
     * {
       box-sizing: border-box;
     }
@@ -262,13 +274,13 @@
       📅 ${item['تاريخ  الر حلة']}  ⏳ ${item['مدة الرحلة']}
     </p>
     <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
-    <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
-
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
+    
+    <div class="card-buttons">
+      <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
+      <a class="btn" href="formabc.html?agency=${encodeURIComponent(item['الوكالة'])}&offerID=${encodeURIComponent(item['ID'])}">احجز الآن</a>
+    </div>
+  </div>
+`;
 
     function filterOffers() {
       const airport = document.getElementById("airport-select").value;
