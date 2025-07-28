@@ -69,7 +69,7 @@
       const body = document.getElementById("body").value.trim();
 
       try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbycquYkLjpWNBNNwTtzrSMxLqNnnTxC08yKo-SoPw4MKbTvBbFVsSA7q5SpcS5oMf5CQA/exec", {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbwpvbTVR6UnODBBsyKbMqAKBdY19q9q8khDs_V5hsLDROskj8WlSkZWZ3ORC1iSLPIMBw/exec", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, title, body })
