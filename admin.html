@@ -18,7 +18,7 @@
       display: block;
       margin: 1rem 0 0.2rem;
     }
-    input, textarea, select, button {
+    input, textarea, button {
       width: 100%;
       padding: 0.6rem;
       font-size: 1rem;
@@ -62,14 +62,14 @@
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      status.textContent = "يتم الإرسال...";
+      status.textContent = "⏳ يتم الإرسال...";
 
       const email = document.getElementById("email").value.trim();
       const title = document.getElementById("title").value.trim();
       const body = document.getElementById("body").value.trim();
 
       try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbyg-vkpX7D2TvcFnuQr-LSIgpimQBti9N7483KDaP0HqO88fBOqEAcNEeoBcpGXGLgssw/exec", {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbzHwKR_0LsmQa8ykKkZtoijeBEifXZkiwu_u1qPTI1OI-JGj3gYUCUV2S53fzzm7OH0SA/exec", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, title, body })
