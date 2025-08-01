@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>اختبار إرسال البيانات</title>
+</head>
+<body>
+  <form id="testForm">
+    <button type="submit">📤 إرسال تجريبي</button>
+  </form>
+
+  <script>
+    document.getElementById("testForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const data = {
+        "تاريخ التسجيل": new Date().toLocaleString("ar-EG"),
+        "اسم الوكالة": "وكالة النجاح",
+        "رقم العرض": "A2025",
+        "نوع الغرفة": "ثنائية",
+        "سعر العرض": "250000",
+        "صفة الحجز": "منفرد",
+        "الولاية": "ورقلة",
+        "الفرع": "فرع ورقلة الرئيسي",
+        "الاسم": "أحمد",
+        "اللقب": "بن سالم",
+        "رقم الهاتف": "0654321987",
+        "البريد الإلكتروني": "ahmed@example.com",
+        "العمر": "32",
+        "تاريخ انتهاء جواز السفر": "2028-05-10",
+        "تاريخ بداية الذهاب": "2025-12-01",
+        "تاريخ نهاية الذهاب": "2025-12-14",
+        "المرافقين (إن وجدوا)": "لا يوجد"
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbzud04rMAAXFqRcUaUuQsMDjOMYhoLnZm6PAnkBvtrbBu5bG_PdGEvBkdg1kAgdRRKwag/exec", {
+        method: "POST",
+        mode: "no-cors", // مهم لتجنب مشاكل CORS
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      alert("✅ تم إرسال البيانات التجريبية!");
+    });
+  </script>
+</body>
+</html>
