@@ -161,20 +161,25 @@
 </head>
 <body>
 
+
+
+<!-- الخطوة 1: اختيار الوكالة -->
+
+
 <form id="umrahForm">
   <div class="step active" id="step0">
     <h2>معلومات العرض</h2>
 
-    <label for="offerNumber">رقم العرض:</label>  
-    <input type="text" id="offerNumber" name="offerNumber" value="0" readonly>
+    <label for="offerNumber">رقم العرض:</label>
+<input type="text" id="offerNumber" name="offerNumber" value="0" readonly>
 
-    <label for="agencyDisplay">اسم الوكالة:</label>
-    <select id="agencyDisplay" required>
-      <option value="" disabled selected>اختر الوكالة</option>
-      <option value="وكالة السقيفة للسياحة و سفر">وكالة السقيفة للسياحة و سفر</option>
-      <option value="وكالة تقرت للسياحة و سفر">وكالة تقرت للسياحة و سفر</option>
-    </select>
-    <input type="hidden" id="agencyName" name="agency">
+<label for="agencyDisplay">اسم الوكالة:</label>
+<select id="agencyDisplay" required onchange="updateBranches()">
+  <option value="" disabled selected>اختر الوكالة</option>
+  <option value="وكالة السقيفة للسياحة و سفر">وكالة السقيفة للسياحة و سفر</option>
+  <option value="وكالة تقرت للسياحة و سفر">وكالة تقرت للسياحة و سفر</option>
+</select>
+<input type="hidden" id="agencyName" name="agency">
 
     <div class="buttons">
       <button type="button" onclick="nextStep()">التالي</button>
@@ -207,8 +212,10 @@
     <h2>اختيار الولاية والفرع</h2>
     <label for="wilaya">الولاية:</label>
     <select id="wilaya" name="wilaya" required></select>
-    <label for="branch">الفرع الأقرب:</label>
-    <select id="branch" name="branch" required></select>
+     <label for="branch">الفرع الأقرب:</label>
+  <select id="branch" name="branch" required>
+    <option value="" disabled selected>اختر الفرع</option>
+  </select>
     <div class="buttons">
       <button type="button" onclick="prevStep()">السابق</button>
       <button type="button" onclick="nextStep()">التالي</button>
