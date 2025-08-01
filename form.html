@@ -223,33 +223,40 @@
   </div>
 
   <!-- الخطوة 3: المرافقون -->
-  <div class="step" id="step3">
-    <h2>المرافقون</h2>
-    <label for="roomType">نوع الغرفة:</label>
-    <select id="roomType" name="roomType" required>
-      <option value="" disabled selected>اختر نوع الغرفة</option>
-      <option value="غرفة ثنائية">غرفة ثنائية</option>
-      <option value="غرفة ثلاثية">غرفة ثلاثية</option>
-      <option value="غرفة رباعية">غرفة رباعية</option>
-      <option value="غرفة خماسية">غرفة خماسية</option>
-      <option value="غرفة جماعية">غرفة جماعية</option>
-    </select>
-    <label for="reservationType">صفة الحجز:</label>
-    <select id="reservationType" name="reservationType" required onchange="toggleCompanionSection()">
-      <option value="" disabled selected>اختر صفة الحجز</option>
-      <option value="منفرد">منفرد</option>
-      <option value="مع صديق">مع صديق</option>
-      <option value="مع الأسرة">مع الأسرة</option>
-    </select>
-    <!-- اختيار فترة الذهاب -->
+  <!-- الخطوة 3: المرافقون + اختيار فترة الذهاب -->
 <div class="step" id="step3">
-  <h2>اختيار فترة الذهاب</h2>
+  <h2>المرافقون واختيار الفترة</h2>
 
-  <label for="startDate">من:</label>
+  <label for="roomType">نوع الغرفة:</label>
+  <select id="roomType" name="roomType" required>
+    <option value="" disabled selected>اختر نوع الغرفة</option>
+    <option value="غرفة ثنائية">غرفة ثنائية</option>
+    <option value="غرفة ثلاثية">غرفة ثلاثية</option>
+    <option value="غرفة رباعية">غرفة رباعية</option>
+    <option value="غرفة خماسية">غرفة خماسية</option>
+    <option value="غرفة جماعية">غرفة جماعية</option>
+  </select>
+
+  <label for="reservationType">صفة الحجز:</label>
+  <select id="reservationType" name="reservationType" required onchange="toggleCompanionSection()">
+    <option value="" disabled selected>اختر صفة الحجز</option>
+    <option value="منفرد">منفرد</option>
+    <option value="مع صديق">مع صديق</option>
+    <option value="مع الأسرة">مع الأسرة</option>
+  </select>
+
+  <!-- اختيار فترة الذهاب -->
+  <label for="startDate">فترة الذهاب - من:</label>
   <input type="date" id="startDate" name="startDate" required>
 
   <label for="endDate">إلى:</label>
   <input type="date" id="endDate" name="endDate" required>
+
+  <!-- قسم المرافقين -->
+  <div id="companionsSection" style="display: none;">
+    <div id="companionsContainer"></div>
+    <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
+  </div>
 
   <div class="buttons">
     <button type="button" onclick="prevStep()">السابق</button>
@@ -257,16 +264,6 @@
   </div>
 </div>
 
-    <!-- قسم المرافقين -->
-    <div id="companionsSection" style="display: none;">
-      <div id="companionsContainer"></div>
-      <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
-    </div>
-    <div class="buttons">
-      <button type="button" onclick="prevStep()">السابق</button>
-      <button type="button" onclick="nextStep()">التالي</button>
-    </div>
-  </div>
 
   <!-- الخطوة 4: الشروط -->
   <div class="step" id="step4">
