@@ -290,6 +290,20 @@
 </div>
 
 <script>
+  function nextStep() {
+  if (currentStep < steps.length - 1) {
+    steps[currentStep].classList.remove('active');
+    currentStep++;
+    steps[currentStep].classList.add('active');
+  }
+}
+
+function showStep(index) {
+  steps.forEach((step, i) => {
+    step.classList.toggle('active', i === index);
+  });
+}
+
   let currentStep = 0;
   const steps = document.querySelectorAll('.step');
   showStep(currentStep);
@@ -306,11 +320,7 @@
         return;
       }
     }
-    if (currentStep < steps.length - 1) {
-      currentStep++;
-      showStep(currentStep);
-    }
-  }
+    
 
   function prevStep() {
     if (currentStep > 0) {
