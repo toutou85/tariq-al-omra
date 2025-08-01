@@ -290,23 +290,8 @@
 </div>
 
 <script>
-  function nextStep() {
-  if (currentStep < steps.length - 1) {
-    steps[currentStep].classList.remove('active');
-    currentStep++;
-    steps[currentStep].classList.add('active');
-  }
-}
-
-function showStep(index) {
-  steps.forEach((step, i) => {
-    step.classList.toggle('active', i === index);
-  });
-}
-
   let currentStep = 0;
   const steps = document.querySelectorAll('.step');
-  showStep(currentStep);
 
   function showStep(index) {
     steps.forEach((step, i) => step.classList.toggle('active', i === index));
@@ -320,17 +305,25 @@ function showStep(index) {
         return;
       }
     }
-    
+    if (currentStep < steps.length - 1) {
+      steps[currentStep].classList.remove('active');
+      currentStep++;
+      showStep(currentStep);
+    }
+  }
 
   function prevStep() {
     if (currentStep > 0) {
+      steps[currentStep].classList.remove('active');
       currentStep--;
       showStep(currentStep);
     }
   }
 
-  // استخراج اسم الوكالة والعرض من الرابط
+  // بدء العرض عند الخطوة الأولى
   window.addEventListener("DOMContentLoaded", () => {
+    showStep(currentStep);
+
     const params = new URLSearchParams(window.location.search);
     const agencyParam = params.get("agency");
     const offerID = params.get("offerID");
@@ -338,25 +331,23 @@ function showStep(index) {
     if (agencyParam) {
       document.getElementById("agencyDisplay").value = agencyParam;
       document.getElementById("agencyName").value = agencyParam;
-      // تحديث قائمة الفروع استنادًا إلى اسم الوكالة
       updateBranches();
     }
     if (offerID) {
       document.getElementById("offerNumber").value = offerID;
     }
+
+    // ملء قائمة الولايات
+    const wilayas = ["أدرار", "الشلف", "الأغواط", "أم البواقي", "باتنة", "بجاية", "بسكرة", "بشار", "البليدة", "البويرة", "تمنراست", "تبسة", "تلمسان", "تيارت", "تيزي وزو", "الجزائر", "الجلفة", "جيجل", "سطيف", "سعيدة", "سكيكدة", "سيدي بلعباس", "عنابة", "قالمة", "قسنطينة", "المدية", "مستغانم", "المسيلة", "معسكر", "ورقلة", "وهران", "البيض", "إليزي", "برج بوعريريج", "بومرداس", "الطارف", "تندوف", "تيسمسيلت", "الوادي", "خنشلة", "سوق أهراس", "تيبازة", "ميلة", "عين الدفلى", "النعامة", "عين تموشنت", "غرداية", "غليزان", "تميمون", "برج باجي مختار", "أولاد جلال", "بني عباس", "عين صالح", "عين قزام", "تقرت", "جانت", "المغير", "المنيعة"];
+    const wilayaSelect = document.getElementById("wilaya");
+    wilayas.forEach(w => {
+      let opt = document.createElement("option");
+      opt.value = w;
+      opt.textContent = w;
+      wilayaSelect.appendChild(opt);
+    });
   });
 
-  // ملء الولايات
-  const wilayas = ["أدرار", "الشلف", "الأغواط", "أم البواقي", "باتنة", "بجاية", "بسكرة", "بشار", "البليدة", "البويرة", "تمنراست", "تبسة", "تلمسان", "تيارت", "تيزي وزو", "الجزائر", "الجلفة", "جيجل", "سطيف", "سعيدة", "سكيكدة", "سيدي بلعباس", "عنابة", "قالمة", "قسنطينة", "المدية", "مستغانم", "المسيلة", "معسكر", "ورقلة", "وهران", "البيض", "إليزي", "برج بوعريريج", "بومرداس", "الطارف", "تندوف", "تيسمسيلت", "الوادي", "خنشلة", "سوق أهراس", "تيبازة", "ميلة", "عين الدفلى", "النعامة", "عين تموشنت", "غرداية", "غليزان", "تميمون", "برج باجي مختار", "أولاد جلال", "بني عباس", "عين صالح", "عين قزام", "تقرت", "جانت", "المغير", "المنيعة"];
-  const wilayaSelect = document.getElementById("wilaya");
-  wilayas.forEach(w => {
-    let opt = document.createElement("option");
-    opt.value = w;
-    opt.textContent = w;
-    wilayaSelect.appendChild(opt);
-  });
-
-  // تعريف وكالات الفروع مع إضافة الفواصل الناقصة
   const agencyBranches = {
     "وكالة السقيفة للسياحة و سفر": ["قسنطينة", "جيجل", "عنابة", "سكيكدة", "سوق اهراس", "ميلة"],
     "وكالة تقرت للسياحة و سفر": ["تقرت", "بومرداس", "المغير", "الجلفة", "المدية", "مستغانم", "بشار", "الشلف", "عنابة", "تمنراست"],
@@ -364,7 +355,6 @@ function showStep(index) {
     "وكالة الانسية للسياحة و سفر": ["وهران", "مستغانم", "عنابة", "سكيكدة", "سوق اهراس", "ميلة"]
   };
 
-  // تحديث قائمة الفروع بناءً على قيمة حقل "agencyDisplay"
   function updateBranches() {
     const branchSelect = document.getElementById("branch");
     branchSelect.innerHTML = '<option value="" disabled selected>اختر الفرع</option>';
@@ -379,7 +369,7 @@ function showStep(index) {
     }
   }
 
-  // إضافة مرافق
+  // مرافقون
   let companionCount = 0;
   function addCompanion() {
     companionCount++;
@@ -411,12 +401,19 @@ function showStep(index) {
     container.appendChild(div);
   }
 
-  // إرسال البيانات
+  function toggleCompanionSection() {
+    const type = document.getElementById("reservationType").value;
+    const companionsDiv = document.getElementById("companionsSection");
+    companionsDiv.style.display = (type === "منفرد") ? "none" : "block";
+  }
+
+  // إرسال النموذج
   document.getElementById("umrahForm").addEventListener("submit", function(e) {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    // جمع بيانات المرافقين
+
+    // بيانات المرافقين
     const companions = [];
     document.querySelectorAll("#companionsContainer fieldset").forEach((fieldset, i) => {
       const relation = fieldset.querySelector(`select[name="companionRelation${i+1}"]`)?.value || "";
@@ -426,8 +423,10 @@ function showStep(index) {
       if (name) companions.push(`${relation}: ${name} - ميلاد: ${birth} - انتهاء جواز: ${passport}`);
     });
     formData.append("companions", companions.join(" | "));
+
     document.getElementById("message").style.display = "block";
     form.style.display = "none";
+
     fetch("https://script.google.com/macros/s/AKfycbwzPE5BMBiOx5x9RNzFozijomTvUcgAzaWTo39Pc7e8Zb7ZU7Zq6Df3k6iWC0oz5O7lyg/exec", {
       method: "POST",
       body: formData
@@ -453,13 +452,8 @@ function showStep(index) {
       document.getElementById("message").style.display = "none";
     });
   });
-
-  function toggleCompanionSection() {
-    const type = document.getElementById("reservationType").value;
-    const companionsDiv = document.getElementById("companionsSection");
-    companionsDiv.style.display = (type === "منفرد") ? "none" : "block";
-  }
 </script>
+
 
 </body>
 </html>
