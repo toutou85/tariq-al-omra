@@ -404,7 +404,7 @@
     formData.append("companions", companions.join(" | "));
     document.getElementById("message").style.display = "block";
     form.style.display = "none";
-    fetch("https://script.google.com/macros/s/AKfycbwQNArPGvsGAfauUVQQnOQZcBvx4Ojl5js5noYc87Yqn_96hwOxFZ9RxHBY9v1K_JaGZg/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbxUl98TCmfnOJyXerwc1HTlLp3gIenDfoiBVSTuYfNc2neBDPqGdX8BhfFYphKXWLsE7Q/exec", {
       method: "POST",
       body: formData
     })
@@ -430,25 +430,46 @@
     });
   });
 
+
+  // إظهار أو إخفاء قسم المرافقين بناءً على نوع الحجز
   function toggleCompanionSection() {
     const type = document.getElementById("reservationType").value;
     const companionsDiv = document.getElementById("companionsSection");
     companionsDiv.style.display = (type === "منفرد") ? "none" : "block";
   }
 
+  // ضبط تواريخ الذهاب والعودة
   const startDate = document.getElementById('startDate');
   const endDate = document.getElementById('endDate');
 
   startDate.addEventListener('change', () => {
     endDate.min = startDate.value;
-  });
-
-  endDate.addEventListener('change', () => {
     if (endDate.value < startDate.value) {
       endDate.value = startDate.value;
     }
   });
+
+  // تجميع البيانات عند الإرسال
+  function collectFormData() {
+    const data = {
+      startDate: document.getElementById("startDate").value,
+      endDate: document.getElementById("endDate").value,
+      reservationType: document.getElementById("reservationType").value,
+      // أضف هنا باقي الحقول كما يلزمك
+    };
+    return data;
+  }
+
+  // مثال على دالة إرسال النموذج (إن كنت ترسل إلى Google Sheets أو غيره)
+  function submitForm() {
+    const data = collectFormData();
+
+    // هنا يتم إرسال البيانات
+    console.log("Form Data:", data);
+    // مثال: sendToGoogleSheets(data); أو تنفيذ أي منطق آخر
+  }
 </script>
+
 
 </body>
 </html>
