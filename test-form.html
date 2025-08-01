@@ -1,48 +1,42 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>اختبار إرسال البيانات</title>
+  <meta charset="UTF-8">
+  <title>تجربة إرسال</title>
 </head>
-<body>
-  <form id="testForm">
-    <button type="submit">📤 إرسال تجريبي</button>
+<body style="font-family: Tahoma; text-align: center; padding: 50px;">
+  <h2>📤 نموذج إرسال تجريبي</h2>
+
+  <form id="myForm">
+    <label>الاسم:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>البريد الإلكتروني:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <button type="submit">إرسال</button>
   </form>
 
+  <p id="response" style="color: green; margin-top: 20px;"></p>
+
   <script>
-    document.getElementById("testForm").addEventListener("submit", function(e) {
+    document.getElementById("myForm").addEventListener("submit", function(e) {
       e.preventDefault();
-
-      const data = {
-        "تاريخ التسجيل": new Date().toLocaleString("ar-EG"),
-        "اسم الوكالة": "وكالة النجاح",
-        "رقم العرض": "A2025",
-        "نوع الغرفة": "ثنائية",
-        "سعر العرض": "250000",
-        "صفة الحجز": "منفرد",
-        "الولاية": "ورقلة",
-        "الفرع": "فرع ورقلة الرئيسي",
-        "الاسم": "أحمد",
-        "اللقب": "بن سالم",
-        "رقم الهاتف": "0654321987",
-        "البريد الإلكتروني": "ahmed@example.com",
-        "العمر": "32",
-        "تاريخ انتهاء جواز السفر": "2028-05-10",
-        "تاريخ بداية الذهاب": "2025-12-01",
-        "تاريخ نهاية الذهاب": "2025-12-14",
-        "المرافقين (إن وجدوا)": "لا يوجد"
-      };
-
-      fetch("https://script.google.com/macros/s/AKfycbybDDUJgeHNO4k8VBFR0FwvMjVFaRabfCApxyqslHDbOJUMkV8bJi1ZUgZQnFZOBcEB/exec", {
+      const form = e.target;
+      const data = new FormData(form);
+      fetch("https://script.google.com/macros/s/AKfycbwCZPbQqB8wl1lCQFWkDhboHIa2z1lJ6Z2penjJkIwzFbnDgSPwi3NqzQG6-EBofcNMpA/exec", {
         method: "POST",
-        mode: "no-cors", // مهم لتجنب مشاكل CORS
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
+        body: data
+      })
+      .then(res => res.text())
+      .then(msg => {
+        document.getElementById("response").innerText = msg;
+        form.reset();
+      })
+      .catch(err => {
+        document.getElementById("response").innerText = "⚠️ حدث خطأ أثناء الإرسال.";
+        console.error(err);
       });
-
-      alert("✅ تم إرسال البيانات التجريبية!");
     });
   </script>
 </body>
