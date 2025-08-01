@@ -381,14 +381,21 @@ label {
     }
 
     // استخراج اسم الوكالة والعرض من الرابط
-    document.addEventListener("DOMContentLoaded", function () {
-  const params = new URLSearchParams(window.location.search);
-  const agency = decodeURIComponent(params.get("agency") || "");
-  document.getElementById("agencyDisplay").value = agency;
-  document.getElementById("offerNumber").value = decodeURIComponent(params.get("offerID") || "");
-  document.getElementById("agencyName").value = agency;
-});
+  
+  window.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const agencyParam = params.get("agency");
+    const offerID = params.get("offerID");
 
+    if (agencyParam) {
+      document.getElementById("agencyDisplay").value = agencyParam;
+      document.getElementById("agencyName").value = agencyParam;
+    }
+
+    if (offerID) {
+      document.getElementById("offerNumber").value = offerID;
+    }
+  });
 
     // ملء الولايات
     const wilayas = ["أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة","تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة","سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة","وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة","سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت","غرداية","غليزان","تميمون","برج باجي مختار","أولاد جلال","بني عباس","عين صالح","عين قزام","تقرت","جانت","المغير","المنيعة"];
