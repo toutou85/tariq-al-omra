@@ -218,9 +218,14 @@ label {
 
 <div class="step active" id="step0">
   <h2>معلومات العرض</h2>
-    <label for="offerNumber">رقم العرض</label>
+   <div class="form-group">
+      <label for="agencyDisplay">اسم الوكالة</label>
+      <input type="text" id="agencyDisplay" disabled />
+      <input type="hidden" id="agencyName" name="agencyName" />
+    </div>
+    <div class="form-group">
+      <label for="offerNumber">رقم العرض</label>
       <input type="text" id="offerNumber" name="offerNumber" readonly />
-
   <div class="buttons">
     <button type="button" onclick="nextStep()">التالي</button>
   </div>
