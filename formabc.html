@@ -204,13 +204,23 @@
     <h2>اختيار الولاية والفرع</h2>
     <label for="wilaya">الولاية:</label>
     <select id="wilaya" name="wilaya" required></select>
+<!-- الخطوة 2: الولاية والفرع -->
+<div class="step" id="step2">
+  <h2>اختيار الولاية والفرع</h2>
+  <label for="wilaya">الولاية:</label>
+  <select id="wilaya" name="wilaya" required></select>
+
   <label for="branch">الفرع الأقرب:</label>
   <select id="branch" name="branch" required>
     <option value="" disabled selected>اختر الفرع</option>
-      <button type="button" onclick="prevStep()">السابق</button>
-      <button type="button" onclick="nextStep()">التالي</button>
-    </div>
+  </select>
+
+  <div class="buttons">
+    <button type="button" onclick="prevStep()">السابق</button>
+    <button type="button" onclick="nextStep()">التالي</button>
   </div>
+</div>
+
 
   <!-- الخطوة 3: المرافقون -->
   <div class="step" id="step3">
