@@ -113,6 +113,109 @@
 
   <!-- باقي الخطوات (step1, step2, step3, step4) تبقى كما هي في كودك -->
 
+<div class="step" id="step1">
+  <h2>معلومات الزبون</h2>
+
+  <label for="firstName">الاسم:</label>  
+  <input type="text" id="firstName" name="firstName" required>  
+
+  <label for="lastName">اللقب:</label>  
+  <input type="text" id="lastName" name="lastName" required>  
+
+  <label for="phone">رقم الهاتف:</label>  
+  <input type="tel" id="phone" name="phone" required>  
+
+  <label for="email">البريد الإلكتروني:</label>  
+  <input type="email" id="email" name="email" required>  
+
+  <label for="age">العمر:</label>  
+  <input type="number" id="age" name="age" min="0" required>    
+
+
+<label for="passportExpiry">تاريخ انتهاء جواز السفر:</label>  
+<input type="date" id="passportExpiry" name="passportExpiry" required>
+
+  <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="button" onclick="nextStep()">التالي</button>
+      </div>
+    </div>
+
+    <!-- الخطوة 2: الولاية والفرع -->
+    <div class="step" id="step2">
+      <h2>اختيار الولاية والفرع</h2>
+      <label for="wilaya">الولاية:</label>
+      <select id="wilaya" name="wilaya" required></select>
+
+      <label for="branch">الفرع الأقرب:</label>
+      <select id="branch" name="branch" required></select>
+
+      <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="button" onclick="nextStep()">التالي</button>
+      </div>
+    </div>
+
+    <!-- الخطوة 3: المرافقون -->
+    <div class="step" id="step3">
+      <h2>المرافقون</h2>
+
+      <!-- ✅ اختيار نوع الغرفة -->
+      <label for="roomType">نوع الغرفة:</label>
+      <select id="roomType" name="roomType" required>
+        <option value="" disabled selected>اختر نوع الغرفة</option>
+        <option value="غرفة ثنائية">غرفة ثنائية</option>
+        <option value="غرفة ثلاثية">غرفة ثلاثية</option>
+        <option value="غرفة رباعية">غرفة رباعية</option>
+        <option value="غرفة خماسية">غرفة خماسية</option>
+        <option value="غرفة جماعية">غرفة جماعية</option>
+      </select>
+
+      <!-- ✅ اختيار صفة الحجز -->
+      <label for="reservationType">صفة الحجز:</label>
+      <select id="reservationType" name="reservationType" required onchange="toggleCompanionSection()">
+        <option value="" disabled selected>اختر صفة الحجز</option>
+        <option value="منفرد">منفرد</option>
+        <option value="مع صديق">مع صديق</option>
+        <option value="مع الأسرة">مع الأسرة</option>
+      </select>
+
+      <!-- ✅ قسم المرافقين -->
+      <div id="companionsSection" style="display: none;">
+        <div id="companionsContainer"></div>
+        <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
+      </div>
+
+      <!-- أزرار التنقل -->
+      <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="button" onclick="nextStep()">التالي</button>
+      </div>
+    </div>
+
+    <!-- الخطوة 4: الشروط -->
+    <div class="step" id="step4">
+      <h2>الشروط والأحكام</h2>
+      <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+        <div class="confirmation-message" style="margin-top: 30px; padding: 20px; border: 1px solid #ccc; border-radius: 12px; background-color: #f9f9f9;">
+          <p>✨ <strong>طريق العمرة</strong> هي منصة جزائرية لتسهيل استكشاف عروض العمرة والتسجيل الأولي بدون دفع إلكتروني.</p>
+          <p>📍 هذا المشروع من إنجاز <strong>طه برقيقة</strong>، مرافق معتمد لدى وكالة <strong>تقرت للسياحة والسفر</strong>.</p>
+          <p>🕌 التسجيل الإلكتروني مجاني، ويتم تأكيد الحجز فقط عند التوجه إلى الفرع المعتمد ودفع المستحقات.</p>
+          <p style="color: red; font-weight: bold;">
+            ⚠️ تنبيه: يبقى تسجيلكم شكليًا إلى حين دفع مستحقات الرحلة في مقر الوكالة، ثم يتم تأكيد الحجز نهائيًا.
+            يرجى قراءة الشروط بعناية قبل الإرسال...
+          </p>
+        </div>
+      </div>
+      <label>
+        <input type="checkbox" id="agree" required> أوافق على الشروط والأحكام
+      </label>
+
+      <div class="buttons">
+        <button type="button" onclick="prevStep()">السابق</button>
+        <button type="submit">إرسال</button>
+      </div>
+    </div>
 </form>
 
 <!-- ✅ رسائل منبثقة -->
