@@ -170,20 +170,19 @@
   <div class="step active" id="step0">
     <h2>معلومات العرض</h2>
 
-
-
-<label for="agencyDisplay">اسم الوكالة:</label>
-<select id="agencyDisplay" required onchange="updateBranches()">
-  <option value="" disabled selected>اختر الوكالة</option>
-  <option value="وكالة السقيفة للسياحة و سفر">وكالة السقيفة للسياحة و سفر</option>
-  <option value="وكالة تقرت للسياحة و سفر">وكالة تقرت للسياحة و سفر</option>
-</select>
-
+    <label for="agencyDisplay">اسم الوكالة:</label>
+    <select id="agencyDisplay" required onchange="updateBranches()">
+      <option value="" disabled selected>اختر الوكالة</option>
+      <option value="وكالة السقيفة للسياحة و سفر">وكالة السقيفة للسياحة و سفر</option>
+      <option value="وكالة تقرت للسياحة و سفر">وكالة تقرت للسياحة و سفر</option>
+    </select>
+    <input type="hidden" id="agencyName" name="agencyName" />
 
     <div class="buttons">
       <button type="button" onclick="nextStep()">التالي</button>
     </div>
   </div>
+
 
   <!-- الخطوة 1: معلومات الزبون -->
   <div class="step" id="step1">
