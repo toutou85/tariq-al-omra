@@ -307,18 +307,7 @@
   const steps = document.querySelectorAll('.step');
   showStep(currentStep);
 
-  function showStep(index) {
-    steps.forEach((step, i) => step.classList.toggle('active', i === index));
-  }
 
-  function nextStep() {
-    const inputs = steps[currentStep].querySelectorAll('input, select');
-    for (let input of inputs) {
-      if (input.required && !input.value) {
-        alert('يرجى ملء جميع الحقول');
-        return;
-      }
-    }
     if (currentStep < steps.length - 1) {
       currentStep++;
       showStep(currentStep);
