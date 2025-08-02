@@ -208,18 +208,19 @@
   color: white;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
-.btn:hover {
-      background-color: #fff;
-      color: #000;
-    }
-
-    footer {
-      background: #222;
-      color: #ccc;
-      text-align: center;
-      padding: 15px;
-      font-size: 0.9em;
-    }
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #222;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  z-index: 1000; /* تأكد أنها تظهر فوق كل شيء */
+  border-top: 2px solid #FFD700;
+}
   </style>
 </head>
 <body>
