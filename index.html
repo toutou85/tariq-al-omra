@@ -237,14 +237,42 @@ z-index: 999; /* لإظهار العلم فوق جميع الطبقات */
   z-index: 1000;
   border-top: 2px solid #FFD700;
 }
+.main-content {
+  padding: 60px 20px;
+  background-color: rgba(0,0,0,0.6);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  flex-grow: 1;
+  margin-bottom: 60px; /* يمنع تغطية المحتوى بالقائمة السفلية */
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #222;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  z-index: 9999;
+  border-top: 2px solid #FFD700;
+}
 
 .bottom-nav a {
   color: white;
   text-decoration: none;
   font-size: 0.9em;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* أيقونة فوق والنص تحت */
   align-items: center;
+}
+
+.bottom-nav a span {
+  margin-top: 5px;
+  font-size: 0.8em;
 }
 
 .bottom-nav a:hover {
