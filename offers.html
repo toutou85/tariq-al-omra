@@ -22,6 +22,16 @@
       box-shadow: 0 3px 8px rgba(0,0,0,0.1);
     }
 
+    .filter-box {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .filter-box select {
+      padding: 6px 12px;
+      font-size: 15px;
+      border-radius: 6px;
+    }
+
     .airport-title {
       margin-top: 28px;
       padding: 12px 14px;
@@ -43,20 +53,37 @@
       padding: 14px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.08);
       min-height: 140px;
+      color: #000;
     }
 
     .card h3 { margin: 0 0 8px 0; font-size: 18px; }
     .card p { margin: 6px 0; font-size: 15px; }
     .card-buttons { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
-    .btn { padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 14px; color: #fff; font-weight: bold; }
+    .btn { padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 14px; color: #fff; font-weight: bold; cursor: pointer; display: inline-block; }
     .btn.details { background: #007bff; }
     .btn.share { background: #28a745; }
+    .btn.like { background: #e53935; }
   </style>
 </head>
 <body>
   <nav><a href="index.html">🏠 الرئيسية</a></nav>
   <div class="page">
     <h1>🕋 عروض العمرة</h1>
+
+    <!-- اختيار المطار -->
+    <div class="filter-box">
+      <label>✈️ اختر المطار: </label>
+      <select id="airportFilter" onchange="renderFiltered()">
+        <option value="all">الكل</option>
+        <option value="الجزائر">الجزائر</option>
+        <option value="تمنغست">تمنغست</option>
+        <option value="ورقلة">ورقلة</option>
+        <option value="وهران">وهران</option>
+        <option value="عنابة">عنابة</option>
+        <option value="قسنطينة">قسنطينة</option>
+      </select>
+    </div>
+
     <div id="offersContainer"><p style="text-align:center;">⏳ جاري تحميل العروض...</p></div>
   </div>
 
@@ -75,13 +102,28 @@ const airportStyles = {
 /* 🔗 رابط الـ Apps Script (تأكد أنه يرجع JSON صحيح) */
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec";
 
+let offersData = [];
+
 /* دالة لترتيب التاريخ */
 function parseDate(value) {
   return new Date(value || "1970-01-01");
 }
 
+/* زر إعجاب */
+function toggleLike(id) {
+  let liked = localStorage.getItem("liked_"+id);
+  if (liked) {
+    alert("لقد قمت بالإعجاب بهذا العرض من قبل ❤️");
+    return;
+  }
+  let counter = document.getElementById("like-count-"+id);
+  let count = parseInt(counter.textContent) || 0;
+  counter.textContent = count + 1;
+  localStorage.setItem("liked_"+id, "true");
+}
+
 /* عرض العروض */
-function renderOffers(data) {
+function renderOffers(data, filter="all") {
   const container = document.getElementById("offersContainer");
   container.innerHTML = "";
 
@@ -93,6 +135,8 @@ function renderOffers(data) {
   });
 
   Object.keys(grouped).forEach(airport => {
+    if (filter !== "all" && filter !== airport) return;
+
     const list = grouped[airport];
     list.sort((a,b)=> parseDate(a["تاريخ  الر حلة"]) - parseDate(b["تاريخ  الر حلة"]));
 
@@ -110,7 +154,9 @@ function renderOffers(data) {
       card.className = "card";
       card.style.background = style.bg;
 
-      const url = `offer-details.html?id=${encodeURIComponent(item["ID"] || "")}`;
+      const id = item["ID"] || Math.random().toString(36).substr(2,9);
+      const url = `offer-details.html?id=${encodeURIComponent(id)}`;
+      const likedBefore = localStorage.getItem("liked_"+id);
 
       card.innerHTML = `
         <h3>${item["اسم العرض"] || "عرض"}</h3>
@@ -121,6 +167,7 @@ function renderOffers(data) {
         <div class="card-buttons">
           <a class="btn details" href="${url}">📖 التفاصيل</a>
           <a class="btn share" href="https://wa.me/?text=🔥 عرض عمرة من مطار ${airport} - فندق ${item["الفندق"]||""} - السعر ${item["السعر الغرفة الجماعية (دج)"]||""} دج 📅 ${item["تاريخ  الر حلة"]||""} ⏳ ${item["مدة الرحلة"]||""} 🌐 ${location.origin}/${url}" target="_blank">📤 مشاركة</a>
+          <button class="btn like" onclick="toggleLike('${id}')">❤️ إعجاب <span id="like-count-${id}">${likedBefore ? 1 : 0}</span></button>
         </div>
       `;
       grid.appendChild(card);
@@ -135,13 +182,19 @@ function loadOffers() {
   fetch(SHEET_URL)
     .then(res => res.json())
     .then(data => {
-      console.log("✅ Data loaded:", data);
-      renderOffers(data);
+      offersData = data;
+      renderOffers(offersData);
     })
     .catch(err => {
       document.getElementById("offersContainer").innerHTML = "<p style='color:red;text-align:center;'>❌ فشل تحميل البيانات</p>";
       console.error(err);
     });
+}
+
+/* فلترة حسب المطار */
+function renderFiltered() {
+  const filter = document.getElementById("airportFilter").value;
+  renderOffers(offersData, filter);
 }
 
 loadOffers();
