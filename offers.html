@@ -182,7 +182,7 @@ function renderOffers(data, filter="all") {
       shareBtn.className = "btn share";
       shareBtn.textContent = "📤 مشاركة";
       shareBtn.addEventListener("click", () => {
-        const text = `🔥 عرض عمرة من مطار ${airport} - فندق ${item['الفندق']||''} - السعر ${item['السعر الغرفة الجماعية (دج)']||''} دج 📅 ${item['تاريخ  الر حلة']||''} ⏳ ${item['مدة الرحلة']||''} 🌐 ${location.origin}/${url}`;
+        const text = `🕋 عرض عمرة من مطار ${airport} - فندق ${item['الفندق']||''} - السعر ${item['السعر الغرفة الجماعية (دج)']||''} دج 📅 ${item['تاريخ  الر حلة']||''} ⏳ ${item['مدة الرحلة']||''} 🌐 ${location.origin}/${url}`;
         if (navigator.share) {
           navigator.share({ title: 'عرض عمرة', text: text, url: location.href });
         } else {
