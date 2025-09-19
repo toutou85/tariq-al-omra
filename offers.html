@@ -199,6 +199,16 @@ function renderOffers(data, filter="all") {
         <div class="card-buttons">
           <a class="btn details" href="${url}">📖 أحجز رحلتك 🧳</a>
           <button class="btn share" onclick="shareOffer('${airport}', '${item["الفندق"]||""}', '${item["السعر الغرفة الجماعية (دج)"]||""}', '${item["تاريخ  الر حلة"]||""}', '${item["مدة الرحلة"]||""}', '${url}')">📤 مشاركة عامة</button>
+function shareOffer(airport, hotel, price, date, duration, url) {
+  const text = `🔥 عرض عمرة من مطار ${airport} - فندق ${hotel} - السعر ${price} دج 📅 ${date} ⏳ ${duration} 🌐 ${location.origin}/${url}`;
+  if (navigator.share) {
+    navigator.share({ title: 'عرض العمرة', text: text, url: location.origin + '/' + url })
+      .catch(err => console.error(err));
+  } else {
+    navigator.clipboard.writeText(text)
+      .then(() => alert('تم نسخ نص العرض مع الرابط! يمكنك الآن مشاركته في أي مكان.'));
+  }
+}
           <button class="btn like" onclick="toggleLike('${id}')">❤️ إعجاب <span id="like-count-${id}">${likedBefore ? 1 : 0}</span></button>
         </div>
       `;
