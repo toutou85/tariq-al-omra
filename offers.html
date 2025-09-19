@@ -13,15 +13,13 @@
       position: relative;
     }
 
-    /* ضباب فقط على الجزء العلوي (العنوان + اختيار المطار) */
+    /* ضباب متدرج على الجزء العلوي */
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 220px; /* يغطي العنوان + فلتر اختيار المطار */
-      background: rgba(255,255,255,0.3);
+      top: 0; left: 0; right: 0;
+      height: 220px;
+      background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0));
       z-index: -1;
     }
 
@@ -56,7 +54,6 @@
       margin-top: 12px;
     }
 
-    /* المربعات */
     .card {
       border-radius: 14px;
       padding: 14px;
@@ -71,7 +68,7 @@
       position: absolute;
       inset: 0;
       border-radius: 14px;
-      background: rgba(255,255,255,0.4); /* شفافية خفيفة حسب المطار */
+      background: rgba(255,255,255,0.4);
     }
 
     .card-content {
@@ -103,7 +100,6 @@
   <div class="page">
     <h1>🕋 عروض العمرة وكالة تقرت للسياحة و سفر </h1>
 
-    <!-- اختيار المطار -->
     <div class="filter-box">
       <label>✈️ اختر المطار: </label>
       <select id="airportFilter" onchange="renderFiltered()">
@@ -147,19 +143,14 @@ function toggleLike(id) {
   localStorage.setItem("liked_"+id, "true");
 }
 
-// مشاركة عامة
 function shareOffer(airport, hotel, price, date, duration, url) {
   const text = `🔥 عرض عمرة من مطار ${airport} - فندق ${hotel} - السعر ${price} دج 📅 ${date} ⏳ ${duration} 🌐 ${location.origin}/${url}`;
   if (navigator.share) {
-    navigator.share({
-      title: 'عرض العمرة',
-      text: text,
-      url: location.origin + '/' + url
-    }).catch(err => console.error(err));
+    navigator.share({ title: 'عرض العمرة', text: text, url: location.origin + '/' + url })
+      .catch(err => console.error(err));
   } else {
-    navigator.clipboard.writeText(text).then(() => {
-      alert('تم نسخ نص العرض مع الرابط! يمكنك الآن مشاركته في أي مكان.');
-    });
+    navigator.clipboard.writeText(text)
+      .then(() => alert('تم نسخ نص العرض مع الرابط! يمكنك الآن مشاركته في أي مكان.'));
   }
 }
 
@@ -214,6 +205,7 @@ function renderOffers(data, filter="all") {
       card.appendChild(content);
       grid.appendChild(card);
     });
+
     container.appendChild(grid);
   });
 }
@@ -226,19 +218,16 @@ function loadOffers() {
       renderOffers(offersData);
     })
     .catch(err => {
-      document.getElementById("offersContainer").innerHTML = "<p style='color:red;text-align:center;'>❌ فشل تحميل البيانات
-</p>";
+      document.getElementById("offersContainer").innerHTML = "<p style='color:red;text-align:center;'>❌ فشل تحميل البيانات</p>";
       console.error(err);
     });
 }
 
-/* فلترة حسب المطار */
 function renderFiltered() {
   const filter = document.getElementById("airportFilter").value;
   renderOffers(offersData, filter);
 }
 
-/* تحميل العروض عند فتح الصفحة */
 loadOffers();
 </script>
 </body>
