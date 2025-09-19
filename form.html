@@ -165,8 +165,7 @@
   <div class="step active" id="step0">  
     <h2>معلومات العرض</h2>  <label for="agencyDisplay">اسم الوكالة:</label>  
 <select id="agencyDisplay" required onchange="updateBranches()">  
-  <option value="" disabled selected>اختر الوكالة</option>  
-  <option value="وكالة السقيفة للسياحة و سفر">وكالة السقيفة للسياحة و سفر</option>  
+  <option value="" disabled selected>اختر الوكالة</option>   
   <option value="وكالة تقرت للسياحة و سفر">وكالة تقرت للسياحة و سفر</option>  
 </select>  
 <input type="hidden" id="agencyName" name="agencyName" />  
@@ -338,11 +337,9 @@
 
 
   const agencyBranches = {
-    "وكالة السقيفة للسياحة و سفر": ["قسنطينة", "جيجل", "عنابة", "سكيكدة", "سوق اهراس", "ميلة"],
-    "وكالة تقرت للسياحة و سفر": ["تقرت","الجزاىر العاصمة", "بومرداس","سطيف", "المغير", "الجلفة", "المدية", "مستغانم", "بشار", "الشلف", "عنابة", "تمنراست"],
-    "وكالة بوشوشة للسياحة و سفر": ["ورقلة", "غرداية"],
-    "وكالة الانسية للسياحة و سفر": ["مستغانم "]
-  };
+    
+  "وكالة تقرت للسياحة و سفر": ["تقرت","الجزائر العاصمة", "بومرداس","سطيف", "المغير", "الجلفة" "المدية", "مستغانم", "بشار", "الشلف", "عنابة", "تمنراست", "قسنطينة", "جيجل", "وهران", "سكيكدة", "سوق اهراس"],
+    
 
   function updateBranches() {
     const branchSelect = document.getElementById("branch");
