@@ -267,6 +267,32 @@ src="https://www.facebook.com/tr?id=1520503049118519&ev=PageView&noscript=1"
 .bottom-nav a:hover {
   color: #FFD700;
 }
+    /* 🎨 ألوان خلفية خاصة بكل مطار */
+.airport-الجزائر {
+  background-color: #fff3e0; /* برتقالي فاتح */
+  border-right: 6px solid #ff9800;
+}
+.airport-تمنغست {
+  background-color: #ede7f6; /* بنفسجي فاتح */
+  border-right: 6px solid #673ab7;
+}
+.airport-ورقلة {
+  background-color: #fce4ec; /* وردي فاتح */
+  border-right: 6px solid #e91e63;
+}
+.airport-وهران {
+  background-color: #f1f8e9; /* أخضر فاتح */
+  border-right: 6px solid #4caf50;
+}
+.airport-عنابة {
+  background-color: #e3f2fd; /* أزرق فاتح */
+  border-right: 6px solid #2196f3;
+}
+.airport-قسنطينة {
+  background-color: #e0f7fa; /* تركوازي فاتح */
+  border-right: 6px solid #00bcd4;
+}
+
   </style>
 </head>
 <body>
@@ -354,26 +380,29 @@ src="https://www.facebook.com/tr?id=1520503049118519&ev=PageView&noscript=1"
       const grid = document.createElement("div");
       grid.className = "offers";
 
-      grouped[airport].forEach(item => {
-        const card = document.createElement("div");
-        card.className = "card";
+     grouped[airport].forEach(item => {
+  const card = document.createElement("div");
+  card.className = "card airport-" + airport;
 
-        card.innerHTML = `
-          <div class="card-content">
-            <h3>${item['اسم العرض']}</h3>
-            <p>✈️ ${item['الخطوط الجوية']}</p>
-            <p class="date-duration">
-              📅 ${item['تاريخ  الر حلة']}  ⏳ ${item['مدة الرحلة']}
-            </p>
-            <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
-            <div class="card-buttons">
-              <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
-            </div>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
+  card.innerHTML = `
+    <div class="card-content">
+      <h3>${item['اسم العرض']}</h3>
+      <p>✈️ المطار: ${item['المطار']}</p>
+      <p>🏨 الفندق: ${item['الفندق']}</p>
+      <p>✈️ ${item['الخطوط الجوية']}</p>
+      <p class="date-duration">
+        📅 ${item['تاريخ  الر حلة']}  ⏳ ${item['مدة الرحلة']}
+      </p>
+      <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
+      <div class="card-buttons">
+        <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
+      </div>
+    </div>
+  `;
+  grid.appendChild(card);
+});
 
+     
       container.appendChild(grid);
     }
   }
