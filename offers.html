@@ -1,423 +1,187 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>عروض العمرة | طريق العمرة</title>
-   <link rel="icon" type="image/png" href="favicon.png">
-  <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1520503049118519');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1520503049118519&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عروض العمرة</title>
   <style>
-.card-content {
-  padding: 15px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.card-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-  flex-wrap: wrap;
-}
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Tajawal', sans-serif;
-      background: url('https://i.postimg.cc/JhKnMv57/FB-IMG-1753464094985.jpg') no-repeat center center fixed;
-      background-size: cover;
+      font-family: "Tahoma", sans-serif;
+      background: #f5f5f5;
       margin: 0;
-      padding: 0;
-      min-height: 100vh;
+      padding: 20px;
     }
 
-    nav {
-      background: #FFD700;
-      padding: 12px;
-      text-align: center;
-    }
-
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: bold;
-      color: #000;
-    }
-
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-top: 20px;
-      margin-bottom: 20px;
+    h2.airport-title {
+      margin: 30px 0 15px;
       font-size: 22px;
+      color: #2c3e50;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
     }
 
-    .container {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(5px);
-      max-width: 600px;
-      width: 90%;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      padding: 20px;
-      margin: 30px auto;
-    }
-
-    .offers {
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
-      padding: 20px;
     }
-    .date-duration {
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-}
-
 
     .card {
-      background: white;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.3s ease;
-    }
-
-    .card:hover {
-      transform: scale(1.02);
-    }
-
-    .card img {
-      width: 100%;
-      height: 180px;
-   
-      object-fit: cover;
-    }
-
-    .card-content {
       padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
     }
 
-    .card h3 {
-      margin: 0;
-      color: #d4af37;
-      font-size: 22px;
+    .card-content h3 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #2c3e50;
     }
 
     .card p {
       margin: 5px 0;
-      color: #444;
-      font-size: 20px;
+      font-size: 15px;
     }
-.card img {
-  width: 100%;
-  height: auto; /* يسمح للصورة بالتمدد الطبيعي */
-  display: block;
-}
+
+    .card p.airport-name {
+      font-weight: bold;
+      color: #2c3e50;
+      font-size: 17px;
+    }
+
+    .card p.hotel-name {
+      font-weight: bold;
+      color: #8e44ad;
+      font-size: 17px;
+    }
+
+    .card-buttons {
+      margin-top: 10px;
+    }
 
     .btn {
       display: inline-block;
-      margin-top: 10px;
-      padding: 8px 16px;
-      background-color: #FFD700;
+      padding: 8px 14px;
+      background: #3498db;
+      color: white;
       border-radius: 6px;
       text-decoration: none;
-      color: #000;
-      font-weight: bold;
-      font-size: 15px;
-      text-align: center;
+      transition: background 0.2s;
     }
-
     .btn:hover {
-      background-color: #f1c40f;
+      background: #2980b9;
     }
 
-    /* شريط البحث */
-    .search-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      align-items: center;
-      padding: 15px 20px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 12px;
-      margin: 20px auto 10px;
-      max-width: 95%;
-      backdrop-filter: blur(4px);
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    /* 🎨 ألوان خلفيات مختلفة لكل مطار */
+    .airport-الجزائر {
+      background-color: #fff3e0;
+      border-right: 6px solid #ff9800;
     }
-
-    .search-bar select,
-    .search-bar button {
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      padding: 8px 12px;
-      white-space: nowrap;
-      flex: 1;
-      min-width: 120px;
+    .airport-تمنغست {
+      background-color: #ede7f6;
+      border-right: 6px solid #673ab7;
     }
-
-    .search-bar button {
-      background: #FFD700;
-      cursor: pointer;
-      border: none;
+    .airport-ورقلة {
+      background-color: #fce4ec;
+      border-right: 6px solid #e91e63;
     }
-
-    .search-bar button:hover {
-      background: #f1c40f;
+    .airport-وهران {
+      background-color: #f1f8e9;
+      border-right: 6px solid #4caf50;
     }
-
-    /* تحسين العرض على الشاشات الصغيرة */
-    @media (max-width: 600px) {
-      h2 {
-        font-size: 22px;
-      }
-      .card img {
-        height: 150px;
-      }
-      .card-content p {
-        font-size: 13px;
-      }
-      .btn {
-        font-size: 18px;
-        padding: 6px 12px;
-      }
-      .search-bar {
-        flex-direction: column;
-        gap: 8px;
-      }
-      .search-bar select,
-      .search-bar button {
-        width: 100%;
-        min-width: auto;
-      }
+    .airport-عنابة {
+      background-color: #e3f2fd;
+      border-right: 6px solid #2196f3;
     }
-
-.fog-text {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.15);       /* خلفية شفافة */
-  backdrop-filter: blur(5px);                  /* تأثير ضبابي */
-  -webkit-backdrop-filter: blur(5px);          /* دعم Safari */
-  padding: 10px 20px;
-  border-radius: 10px;
-  color: white;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-.main-content {
-  padding: 60px 20px;
-  background-color: rgba(0,0,0,0.6);
-  text-align: center;
-  position: relative;
-  z-index: 2;
-  flex-grow: 1;
-  margin-bottom: 60px; /* يمنع تغطية المحتوى بالقائمة السفلية */
-}
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background-color: #222;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0;
-  z-index: 9999;
-  border-top: 2px solid #FFD700;
-}
-
-.bottom-nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 0.9em;
-  display: flex;
-  flex-direction: column; /* أيقونة فوق والنص تحت */
-  align-items: center;
-}
-
-.bottom-nav a span {
-  margin-top: 5px;
-  font-size: 0.8em;
-}
-
-.bottom-nav a:hover {
-  color: #FFD700;
-}
-    /* 🎨 ألوان خلفية خاصة بكل مطار */
-.airport-الجزائر {
-  background-color: #fff3e0; /* برتقالي فاتح */
-  border-right: 6px solid #ff9800;
-}
-.airport-تمنغست {
-  background-color: #ede7f6; /* بنفسجي فاتح */
-  border-right: 6px solid #673ab7;
-}
-.airport-ورقلة {
-  background-color: #fce4ec; /* وردي فاتح */
-  border-right: 6px solid #e91e63;
-}
-.airport-وهران {
-  background-color: #f1f8e9; /* أخضر فاتح */
-  border-right: 6px solid #4caf50;
-}
-.airport-عنابة {
-  background-color: #e3f2fd; /* أزرق فاتح */
-  border-right: 6px solid #2196f3;
-}
-.airport-قسنطينة {
-  background-color: #e0f7fa; /* تركوازي فاتح */
-  border-right: 6px solid #00bcd4;
-}
-
+    .airport-قسنطينة {
+      background-color: #e0f7fa;
+      border-right: 6px solid #00bcd4;
+    }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="index.html">🏠 الرئيسية</a>
-  </nav>
-
-  <h2 class="fog-text">🕋 عروض العمرة الحالية📣</h2>
-<div class="offers" id="offers-container">
-  <p style="text-align:center;">جاري تحميل العروض...</p>
-</div>
-
+  <h1>📢 عروض العمرة</h1>
+  <div id="offersContainer">
+    <p style="text-align:center;">⏳ جاري تحميل العروض...</p>
   </div>
-</div>
-<div class="bottom-nav">
-  <a href="upload.html">📤<span>جواز السفر</span></a>
-  <a href="reviews.html">💬<span>تعليقاتكم</span></a>
-  <a href="contact.html">📞<span>اتصل بنا</span></a>
-  <a href="about.html">❔<span>من نحن</span></a>
-</div>
-  
 
-<script>
-  let allOffers = [];
+  <script>
+    // 🟢 جلب البيانات من Google Sheets عبر Apps Script
+    fetch("https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec")
+      .then(res => res.json())
+      .then(data => {
+        displayOffers(data);
+      })
+      .catch(err => {
+        document.getElementById("offersContainer").innerHTML =
+          "<p style='color:red; text-align:center;'>❌ فشل تحميل البيانات</p>";
+        console.error(err);
+      });
 
-  fetch("https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec")
-    .then(response => response.json())
-    .then(data => {
-      allOffers = data;
-      displayOffers(allOffers);
-    })
-    .catch(err => {
-      document.getElementById("offers-container").innerHTML =
-        "<p style='color:red; text-align:center;'>❌ حدث خطأ أثناء تحميل العروض</p>";
-      console.error("فشل في جلب البيانات:", err);
-    });
+    function displayOffers(data) {
+      const container = document.getElementById("offersContainer");
+      container.innerHTML = "";
 
-  function displayOffers(offers) {
-    const container = document.getElementById("offers-container");
-    container.innerHTML = "";
+      if (!data || data.length === 0) {
+        container.innerHTML = "<p style='text-align:center;'>لا توجد عروض حالياً</p>";
+        return;
+      }
 
-    if (offers.length === 0) {
-      container.innerHTML = "<p style='text-align:center;'>لا توجد عروض مطابقة</p>";
-      return;
+      // 🟢 تجميع العروض حسب المطار
+      const grouped = {};
+      data.forEach(item => {
+        const airport = item['المطار'] || "غير محدد";
+        if (!grouped[airport]) grouped[airport] = [];
+        grouped[airport].push(item);
+      });
+
+      // 🔹 عرض البطاقات مرتبة حسب التاريخ داخل كل مطار
+      Object.keys(grouped).forEach(airport => {
+        // ترتيب العروض حسب التاريخ (الأحدث أولاً)
+        grouped[airport].sort((a, b) => {
+          return new Date(b['تاريخ  الر حلة']) - new Date(a['تاريخ  الر حلة']);
+        });
+
+        // عنوان المطار
+        const title = document.createElement("h2");
+        title.className = "airport-title";
+        title.textContent = "✈️ مطار " + airport;
+        container.appendChild(title);
+
+        // شبكة البطاقات
+        const grid = document.createElement("div");
+        grid.className = "grid";
+
+        grouped[airport].forEach(item => {
+          const card = document.createElement("div");
+          card.className = "card airport-" + airport;
+
+          card.innerHTML = `
+            <div class="card-content">
+              <h3>${item['اسم العرض']}</h3>
+              <p class="airport-name">✈️ المطار: ${item['المطار']}</p>
+              <p class="hotel-name">🏨 الفندق: ${item['الفندق']}</p>
+              <p>✈️ ${item['الخطوط الجوية']}</p>
+              <p class="date-duration">
+                📅 ${item['تاريخ  الر حلة']}  ⏳ ${item['مدة الرحلة']}
+              </p>
+              <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
+              <div class="card-buttons">
+                <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        container.appendChild(grid);
+      });
     }
-
-    // 🎨 جدول الألوان لكل مطار
-    const airportColors = {
-      "الجزائر": "rgba(135, 206, 250, 0.6)",   // أزرق فاتح
-      "وهران": "rgba(144, 238, 144, 0.6)",     // أخضر فاتح
-      "قسنطينة": "rgba(216, 191, 216, 0.6)",   // بنفسجي فاتح
-      "عنابة": "rgba(255, 165, 0, 0.6)",       // برتقالي فاتح
-      "ورقلة": "rgba(255, 182, 193, 0.6)",     // وردي فاتح
-      "تمنغست": "rgba(64, 224, 208, 0.6)",     // تركوازي
-      "ادرار": "rgba(211, 211, 211, 0.6)",     // رمادي فاتح
-      "غرداية": "rgba(255, 255, 153, 0.7)"     // أصفر فاتح
-    };
-
-    // ✅ تجميع العروض حسب المطار
-    const grouped = {};
-    offers.forEach(item => {
-      const airport = item["المطار"] || "غير محدد";
-      if (!grouped[airport]) grouped[airport] = [];
-      grouped[airport].push(item);
-    });
-
-    // ✅ عرض العروض حسب المطار
-    for (const airport in grouped) {
-      // عنوان المطار كشريط كامل
-      const title = document.createElement("div");
-      title.textContent = `🛫 ${airport}`;
-      title.style.background = airportColors[airport] || "rgba(255,215,0,0.4)";
-      title.style.color = "#000";
-      title.style.fontWeight = "bold";
-      title.style.fontSize = "20px";
-      title.style.padding = "12px";
-      title.style.textAlign = "center";
-      title.style.marginTop = "25px";
-      title.style.borderRadius = "8px";
-      title.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
-      container.appendChild(title);
-
-      // بطاقات العروض الخاصة بالمطار
-      const grid = document.createElement("div");
-      grid.className = "offers";
-
-     grouped[airport].forEach(item => {
-  const card = document.createElement("div");
-  card.className = "card airport-" + airport;
-
-  card.innerHTML = `
-    <div class="card-content">
-      <h3>${item['اسم العرض']}</h3>
-      <p>✈️ المطار: ${item['المطار']}</p>
-      <p>🏨 الفندق: ${item['الفندق']}</p>
-      <p>✈️ ${item['الخطوط الجوية']}</p>
-      <p class="date-duration">
-        📅 ${item['تاريخ  الر حلة']}  ⏳ ${item['مدة الرحلة']}
-      </p>
-      <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
-      <div class="card-buttons">
-        <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
-      </div>
-    </div>
-  `;
-  grid.appendChild(card);
-});
-
-     
-      container.appendChild(grid);
-    }
-  }
-
-  function filterOffers() {
-    const airport = document.getElementById("airport-select").value;
-    const filtered = allOffers.filter(item => {
-      const matchAirport = !airport || item["المطار"]?.includes(airport);
-      return matchAirport;
-    });
-    displayOffers(filtered);
-  }
-</script>
-
-<div style="height: 65px;"></div>
+  </script>
 </body>
 </html>
-
