@@ -8,7 +8,7 @@
     body {
       font-family: 'Tajawal', Tahoma, Arial, sans-serif;
       margin: 0; padding: 0;
-      background: url("https://i.ibb.co/Q8xDQYd/makkah.jpg") no-repeat center center fixed;
+      background: url("https://i.postimg.cc/mk1k1LW3/FB-IMG-1757788923321.jpg") no-repeat center center fixed;
       background-size: cover;
       position: relative;
     }
@@ -93,7 +93,7 @@
 <body>
   <nav><a href="index.html">🏠 الرئيسية</a></nav>
   <div class="page">
-    <h1>🕋 عروض العمرة</h1>
+    <h1>🕋 عروض العمرة وكالة تقرت للسياحة و سفر </h1>
 
     <!-- اختيار المطار -->
     <div class="filter-box">
@@ -193,7 +193,7 @@ function renderOffers(data, filter="all") {
         <p>📅 ${item["تاريخ  الر حلة"] || ""} ⏳ ${item["مدة الرحلة"] || ""}</p>
         <p>💵 ${item["السعر الغرفة الجماعية (دج)"] || ""} دج</p>
         <div class="card-buttons">
-          <a class="btn details" href="${url}">📖 التفاصيل</a>
+          <a class="btn details" href="${url}">📖 أحجز رحلتك 🧳</a>
           <a class="btn share" href="https://wa.me/?text=🔥 عرض عمرة من مطار ${airport} - فندق ${item["الفندق"]||""} - السعر ${item["السعر الغرفة الجماعية (دج)"]||""} دج 📅 ${item["تاريخ  الر حلة"]||""} ⏳ ${item["مدة الرحلة"]||""} 🌐 ${location.origin}/${url}" target="_blank">📤 مشاركة</a>
           <button class="btn like" onclick="toggleLike('${id}')">❤️ إعجاب <span id="like-count-${id}">${likedBefore ? 1 : 0}</span></button>
         </div>
