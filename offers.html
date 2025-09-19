@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>عروض العمرة</title>
+  <style>
+    body {
+      font-family: "Tahoma", sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 15px;
+    }
+    .card {
+      border-radius: 12px;
+      padding: 15px;
+      color: #fff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card h3 {
+      margin: 0 0 10px 0;
+      font-size: 20px;
+    }
+    .card p {
+      margin: 5px 0;
+    }
+    .card-buttons {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-details { background: #fff; color: #333; }
+    .btn-share { background: #007bff; color: #fff; }
+    .btn-like { background: #28a745; color: #fff; }
+
+    /* ألوان مختلفة حسب المطار */
+    .airport-الجزائر { background: #6c5ce7; }
+    .airport-تمنغاست { background: #e17055; }
+    .airport-ورقلة   { background: #0984e3; }
+    .airport-وهران   { background: #00b894; }
+    .airport-عنابة   { background: #d63031; }
+    .airport-قسنطينة { background: #e84393; }
+  </style>
+</head>
+<body>
+  <h1>✈️ عروض العمرة</h1>
+  <div id="offersGrid" class="grid"></div>
+
+  <script>
+    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTyCRa-FUh6a62brIHe7tg4YImWLVEuEjsaYtIQGeAxrqt8-dQzcfoH-uQ5H8YHG36soStv6Zuwbd4a/pub?output=csv";
+    const grid = document.getElementById("offersGrid");
+
+    // تحميل الإعجابات من localStorage
+    const likes = JSON.parse(localStorage.getItem("likes") || "{}");
+
+    async function loadOffers() {
+      const res = await fetch(sheetURL);
+      const text = await res.text();
+      const rows = text.split("\n").map(r => r.split(","));
+      const headers = rows[0];
+      const data = rows.slice(1).map(r => {
+        let obj = {};
+        headers.forEach((h, i) => obj[h.trim()] = r[i] ? r[i].trim() : "");
+        return obj;
+      });
+
+      // ترتيب حسب تاريخ الرحلة
+      data.sort((a, b) => new Date(a['تاريخ  الر حلة']) - new Date(b['تاريخ  الر حلة']));
+
+      // عرض كل عرض
+      data.forEach(item => {
+        const airport = item['المطار'] || "غير معروف";
+        const id = item['ID'] || Math.random().toString(36).substr(2,9);
+
+        const card = document.createElement("div");
+        card.className = "card airport-" + airport;
+
+        // عدد الإعجابات
+        const likeCount = likes[id] || 0;
+
+        card.innerHTML = `
+          <div>
+            <h3>${item['اسم العرض']}</h3>
+            <p>📍 المطار: ${airport}</p>
+            <p>🏨 الفندق: ${item['الفندق']}</p>
+            <p>✈️ ${item['الخطوط الجوية']}</p>
+            <p>📅 ${item['تاريخ  الر حلة']} ⏳ ${item['مدة الرحلة']}</p>
+            <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
+          </div>
+          <div class="card-buttons">
+            <a class="btn btn-details" href="offer-details.html?id=${id}">التفاصيل</a>
+            <button class="btn btn-share">مشاركة</button>
+            <button class="btn btn-like">👍 <span>${likeCount}</span></button>
+          </div>
+        `;
+
+        // زر المشاركة
+        card.querySelector(".btn-share").addEventListener("click", async () => {
+          const shareData = {
+            title: item['اسم العرض'],
+            text: `عرض عمرة من ${airport} - ${item['الفندق']} - السعر: ${item['السعر الغرفة الجماعية (دج)']} دج`,
+            url: window.location.origin + `/offer-details.html?id=${id}`
+          };
+          if (navigator.share) {
+            await navigator.share(shareData);
+          } else {
+            alert("المشاركة غير مدعومة في هذا المتصفح");
+          }
+        });
+
+        // زر الإعجاب
+        card.querySelector(".btn-like").addEventListener("click", () => {
+          if (!likes[id]) {
+            likes[id] = 1;
+          } else {
+            likes[id]++;
+          }
+          localStorage.setItem("likes", JSON.stringify(likes));
+          card.querySelector(".btn-like span").textContent = likes[id];
+          card.querySelector(".btn-like").disabled = true; // مرة واحدة فقط
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    loadOffers();
+  </script>
+</body>
+</html>
