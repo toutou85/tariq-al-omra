@@ -210,7 +210,15 @@ function renderOffers(data, filter="all") {
         <p>💵 ${item["السعر الغرفة الجماعية (دج)"] || ""} دج</p>
         <div class="card-buttons">
           <a class="btn details" href="${url}">📖 أحجز رحلتك 🧳</a>
-          <a class="btn share" href="https://wa.me/?text=🔥 عرض عمرة من مطار ${airport} - فندق ${item["الفندق"]||""} - السعر ${item["السعر الغرفة الجماعية (دج)"]||""} دج 📅 ${item["تاريخ  الر حلة"]||""} ⏳ ${item["مدة الرحلة"]||""} 🌐 ${location.origin}/${url}" target="_blank">📤 مشاركة</a>
+      <a class="btn share" href="#" onclick="
+  const text = `🔥 عرض عمرة من مطار ${airport} - فندق ${item['الفندق']||''} - السعر ${item['السعر الغرفة الجماعية (دج)']||''} دج 📅 ${item['تاريخ  الر حلة']||''} ⏳ ${item['مدة الرحلة']||''} 🌐 ${location.origin}/${url}`;
+  if (navigator.share) {
+    navigator.share({ title: 'عرض عمرة', text: text, url: location.href });
+  } else {
+    prompt('انسخ النص وشاركه:', text);
+  }
+">📤 مشاركة</a>
+
           <button class="btn like" onclick="toggleLike('${id}')">❤️ إعجاب <span id="like-count-${id}">${likedBefore ? 1 : 0}</span></button>
         </div>
       `;
