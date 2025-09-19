@@ -29,6 +29,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      min-height: 230px;
     }
     .card h2 {
       margin: 0 0 10px;
@@ -70,103 +71,111 @@
 
   <h1>✨ عروض العمرة ✨</h1>
 
-  <div class="offers">
-    <div class="card" data-id="offer1" data-airport="عنابة">
-      <h2>✈️ مطار عنابة</h2>
-      <p>📅 التاريخ: 03 أكتوبر</p>
-      <p>🏨 الفندق: رياض الضيافة</p>
-      <p>💰 السعر: 139,000 دج</p>
-      <div class="actions">
-        <button class="share-btn">🔗 مشاركة</button>
-        <button class="like-btn">❤️ <span class="count">0</span></button>
-      </div>
-    </div>
-
-    <div class="card" data-id="offer2" data-airport="وهران">
-      <h2>✈️ مطار وهران</h2>
-      <p>📅 التاريخ: 10 أكتوبر</p>
-      <p>🏨 الفندق: سرايا الضيافة</p>
-      <p>💰 السعر: 149,000 دج</p>
-      <div class="actions">
-        <button class="share-btn">🔗 مشاركة</button>
-        <button class="like-btn">❤️ <span class="count">0</span></button>
-      </div>
-    </div>
-
-    <div class="card" data-id="offer3" data-airport="الجزائر">
-      <h2>✈️ مطار الجزائر</h2>
-      <p>📅 التاريخ: 15 أكتوبر</p>
-      <p>🏨 الفندق: أبراج الجنادرية</p>
-      <p>💰 السعر: 159,000 دج</p>
-      <div class="actions">
-        <button class="share-btn">🔗 مشاركة</button>
-        <button class="like-btn">❤️ <span class="count">0</span></button>
-      </div>
-    </div>
+  <div class="offers" id="offersContainer">
+    ⏳ جاري تحميل البيانات...
   </div>
 
   <script>
+    // رابط الجدول (CSV) من Google Sheets
+    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTyCRa-FUh6a62brIHe7tg4YImWLVEuEjsaYtIQGeAxrqt8-dQzcfoH-uQ5H8YHG36soStv6Zuwbd4a/pub?output=csv";
+
     // ألوان خاصة بكل مطار
     const airportColors = {
       "عنابة": "#1abc9c",
       "وهران": "#9b59b6",
-      "الجزائر": "#e67e22"
+      "الجزائر": "#e67e22",
+      "قسنطينة": "#3498db",
+      "ورقلة": "#e84393"
     };
 
-    // تغيير الخلفية حسب المطار
-    document.querySelectorAll(".card").forEach(card => {
-      const airport = card.dataset.airport;
-      if (airportColors[airport]) {
-        card.style.background = airportColors[airport];
-      }
-    });
+    async function loadOffers() {
+      const response = await fetch(sheetURL);
+      const data = await response.text();
 
-    // مشاركة العرض
-    document.querySelectorAll(".share-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
+      const rows = data.split("\n").slice(1); // حذف العناوين
+      const container = document.getElementById("offersContainer");
+      container.innerHTML = "";
+
+      rows.forEach((row, index) => {
+        const cols = row.split(",");
+        if (cols.length < 4) return;
+
+        const airport = cols[0].trim();
+        const date = cols[1].trim();
+        const hotel = cols[2].trim();
+        const price = cols[3].trim();
+
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.id = "offer" + index;
+        card.dataset.airport = airport;
+        card.style.background = airportColors[airport] || "#2c3e50";
+
+        card.innerHTML = `
+          <h2>✈️ ${airport}</h2>
+          <p>📅 التاريخ: ${date}</p>
+          <p>🏨 الفندق: ${hotel}</p>
+          <p>💰 السعر: ${price} دج</p>
+          <div class="actions">
+            <button class="share-btn">🔗 مشاركة</button>
+            <button class="like-btn">❤️ <span class="count">0</span></button>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      initFeatures();
+    }
+
+    function initFeatures() {
+      // مشاركة العرض
+      document.querySelectorAll(".share-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const card = btn.closest(".card");
+          const title = card.querySelector("h2").innerText;
+          const details = Array.from(card.querySelectorAll("p"))
+                               .map(p => p.innerText).join("\n");
+          const url = window.location.href;
+
+          if (navigator.share) {
+            navigator.share({
+              title: title,
+              text: details,
+              url: url
+            });
+          } else {
+            navigator.clipboard.writeText(title + "\n" + details + "\n" + url);
+            alert("📋 تم نسخ العرض مع الرابط!");
+          }
+        });
+      });
+
+      // زر الإعجاب
+      document.querySelectorAll(".like-btn").forEach(btn => {
         const card = btn.closest(".card");
-        const title = card.querySelector("h2").innerText;
-        const details = Array.from(card.querySelectorAll("p"))
-                             .map(p => p.innerText).join("\n");
-        const url = window.location.href;
+        const offerId = card.dataset.id;
+        const countSpan = btn.querySelector(".count");
 
-        if (navigator.share) {
-          navigator.share({
-            title: title,
-            text: details,
-            url: url
-          });
-        } else {
-          navigator.clipboard.writeText(title + "\n" + details + "\n" + url);
-          alert("📋 تم نسخ العرض مع الرابط!");
-        }
-      });
-    });
-
-    // زر الإعجاب مع تخزين محلي
-    document.querySelectorAll(".like-btn").forEach(btn => {
-      const card = btn.closest(".card");
-      const offerId = card.dataset.id;
-      const countSpan = btn.querySelector(".count");
-
-      // استرجاع القيمة من localStorage
-      let likes = localStorage.getItem("likes_" + offerId) || 0;
-      countSpan.textContent = likes;
-
-      // التحقق إذا سبق وعمل إعجاب
-      const liked = localStorage.getItem("liked_" + offerId);
-
-      btn.addEventListener("click", () => {
-        if (liked) {
-          alert("لقد أعجبت بهذا العرض من قبل ❤️");
-          return;
-        }
-        likes++;
+        // استرجاع القيمة من localStorage
+        let likes = localStorage.getItem("likes_" + offerId) || 0;
         countSpan.textContent = likes;
-        localStorage.setItem("likes_" + offerId, likes);
-        localStorage.setItem("liked_" + offerId, "true");
+
+        btn.addEventListener("click", () => {
+          const liked = localStorage.getItem("liked_" + offerId);
+          if (liked) {
+            alert("لقد أعجبت بهذا العرض من قبل ❤️");
+            return;
+          }
+          likes++;
+          countSpan.textContent = likes;
+          localStorage.setItem("likes_" + offerId, likes);
+          localStorage.setItem("liked_" + offerId, "true");
+        });
       });
-    });
+    }
+
+    loadOffers();
   </script>
 
 </body>
