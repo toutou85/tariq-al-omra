@@ -23,7 +23,7 @@
     .card {
       border-radius: 12px;
       padding: 15px;
-      color: #fff;
+      color: #000; /* النص أسود باش يكون واضح */
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
@@ -57,13 +57,13 @@
     .btn-share { background: #007bff; color: #fff; }
     .btn-like { background: #28a745; color: #fff; }
 
-    /* ألوان مختلفة حسب المطار */
-    .airport-الجزائر { background: #6c5ce7; }
-    .airport-تمنغاست { background: #e17055; }
-    .airport-ورقلة   { background: #0984e3; }
-    .airport-وهران   { background: #00b894; }
-    .airport-عنابة   { background: #d63031; }
-    .airport-قسنطينة { background: #e84393; }
+    /* ألوان خلفيات فاتحة لكل مطار */
+    .airport-الجزائر { background: #dfe6f9; }
+    .airport-تمنغاست { background: #ffe0d6; }
+    .airport-ورقلة   { background: #d6ecff; }
+    .airport-وهران   { background: #d9f7ef; }
+    .airport-عنابة   { background: #ffd6d6; }
+    .airport-قسنطينة { background: #f9d6f0; }
   </style>
 </head>
 <body>
@@ -74,7 +74,6 @@
     const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTyCRa-FUh6a62brIHe7tg4YImWLVEuEjsaYtIQGeAxrqt8-dQzcfoH-uQ5H8YHG36soStv6Zuwbd4a/pub?output=csv";
     const grid = document.getElementById("offersGrid");
 
-    // تحميل الإعجابات من localStorage
     const likes = JSON.parse(localStorage.getItem("likes") || "{}");
 
     async function loadOffers() {
@@ -88,28 +87,24 @@
         return obj;
       });
 
-      // ترتيب حسب تاريخ الرحلة
       data.sort((a, b) => new Date(a['تاريخ  الر حلة']) - new Date(b['تاريخ  الر حلة']));
 
-      // عرض كل عرض
       data.forEach(item => {
         const airport = item['المطار'] || "غير معروف";
         const id = item['ID'] || Math.random().toString(36).substr(2,9);
+        const likeCount = likes[id] || 0;
 
         const card = document.createElement("div");
         card.className = "card airport-" + airport;
 
-        // عدد الإعجابات
-        const likeCount = likes[id] || 0;
-
         card.innerHTML = `
           <div>
-            <h3>${item['اسم العرض']}</h3>
+            <h3>${item['اسم العرض'] || "بدون عنوان"}</h3>
             <p>📍 المطار: ${airport}</p>
-            <p>🏨 الفندق: ${item['الفندق']}</p>
-            <p>✈️ ${item['الخطوط الجوية']}</p>
-            <p>📅 ${item['تاريخ  الر حلة']} ⏳ ${item['مدة الرحلة']}</p>
-            <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
+            <p>🏨 الفندق: ${item['الفندق'] || "-"}</p>
+            <p>✈️ ${item['الخطوط الجوية'] || "-"}</p>
+            <p>📅 ${item['تاريخ  الر حلة'] || "-"} ⏳ ${item['مدة الرحلة'] || "-"}</p>
+            <p>💵 ${item['السعر الغرفة الجماعية (دج)'] || "0"} دج</p>
           </div>
           <div class="card-buttons">
             <a class="btn btn-details" href="offer-details.html?id=${id}">التفاصيل</a>
@@ -118,7 +113,7 @@
           </div>
         `;
 
-        // زر المشاركة
+        // مشاركة
         card.querySelector(".btn-share").addEventListener("click", async () => {
           const shareData = {
             title: item['اسم العرض'],
@@ -132,7 +127,7 @@
           }
         });
 
-        // زر الإعجاب
+        // إعجاب
         card.querySelector(".btn-like").addEventListener("click", () => {
           if (!likes[id]) {
             likes[id] = 1;
@@ -141,7 +136,7 @@
           }
           localStorage.setItem("likes", JSON.stringify(likes));
           card.querySelector(".btn-like span").textContent = likes[id];
-          card.querySelector(".btn-like").disabled = true; // مرة واحدة فقط
+          card.querySelector(".btn-like").disabled = true;
         });
 
         grid.appendChild(card);
