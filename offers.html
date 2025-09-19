@@ -1,160 +1,232 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>عروض العمرة</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>عروض العمرة | طريق العمرة</title>
   <style>
-    /* 🌄 خلفية موحدة للصفحة */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: url('your-background.jpg') no-repeat center center fixed;
+      font-family: 'Tajawal', Tahoma, Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: url("https://i.ibb.co/Q8xDQYd/makkah.jpg") no-repeat center center fixed;
       background-size: cover;
       position: relative;
     }
-
-    /* طبقة شفافية فوق الخلفية */
     body::before {
       content: "";
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(255, 255, 255, 0.6); /* شفافية */
+      inset: 0;
+      background: rgba(255,255,255,0.6); /* طبقة شفافة على الخلفية */
       z-index: -1;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 15px;
-      padding: 20px;
+    nav { background: #FFD700; padding: 12px; text-align: center; }
+    nav a { text-decoration: none; color: #000; font-weight: bold; margin: 0 10px; }
+
+    .page {
+      max-width: 1100px;
+      margin: 20px auto 60px;
+      padding: 18px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
     }
 
-    /* 🎨 ألوان شفافة لكل مطار */
-    .card.airport-الجزائر { background: rgba(248, 215, 218, 0.8); }
-    .card.airport-تمنغاست { background: rgba(209, 236, 241, 0.8); }
-    .card.airport-ورقلة { background: rgba(212, 237, 218, 0.8); }
-    .card.airport-وهران { background: rgba(255, 243, 205, 0.8); }
-    .card.airport-عنابة { background: rgba(226, 227, 229, 0.8); }
-    .card.airport-قسنطينة { background: rgba(245, 208, 254, 0.8); }
+    .filter-box { text-align: center; margin-bottom: 20px; }
+    .filter-box select { padding: 6px 12px; font-size: 15px; border-radius: 6px; }
+
+    .airport-title {
+      margin-top: 28px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 18px;
+      background: #eee;
+    }
+
+    .offers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
 
     .card {
-      border-radius: 15px;
-      padding: 15px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      border-radius: 14px;
+      padding: 14px;
+      color: #000;
+      min-height: 160px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .card-content h3 {
-      margin-top: 0;
+    .overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
     }
 
-    .card-buttons {
-      margin-top: 10px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    .card-content {
+      position: relative;
+      z-index: 2;
     }
 
+    .card h3 { margin: 0 0 8px 0; font-size: 18px; }
+    .card p { margin: 6px 0; font-size: 15px; }
+
+    .card-buttons { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
     .btn {
-      padding: 8px 12px;
+      padding: 7px 11px;
       border-radius: 8px;
       text-decoration: none;
-      color: #fff;
       font-size: 14px;
-      transition: 0.3s;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
     }
-    .btn-details { background: #007bff; }
-    .btn-share { background: #28a745; }
-    .btn-like { background: #ff9800; }
-
-    .btn:hover { opacity: 0.8; }
+    .btn.details { background: #007bff; }
+    .btn.share { background: #28a745; }
+    .btn.like { background: #e53935; }
   </style>
 </head>
 <body>
+  <nav><a href="index.html">🏠 الرئيسية</a></nav>
+  <div class="page">
+    <h1>🕋 عروض العمرة</h1>
 
-  <!-- مكان عرض البطاقات -->
-  <div id="offersGrid" class="grid"></div>
+    <!-- اختيار المطار -->
+    <div class="filter-box">
+      <label>✈️ اختر المطار: </label>
+      <select id="airportFilter" onchange="renderFiltered()">
+        <option value="all">الكل</option>
+        <option value="الجزائر">الجزائر</option>
+        <option value="تمنغست">تمنغست</option>
+        <option value="ورقلة">ورقلة</option>
+        <option value="وهران">وهران</option>
+        <option value="عنابة">عنابة</option>
+        <option value="قسنطينة">قسنطينة</option>
+      </select>
+    </div>
 
-  <script>
-  const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTyCRa-FUh6a62brIHe7tg4YImWLVEuEjsaYtIQGeAxrqt8-dQzcfoH-uQ5H8YHG36soStv6Zuwbd4a/pub?output=csv";
+    <div id="offersContainer"><p style="text-align:center;">⏳ جاري تحميل العروض...</p></div>
+  </div>
 
-  // 🧡 جلب البيانات
-  fetch(sheetUrl)
-    .then(res => res.text())
-    .then(csv => {
-      const rows = csv.split("\n").map(r => r.split(","));
-      const headers = rows[0];
-      const data = rows.slice(1).map(r => {
-        let obj = {};
-        headers.forEach((h, i) => obj[h.trim()] = r[i] ? r[i].trim() : "");
-        return obj;
-      });
+<script>
+/* 🎨 شفافية لكل مطار (ألوان فاتحة) */
+const airportOverlayColors = {
+  "الجزائر": "rgba(255, 182, 193, 0.6)",    // وردي فاتح
+  "تمنغست": "rgba(173, 216, 230, 0.6)",    // أزرق فاتح
+  "ورقلة": "rgba(144, 238, 144, 0.6)",     // أخضر فاتح
+  "وهران": "rgba(255, 255, 224, 0.6)",     // أصفر فاتح
+  "عنابة": "rgba(211, 211, 211, 0.6)",     // رمادي فاتح
+  "قسنطينة": "rgba(221, 160, 221, 0.6)",   // بنفسجي فاتح
+  "default": "rgba(255,255,255,0.65)"
+};
 
-      // 🛫 تجميع حسب المطار
-      const grouped = {};
-      data.forEach(item => {
-        if (!grouped[item['المطار']]) grouped[item['المطار']] = [];
-        grouped[item['المطار']].push(item);
-      });
+/* 🔗 رابط Apps Script */
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec";
 
-      renderCards(grouped);
-    });
+let offersData = [];
 
-  // ✅ دالة لإنشاء البطاقات مرتبة
-  function renderCards(grouped) {
-    const grid = document.getElementById("offersGrid");
-    grid.innerHTML = "";
+function parseDate(value) {
+  return new Date(value || "1970-01-01");
+}
 
-    Object.keys(grouped).forEach(airport => {
-      // ⏳ ترتيب حسب تاريخ الرحلة
-      grouped[airport].sort((a, b) => new Date(a['تاريخ  الر حلة']) - new Date(b['تاريخ  الر حلة']));
-
-      grouped[airport].forEach(item => {
-        const card = document.createElement("div");
-        card.className = "card airport-" + airport;
-
-        // 🧡 زر الإعجاب مع LocalStorage
-        const likeKey = "like_" + item['ID'];
-        let likes = localStorage.getItem(likeKey) || 0;
-
-        card.innerHTML = `
-          <div class="card-content">
-            <h3>${item['اسم العرض']}</h3>
-            <p><strong>✈️ المطار:</strong> ${item['المطار']}</p>
-            <p><strong>🏨 الفندق:</strong> ${item['الفندق']}</p>
-            <p>✈️ ${item['الخطوط الجوية']}</p>
-            <p class="date-duration">
-              📅 ${item['تاريخ  الر حلة']}  ⏳ ${item['مدة الرحلة']}
-            </p>
-            <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
-            <div class="card-buttons">
-              <a class="btn btn-details" href="offer-details.html?id=${item['ID']}">📖 أحجز رحلتك</a>
-              <a class="btn btn-share" href="https://wa.me/?text=🔥 عرض عمرة من مطار ${item['المطار']} 🛫 فندق ${item['الفندق']} بسعر ${item['السعر الغرفة الجماعية (دج)']} دج 📅 ${item['تاريخ  الر حلة']} ⏳ ${item['مدة الرحلة']} 👉 https://example.com/offer-details.html?id=${item['ID']}" target="_blank">📤 مشاركة العرض</a>
-              <button class="btn btn-like" data-id="${item['ID']}">👍 إعجاب <span>${likes}</span></button>
-            </div>
-          </div>
-        `;
-
-        // 🎯 التعامل مع زر الإعجاب
-        const likeBtn = card.querySelector(".btn-like");
-        likeBtn.addEventListener("click", () => {
-          if (localStorage.getItem(likeKey + "_clicked")) {
-            alert("لقد أعجبت بهذا العرض من قبل ✅");
-            return;
-          }
-          likes++;
-          localStorage.setItem(likeKey, likes);
-          localStorage.setItem(likeKey + "_clicked", true);
-          likeBtn.querySelector("span").textContent = likes;
-        });
-
-        grid.appendChild(card);
-      });
-    });
+/* زر إعجاب */
+function toggleLike(id) {
+  if (localStorage.getItem("liked_"+id)) {
+    alert("لقد قمت بالإعجاب بهذا العرض من قبل ❤️");
+    return;
   }
-  </script>
+  let counter = document.getElementById("like-count-"+id);
+  let count = parseInt(counter.textContent) || 0;
+  counter.textContent = count + 1;
+  localStorage.setItem("liked_"+id, "true");
+}
+
+/* عرض العروض */
+function renderOffers(data, filter="all") {
+  const container = document.getElementById("offersContainer");
+  container.innerHTML = "";
+
+  const grouped = {};
+  data.forEach(item => {
+    const airport = (item["المطار"] || "غير محدد").trim();
+    if (!grouped[airport]) grouped[airport] = [];
+    grouped[airport].push(item);
+  });
+
+  Object.keys(grouped).forEach(airport => {
+    if (filter !== "all" && filter !== airport) return;
+
+    const list = grouped[airport];
+    list.sort((a,b)=> parseDate(a["تاريخ  الر حلة"]) - parseDate(b["تاريخ  الر حلة"]));
+
+    const title = document.createElement("div");
+    title.className = "airport-title";
+    title.textContent = "🛫 مطار " + airport;
+    container.appendChild(title);
+
+    const grid = document.createElement("div");
+    grid.className = "offers-grid";
+
+    list.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const overlay = document.createElement("div");
+      overlay.className = "overlay";
+      overlay.style.background = airportOverlayColors[airport] || airportOverlayColors["default"];
+      card.appendChild(overlay);
+
+      const id = item["ID"] || Math.random().toString(36).substr(2,9);
+      const url = `offer-details.html?id=${encodeURIComponent(id)}`;
+      const likedBefore = localStorage.getItem("liked_"+id);
+
+      const content = document.createElement("div");
+      content.className = "card-content";
+      content.innerHTML = `
+        <h3>${item["اسم العرض"] || "عرض"}</h3>
+        <p>✈️ المطار: ${airport}</p>
+        <p>🏨 الفندق: ${item["الفندق"] || ""}</p>
+        <p>📅 ${item["تاريخ  الر حلة"] || ""} ⏳ ${item["مدة الرحلة"] || ""}</p>
+        <p>💵 ${item["السعر الغرفة الجماعية (دج)"] || ""} دج</p>
+        <div class="card-buttons">
+          <a class="btn details" href="${url}">📖 التفاصيل</a>
+          <a class="btn share" href="https://wa.me/?text=🔥 عرض عمرة من مطار ${airport} - فندق ${item["الفندق"]||""} - السعر ${item["السعر الغرفة الجماعية (دج)"]||""} دج 📅 ${item["تاريخ  الر حلة"]||""} ⏳ ${item["مدة الرحلة"]||""} 🌐 ${location.origin}/${url}" target="_blank">📤 مشاركة</a>
+          <button class="btn like" onclick="toggleLike('${id}')">❤️ إعجاب <span id="like-count-${id}">${likedBefore ? 1 : 0}</span></button>
+        </div>
+      `;
+      card.appendChild(content);
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+  });
+}
+
+/* جلب البيانات */
+function loadOffers() {
+  fetch(SHEET_URL)
+    .then(res => res.json())
+    .then(data => {
+      offersData = data;
+      renderOffers(offersData);
+    })
+    .catch(err => {
+      document.getElementById("offersContainer").innerHTML = "<p style='color:red;text-align:center;'>❌ فشل تحميل البيانات</p>";
+      console.error(err);
+    });
+}
+
+/* فلترة حسب المطار */
+function renderFiltered() {
+  const filter = document.getElementById("airportFilter").value;
+  renderOffers(offersData, filter);
+}
+
+loadOffers();
+</script>
 </body>
 </html>
