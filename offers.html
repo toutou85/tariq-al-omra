@@ -304,7 +304,9 @@ src="https://www.facebook.com/tr?id=1520503049118519&ev=PageView&noscript=1"
   <a href="contact.html">📞<span>اتصل بنا</span></a>
   <a href="about.html">❔<span>من نحن</span></a>
 </div>
- <script>
+  
+
+<script>
   let allOffers = [];
 
   fetch("https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec")
@@ -314,7 +316,8 @@ src="https://www.facebook.com/tr?id=1520503049118519&ev=PageView&noscript=1"
       displayOffers(allOffers);
     })
     .catch(err => {
-      document.getElementById("offers-container").innerHTML = "<p style='color:red; text-align:center;'>❌ حدث خطأ أثناء تحميل العروض</p>";
+      document.getElementById("offers-container").innerHTML =
+        "<p style='color:red; text-align:center;'>❌ حدث خطأ أثناء تحميل العروض</p>";
       console.error("فشل في جلب البيانات:", err);
     });
 
@@ -327,42 +330,80 @@ src="https://www.facebook.com/tr?id=1520503049118519&ev=PageView&noscript=1"
       return;
     }
 
-    offers.forEach(item => {
-      const card = document.createElement("div");
-      card.className = "card";
+    // 🎨 جدول الألوان لكل مطار
+    const airportColors = {
+      "الجزائر": "rgba(135, 206, 250, 0.6)",   // أزرق فاتح
+      "وهران": "rgba(144, 238, 144, 0.6)",     // أخضر فاتح
+      "قسنطينة": "rgba(216, 191, 216, 0.6)",   // بنفسجي فاتح
+      "عنابة": "rgba(255, 165, 0, 0.6)",       // برتقالي فاتح
+      "ورقلة": "rgba(255, 182, 193, 0.6)",     // وردي فاتح
+      "تمنغست": "rgba(64, 224, 208, 0.6)",     // تركوازي
+      "ادرار": "rgba(211, 211, 211, 0.6)",     // رمادي فاتح
+      "غرداية": "rgba(255, 255, 153, 0.7)"     // أصفر فاتح
+    };
 
-      card.innerHTML = `
-      
-        <div class="card-content">
-          <h3>${item['اسم العرض']}</h3>
-          <p>✈️ ${item['الخطوط الجوية']}</p>
-          <p>🛫 ${item['المطار']}</p>
-          <p class="date-duration">
-            📅 ${item['تاريخ  الر حلة']}  ⏳ ${item['مدة الرحلة']}
-          </p>
-          <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
-          
-          <div class="card-buttons">
-            <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
-           
-     </div>
-        </div>
-      `;
-      container.appendChild(card);
+    // ✅ تجميع العروض حسب المطار
+    const grouped = {};
+    offers.forEach(item => {
+      const airport = item["المطار"] || "غير محدد";
+      if (!grouped[airport]) grouped[airport] = [];
+      grouped[airport].push(item);
     });
+
+    // ✅ عرض العروض حسب المطار
+    for (const airport in grouped) {
+      // عنوان المطار كشريط كامل
+      const title = document.createElement("div");
+      title.textContent = `🛫 ${airport}`;
+      title.style.background = airportColors[airport] || "rgba(255,215,0,0.4)";
+      title.style.color = "#000";
+      title.style.fontWeight = "bold";
+      title.style.fontSize = "20px";
+      title.style.padding = "12px";
+      title.style.textAlign = "center";
+      title.style.marginTop = "25px";
+      title.style.borderRadius = "8px";
+      title.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+      container.appendChild(title);
+
+      // بطاقات العروض الخاصة بالمطار
+      const grid = document.createElement("div");
+      grid.className = "offers";
+
+      grouped[airport].forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <div class="card-content">
+            <h3>${item['اسم العرض']}</h3>
+            <p>✈️ ${item['الخطوط الجوية']}</p>
+            <p class="date-duration">
+              📅 ${item['تاريخ  الر حلة']}  ⏳ ${item['مدة الرحلة']}
+            </p>
+            <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
+            <div class="card-buttons">
+              <a class="btn" href="offer-details.html?id=${item['ID']}">مزيد من التفاصيل</a>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      container.appendChild(grid);
+    }
   }
 
   function filterOffers() {
     const airport = document.getElementById("airport-select").value;
-
     const filtered = allOffers.filter(item => {
       const matchAirport = !airport || item["المطار"]?.includes(airport);
       return matchAirport;
     });
-
     displayOffers(filtered);
   }
 </script>
+
 <div style="height: 65px;"></div>
 </body>
 </html>
