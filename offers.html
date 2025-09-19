@@ -1,103 +1,122 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>عروض العمرة | طريق العمرة</title>
-  <style>
-    body {
-      font-family: 'Tajawal', Tahoma, Arial, sans-serif;
-      margin: 0; padding: 0;
-      background: url("https://i.postimg.cc/mk1k1LW3/FB-IMG-1757788923321.jpg") no-repeat center center fixed;
-      background-size: cover;
-      position: relative;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>عروض العمرة | طريق العمرة</title>
+<style>
+  body {
+    font-family: 'Tajawal', Tahoma, Arial, sans-serif;
+    margin: 0; padding: 0;
+    background: url("https://i.postimg.cc/mk1k1LW3/FB-IMG-1757788923321.jpg") no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+  }
 
-    /* طبقة التعتيم البيضاء خفيفة جدًا لتظهر الخلفية */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(255,255,255,0.02);
-      z-index: -1;
-    }
+  /* طبقة شفافة خفيفة على الخلفية */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.2);
+    z-index: -1;
+  }
 
-    nav { background: #FFD700; padding: 12px; text-align: center; }
-    nav a { text-decoration: none; color: #000; font-weight: bold; margin: 0 10px; }
+  nav { background: #FFD700; padding: 12px; text-align: center; }
+  nav a { text-decoration: none; color: #000; font-weight: bold; margin: 0 10px; }
 
-    .page {
-      max-width: 1100px;
-      margin: 20px auto 60px;
-      padding: 18px;
-      background: rgba(255,255,255,2); /* وضوح أكبر */
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    }
+  .page {
+    max-width: 1100px;
+    margin: 20px auto 60px;
+    padding: 18px;
+  }
 
-    .filter-box { text-align: center; margin-bottom: 20px; }
-    .filter-box select { padding: 6px 12px; font-size: 15px; border-radius: 6px; }
+  /* العنوان مع خلفية ضبابية */
+  .title-box {
+    position: relative;
+    padding: 20px 14px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.2); /* شفافية خفيفة */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .title-box h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+  }
 
-    .airport-title {
-      margin-top: 28px;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 18px;
-      background: #eee;
-    }
+  .filter-box { text-align: center; margin-bottom: 20px; }
+  .filter-box select { padding: 6px 12px; font-size: 15px; border-radius: 6px; }
 
-    .offers-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 12px;
-    }
+  .airport-title {
+    margin-top: 28px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 18px;
+    background: #eee;
+  }
 
-    .card {
-      border-radius: 14px;
-      padding: 14px;
-      color: #000;
-      min-height: 160px;
-      position: relative;
-      overflow: hidden;
-      background: rgba(255,255,255,0.95); /* وضوح أكبر */
-    }
+  .offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+  }
 
-    .overlay {
-      position: absolute;
-      inset: 0;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.3); /* شفافية أقل */
-    }
+  .card {
+    border-radius: 14px;
+    padding: 14px;
+    color: #000;
+    min-height: 160px;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.9); /* وضوح أكبر للمربعات */
+  }
 
-    .card-content {
-      position: relative;
-      z-index: 2;
-    }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.3); /* شفافية أقل */
+  }
 
-    .card h3 { margin: 0 0 8px 0; font-size: 18px; }
-    .card p { margin: 6px 0; font-size: 15px; }
+  .card-content {
+    position: relative;
+    z-index: 2;
+  }
 
-    .card-buttons { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
-    .btn {
-      padding: 7px 11px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 14px;
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
-    }
-    .btn.details { background: #007bff; }
-    .btn.share { background: #28a745; }
-    .btn.like { background: #e53935; }
-  </style>
+  .card h3 { margin: 0 0 8px 0; font-size: 18px; }
+  .card p { margin: 6px 0; font-size: 15px; }
+
+  .card-buttons { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    padding: 7px 11px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+  }
+  .btn.details { background: #007bff; }
+  .btn.share { background: #28a745; }
+  .btn.like { background: #e53935; }
+
+</style>
 </head>
 <body>
   <nav><a href="index.html">🏠 الرئيسية</a></nav>
   <div class="page">
-    <h1>🕋 عروض العمرة وكالة تقرت للسياحة و سفر </h1>
+    <!-- العنوان بالضباب -->
+    <div class="title-box">
+      <h1>🕋 عروض العمرة وكالة تقرت للسياحة و سفر </h1>
+    </div>
 
     <!-- اختيار المطار -->
     <div class="filter-box">
@@ -118,12 +137,12 @@
 
 <script>
 const airportOverlayColors = {
-  "الجزائر": "rgba(255, 182, 193, 0.6)",    // وردي فاتح
-  "تمنغست": "rgba(173, 216, 230, 0.6)",    // أزرق فاتح
-  "ورقلة": "rgba(144, 238, 144, 0.6)",     // أخضر فاتح
-  "وهران": "rgba(255, 255, 224, 0.6)",     // أصفر فاتح
-  "عنابة": "rgba(211, 211, 211, 0.6)",     // رمادي فاتح
-  "قسنطينة": "rgba(221, 160, 221, 0.6)",   // بنفسجي فاتح
+  "الجزائر": "rgba(255, 182, 193, 0.6)",
+  "تمنغست": "rgba(173, 216, 230, 0.6)",
+  "ورقلة": "rgba(144, 238, 144, 0.6)",
+  "وهران": "rgba(255, 255, 224, 0.6)",
+  "عنابة": "rgba(211, 211, 211, 0.6)",
+  "قسنطينة": "rgba(221, 160, 221, 0.6)",
   "default": "rgba(255,255,255,0.65)"
 };
 
