@@ -1,105 +1,124 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>عروض العمرة | طريق العمرة</title>
-  <style>
-    body {
-      font-family: 'Tajawal', Tahoma, Arial, sans-serif;
-      margin: 0; padding: 0;
-      background: url("https://i.postimg.cc/mk1k1LW3/FB-IMG-1757788923321.jpg") no-repeat center center fixed;
-      background-size: cover;
-      position: relative;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>عروض العمرة | طريق العمرة</title>
+<style>
+  body {
+    font-family: 'Tajawal', Tahoma, Arial, sans-serif;
+    margin: 0; padding: 0;
+    background: url("https://i.postimg.cc/mk1k1LW3/FB-IMG-1757788923321.jpg") no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+  }
 
-    /* ضباب متدرج على الجزء العلوي */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 220px;
-      background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0));
-      z-index: -1;
-    }
+  /* طبقة شفافة خفيفة على الخلفية */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.2);
+    z-index: -1;
+  }
 
-    nav { background: #FFD700; padding: 12px; text-align: center; }
-    nav a { text-decoration: none; color: #000; font-weight: bold; margin: 0 10px; }
+  nav { background: #FFD700; padding: 12px; text-align: center; }
+  nav a { text-decoration: none; color: #000; font-weight: bold; margin: 0 10px; }
 
-    .page {
-      max-width: 1100px;
-      margin: 20px auto 60px;
-      padding: 18px;
-      background: rgba(255,255,255,0.95);
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    }
+  .page {
+    max-width: 1100px;
+    margin: 20px auto 60px;
+    padding: 18px;
+  }
 
-    .filter-box { text-align: center; margin-bottom: 20px; }
-    .filter-box select { padding: 6px 12px; font-size: 15px; border-radius: 6px; }
+  /* العنوان مع خلفية ضبابية */
+  .title-box {
+    position: relative;
+    padding: 20px 14px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.2); /* شفافية خفيفة */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .title-box h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+  }
 
-    .airport-title {
-      margin-top: 28px;
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 18px;
-      background: #eee;
-    }
+  .filter-box { text-align: center; margin-bottom: 20px; }
+  .filter-box select { padding: 6px 12px; font-size: 15px; border-radius: 6px; }
 
-    .offers-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 12px;
-    }
+  .airport-title {
+    margin-top: 28px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 18px;
+    background: #eee;
+  }
 
-    .card {
-      border-radius: 14px;
-      padding: 14px;
-      color: #000;
-      min-height: 160px;
-      position: relative;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.95);
-    }
+  .offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+  }
 
-    .overlay {
-      position: absolute;
-      inset: 0;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.4);
-    }
+  .card {
+    border-radius: 14px;
+    padding: 14px;
+    color: #000;
+    min-height: 160px;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.9); /* وضوح أكبر للمربعات */
+  }
 
-    .card-content {
-      position: relative;
-      z-index: 2;
-    }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.3); /* شفافية أقل */
+  }
 
-    .card h3 { margin: 0 0 8px 0; font-size: 18px; }
-    .card p { margin: 6px 0; font-size: 15px; }
+  .card-content {
+    position: relative;
+    z-index: 2;
+  }
 
-    .card-buttons { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
-    .btn {
-      padding: 7px 11px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 14px;
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
-    }
-    .btn.details { background: #007bff; }
-    .btn.share { background: #28a745; }
-    .btn.like { background: #e53935; }
-  </style>
+  .card h3 { margin: 0 0 8px 0; font-size: 18px; }
+  .card p { margin: 6px 0; font-size: 15px; }
+
+  .card-buttons { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    padding: 7px 11px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+  }
+  .btn.details { background: #007bff; }
+  .btn.share { background: #28a745; }
+  .btn.like { background: #e53935; }
+
+</style>
 </head>
 <body>
   <nav><a href="index.html">🏠 الرئيسية</a></nav>
   <div class="page">
-    <h1>🕋 عروض العمرة وكالة تقرت للسياحة و سفر </h1>
+    <!-- العنوان بالضباب -->
+    <div class="title-box">
+      <h1>🕋 عروض العمرة وكالة تقرت للسياحة و سفر </h1>
+    </div>
 
+    <!-- اختيار المطار -->
     <div class="filter-box">
       <label>✈️ اختر المطار: </label>
       <select id="airportFilter" onchange="renderFiltered()">
@@ -143,20 +162,10 @@ function toggleLike(id) {
   localStorage.setItem("liked_"+id, "true");
 }
 
-function shareOffer(airport, hotel, price, date, duration, url) {
-  const text = `🔥 عرض عمرة من مطار ${airport} - فندق ${hotel} - السعر ${price} دج 📅 ${date} ⏳ ${duration} 🌐 ${location.origin}/${url}`;
-  if (navigator.share) {
-    navigator.share({ title: 'عرض العمرة', text: text, url: location.origin + '/' + url })
-      .catch(err => console.error(err));
-  } else {
-    navigator.clipboard.writeText(text)
-      .then(() => alert('تم نسخ نص العرض مع الرابط! يمكنك الآن مشاركته في أي مكان.'));
-  }
-}
-
 function renderOffers(data, filter="all") {
   const container = document.getElementById("offersContainer");
   container.innerHTML = "";
+
   const grouped = {};
   data.forEach(item => {
     const airport = (item["المطار"] || "غير محدد").trim();
@@ -166,8 +175,10 @@ function renderOffers(data, filter="all") {
 
   Object.keys(grouped).forEach(airport => {
     if (filter !== "all" && filter !== airport) return;
+
     const list = grouped[airport];
     list.sort((a,b)=> parseDate(a["تاريخ  الر حلة"]) - parseDate(b["تاريخ  الر حلة"]));
+
     const title = document.createElement("div");
     title.className = "airport-title";
     title.textContent = "🛫 مطار " + airport;
@@ -179,6 +190,7 @@ function renderOffers(data, filter="all") {
     list.forEach(item => {
       const card = document.createElement("div");
       card.className = "card";
+
       const overlay = document.createElement("div");
       overlay.className = "overlay";
       overlay.style.background = airportOverlayColors[airport] || airportOverlayColors["default"];
@@ -198,17 +210,7 @@ function renderOffers(data, filter="all") {
         <p>💵 ${item["السعر الغرفة الجماعية (دج)"] || ""} دج</p>
         <div class="card-buttons">
           <a class="btn details" href="${url}">📖 أحجز رحلتك 🧳</a>
-          <button class="btn share" onclick="shareOffer('${airport}', '${item["الفندق"]||""}', '${item["السعر الغرفة الجماعية (دج)"]||""}', '${item["تاريخ  الر حلة"]||""}', '${item["مدة الرحلة"]||""}', '${url}')">📤 مشاركة عامة</button>
-function shareOffer(airport, hotel, price, date, duration, url) {
-  const text = `🔥 عرض عمرة من مطار ${airport} - فندق ${hotel} - السعر ${price} دج 📅 ${date} ⏳ ${duration} 🌐 ${location.origin}/${url}`;
-  if (navigator.share) {
-    navigator.share({ title: 'عرض العمرة', text: text, url: location.origin + '/' + url })
-      .catch(err => console.error(err));
-  } else {
-    navigator.clipboard.writeText(text)
-      .then(() => alert('تم نسخ نص العرض مع الرابط! يمكنك الآن مشاركته في أي مكان.'));
-  }
-}
+          <a class="btn share" href="https://wa.me/?text=🔥 عرض عمرة من مطار ${airport} - فندق ${item["الفندق"]||""} - السعر ${item["السعر الغرفة الجماعية (دج)"]||""} دج 📅 ${item["تاريخ  الر حلة"]||""} ⏳ ${item["مدة الرحلة"]||""} 🌐 ${location.origin}/${url}" target="_blank">📤 مشاركة</a>
           <button class="btn like" onclick="toggleLike('${id}')">❤️ إعجاب <span id="like-count-${id}">${likedBefore ? 1 : 0}</span></button>
         </div>
       `;
