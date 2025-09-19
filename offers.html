@@ -2,163 +2,125 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>عروض العمرة</title>
   <style>
-    body {
-      font-family: "Tahoma", sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    .offers {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
+    body { font-family: Tahoma, sans-serif; background: #f9f9f9; margin: 0; padding: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+
+    /* 🎨 ألوان خلفية لكل مطار */
+    .card.airport-الجزائر { background: #f8d7da; }     
+    .card.airport-تمنغاست { background: #d1ecf1; }     
+    .card.airport-ورقلة { background: #d4edda; }       
+    .card.airport-وهران { background: #fff3cd; }       
+    .card.airport-عنابة { background: #e2e3e5; }       
+    .card.airport-قسنطينة { background: #f5d0fe; }     
+
     .card {
-      border-radius: 12px;
+      border-radius: 15px;
       padding: 15px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+    .card-content h3 { margin-top: 0; }
+    .card-buttons { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .card-buttons .btn {
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
       color: #fff;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    }
-    .card h2 {
-      margin: 0 0 10px;
-    }
-    .card p {
-      margin: 5px 0;
-    }
-    .btn {
-      display: inline-block;
-      margin: 8px 5px 0 0;
-      padding: 8px 14px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
       font-size: 14px;
+      transition: 0.3s;
     }
-    .share-btn {
-      background: #0077ff;
-      color: #fff;
-    }
-    .like-btn {
-      background: #ff4081;
-      color: #fff;
-    }
-    .like-count {
-      margin-right: 6px;
-    }
+    .btn-details { background: #007bff; }
+    .btn-share { background: #28a745; }
+    .btn-like { background: #ff5722; }
+    .btn:hover { opacity: 0.85; }
   </style>
 </head>
 <body>
-  <h1>✈️ عروض رحلات العمرة</h1>
-  <div class="offers" id="offers"></div>
+
+  <h2>📋 عروض العمرة</h2>
+  <div id="offersGrid" class="grid"></div>
 
   <script>
-    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTyCRa-FUh6a62brIHe7tg4YImWLVEuEjsaYtIQGeAxrqt8-dQzcfoH-uQ5H8YHG36soStv6Zuwbd4a/pub?output=csv";
+    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTyCRa-FUh6a62brIHe7tg4YImWLVEuEjsaYtIQGeAxrqt8-dQzcfoH-uQ5H8YHG36soStv6Zuwbd4a/pub?output=csv";
 
-    const airportColors = {
-      "الجزائر": "#4CAF50",
-      "تمنغاست": "#2196F3",
-      "ورقلة": "#9C27B0",
-      "وهران": "#FF9800",
-      "عنابة": "#F44336",
-      "قسنطينة": "#009688"
-    };
-
-    // استرجاع عدد الإعجابات من LocalStorage
-    function getLikes(id) {
-      return parseInt(localStorage.getItem("like_" + id) || "0");
+    async function fetchData() {
+      const res = await fetch(sheetURL);
+      const text = await res.text();
+      const rows = text.split("\n").map(r => r.split(","));
+      const headers = rows[0];
+      return rows.slice(1).map(r => {
+        let obj = {};
+        headers.forEach((h, i) => obj[h.trim()] = r[i] ? r[i].trim() : "");
+        return obj;
+      });
     }
 
-    // التحقق إن كان المستخدم ضغط لايك من قبل
-    function hasLiked(id) {
-      return localStorage.getItem("liked_" + id) === "true";
-    }
+    function renderCards(grouped) {
+      const grid = document.getElementById("offersGrid");
+      grid.innerHTML = "";
 
-    // التعامل مع زر الإعجاب
-    function toggleLike(id, btn, countSpan) {
-      if (hasLiked(id)) {
-        alert("لقد أعجبت بهذا العرض من قبل ✅");
-        return;
-      }
-      let likes = getLikes(id) + 1;
-      localStorage.setItem("like_" + id, likes);
-      localStorage.setItem("liked_" + id, "true");
-      countSpan.textContent = likes;
-    }
+      Object.keys(grouped).forEach(airport => {
+        grouped[airport].sort((a, b) => new Date(a['تاريخ  الر حلة']) - new Date(b['تاريخ  الر حلة']));
 
-    // جلب البيانات
-    fetch(sheetUrl)
-      .then(res => res.text())
-      .then(data => {
-        let rows = data.split("\n").map(r => r.split(","));
-        rows.shift(); // إزالة العناوين
+        grouped[airport].forEach(item => {
+          const card = document.createElement("div");
+          card.className = "card airport-" + airport;
 
-        let offers = rows.map((r, i) => ({
-          id: i,
-          airport: r[0],
-          date: new Date(r[1]),
-          hotel: r[2],
-          price: r[3]
-        }));
-
-        // ترتيب حسب التاريخ
-        offers.sort((a, b) => a.date - b.date);
-
-        const container = document.getElementById("offers");
-
-        offers.forEach(offer => {
-          let card = document.createElement("div");
-          card.className = "card";
-          card.style.background = airportColors[offer.airport] || "#666";
-
-          let dateStr = offer.date.toLocaleDateString("ar-DZ");
+          const likesKey = "likes_" + item['ID'];
+          let likes = localStorage.getItem(likesKey) || 0;
 
           card.innerHTML = `
-            <h2>${offer.airport}</h2>
-            <p>📅 ${dateStr}</p>
-            <p>🏨 ${offer.hotel}</p>
-            <p>💰 ${offer.price} دج</p>
+            <div class="card-content">
+              <h3>${item['اسم العرض']}</h3>
+              <p><strong>✈️ المطار:</strong> ${item['المطار']}</p>
+              <p><strong>🏨 الفندق:</strong> ${item['الفندق']}</p>
+              <p>✈️ ${item['الخطوط الجوية']}</p>
+              <p class="date-duration">
+                📅 ${item['تاريخ  الر حلة']} ⏳ ${item['مدة الرحلة']}
+              </p>
+              <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
+              <div class="card-buttons">
+                <a class="btn btn-details" href="offer-details.html?id=${item['ID']}">📖 تفاصيل</a>
+                <a class="btn btn-share" 
+                   href="https://wa.me/?text=🔥 عرض عمرة من مطار ${item['المطار']} 🛫 فندق ${item['الفندق']} 
+                   بسعر ${item['السعر الغرفة الجماعية (دج)']} دج 📅 ${item['تاريخ  الر حلة']} ⏳ ${item['مدة الرحلة']} 
+                   🌐 رابط العرض: ${window.location.origin}/offer-details.html?id=${item['ID']}" 
+                   target="_blank">📤 مشاركة</a>
+                <button class="btn btn-like" data-id="${item['ID']}">👍 إعجاب (<span>${likes}</span>)</button>
+              </div>
+            </div>
           `;
 
-          // زر المشاركة العام
-          let shareBtn = document.createElement("button");
-          shareBtn.className = "btn share-btn";
-          shareBtn.textContent = "📤 مشاركة العرض";
-          shareBtn.onclick = () => {
-            const text = `🌟 عرض عمرة 🌟\nمن مطار ${offer.airport}\n📅 ${dateStr}\n🏨 ${offer.hotel}\n💰 ${offer.price} دج\n👉 الرابط: ${window.location.href}`;
-            if (navigator.share) {
-              navigator.share({ title: "عرض عمرة", text, url: window.location.href });
+          // تفعيل زر الإعجاب
+          const likeBtn = card.querySelector(".btn-like");
+          likeBtn.addEventListener("click", () => {
+            if (!localStorage.getItem("liked_" + item['ID'])) {
+              likes++;
+              localStorage.setItem(likesKey, likes);
+              localStorage.setItem("liked_" + item['ID'], true);
+              likeBtn.innerHTML = `👍 إعجاب (<span>${likes}</span>)`;
             } else {
-              navigator.clipboard.writeText(text);
-              alert("تم نسخ العرض ✅");
+              alert("لقد أعجبت بهذا العرض من قبل ✅");
             }
-          };
+          });
 
-          // زر الإعجاب
-          let likeBtn = document.createElement("button");
-          likeBtn.className = "btn like-btn";
-
-          let countSpan = document.createElement("span");
-          countSpan.className = "like-count";
-          countSpan.textContent = getLikes(offer.id);
-
-          likeBtn.innerHTML = "👍 أعجبني ";
-          likeBtn.prepend(countSpan);
-
-          likeBtn.onclick = () => toggleLike(offer.id, likeBtn, countSpan);
-
-          card.appendChild(shareBtn);
-          card.appendChild(likeBtn);
-
-          container.appendChild(card);
+          grid.appendChild(card);
         });
       });
+    }
+
+    fetchData().then(data => {
+      const grouped = {};
+      data.forEach(item => {
+        const airport = item['المطار'];
+        if (!grouped[airport]) grouped[airport] = [];
+        grouped[airport].push(item);
+      });
+      renderCards(grouped);
+    });
   </script>
+
 </body>
 </html>
