@@ -13,11 +13,14 @@
       position: relative;
     }
 
-    /* ضباب فقط على العنوان الأعلى */
+    /* ضباب فقط على الجزء العلوي (العنوان + اختيار المطار) */
     body::before {
       content: "";
       position: fixed;
-      top: 0; left: 0; right: 0; height: 180px; /* فقط الجزء العلوي */
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 220px; /* يغطي العنوان + فلتر اختيار المطار */
       background: rgba(255,255,255,0.3);
       z-index: -1;
     }
@@ -53,6 +56,7 @@
       margin-top: 12px;
     }
 
+    /* المربعات */
     .card {
       border-radius: 14px;
       padding: 14px;
@@ -67,7 +71,7 @@
       position: absolute;
       inset: 0;
       border-radius: 14px;
-      background: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.4); /* شفافية خفيفة حسب المطار */
     }
 
     .card-content {
@@ -143,7 +147,7 @@ function toggleLike(id) {
   localStorage.setItem("liked_"+id, "true");
 }
 
-// دالة المشاركة العامة
+// مشاركة عامة
 function shareOffer(airport, hotel, price, date, duration, url) {
   const text = `🔥 عرض عمرة من مطار ${airport} - فندق ${hotel} - السعر ${price} دج 📅 ${date} ⏳ ${duration} 🌐 ${location.origin}/${url}`;
   if (navigator.share) {
@@ -222,16 +226,19 @@ function loadOffers() {
       renderOffers(offersData);
     })
     .catch(err => {
-      document.getElementById("offersContainer").innerHTML = "<p style='color:red;text-align:center;'>❌ فشل تحميل البيانات</p>";
+      document.getElementById("offersContainer").innerHTML = "<p style='color:red;text-align:center;'>❌ فشل تحميل البيانات
+</p>";
       console.error(err);
     });
 }
 
+/* فلترة حسب المطار */
 function renderFiltered() {
   const filter = document.getElementById("airportFilter").value;
   renderOffers(offersData, filter);
 }
 
+/* تحميل العروض عند فتح الصفحة */
 loadOffers();
 </script>
 </body>
