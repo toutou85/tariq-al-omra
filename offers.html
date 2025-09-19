@@ -2,154 +2,172 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>عروض العمرة</title>
   <style>
     body {
-      font-family: "Tahoma", Arial, sans-serif;
+      font-family: Arial, sans-serif;
       background: #f5f5f5;
       margin: 0;
       padding: 20px;
     }
-
     h1 {
       text-align: center;
       margin-bottom: 20px;
+      color: #333;
     }
-
-    .grid {
+    .offers {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
     }
-
-    /* 🎨 ألوان خلفية لكل مطار */
-    .card.airport-الجزائر { background: #f8d7da; }     /* أحمر فاتح */
-    .card.airport-تمنغاست { background: #d1ecf1; }     /* أزرق سماوي */
-    .card.airport-ورقلة { background: #d4edda; }       /* أخضر فاتح */
-    .card.airport-وهران { background: #fff3cd; }       /* أصفر فاتح */
-    .card.airport-عنابة { background: #e2e3e5; }       /* رمادي فاتح */
-    .card.airport-قسنطينة { background: #f5d0fe; }     /* بنفسجي فاتح */
-
     .card {
-      border-radius: 15px;
-      padding: 15px;
-      margin: 10px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      padding: 20px;
+      border-radius: 12px;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    .card-content h3 {
-      margin-top: 0;
-      font-size: 18px;
+    .card h2 {
+      margin: 0 0 10px;
     }
-    .card-content p {
+    .card p {
       margin: 5px 0;
     }
-    .card-buttons {
-      margin-top: 10px;
+    .actions {
+      margin-top: 15px;
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
     }
-    .card-buttons .btn {
-      padding: 8px 12px;
+    button {
+      border: none;
+      padding: 8px 14px;
       border-radius: 8px;
-      text-decoration: none;
-      color: #fff;
+      cursor: pointer;
       font-size: 14px;
       transition: 0.3s;
     }
-    .card-buttons .btn-details { background: #007bff; }
-    .card-buttons .btn-share { background: #28a745; }
-    .card-buttons .btn:hover { opacity: 0.85; }
+    button:hover {
+      opacity: 0.8;
+    }
+    .share-btn {
+      background: #007bff;
+      color: white;
+    }
+    .like-btn {
+      background: #ff4757;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
   </style>
 </head>
 <body>
 
-  <h1>📢 عروض العمرة</h1>
-  <div id="offersGrid" class="grid"></div>
+  <h1>✨ عروض العمرة ✨</h1>
+
+  <div class="offers">
+    <div class="card" data-id="offer1" data-airport="عنابة">
+      <h2>✈️ مطار عنابة</h2>
+      <p>📅 التاريخ: 03 أكتوبر</p>
+      <p>🏨 الفندق: رياض الضيافة</p>
+      <p>💰 السعر: 139,000 دج</p>
+      <div class="actions">
+        <button class="share-btn">🔗 مشاركة</button>
+        <button class="like-btn">❤️ <span class="count">0</span></button>
+      </div>
+    </div>
+
+    <div class="card" data-id="offer2" data-airport="وهران">
+      <h2>✈️ مطار وهران</h2>
+      <p>📅 التاريخ: 10 أكتوبر</p>
+      <p>🏨 الفندق: سرايا الضيافة</p>
+      <p>💰 السعر: 149,000 دج</p>
+      <div class="actions">
+        <button class="share-btn">🔗 مشاركة</button>
+        <button class="like-btn">❤️ <span class="count">0</span></button>
+      </div>
+    </div>
+
+    <div class="card" data-id="offer3" data-airport="الجزائر">
+      <h2>✈️ مطار الجزائر</h2>
+      <p>📅 التاريخ: 15 أكتوبر</p>
+      <p>🏨 الفندق: أبراج الجنادرية</p>
+      <p>💰 السعر: 159,000 دج</p>
+      <div class="actions">
+        <button class="share-btn">🔗 مشاركة</button>
+        <button class="like-btn">❤️ <span class="count">0</span></button>
+      </div>
+    </div>
+  </div>
 
   <script>
-    // 📌 بيانات تجريبية (استبدلها ببيانات Google Sheets لاحقاً)
-    const grouped = {
-      "الجزائر": [
-        {
-          "ID": 1,
-          "اسم العرض": "عمرة الجزائر",
-          "المطار": "الجزائر",
-          "الفندق": "فندق سرايا الضيافة",
-          "الخطوط الجوية": "الخطوط الجوية الجزائرية",
-          "تاريخ  الر حلة": "2025-10-05",
-          "مدة الرحلة": "15 يوم",
-          "السعر الغرفة الجماعية (دج)": "139000"
-        }
-      ],
-      "عنابة": [
-        {
-          "ID": 2,
-          "اسم العرض": "عمرة عنابة",
-          "المطار": "عنابة",
-          "الفندق": "فندق رياض الضيافة",
-          "الخطوط الجوية": "طيران ناس",
-          "تاريخ  الر حلة": "2025-09-25",
-          "مدة الرحلة": "12 يوم",
-          "السعر الغرفة الجماعية (دج)": "135000"
-        }
-      ],
-      "وهران": [
-        {
-          "ID": 3,
-          "اسم العرض": "عمرة وهران",
-          "المطار": "وهران",
-          "الفندق": "فندق منارة المسك",
-          "الخطوط الجوية": "الخطوط الجوية الجزائرية",
-          "تاريخ  الر حلة": "2025-12-10",
-          "مدة الرحلة": "10 أيام",
-          "السعر الغرفة الجماعية (دج)": "140000"
-        }
-      ]
+    // ألوان خاصة بكل مطار
+    const airportColors = {
+      "عنابة": "#1abc9c",
+      "وهران": "#9b59b6",
+      "الجزائر": "#e67e22"
     };
 
-    // ✅ دالة لإنشاء البطاقات مرتبة حسب التاريخ
-    function renderCards(grouped) {
-      const grid = document.getElementById("offersGrid");
-      grid.innerHTML = "";
+    // تغيير الخلفية حسب المطار
+    document.querySelectorAll(".card").forEach(card => {
+      const airport = card.dataset.airport;
+      if (airportColors[airport]) {
+        card.style.background = airportColors[airport];
+      }
+    });
 
-      Object.keys(grouped).forEach(airport => {
-        // ⏳ ترتيب حسب تاريخ الرحلة
-        grouped[airport].sort((a, b) => {
-          return new Date(a['تاريخ  الر حلة']) - new Date(b['تاريخ  الر حلة']);
-        });
+    // مشاركة العرض
+    document.querySelectorAll(".share-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const card = btn.closest(".card");
+        const title = card.querySelector("h2").innerText;
+        const details = Array.from(card.querySelectorAll("p"))
+                             .map(p => p.innerText).join("\n");
+        const url = window.location.href;
 
-        grouped[airport].forEach(item => {
-          const card = document.createElement("div");
-          card.className = "card airport-" + airport;
-
-          // 🔗 رابط العرض
-          const offerUrl = `offer-details.html?id=${item['ID']}`;
-
-          card.innerHTML = `
-            <div class="card-content">
-              <h3>${item['اسم العرض']}</h3>
-              <p><strong>✈️ المطار:</strong> ${item['المطار']}</p>
-              <p><strong>🏨 الفندق:</strong> ${item['الفندق']}</p>
-              <p>✈️ ${item['الخطوط الجوية']}</p>
-              <p class="date-duration">
-                📅 ${item['تاريخ  الر حلة']}  ⏳ ${item['مدة الرحلة']}
-              </p>
-              <p>💵 ${item['السعر الغرفة الجماعية (دج)']} دج</p>
-              <div class="card-buttons">
-                <a class="btn btn-details" href="${offerUrl}">📖 مزيد من التفاصيل</a>
-                <a class="btn btn-share" href="https://wa.me/?text=🔥 عرض عمرة من مطار ${item['المطار']} 🛫%0A🏨 فندق: ${item['الفندق']}%0A💵 السعر: ${item['السعر الغرفة الجماعية (دج)']} دج%0A📅 ${item['تاريخ  الر حلة']} ⏳ ${item['مدة الرحلة']}%0A🔗 رابط العرض: ${location.origin}/${offerUrl}" target="_blank">📤 مشاركة العرض</a>
-              </div>
-            </div>
-          `;
-          grid.appendChild(card);
-        });
+        if (navigator.share) {
+          navigator.share({
+            title: title,
+            text: details,
+            url: url
+          });
+        } else {
+          navigator.clipboard.writeText(title + "\n" + details + "\n" + url);
+          alert("📋 تم نسخ العرض مع الرابط!");
+        }
       });
-    }
+    });
 
-    // 🚀 تشغيل
-    renderCards(grouped);
+    // زر الإعجاب مع تخزين محلي
+    document.querySelectorAll(".like-btn").forEach(btn => {
+      const card = btn.closest(".card");
+      const offerId = card.dataset.id;
+      const countSpan = btn.querySelector(".count");
+
+      // استرجاع القيمة من localStorage
+      let likes = localStorage.getItem("likes_" + offerId) || 0;
+      countSpan.textContent = likes;
+
+      // التحقق إذا سبق وعمل إعجاب
+      const liked = localStorage.getItem("liked_" + offerId);
+
+      btn.addEventListener("click", () => {
+        if (liked) {
+          alert("لقد أعجبت بهذا العرض من قبل ❤️");
+          return;
+        }
+        likes++;
+        countSpan.textContent = likes;
+        localStorage.setItem("likes_" + offerId, likes);
+        localStorage.setItem("liked_" + offerId, "true");
+      });
+    });
   </script>
+
 </body>
 </html>
