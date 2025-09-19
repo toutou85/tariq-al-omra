@@ -12,48 +12,27 @@
       background-size: cover;
       position: relative;
     }
-    body {
-  font-family: 'Tajawal', Tahoma, Arial, sans-serif;
-  margin: 0; padding: 0;
-  background: url("https://i.postimg.cc/mk1k1LW3/FB-IMG-1757788923321.jpg") no-repeat center center fixed;
-  background-size: cover;
-  position: relative;
-}
 
-/* إزالة طبقة التعتيم البيضاء أو تقليلها */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(255,255,255,0.3); /* تقليل الشفافية من 0.6 إلى 0.3 */
-  z-index: -1;
-}
+    /* طبقة التعتيم البيضاء خفيفة جدًا لتظهر الخلفية */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.2);
+      z-index: -1;
+    }
 
-.page {
-  max-width: 1100px;
-  margin: 20px auto 60px;
-  padding: 18px;
-  background: rgba(255,255,255,0.95); /* تقليل الشفافية من 0.8 إلى 0.95 */
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-}
+    nav { background: #FFD700; padding: 12px; text-align: center; }
+    nav a { text-decoration: none; color: #000; font-weight: bold; margin: 0 10px; }
 
-.card {
-  border-radius: 14px;
-  padding: 14px;
-  color: #000;
-  min-height: 160px;
-  position: relative;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.95); /* زيادة وضوح المربعات */
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.4); /* تقليل الشفافية من 0.6 إلى 0.4 */
-}
+    .page {
+      max-width: 1100px;
+      margin: 20px auto 60px;
+      padding: 18px;
+      background: rgba(255,255,255,0.95); /* وضوح أكبر */
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
 
     .filter-box { text-align: center; margin-bottom: 20px; }
     .filter-box select { padding: 6px 12px; font-size: 15px; border-radius: 6px; }
@@ -81,12 +60,14 @@ body::before {
       min-height: 160px;
       position: relative;
       overflow: hidden;
+      background: rgba(255,255,255,0.95); /* وضوح أكبر */
     }
 
     .overlay {
       position: absolute;
       inset: 0;
       border-radius: 14px;
+      background: rgba(255,255,255,0.3); /* شفافية أقل */
     }
 
     .card-content {
@@ -136,7 +117,6 @@ body::before {
   </div>
 
 <script>
-/* 🎨 شفافية لكل مطار (ألوان فاتحة) */
 const airportOverlayColors = {
   "الجزائر": "rgba(255, 182, 193, 0.6)",    // وردي فاتح
   "تمنغست": "rgba(173, 216, 230, 0.6)",    // أزرق فاتح
@@ -147,16 +127,11 @@ const airportOverlayColors = {
   "default": "rgba(255,255,255,0.65)"
 };
 
-/* 🔗 رابط Apps Script */
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec";
-
 let offersData = [];
 
-function parseDate(value) {
-  return new Date(value || "1970-01-01");
-}
+function parseDate(value) { return new Date(value || "1970-01-01"); }
 
-/* زر إعجاب */
 function toggleLike(id) {
   if (localStorage.getItem("liked_"+id)) {
     alert("لقد قمت بالإعجاب بهذا العرض من قبل ❤️");
@@ -168,7 +143,6 @@ function toggleLike(id) {
   localStorage.setItem("liked_"+id, "true");
 }
 
-/* عرض العروض */
 function renderOffers(data, filter="all") {
   const container = document.getElementById("offersContainer");
   container.innerHTML = "";
@@ -229,7 +203,6 @@ function renderOffers(data, filter="all") {
   });
 }
 
-/* جلب البيانات */
 function loadOffers() {
   fetch(SHEET_URL)
     .then(res => res.json())
@@ -243,7 +216,6 @@ function loadOffers() {
     });
 }
 
-/* فلترة حسب المطار */
 function renderFiltered() {
   const filter = document.getElementById("airportFilter").value;
   renderOffers(offersData, filter);
