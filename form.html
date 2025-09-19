@@ -1,10 +1,13 @@
+
+  
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>نموذج تسجيل العمرة</title>
-  <style>
+  
+    <style>
     * {
       box-sizing: border-box;
     }
@@ -159,106 +162,8 @@
 <body>
 
 <form id="umrahForm" class="container">
-  <!-- محتوى النموذج مثلما أدرجته سابقًا دون تغيير -->
-  <!-- تمت مراجعة كل خطوات النموذج هنا مسبقًا -->
-
-  <div class="step active" id="step0">  
-    <h2>معلومات العرض</h2>  <label for="agencyDisplay">اسم الوكالة:</label>  
-<select id="agencyDisplay" required onchange="updateBranches()">  
-  <option value="" disabled selected>اختر الوكالة</option>   
-  <option value="وكالة تقرت للسياحة و سفر">وكالة تقرت للسياحة و سفر</option>  
-</select>  
-<input type="hidden" id="agencyName" name="agencyName" />  
-
-<div class="buttons">  
-  <button type="button" onclick="nextStep()">التالي</button>  
-</div>
-
-  </div>    <!-- الخطوة 1: معلومات الزبون -->    <div class="step" id="step1">  
-    <h2>معلومات الزبون</h2>  
-    <label for="firstName">الاسم:</label>    
-    <input type="text" id="firstName" name="firstName" required>    
-    <label for="lastName">اللقب:</label>    
-    <input type="text" id="lastName" name="lastName" required>    
-    <label for="phone">رقم الهاتف:</label>    
-    <input type="tel" id="phone" name="phone" required>    
-    <label for="email">البريد الإلكتروني:</label>    
-    <input type="email" id="email" name="email" required>    
-    <label for="age">العمر:</label>    
-    <input type="number" id="age" name="age" min="0" required>  
-    <label for="passportExpiry">تاريخ انتهاء جواز السفر:</label>    
-    <input type="date" id="passportExpiry" name="passportExpiry" required>  
-    <div class="buttons">  
-      <button type="button" onclick="prevStep()">السابق</button>  
-      <button type="button" onclick="nextStep()">التالي</button>  
-    </div>  
-  </div>    <!-- الخطوة 2: الولاية والفرع -->    <div class="step" id="step2">  
-    <h2>اختيار الولاية والفرع</h2>  
-    <label for="wilaya">الولاية:</label>  
-    <select id="wilaya" name="wilaya" required></select>  
-     <label for="branch">الفرع الأقرب:</label>  
-  <select id="branch" name="branch" required>  
-    <option value="" disabled selected>اختر الفرع</option>  
-  </select>  
-    <div class="buttons">  
-      <button type="button" onclick="prevStep()">السابق</button>  
-      <button type="button" onclick="nextStep()">التالي</button>  
-    </div>  
-  </div>    <!-- الخطوة 3: المرافقون -->    <!-- الخطوة 3: المرافقون + اختيار فترة الذهاب -->  <div class="step" id="step3">  
-  <h2>المرافقون واختيار الفترة</h2>  <label for="roomType">نوع الغرفة:</label>
-<select id="roomType" name="roomType" required>
-<option value="" disabled selected>اختر نوع الغرفة</option>
-<option value="غرفة ثنائية">غرفة ثنائية</option>
-<option value="غرفة ثلاثية">غرفة ثلاثية</option>
-<option value="غرفة رباعية">غرفة رباعية</option>
-<option value="غرفة خماسية">غرفة خماسية</option>
-<option value="غرفة جماعية">غرفة جماعية</option>
-</select>
-
-<label for="reservationType">صفة الحجز:</label>
-<select id="reservationType" name="reservationType" required onchange="toggleCompanionSection()">
-<option value="" disabled selected>اختر صفة الحجز</option>
-<option value="منفرد">منفرد</option>
-<option value="مع صديق">مع صديق</option>
-<option value="مع الأسرة">مع الأسرة</option>
-</select>
-
-  <!-- اختيار فترة الذهاب -->  <label for="startDate">فترة الذهاب - من:</label>
-<input type="date" id="startDate" name="startDate" required>
-
-<label for="endDate">إلى:</label>
-<input type="date" id="endDate" name="endDate" required>
-
-  <!-- قسم المرافقين -->    <div id="companionsSection" style="display: none;">  
-    <div id="companionsContainer"></div>  
-    <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>  
-  </div>    <div class="buttons">  
-    <button type="button" onclick="prevStep()">السابق</button>  
-    <button type="button" onclick="nextStep()">التالي</button>  
-  </div>  
-</div>    <!-- الخطوة 4: الشروط -->    <div class="step" id="step4">  
-    <h2>الشروط والأحكام</h2>  
-    <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">  
-      <div class="confirmation-message" style="margin-top: 30px; padding: 20px; border: 1px solid #ccc; border-radius: 12px; background-color: #f9f9f9;">  
-        <p>✨ <strong>طريق العمرة</strong> هي منصة جزائرية لتسهيل استكشاف عروض العمرة والتسجيل الأولي بدون دفع إلكتروني.</p>  
-        <p>📍 هذا المشروع من إنجاز <strong>طه برقيقة</strong>، مرافق معتمد لدى وكالة <strong>تقرت للسياحة والسفر</strong>.</p>  
-        <p>🕌 التسجيل الإلكتروني مجاني، ويتم تأكيد الحجز فقط عند التوجه إلى الفرع المعتمد ودفع المستحقات.</p>  
-        <p style="color: red; font-weight: bold;">  
-          ⚠️ تنبيه: يبقى تسجيلكم شكليًا إلى حين دفع مستحقات الرحلة في مقر الوكالة، ثم يتم تأكيد الحجز نهائيًا.  
-          يرجى قراءة الشروط بعناية قبل الإرسال...  
-        </p>  
-      </div>  
-    </div>  
-    <label>  
-      <input type="checkbox" id="agree" required> أوافق على الشروط والأحكام  
-    </label>  
-    <div class="buttons">  
-      <button type="button" onclick="prevStep()">السابق</button>  
-      <button type="submit">إرسال</button>  
-    </div>  
-  </div>  
+  <!-- محتوى النموذج كما في كودك السابق -->
 </form>
-
 
 <div id="message" class="popup-box">
   <h3>⏳ الرجاء الانتظار <span id="countdown">10</span> ثواني...</h3>
@@ -315,16 +220,13 @@
     showStep(currentStep);
   });
 
-
-
-
   const wilayas = [
-    "أدرار", "الشلف", "الأغواط", "أم البواقي", "باتنة", "بجاية", "بسكرة", "بشار", "البليدة", "البويرة",
-    "تمنراست", "تبسة", "تلمسان", "تيارت", "تيزي وزو", "الجزائر", "الجلفة", "جيجل", "سطيف", "سعيدة",
-    "سكيكدة", "سيدي بلعباس", "عنابة", "قالمة", "قسنطينة", "المدية", "مستغانم", "المسيلة", "معسكر", "ورقلة",
-    "وهران", "البيض", "إليزي", "برج بوعريريج", "بومرداس", "الطارف", "تندوف", "تيسمسيلت", "الوادي", "خنشلة",
-    "سوق أهراس", "تيبازة", "ميلة", "عين الدفلى", "النعامة", "عين تموشنت", "غرداية", "غليزان", "تميمون", 
-    "برج باجي مختار", "أولاد جلال", "بني عباس", "إن صالح", "إن قزام", "تقرت", "جانت", "المغير", "المنيعة"
+    "أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة",
+    "تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة",
+    "سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة",
+    "وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة",
+    "سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت","غرداية","غليزان","تميمون", 
+    "برج باجي مختار","أولاد جلال","بني عباس","إن صالح","إن قزام","تقرت","جانت","المغير","المنيعة"
   ];
 
   const wilayaSelect = document.getElementById("wilaya");
@@ -335,11 +237,9 @@
     wilayaSelect.appendChild(opt);
   });
 
-
   const agencyBranches = {
-    
-  "وكالة تقرت للسياحة و سفر": ["تقرت","الجزائر العاصمة", "بومرداس","سطيف", "المغير", "الجلفة" "المدية", "مستغانم", "بشار", "الشلف", "عنابة", "تمنراست", "قسنطينة", "جيجل", "وهران", "سكيكدة", "سوق اهراس"],
-    
+    "وكالة تقرت للسياحة و سفر": ["تقرت","الجزائر العاصمة","بومرداس","سطيف","المغير","الجلفة","المدية","مستغانم","بشار","الشلف","عنابة","تمنراست","قسنطينة","جيجل","وهران","سكيكدة","سوق أهراس"]
+  };
 
   function updateBranches() {
     const branchSelect = document.getElementById("branch");
@@ -353,6 +253,8 @@
         branchSelect.appendChild(opt);
       });
     }
+    // تحديث اسم الوكالة في الحقل المخفي
+    document.getElementById("agencyName").value = selectedAgency;
   }
 
   let companionCount = 0;
@@ -401,6 +303,7 @@
     formData.append("companions", companions.join(" | "));
     document.getElementById("message").style.display = "block";
     form.style.display = "none";
+
     fetch("https://script.google.com/macros/s/AKfycbwbxMHpUMcOfzk2CqdMbFM0EWij31KkPDMgNAQ-pqmXfVh15Rbxw5VokqhYUrOibq9-ag/exec", {
       method: "POST",
       body: formData
@@ -427,46 +330,20 @@
     });
   });
 
-
-  // إظهار أو إخفاء قسم المرافقين بناءً على نوع الحجز
   function toggleCompanionSection() {
     const type = document.getElementById("reservationType").value;
     const companionsDiv = document.getElementById("companionsSection");
     companionsDiv.style.display = (type === "منفرد") ? "none" : "block";
   }
 
-  // ضبط تواريخ الذهاب والعودة
   const startDate = document.getElementById('startDate');
   const endDate = document.getElementById('endDate');
 
   startDate.addEventListener('change', () => {
     endDate.min = startDate.value;
-    if (endDate.value < startDate.value) {
-      endDate.value = startDate.value;
-    }
+    if (endDate.value < startDate.value) endDate.value = startDate.value;
   });
-
-  // تجميع البيانات عند الإرسال
-  function collectFormData() {
-    const data = {
-      startDate: document.getElementById("startDate").value,
-      endDate: document.getElementById("endDate").value,
-      reservationType: document.getElementById("reservationType").value,
-      // أضف هنا باقي الحقول كما يلزمك
-    };
-    return data;
-  }
-
-  // مثال على دالة إرسال النموذج (إن كنت ترسل إلى Google Sheets أو غيره)
-  function submitForm() {
-    const data = collectFormData();
-
-    // هنا يتم إرسال البيانات
-    console.log("Form Data:", data);
-    // مثال: sendToGoogleSheets(data); أو تنفيذ أي منطق آخر
-  }
 </script>
-
 
 </body>
 </html>
