@@ -110,14 +110,29 @@ let offersData = [];
 function parseDate(value) { return new Date(value || "1970-01-01"); }
 
 function toggleLike(id) {
-  if (localStorage.getItem("liked_"+id)) {
+  if (localStorage.getItem("liked_" + id)) {
     alert("لقد قمت بالإعجاب بهذا العرض من قبل ❤️");
     return;
   }
-  let counter = document.getElementById("like-count-"+id);
-  let count = parseInt(counter.textContent) || 0;
-  counter.textContent = count + 1;
-  localStorage.setItem("liked_"+id, "true");
+
+  // إرسال طلب إلى السكربت لزيادة الإعجاب
+  fetch(SHEET_URL + "?action=like&id=" + encodeURIComponent(id))
+    .then(res => res.json())
+    .then(res => {
+      if (res.success) {
+        let counter = document.getElementById("like-count-" + id);
+        counter.textContent = res.likes; // العدد الجديد من الجدول
+        localStorage.setItem("liked_" + id, "true");
+      } else {
+        alert("❌ فشل تسجيل الإعجاب");
+      }
+    })
+    .catch(err => {
+      alert("⚠️ حدث خطأ في الاتصال بالسيرفر");
+      console.error(err);
+    });
+}
+calStorage.setItem("liked_"+id, "true");
 }
 
 function renderOffers(data, filter="all") {
