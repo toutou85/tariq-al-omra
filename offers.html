@@ -131,8 +131,7 @@ function toggleLike(id) {
       alert("⚠️ حدث خطأ في الاتصال بالسيرفر");
       console.error(err);
     });
-}
-calStorage.setItem("liked_"+id, "true");
+
 }
 
 function renderOffers(data, filter="all") {
