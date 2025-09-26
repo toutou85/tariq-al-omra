@@ -231,11 +231,21 @@ function updateBranches(){
   const branchSelect = document.getElementById('branch');
   branchSelect.innerHTML='<option value="" disabled selected>اختر الفرع</option>';
   const selectedAgency = document.getElementById('agencyDisplay').value;
-  if(selectedAgency && agencyBranches[selectedAgency]){
-    agencyBranches[selectedAgency].forEach(b=>{
-      let opt=document.createElement('option'); opt.value=b; opt.textContent=b; branchSelect.appendChild(opt);
-    });
+
+  // نطبع النص (نحذف الفراغات)
+  const normalized = selectedAgency.replace(/\s+/g,"");
+
+  for (let key in agencyBranches){
+    if(key.replace(/\s+/g,"") === normalized){
+      agencyBranches[key].forEach(b=>{
+        let opt=document.createElement('option'); 
+        opt.value=b; 
+        opt.textContent=b; 
+        branchSelect.appendChild(opt);
+      });
+    }
   }
+
   document.getElementById('agencyName').value=selectedAgency;
 }
 
