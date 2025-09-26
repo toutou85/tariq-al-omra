@@ -348,11 +348,13 @@
 };
 
   function updateBranches() {
-    const branchSelect = document.getElementById("branch");
-    branchSelect.innerHTML = '<option value="" disabled selected>اختر الفرع</option>';
-    const selectedAgency = document.getElementById("agencyDisplay").value;
-    if (selectedAgency && agencyBranches[selectedAgency]) {
-      agencyBranches[selectedAgency].forEach(branch => {
+  const branchSelect = document.getElementById("branch");
+  branchSelect.innerHTML = '<option value="" disabled selected>اختر الفرع</option>';
+  const selectedAgency = document.getElementById("agencyDisplay").value.trim();
+
+  for (let key in agencyBranches) {
+    if (key.replace(/\s+/g, "") === selectedAgency.replace(/\s+/g, "")) {
+      agencyBranches[key].forEach(branch => {
         let opt = document.createElement("option");
         opt.value = branch;
         opt.textContent = branch;
@@ -360,6 +362,7 @@
       });
     }
   }
+}
 
   // مرافقون
   let companionCount = 0;
