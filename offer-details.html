@@ -5,20 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>تفاصيل العرض | طريق العمرة</title>
   <style>
-      * {
-    box-sizing: border-box;
-  }
-
-  body {
-    background: url('https://i.postimg.cc/JhKnMv57/FB-IMG-1753464094985.jpg') no-repeat center center fixed;
-    background-size: cover;            /* تغطية كاملة للشاشة */
-    background-position: center;
-    background-repeat: no-repeat;
-
-   
+    * { box-sizing: border-box; }
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f8f8f8;
+      background: #f4f4f4;
       margin: 0;
       padding: 0;
     }
@@ -34,67 +24,101 @@
       color: #000;
     }
     .container {
-      max-width: 800px;
+      max-width: 850px;
       margin: 30px auto;
       background: white;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    img {
+    .main-img {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 12px;
       margin-bottom: 20px;
     }
     h2 {
       color: #d4af37;
       margin-top: 0;
+      text-align: center;
     }
     ul {
       list-style: none;
       padding: 0;
+      margin: 0;
     }
     ul li {
-      padding: 5px 0;
+      padding: 8px 10px;
       border-bottom: 1px solid #eee;
+      font-size: 15px;
     }
-    .btn {
-      display: inline-block;
+    .extra-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
       margin-top: 20px;
-      padding: 10px 20px;
-      background: #FFD700;
-      border-radius: 6px;
-      text-decoration: none;
-      color: #000;
-      font-weight: bold;
     }
+    .extra-images img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    .actions button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+    .like-btn {
+      background: #ff4d4d;
+      color: #fff;
+    }
+    .like-btn:hover { background: #e60000; }
+    .share-btn {
+      background: #4da6ff;
+      color: #fff;
+    }
+    .share-btn:hover { background: #005ce6; }
     .fixed-btn {
-  position: fixed;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #FFD700;
-  color: #000;
-  padding: 12px 30px;
-  border-radius: 8px;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 999;
-  transition: 0.3s;
-}
-.fixed-btn:hover {
-  background: #fff;
-  color: #000;
-}
-
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #FFD700;
+      color: #000;
+      padding: 14px 35px;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      transition: 0.3s;
+    }
+    .fixed-btn:hover {
+      background: #fff;
+      color: #000;
+    }
+    .like-count {
+      font-size: 14px;
+      margin-top: 6px;
+      text-align: center;
+      color: #444;
+    }
   </style>
 </head>
 <body>
 
   <nav>
     <a href="index.html">🏠 الرئيسية</a>
-   
   </nav>
 
   <div class="container" id="details-container">
@@ -105,61 +129,97 @@
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
 
-    fetch("https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec")
+    // رابط Google Apps Script (اقرأ وعدل منه)
+    const apiURL = "https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec";
+
+    let currentOffer = null;
+
+    fetch(apiURL)
       .then(res => res.json())
       .then(data => {
-        const offer = data.find(item => item.ID == id);
+        currentOffer = data.find(item => item.ID == id);
         const container = document.getElementById("details-container");
 
-        if (!offer) {
+        if (!currentOffer) {
           container.innerHTML = "<p style='color:red;'>❌ العرض غير موجود</p>";
           return;
         }
 
-container.innerHTML = `
-  <img src="${offer['رابط صورة الفندق']}" alt="صورة الفندق">
-  <h2>${offer['اسم العرض']}</h2>
-  
-  <ul>
-    <li>🏢 الوكالة: ${offer['الوكالة']}</li>
-    <li>🛬 المطار: ${offer['المطار']}</li>
-    <li>🛫 نوع الرحلة: ${offer['نوع الرحلة']}</li>
-    <li>✈️ الخطوط الجوية: ${offer['الخطوط الجوية']}</li>
-    <li>📅 تاريخ الرحلة: ${offer['تاريخ  الر حلة']}</li>
-    <li>📆 مدة الرحلة: ${offer['مدة الرحلة']}</li>
-    <li>📥 الدخول والخروج: ${offer['الدخول و الخروج']}</li>
-    <li>🏨 الفندق: ${offer['الفندق']} (${offer['عدد النجوم']})</li>
-    <li>📍 المسافة عن الحرم: ${offer['المسافة عن الحرم']}</li>
-    <li>🍽️ سعر الإطعام: ${offer['سعر الاطعام']}</li>
-    <li>💰 السعر الغرفة الجماعية: ${offer['السعر الغرفة الجماعية (دج)']} دج</li>
-    <li>💰 السعر الخماسية: ${offer['السعر الغرفة الخماسية (دج)']} دج</li>
-    <li>💰 السعر الرباعية: ${offer['السعر الغرفة الرباعية (دج)']} دج</li>
-    <li>💰 السعر الثلاثية: ${offer['السعر الغرفة الثلاثية (دج)']} دج</li>
-    <li>💰 السعر الثنائية: ${offer['السعر الغرفة الثنائية دج)']} دج</li>
-    <li>👶 أقل من عامين: ${offer['سعر الاطفال اقل من عامين']} دج</li>
-    <li>🧒 أقل من 12 سنة: ${offer['سعر الاطفال الاقل من عامين الى 12 سنة']} دج</li>
-  </ul>
+        container.innerHTML = `
+          <img class="main-img" src="${currentOffer['رابط صورة الفندق']}" alt="صورة الفندق">
+          <h2>${currentOffer['اسم العرض']}</h2>
+          
+          <ul>
+            <li>🏢 الوكالة: ${currentOffer['الوكالة']}</li>
+            <li>🛬 المطار: ${currentOffer['المطار']}</li>
+            <li>🛫 نوع الرحلة: ${currentOffer['نوع الرحلة']}</li>
+            <li>✈️ الخطوط الجوية: ${currentOffer['الخطوط الجوية']}</li>
+            <li>📅 تاريخ الرحلة: ${currentOffer['تاريخ  الر حلة']}</li>
+            <li>📆 مدة الرحلة: ${currentOffer['مدة الرحلة']}</li>
+            <li>📥 الدخول والخروج: ${currentOffer['الدخول و الخروج']}</li>
+            <li>🏨 الفندق: ${currentOffer['الفندق']} (${currentOffer['عدد النجوم']})</li>
+            <li>📍 المسافة عن الحرم: ${currentOffer['المسافة عن الحرم']}</li>
+            <li>🍽️ سعر الإطعام: ${currentOffer['سعر الاطعام']}</li>
+            <li>💰 الغرفة الجماعية: ${currentOffer['السعر الغرفة الجماعية (دج)']} دج</li>
+            <li>💰 الخماسية: ${currentOffer['السعر الغرفة الخماسية (دج)']} دج</li>
+            <li>💰 الرباعية: ${currentOffer['السعر الغرفة الرباعية (دج)']} دج</li>
+            <li>💰 الثلاثية: ${currentOffer['السعر الغرفة الثلاثية (دج)']} دج</li>
+            <li>💰 الثنائية: ${currentOffer['السعر الغرفة الثنائية دج)']} دج</li>
+            <li>👶 أقل من عامين: ${currentOffer['سعر الاطفال اقل من عامين']} دج</li>
+            <li>🧒 من 2 حتى 12 سنة: ${currentOffer['سعر الاطفال الاقل من عامين الى 12 سنة']} دج</li>
+          </ul>
 
-  <!-- صور إضافية -->
-  <div class="extra-images">
-    <img src="${offer['رابطصورة 2']}" alt="صورة إضافية 2">
-    <img src="${offer['رابط صورة 3']}" alt="صورة إضافية 3">
-     <img src="${offer['بط صورة 4']}" alt="صورة إضافية 4">
-      <img src="${offer['رابط صورة 5']}" alt="صورة إضافية 5">
-       <img src="${offer['رابط صورة 6']}" alt="صورة إضافية 6">
-  </div>
-      <a class="btn fixed-btn" href="formabc.html?agency=${encodeURIComponent(offer['الوكالة'])}&offerID=${encodeURIComponent(offer['ID'])}">احجز الآن</a>
+          <div class="extra-images">
+            ${currentOffer['رابطصورة 2'] ? `<img src="${currentOffer['رابطصورة 2']}" alt="">` : ""}
+            ${currentOffer['رابط صورة 3'] ? `<img src="${currentOffer['رابط صورة 3']}" alt="">` : ""}
+            ${currentOffer['بط صورة 4'] ? `<img src="${currentOffer['بط صورة 4']}" alt="">` : ""}
+            ${currentOffer['رابط صورة 5'] ? `<img src="${currentOffer['رابط صورة 5']}" alt="">` : ""}
+            ${currentOffer['رابط صورة 6'] ? `<img src="${currentOffer['رابط صورة 6']}" alt="">` : ""}
+          </div>
 
+          <div class="actions">
+            <button class="like-btn" onclick="likeOffer()">👍 إعجاب</button>
+            <button class="share-btn" onclick="shareOffer()">📤 مشاركة</button>
+          </div>
+          <p class="like-count">الإعجابات: <span id="like-count">${currentOffer['likes'] || 0}</span></p>
 
+          <a class="btn fixed-btn" href="formabc.html?agency=${encodeURIComponent(currentOffer['الوكالة'])}&offerID=${encodeURIComponent(currentOffer['ID'])}">احجز الآن</a>
         `;
       })
       .catch(err => {
         document.getElementById("details-container").innerHTML = "<p style='color:red;'>❌ فشل في تحميل التفاصيل</p>";
         console.error(err);
-        
       });
-  </script>
 
+    // دالة الإعجاب (تحديث العدّاد في Google Sheets)
+    function likeOffer() {
+      if (!currentOffer) return;
+
+      fetch(apiURL + "?action=like&id=" + currentOffer.ID)
+        .then(res => res.json())
+        .then(res => {
+          if (res.success) {
+            document.getElementById("like-count").innerText = res.likes;
+          } else {
+            alert("❌ لم يتم تسجيل الإعجاب");
+          }
+        })
+        .catch(err => alert("⚠️ خطأ أثناء الإعجاب"));
+    }
+
+    // دالة المشاركة
+    function shareOffer() {
+      if (navigator.share) {
+        navigator.share({
+          title: document.title,
+          text: "🌟 شاهد هذا العرض المميز من طريق العمرة:",
+          url: window.location.href
+        }).catch(err => console.log(err));
+      } else {
+        alert("📌 المشاركة غير مدعومة في هذا المتصفح.");
+      }
+    }
+  </script>
 
 </body>
 </html>
