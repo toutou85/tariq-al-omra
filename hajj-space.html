@@ -1,0 +1,206 @@
+<!doctype html>
+
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>فضاء الحج — طريق العمرة</title>
+  <meta name="description" content="آخر أخبار الحج، تواريخ التسجيل، وتحديثات هامة لمسافري الحج">
+  <style>
+    :root{--accent:#0b5;--bg:#f7f7f9;--card:#ffffff;--muted:#666}
+    *{box-sizing:border-box}
+    body{font-family: "Segoe UI", Tahoma, Arial, sans-serif;margin:0;background:var(--bg);color:#111;line-height:1.5}
+    header{background:linear-gradient(90deg,#063c3b,#0b6b61);color:#fff;padding:18px 16px}
+    .container{max-width:980px;margin:18px auto;padding:0 16px}
+    nav{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .brand{font-weight:700;font-size:1.25rem}
+    .nav-links a{color:rgba(255,255,255,0.95);text-decoration:none;margin-left:12px}
+    .hero{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(5,10,20,0.06);margin-top:12px}
+    h1{margin:0 0 8px;font-size:1.5rem}
+    p.lead{margin:0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+    @media(min-width:880px){.grid{grid-template-columns:1fr 360px}}
+    .card{background:var(--card);padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(5,10,20,0.04)}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid #eee;text-align:right}
+    th{background:#fafafa;font-weight:700}
+    ul.updates{list-style:none;padding:0;margin:0}
+    ul.updates li{padding:10px;border-bottom:1px dashed #eee}
+    .meta{font-size:0.85rem;color:var(--muted)}
+    .small{font-size:0.9rem;color:var(--muted)}
+    .btn{display:inline-block;padding:8px 12px;border-radius:8px;text-decoration:none;border:none;cursor:pointer}
+    .btn-primary{background:var(--accent);color:#022;}
+    .muted{color:var(--muted)}
+    form .row{margin-bottom:8px}
+    input[type=text],input[type=email],textarea{width:100%;padding:8px;border-radius:6px;border:1px solid #ddd}
+    footer{margin:18px 0 40px;color:var(--muted);font-size:0.9rem;text-align:center}
+    .whatsapp{direction:ltr}
+    .note{background:#fff8e6;padding:10px;border-radius:8px;border-left:4px solid #ffd54a}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand">طريق العمرة</div>
+        <div class="nav-links">
+          <a href="/">الصفحة الرئيسية</a>
+          <a href="/about.html">من نحن</a>
+          <a href="/hajj-space.html" aria-current="page">فضاء الحج</a>
+        </div>
+      </nav>
+    </div>
+  </header>  <main class="container">
+    <section class="hero card">
+      <h1>فضاء الحج</h1>
+      <p class="lead">صفحة مخصصة لنشر تواريخ التسجيل، الأخبار الرسمية، والتحديثات المهمة لمسافري الحج. تصفح التواريخ أو أضف إعلانًا سريعًا (الخاصية للاستخدام الداخلي).</p>
+    </section><div class="grid">
+  <section class="card">
+    <h2>تواريخ التسجيل</h2>
+    <p class="small">تأكد من زيارة مكتب التسجيل أو التواصل معنا عبر الأرقام الرسمية للتحقق من المواعيد النهائية.</p>
+    <table aria-label="تواريخ التسجيل">
+      <thead>
+        <tr><th>الحدث</th><th>بداية</th><th>نهاية</th></tr>
+      </thead>
+      <tbody id="dates-table">
+        <!-- بيانات افتراضية يمكن تعديلها من الـ JavaScript أو عبر HTML مباشرة -->
+        <tr><td>فتح التسجيل المبدئي</td><td>1 فبراير 2026</td><td>28 فبراير 2026</td></tr>
+        <tr><td>فتح التسجيل النهائي</td><td>1 مارس 2026</td><td>30 أبريل 2026</td></tr>
+        <tr><td>إغلاق التسجيل</td><td>—</td><td>15 مايو 2026</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:12px" class="note">
+      <strong>ملاحظة:</strong> هذه التواريخ نموذجية — قم بتعديلها حسب القرارات الرسمية أو مكاتبنا المحلية.
+    </div>
+
+    <h3 style="margin-top:12px">اتصل للاستفسار</h3>
+    <p class="small">رقم واتساب/هاتف للحجز والاستفسار:</p>
+    <p class="whatsapp"><strong>+213 6X XXX XXXX</strong> — ضع هنا أرقام المكتب أو استخدم نموذج الاتصال.</p>
+
+  </section>
+
+  <aside class="card">
+    <h2>أحدث المستجدات</h2>
+    <ul id="updates" class="updates" aria-live="polite">
+      <!-- يتم ملؤها بالديناميكية -->
+    </ul>
+
+    <hr style="margin:12px 0">
+
+    <h3>أضف تحديث سريع (داخلي)</h3>
+    <form id="addUpdateForm">
+      <div class="row">
+        <input type="text" id="u-title" placeholder="عنوان التحديث (مثال: فتح باب التسجيل)" required>
+      </div>
+      <div class="row">
+        <textarea id="u-body" rows="3" placeholder="نص الاختصار (مثال: التسجيل متاح عبر مكاتبنا ابتداءً من...)" required></textarea>
+      </div>
+      <div class="row">
+        <input type="text" id="u-author" placeholder="الجهة أو المسؤول (اختياري)">
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-start;">
+        <button class="btn btn-primary" type="submit">أضف التحديث</button>
+        <button class="btn" type="button" id="clearUpdates">مسح كل الإعلانات</button>
+      </div>
+    </form>
+
+    <hr style="margin:12px 0">
+
+    <h3>اشترك لتصلك الإشعارات</h3>
+    <form id="subscribeForm">
+      <div class="row"><input type="email" id="email" placeholder="البريد الإلكتروني" required></div>
+      <div class="row"><input type="text" id="phone" placeholder="رقم الهاتف (مثال: 06XXXXXXXX)"></div>
+      <div class="row"><button class="btn btn-primary" type="submit">اشترك</button></div>
+    </form>
+
+  </aside>
+</div>
+
+<section class="card" style="margin-top:12px">
+  <h2>أرشيف الإعلانات الرسمية</h2>
+  <p class="small">قائمة قابلة للبحث والفرز مستقبلاً — في هذه النسخة نعرض أحدث 20 إعلانًا محفوظًا محليًا.</p>
+  <div id="archive" style="margin-top:8px"></div>
+</section>
+
+  </main>  <footer>
+    © حقوق النشر — طريق العمرة. للتواصل: ضع أرقام المكتب أو رابط نموذج الاتصال.
+  </footer>  <script>
+    // بيانات تجريبية أولية
+    const initialUpdates = [
+      {title: 'فتح التسجيل المبدئي', body: 'تم فتح التسجيل المبدئي للحجاج. يرجى زيارة مكاتبنا أو التواصل عبر الواتساب.', author: 'مكتب طريق العمرة', date: '2025-10-01T09:00:00Z'},
+      {title: 'تأكيد الوثائق المطلوبة', body: 'جواز السفر صالح لمدة 6 أشهر، صور شخصية، وشهادة التطعيم إن وجدت.', author: 'الإدارة', date: '2025-09-20T12:00:00Z'}
+    ];
+
+    // حفظ واسترجاع من localStorage لسهولة الاستخدام بدون backend
+    function loadUpdates(){
+      const raw = localStorage.getItem('hajj_updates');
+      if(raw){
+        try{return JSON.parse(raw)}catch(e){return initialUpdates}
+      }
+      return initialUpdates;
+    }
+
+    function saveUpdates(list){
+      localStorage.setItem('hajj_updates', JSON.stringify(list));
+    }
+
+    function renderUpdates(){
+      const list = loadUpdates();
+      const ul = document.getElementById('updates');
+      const archive = document.getElementById('archive');
+      ul.innerHTML = '';
+      archive.innerHTML = '';
+      // عرض الأحدث أولًا
+      list.slice().reverse().forEach((u, idx)=>{
+        const li = document.createElement('li');
+        const d = new Date(u.date || new Date()).toLocaleString('ar-EG');
+        li.innerHTML = `<strong>${escapeHtml(u.title)}</strong><div class="meta">${escapeHtml(u.author||'--')} • ${d}</div><div style="margin-top:6px">${escapeHtml(u.body)}</div>`;
+        ul.appendChild(li);
+        // أرشيف مبسط
+        const div = document.createElement('div');
+        div.style.padding='8px';div.style.borderBottom='1px solid #eee';
+        div.innerHTML = `<strong>${escapeHtml(u.title)}</strong> — <span class="meta">${d}</span><div class="small">${escapeHtml(u.body)}</div>`;
+        archive.appendChild(div);
+      });
+    }
+
+    function escapeHtml(str){
+      return String(str).replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]});
+    }
+
+    document.getElementById('addUpdateForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const title = document.getElementById('u-title').value.trim();
+      const body = document.getElementById('u-body').value.trim();
+      const author = document.getElementById('u-author').value.trim() || 'الإدارة';
+      if(!title||!body) return alert('المرجو ملء الحقول المطلوبة');
+      const list = loadUpdates();
+      list.push({title, body, author, date: new Date().toISOString()});
+      saveUpdates(list);
+      renderUpdates();
+      this.reset();
+    });
+
+    document.getElementById('subscribeForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      // هنا: يمكنك استبدال ذلك بإرسال إلى سيرفر أو Google Sheet
+      alert('شكراً للاشتراك — سيتم حفظ البيانات محليًا (نموذج).');
+      this.reset();
+    });
+
+    document.getElementById('clearUpdates').addEventListener('click', function(){
+      if(confirm('هل تريد مسح كل الإعلانات المحلية؟')){
+        localStorage.removeItem('hajj_updates');
+        renderUpdates();
+      }
+    });
+
+    // تحميل التواريخ الجدولية — يمكن تعديلها هنا برمجياً إن رغبت
+    (function(){
+      renderUpdates();
+    })();
+  </script></body>
+</html>
