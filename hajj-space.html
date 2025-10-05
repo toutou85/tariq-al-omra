@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
@@ -22,10 +21,7 @@
       padding: 18px 16px;
       border-radius: 0 0 15px 15px;
     }
-    h1 {
-      margin: 0;
-      font-size: 1.6rem;
-    }
+    h1 { margin: 0; font-size: 1.6rem; }
     .card {
       background: #fff;
       margin: 30px auto;
@@ -34,9 +30,7 @@
       border-radius: 12px;
       box-shadow: 0 6px 18px rgba(5,10,20,0.06);
     }
-    .emoji {
-      font-size: 1.4rem;
-    }
+    .emoji { font-size: 1.4rem; }
     footer {
       margin-top: 40px;
       font-size: 0.9rem;
@@ -52,15 +46,43 @@
       background: #0b6b61;
       transition: background 0.3s;
     }
-    .btn:hover {
-      background: #094c45;
+    .btn:hover { background: #094c45; }
+    .agency {
+      background: #fff;
+      margin: 20px auto;
+      max-width: 700px;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(5,10,20,0.05);
+      text-align: center;
+    }
+    .agency img {
+      width: 100%;
+      max-width: 450px;
+      border-radius: 10px;
+      margin: 10px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .photos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .photos img {
+      width: 48%;
+      border-radius: 8px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
     }
   </style>
 </head>
 <body>
   <header>
     <h1>فضاء الحج — طريق العمرة</h1>
-  </header>  <main>
+  </header>
+
+  <main>
     <div class="card">
       <h2>✅ تسجيلات قرعة الحج لموسم 1447 هجري / 2026 ميلادي</h2>
       <p>✒️ <strong>إبتداءً من يوم الإثنين 06 أكتوبر 2025</strong><br>إلى غاية <strong>30 أكتوبر 2025</strong></p>
@@ -71,7 +93,21 @@
         <a href="offers.html" class="btn">🕋 تصفح عروض العمرة</a>
       </div>
     </div>
-  </main>  <footer>
+
+    <section class="agency">
+      <h2>وكالة تقرت للسياحة و السفر</h2>
+      <p><strong>ترخيص الحج تحت رقم: 017</strong></p>
+      <img src="https://i.postimg.cc/L4v9BxBn/FB-IMG-1759642323160.jpg" alt="ترخيص وكالة تقرت">
+      
+      <h3>مقتطفات من حج العام الماضي</h3>
+      <div class="photos">
+        <img src="https://i.postimg.cc/j2DFfq4d/FB-IMG-1753590774120.jpg" alt="صورة من حج العام الماضي">
+        <!-- يمكنك إضافة الصور الجديدة هنا -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
     © 2025 طريق العمرة — جميع الحقوق محفوظة.
   </footer>
 </body>
