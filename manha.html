@@ -3,114 +3,205 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>منحة السفر الجزائرية — شرح رسمي</title>
-  <meta name="description" content="شرح منحة السفر حسب تعليمة بنك الجزائر رقم 05-2025 (17 جويلية 2025). المبالغ، الشروط والملاحظات." />
+  <title>منحة السفر الجزائرية — بنك الجزائر 2025</title>
+  <meta name="description" content="شرح منحة السفر الجزائرية حسب تعليمة بنك الجزائر رقم 05-2025 المؤرخة في 17 جويلية 2025.">
   <style>
-    :root { --accent:#0b6b5a; --muted:#666; --bg:#f7f7f8; --card:#fff; }
-    body{font-family: "Segoe UI", Tahoma, Arial, sans-serif; background:var(--bg); color:#111; margin:0; padding:20px;}
-    .container{max-width:900px;margin:0 auto;}
-    header{display:flex;gap:16px;align-items:center;margin-bottom:18px}
-    header img{height:56px;}
-    h1{font-size:1.4rem;margin:0;color:var(--accent)}
-    .card{background:var(--card);border-radius:12px;box-shadow:0 6px 18px rgba(12,20,30,.06);padding:18px;margin-bottom:14px}
-    .note{background:#fff7e6;border-left:4px solid #ffb400;padding:12px;border-radius:8px;margin:10px 0;color:#6a4a00}
-    ul{padding-inline-start:1.05rem}
-    li{margin:8px 0}
-    .amount{font-weight:700;color:#0a4b8c}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#eef6f4;color:var(--accent);font-weight:600;margin-left:8px}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    button{cursor:pointer;border:0;padding:10px 14px;border-radius:8px;background:var(--accent);color:white;font-weight:600}
-    button.secondary{background:#6565ea}
-    footer{font-size:.9rem;color:var(--muted);margin-top:16px;text-align:center}
-    pre{white-space:pre-wrap;font-family:inherit;background:#f2f6f8;padding:10px;border-radius:6px;color:#123}
-    @media (max-width:520px){ header img{display:none} h1{font-size:1.15rem} }
+    :root {
+      --accent: #0b6b5a;
+      --muted: #666;
+      --bg: #f7f7f8;
+      --card: #fff;
+      --hover: #0e8d73;
+    }
+    body {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      background: var(--bg);
+      margin: 0;
+      padding: 0;
+      color: #111;
+    }
+    nav {
+      background: var(--accent);
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      background: rgba(255,255,255,0.1);
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    nav a:hover {
+      background: var(--hover);
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 15px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    header img {
+      width: 100%;
+      max-height: 480px;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 1.6rem;
+      color: var(--accent);
+      margin-top: 12px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(12,20,30,.06);
+      margin-bottom: 16px;
+    }
+    h2 {
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin-top: 0;
+    }
+    ul {
+      padding-right: 20px;
+    }
+    li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    .note {
+      background: #fff7e6;
+      border-left: 4px solid #ffb400;
+      padding: 10px;
+      border-radius: 8px;
+      color: #6a4a00;
+      margin: 10px 0;
+    }
+    .amount {
+      color: #0a4b8c;
+      font-weight: bold;
+    }
+    pre {
+      background: #f2f6f8;
+      padding: 10px;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      font-family: inherit;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    button {
+      cursor: pointer;
+      border: 0;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+    button.secondary {
+      background: #0066cc;
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 30px;
+      padding: 15px;
+    }
   </style>
 </head>
 <body>
+
+  <!-- أزرار التنقل العلوية -->
+  <nav>
+    <a href="index.html">🏠 الرئيسية</a>
+    <a href="omra.html">🕋 العمرة</a>
+    <a href="manha.html">💶 منحة السفر</a>
+    <a href="contact.html">📞 تواصل معنا</a>
+  </nav>
+
   <div class="container">
     <header>
-      <!-- لو تحب تضيف شعار البنك ضع رابط الصورة هنا -->
-      <img src="" alt="" aria-hidden="true" />
-      <div>
-        <h1>تعليمة بنك الجزائر رقم 05-2025 — حق الصرف للسفر</h1>
-        <div style="color:var(--muted);font-size:.95rem;margin-top:4px">المؤرخة في 17 جويلية 2025 — ملخّص المبالغ والشروط</div>
-      </div>
+      <img src="https://i.postimg.cc/x1CfqMwr/images-75.jpg" alt="تعليمة بنك الجزائر رقم 05-2025">
+      <h1>منحة السفر الجزائرية حسب تعليمة بنك الجزائر رقم 05-2025</h1>
     </header>
 
-    <main>
-      <section class="card" aria-labelledby="titre1">
-        <h2 id="titre1">ملخص رسمي للمبالغ الممنوحة</h2>
-
-        <p>بمقتضى تعليمة بنك الجزائر رقم <strong>05-2025</strong> (17 جويلية 2025) المحدِّدة لحق الصرف من أجل السفر إلى الخارج، تُمنح مبالغ بالعملة الصعبة <strong>مرة واحدة في السنة المرجعية</strong> لكل مستفيد وفق الفئات التالية:</p>
-
-        <ul>
-          <li>
-            للكبار (الذين تبلغ أعمارهم <strong>19 سنة فما فوق</strong>) — <span class="amount">750.00 يورو</span> أو ما يعادلها بالعملة الصعبة القابلة للتحويل.
-          </li>
-          <li>
-            للفئة العمرية بين <strong>12 و 19 سنة</strong> — <span class="amount">300.00 يورو</span> أو ما يعادلها. 
-            <div class="note" role="note">
-              الاستفادة هذه للأطفال مقيدة بحد أقصى <strong>طفلين (2)</strong> لكل عائلة.
-            </div>
-          </li>
-        </ul>
-
-        <p>المبلغ يُمنح <strong>مرة واحدة لكل سنة مرجعية</strong> ولا يجوز تراكمه من سنة إلى أخرى.</p>
-      </section>
-
-      <section class="card" aria-labelledby="titre2">
-        <h2 id="titre2">ملاحظات وشروط هامة</h2>
-
-        <ul>
-          <li>الإعانة مخصصة للاستخدام في <strong>نفقات السفر الشخصي</strong> للمواطنين الجزائريين المقيمين.</li>
-          <li>لا تنطبق أحكام هذه التعليمة على <strong>رحلات أداء فريضة الحج</strong>، فهذه الرحلات تتمتع بنظام خاص.</li>
-          <li>الحق يمنح مرة واحدة في السنة المرجعية، <strong>مهما كان عدد السفرات</strong> خلال نفس السنة.</li>
-          <li>المبالغ غير قابلة للتراكم أو التحويل بين السنوات.</li>
-        </ul>
-      </section>
-
-      <section class="card" aria-labelledby="titre3">
-        <h2 id="titre3">نموذج نص مختصر يمكن استخدامه كمنشور</h2>
-
-        <pre>
-إعلان مهم — منحة السفر 2025:
-بمقتضى تعليمة بنك الجزائر (05-2025 بتاريخ 17 جويلية 2025)، يُمنح للمسافر الجزائري مرة واحدة في السنة:
-- البالغون (≥ 19 سنة): 750 يورو (أو ما يعادلها).
-- الأطفال من 12 إلى 19 سنة: 300 يورو (حد أقصى طفلين لكل عائلة).
-لا تنطبق على رحلات الحج. الحق غير قابل للتراكم.
-        </pre>
-      </section>
-
-      <div class="card" aria-labelledby="titre4">
-        <h2 id="titre4">خيارات تفاعلية</h2>
-        <div class="actions">
-          <button id="printBtn">طباعة الصفحة</button>
-          <button id="copyBtn" class="secondary">نسخ نص المنشور</button>
-        </div>
+    <section class="card">
+      <h2>📘 الملخص الرسمي للمبالغ الممنوحة</h2>
+      <p>
+        بمقتضى تعليمة بنك الجزائر رقم <strong>05-2025</strong> المؤرخة في <strong>17 جويلية 2025</strong>،
+        تم تحديد المبالغ الممنوحة للمواطنين الجزائريين المقيمين عند السفر إلى الخارج مرة واحدة في السنة المرجعية كما يلي:
+      </p>
+      <ul>
+        <li>للكبار (19 سنة فما فوق): <span class="amount">750 يورو</span> أو ما يعادلها بالعملة الصعبة القابلة للتحويل.</li>
+        <li>للأطفال من 12 إلى 19 سنة: <span class="amount">300 يورو</span> أو ما يعادلها بالعملة الصعبة القابلة للتحويل.</li>
+      </ul>
+      <div class="note">
+        يُسمح بالاستفادة للأطفال في حدود <strong>طفلين (2)</strong> فقط لكل عائلة.
       </div>
-    </main>
+      <p>يُمنح هذا المبلغ <strong>مرة واحدة فقط في السنة المرجعية</strong> ولا يمكن تراكمه أو تحويله إلى سنة أخرى.</p>
+    </section>
+
+    <section class="card">
+      <h2>📋 الشروط والملاحظات الهامة</h2>
+      <ul>
+        <li>المنحة مخصصة لتغطية نفقات السفر الشخصي للمواطنين المقيمين.</li>
+        <li>لا تنطبق هذه التعليمة على رحلات أداء فريضة الحج، إذ تخضع لأحكام خاصة.</li>
+        <li>يُمنح الحق مرة واحدة فقط مهما كان عدد السفرات خلال نفس السنة.</li>
+        <li>المبالغ الممنوحة غير قابلة للتراكم أو التحويل بين السنوات.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>🗞️ نص مختصر قابل للنشر</h2>
+      <pre>
+📢 منحة السفر 2025:
+وفق تعليمة بنك الجزائر رقم 05-2025 (17 جويلية 2025)
+- البالغون (19 سنة فما فوق): 750 يورو.
+- من 12 إلى 19 سنة: 300 يورو (حد أقصى طفلين لكل عائلة).
+🔹 المنحة تمنح مرة واحدة في السنة ولا تخص رحلات الحج.
+      </pre>
+      <div class="actions">
+        <button id="printBtn">🖨️ طباعة الصفحة</button>
+        <button id="copyBtn" class="secondary">📋 نسخ النص</button>
+      </div>
+    </section>
 
     <footer>
-      المصدر: تعليمة بنك الجزائر رقم 05-2025 (17 جويلية 2025). هذه صفحة عرض توضيحية — راجع الوثائق الرسمية لدى بنك الجزائر للتفاصيل والإجراءات التطبيقية.
+      المصدر: تعليمة بنك الجزائر رقم 05-2025 المؤرخة في 17 جويلية 2025.  
+      هذه الصفحة للاطلاع فقط، والمرجع الرسمي هو الوثيقة الأصلية الصادرة عن بنك الجزائر.
     </footer>
   </div>
 
   <script>
-    // وظائف بسيطة: طباعة ونسخ النص المختصر
-    document.getElementById('printBtn').addEventListener('click', function(){
-      window.print();
-    });
-
-    document.getElementById('copyBtn').addEventListener('click', async function(){
-      const text = "تنبيه: حسب تعليمة بنك الجزائر (05-2025) — البالغون (≥19): 750 يورو مرة واحدة في السنة. الأطفال 12-19: 300 يورو (حتى طفلين/عائلة). لا ينطبق على رحلات الحج.";
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+    document.getElementById('copyBtn').addEventListener('click', async function() {
+      const text = "منحة السفر 2025 — حسب تعليمة بنك الجزائر رقم 05-2025: البالغون (19 سنة فما فوق) 750 يورو، من 12 إلى 19 سنة 300 يورو (حد أقصى طفلين). المنحة تمنح مرة واحدة في السنة ولا تخص الحج.";
       try {
         await navigator.clipboard.writeText(text);
-        this.textContent = 'تم النسخ ✓';
-        setTimeout(()=> this.textContent = 'نسخ نص المنشور', 1800);
-      } catch (e) {
-        alert('نسخ فشل — الرجاء نسخه يدوياً:\n' + text);
+        this.textContent = "✅ تم النسخ";
+        setTimeout(() => this.textContent = "📋 نسخ النص", 2000);
+      } catch {
+        alert("تعذر النسخ التلقائي، يرجى النسخ يدويًا:\n" + text);
       }
     });
   </script>
+
 </body>
 </html>
