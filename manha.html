@@ -88,6 +88,17 @@
       color: #6a4a00;
       margin: 10px 0;
     }
+    .alert {
+      background: #ffeaea;
+      border-right: 5px solid #ff3b3b;
+      padding: 15px;
+      border-radius: 10px;
+      color: #8a0000;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(255,0,0,0.08);
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
     .amount {
       color: #0a4b8c;
       font-weight: bold;
@@ -124,16 +135,70 @@
       margin-top: 30px;
       padding: 15px;
     }
+
+    /* 🌟 تصميم النافذة المنبثقة */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .popup {
+      background: #fff;
+      max-width: 420px;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+    .popup h3 {
+      color: #b30000;
+      margin-bottom: 10px;
+    }
+    .popup p {
+      line-height: 1.6;
+      color: #333;
+      font-weight: 500;
+    }
+    .popup button {
+      background: var(--accent);
+      margin-top: 15px;
+      font-size: 1rem;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
   </style>
 </head>
 <body>
 
-  <!-- أزرار التنقل العلوية -->
+  <!-- أزرار التنقل -->
   <nav>
     <a href="index.html">🏠 الرئيسية</a>
     <a href="offers.html">🕋 العمرة</a>
-  
   </nav>
+
+  <!-- ✅ نافذة التنبيه المنبثقة -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup">
+      <h3>⚠️ تنبيه هام بخصوص منحة السفر</h3>
+      <p>
+        عند <strong>دفع وثائق منحة السفر</strong>، يُرجى التأكيد بدقة على  
+        <strong>مكان الخروج (المطار)</strong> و<strong>وقت الخروج من التراب الوطني</strong>.<br><br>
+        ❗ أي خطأ في هذه المعلومات قد يؤدي إلى <u>حرمان المسافر من المنحة نهائيًا</u>.<br><br>
+        ✅ الرجاء التحقق جيدًا قبل الإيداع.
+      </p>
+      <button id="closePopup">✅ تم الفهم</button>
+    </div>
+  </div>
 
   <div class="container">
     <header>
@@ -189,6 +254,7 @@
   </div>
 
   <script>
+    // زر الطباعة والنسخ
     document.getElementById('printBtn').addEventListener('click', () => window.print());
     document.getElementById('copyBtn').addEventListener('click', async function() {
       const text = "منحة السفر 2025 — حسب تعليمة بنك الجزائر رقم 05-2025: البالغون (19 سنة فما فوق) 750 يورو، من 12 إلى 19 سنة 300 يورو (حد أقصى طفلين). المنحة تمنح مرة واحدة في السنة ولا تخص الحج.";
@@ -199,6 +265,19 @@
       } catch {
         alert("تعذر النسخ التلقائي، يرجى النسخ يدويًا:\n" + text);
       }
+    });
+
+    // 🔔 التحكم في النافذة المنبثقة
+    const popup = document.getElementById('popup');
+    const closePopup = document.getElementById('closePopup');
+
+    closePopup.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    // يمكن إظهارها فقط في أول زيارة (اختياريًا)
+    window.addEventListener('load', () => {
+      popup.style.display = 'flex';
     });
   </script>
 
