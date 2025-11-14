@@ -201,9 +201,16 @@ let currentStep = 0;
 const steps = document.querySelectorAll('.step');
 function showStep(index) {
   steps.forEach((step,i) => step.classList.toggle('active', i===index));
-}
 function nextStep() {
-  if(currentStep<steps.length-1) { currentStep++; showStep(currentStep); }
+  if (!validateStep(currentStep)) {
+    alert("⚠️ يرجى ملء جميع الخانات المطلوبة قبل المتابعة.");
+    return;
+  }
+
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    showStep(currentStep);
+  }
 }
 function prevStep() {
   if(currentStep>0) { currentStep--; showStep(currentStep); }
@@ -333,6 +340,19 @@ document.getElementById('umrahForm').addEventListener('submit',function(e){
     document.getElementById('message').style.display='none';
   });
 });
+function validateStep(stepIndex) {
+  const step = steps[stepIndex];
+  const requiredFields = step.querySelectorAll("input[required], select[required], textarea[required]");
+
+  for (let field of requiredFields) {
+    if (!field.value || field.value === "") {
+      field.style.border = "2px solid red";
+      setTimeout(() => field.style.border = "1px solid #ccc", 1500);
+      return false;
+    }
+  }
+  return true;
+}
 </script>
 </body>
 </html>
