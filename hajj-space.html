@@ -1,158 +1,183 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>فضاء الحج — طريق العمرة</title>
-  <meta name="description" content="تاريخ تسجيل مع وكالة تقرت للسياحة و السفر في رحلة الحج لموسم 1447 هجري / 2026 ميلادي">
-  <style>
-    body {
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-      margin: 0;
-      background: #f9f9f9;
-      color: #111;
-      line-height: 1.7;
-      text-align: center;
-      padding: 40px 10px;
+<!doctype html>  
+<html lang="ar" dir="rtl">  
+<head>  
+  <meta charset="utf-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
+  <title>فضاء الحج — طريق العمرة</title>  
+  <meta name="description" content="تاريخ تسجيل مع وكالة تقرت للسياحة و السفر في رحلة الحج لموسم 1447 هجري / 2026 ميلادي">  
+  <style>  
+    body {  
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;  
+      margin: 0;  
+      background: #f9f9f9;  
+      color: #111;  
+      line-height: 1.7;  
+      text-align: center;  
+      padding: 40px 10px;  
+    }  
+    header {  
+      background: linear-gradient(90deg,#063c3b,#0b6b61);  
+      color: #fff;  
+      padding: 18px 16px;  
+      border-radius: 0 0 15px 15px;  
+    }  
+    h1 { margin: 0; font-size: 1.6rem; }  
+    .card {  
+      background: #fff;  
+      margin: 30px auto;  
+      max-width: 600px;  
+      padding: 25px;  
+      border-radius: 12px;  
+      box-shadow: 0 6px 18px rgba(5,10,20,0.06);  
+    }  
+    .emoji { font-size: 1.4rem; }  
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 1rem;
     }
-    header {
-      background: linear-gradient(90deg,#063c3b,#0b6b61);
-      color: #fff;
-      padding: 18px 16px;
-      border-radius: 0 0 15px 15px;
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
     }
-    h1 { margin: 0; font-size: 1.6rem; }
-    .card {
-      background: #fff;
-      margin: 30px auto;
-      max-width: 600px;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(5,10,20,0.06);
+    table th {
+      background: #0b6b61;
+      color: white;
     }
-    .emoji { font-size: 1.4rem; }
-    footer {
-      margin-top: 40px;
-      font-size: 0.9rem;
-      color: #666;
-    }
-    .btn {
+
+    .btn-primary {
       display: inline-block;
-      margin: 10px;
-      padding: 10px 18px;
+      margin: 20px auto 10px;
+      background: #0b6b61;
+      color: #fff;
+      padding: 12px 20px;
       border-radius: 8px;
       text-decoration: none;
-      color: #fff;
-      background: #0b6b61;
-      transition: background 0.3s;
+      font-size: 1.1rem;
+      font-weight: bold;
+      width: 70%;
     }
-    .btn:hover { background: #094c45; }
-    .agency {
-      background: #fff;
-      margin: 20px auto;
-      max-width: 700px;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(5,10,20,0.05);
-      text-align: center;
-    }
-    .agency img {
-      width: 100%;
-      max-width: 450px;
-      border-radius: 10px;
-      margin: 10px 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-    .photos {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .photos img {
-      width: 48%;
-      border-radius: 8px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>فضاء الحج — طريق العمرة</h1>
-  </header>
+    .btn-primary:hover { background: #094c45; }
 
-  <main>
-    <div class="card">
-      <h2>✅ تسجيلات في رحلة الحج هجري / 2026 ميلادي</h2>
-    
-      <p class="emoji">🤲✈️🇩🇿🕋</p>
-      <p><strong>
+    .btn {  
+      display: inline-block;  
+      margin: 10px;  
+      padding: 10px 18px;  
+      border-radius: 8px;  
+      text-decoration: none;  
+      color: #fff;  
+      background: #0b6b61;  
+      transition: background 0.3s;  
+    }  
+    .btn:hover { background: #094c45; }  
 
-اللهم بلغ الجميع مقاصدهم
+    .agency {  
+      background: #fff;  
+      margin: 20px auto;  
+      max-width: 700px;  
+      padding: 25px;  
+      border-radius: 12px;  
+      box-shadow: 0 6px 18px rgba(5,10,20,0.05);  
+      text-align: center;  
+    }  
+    .agency img {  
+      width: 100%;  
+      max-width: 450px;  
+      border-radius: 10px;  
+      margin: 10px 0;  
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);  
+    }  
+    .photos {  
+      display: flex;  
+      flex-wrap: wrap;  
+      justify-content: center;  
+      gap: 10px;  
+      margin-top: 10px;  
+    }  
+    .photos img {  
+      width: 48%;  
+      border-radius: 8px;  
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);  
+    }  
+  </style>  
+</head>  
+<body>  
 
-🕋 برنامج الحج لعام 2025
-وكالة تقرت للسياحة و سفر 
-✈️ انطلاق من مطار ورقلة
+<header>  
+  <h1>فضاء الحج — طريق العمرة</h1>  
+</header>  
+  
+<main>  
+  <div class="card">  
+    <h2>✅ تسجيلات في رحلة الحج هجري / 2026 ميلادي</h2>  
+    <p class="emoji">🤲✈️🇩🇿🕋</p>  
 
-🏨 الإقامة في فنادق راقية:
+    <p><strong>اللهم بلغ الجميع مقاصدهم</strong></p>
 
-فندق سجى أجياد – مكة المكرمة
+    <h3>🕋 برنامج الحج لعام 2025</h3>
+    <p><strong>وكالة تقرت للسياحة و سفر</strong></p>
+    <p>✈️ الانطلاق من مطار ورقلة</p>
 
-فندق سجى المصافي – المدينة المنورة
-📍 المسافة عن الحرم: حوالي 400 متر فقط
+    <h3>🏨 الإقامة</h3>
+    <p>فندق سجى أجياد – مكة المكرمة</p>
+    <p>فندق سجى المصافي – المدينة المنورة</p>
+    <p><strong>📍 المسافة عن الحرم: حوالي 400 متر فقط</strong></p>
 
+    <h3>💰 أسعار باقات الحج</h3>
 
+    <table>
+      <tr>
+        <th>نوع الغرفة</th>
+        <th>السعر</th>
+      </tr>
+      <tr>
+        <td>الغرفة الجماعية</td>
+        <td>45.000 دج</td>
+      </tr>
+      <tr>
+        <td>الغرفة الثلاثية - مكة</td>
+        <td>14 مليون</td>
+      </tr>
+      <tr>
+        <td>الغرفة الثلاثية - المدينة</td>
+        <td>14 مليون</td>
+      </tr>
+      <tr>
+        <td>الغرفة الثنائية - مكة</td>
+        <td>22 مليون</td>
+      </tr>
+      <tr>
+        <td>الغرفة الثنائية - المدينة</td>
+        <td>18 مليون</td>
+      </tr>
+    </table>
 
----
+    <!-- زر الحجز -->
+    <a href="Hadj.html" class="btn-primary">📝 أحجز الآن</a>
 
-💰 أسعار باقات الحج:
-
-الغرفة الجماعية: 45.000 دج
-
-الغرفة الثلاثية:
-
-مكة: 14 مليون
-
-المدينة: 14 مليون
-
-
-الغرفة الثنائية:
-
-مكة: 22 مليون
-
-المدينة: 18 مليون
-
-
-
-
----
-
-🎁 هدايا خاصة للحجاج
-🌟 رحلة إيمانية لا تُنسى… وخدمة ترافقكم من البداية إلى العودة سالمين بإذن الله.
-
-.</strong></p>
-      <div>
-        <a href="index.html" class="btn">🏠 الصفحة الرئيسية</a>
-        <a href="offers.html" class="btn">🕋 تصفح عروض العمرة</a>
-      </div>
+    <div style="margin-top:20px;">
+      <a href="index.html" class="btn">🏠 الصفحة الرئيسية</a>  
+      <a href="offers.html" class="btn">🕋 تصفح عروض العمرة</a>  
     </div>
+  </div>  
 
-    <section class="agency">
-      <h2>وكالة تقرت للسياحة و السفر</h2>
-      <p><strong>ترخيص الحج تحت رقم: 017</strong></p>
-      <img src="https://i.postimg.cc/L4v9BxBn/FB-IMG-1759642323160.jpg" alt="ترخيص وكالة تقرت">
-      
-      <h3>مقتطفات من حج العام الماضي</h3>
-      <div class="photos">
-        <img src="https://i.postimg.cc/j2DFfq4d/FB-IMG-1753590774120.jpg" alt="صورة من حج العام الماضي">
-        <!-- يمكنك إضافة الصور الجديدة هنا -->
-      </div>
-    </section>
-  </main>
+  <section class="agency">  
+    <h2>وكالة تقرت للسياحة و السفر</h2>  
+    <p><strong>ترخيص الحج تحت رقم: 017</strong></p>  
+    <img src="https://i.postimg.cc/L4v9BxBn/FB-IMG-1759642323160.jpg" alt="ترخيص وكالة تقرت">  
+        
+    <h3>مقتطفات من حج العام الماضي</h3>  
+    <div class="photos">  
+      <img src="https://i.postimg.cc/j2DFfq4d/FB-IMG-1753590774120.jpg" alt="صورة من حج العام الماضي">  
+    </div>  
+  </section>  
+</main>  
+  
+<footer>  
+  © 2025 طريق العمرة — جميع الحقوق محفوظة.  
+</footer>  
 
-  <footer>
-    © 2025 طريق العمرة — جميع الحقوق محفوظة.
-  </footer>
-</body>
+</body>  
 </html>
