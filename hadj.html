@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الحج - وكالة تقرت للسياحة و السفر</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    background: url('https://i.postimg.cc/JhKnMv57/FB-IMG-1753464094985.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Tahoma', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(5px);
+    max-width: 450px;
+    width: 90%;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    padding: 20px;
+  }
+  .step { display: none; }
+  .step.active { display: block; }
+  input, select { width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; }
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.4);
+    padding: 10px;
+    border-radius: 8px;
+  }
+  label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.6);
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: #007bff;
+    color: white;
+    font-size: 1rem;
+    transition: 0.3s;
+  }
+  button:hover { background: #0056b3; }
+  .buttons { display: flex; gap: 10px; justify-content: space-between; }
+
+  .remove-companion-btn {
+    background:red; padding:5px 10px; margin-top:5px;
+    border:none; border-radius:5px; color:white; cursor:pointer;
+  }
+
+  /* نوافذ منبثقة */
+  .popup-box {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    background: rgba(255,255,255,0.9);
+    max-width: 500px;
+    margin: 30px auto;
+    border-radius: 15px;
+    backdrop-filter: blur(6px);
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+  }
+  .popup-box h3 { margin-bottom:15px; background: rgba(255,255,255,0.6); padding:12px; border-radius:10px; }
+
+  @media (max-width:480px) {
+    .container { padding: 15px; }
+    h2 { font-size:1.3rem; }
+    input, select, button { font-size:0.95rem; padding:10px; }
+  }
+</style>
+</head>
+<body>
+
+<form id="hadjForm" class="container">
+
+  <!-- الخطوة 0: اختيار موعد رحلة الحج -->
+  <div class="step active" id="step0">
+    <h2>اختيار موعد رحلة الحج</h2>
+
+    <label>اختر موعد الرحلة:</label>
+    <select id="flightDate" name="flightDate" required>
+      <option value="" selected disabled>اختر موعد الرحلة</option>
+      <option value="رحلة 01 جويلية">رحلة 01 جويلية</option>
+      <option value="رحلة 05 جويلية">رحلة 05 جويلية</option>
+      <option value="رحلة 10 جويلية">رحلة 10 جويلية</option>
+    </select>
+
+    <div class="buttons">
+      <button type="button" onclick="nextStep()">التالي</button>
+    </div>
+  </div>
+
+  <!-- الخطوة 1: معلومات الحاج -->
+  <div class="step" id="step1">
+    <h2>معلومات الحاج</h2>
+
+    <label for="firstName">الاسم:</label>
+    <input type="text" id="firstName" name="firstName" required>
+
+    <label for="lastName">اللقب:</label>
+    <input type="text" id="lastName" name="lastName" required>
+
+    <label for="phone">رقم الهاتف:</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <div class="buttons">
+      <button type="button" onclick="prevStep()">السابق</button>
+      <button type="button" onclick="nextStep()">التالي</button>
+    </div>
+  </div>
+
+  <!-- الخطوة 2: الغرفة، صفة الحجز، المرافقون -->
+  <div class="step" id="step2">
+    <h2>نوع الغرفة و صفة الحجز</h2>
+
+    <label>نوع الغرفة:</label>
+    <select id="roomType" name="roomType" required>
+      <option value="" disabled selected>اختر نوع الغرفة</option>
+      <option value="غرفة ثنائية">ثنائية</option>
+      <option value="غرفة ثلاثية">ثلاثية</option>
+      <option value="غرفة رباعية">رباعية</option>
+      <option value="غرفة خماسية">خماسية</option>
+      <option value="غرفة جماعية">جماعية</option>
+    </select>
+
+    <label>صفة الحجز:</label>
+    <select id="reservationType" name="reservationType" required onchange="toggleCompanionSection()">
+      <option value="" disabled selected>اختر</option>
+      <option value="منفرد">منفرد</option>
+      <option value="مع الأسرة">مع الأسرة</option>
+      <option value="مع صديق">مع صديق</option>
+    </select>
+
+    <div id="companionsSection" style="display:none;">
+      <div id="companionsContainer"></div>
+      <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
+    </div>
+
+    <div class="buttons">
+      <button type="button" onclick="prevStep()">السابق</button>
+      <button type="button" onclick="nextStep()">التالي</button>
+    </div>
+  </div>
+
+  <!-- الخطوة 3: الشروط -->
+  <div class="step" id="step3">
+    <h2>الشروط والأحكام</h2>
+
+    <div style="max-height:200px; overflow-y:auto; border:1px solid #ccc; padding:10px;">
+      <p>🔹 يرجى التأكد من صحة المعلومات قبل إرسال طلب الحج.</p>
+      <p>🔹 التسجيل عبر موقع طريق العمرة – خدمة مجانية بدون دفع إلكتروني.</p>
+      <p>🔹 إرسال الطلب لا يعني تأكيد الحجز حتى يتم الاتصال بكم.</p>
+      <p>🔹 الموافقة على الشروط إلزامية.</p>
+    </div>
+
+    <label>
+      <input type="checkbox" name="agree" required> أوافق على جميع الشروط والأحكام
+    </label>
+
+    <div class="buttons">
+      <button type="button" onclick="prevStep()">السابق</button>
+      <button type="submit">إرسال الطلب</button>
+    </div>
+  </div>
+
+</form>
+
+<!-- نافذة الانتظار -->
+<div id="message" class="popup-box">
+  <h3>⏳ الرجاء الانتظار <span id="countdown">10</span> ثوانٍ...</h3>
+  <p>🌿 أكثروا من الاستغفار أثناء الانتظار 🌿</p>
+</div>
+
+<!-- نافذة صورة الجواز -->
+<div id="passportChoice" class="popup-box">
+  <h3>📄 هل تريد تحميل جواز السفر الآن؟</h3>
+  <button onclick="location.href='upload_hadj.html'">نعم</button>
+  <button onclick="location.href='index.html'">لاحقًا</button>
+</div>
+
+<script>
+let currentStep = 0;
+const steps = document.querySelectorAll('.step');
+
+function showStep(index) {
+  steps.forEach((s,i)=> s.classList.toggle("active", i===index));
+}
+
+function nextStep() {
+  if (!validateStep(currentStep)) {
+    alert("⚠️ يرجى ملء جميع الخانات المطلوبة.");
+    return;
+  }
+  currentStep++; showStep(currentStep);
+}
+function prevStep() { currentStep--; showStep(currentStep); }
+
+showStep(currentStep);
+
+/*— المرافقون —*/
+let companionCount = 0;
+
+function addCompanion() {
+  companionCount++;
+  const container = document.getElementById("companionsContainer");
+
+  const block = document.createElement("div");
+  block.innerHTML = `
+    <fieldset style="padding:10px;border:1px solid #ccc;margin-top:10px;">
+      <legend>المرافق ${companionCount}</legend>
+
+      <label>الصفة:</label>
+      <select name="relation${companionCount}" required>
+        <option value="">اختر</option>
+        <option value="زوجة">زوجة</option>
+        <option value="زوج">زوج</option>
+        <option value="ابن">ابن</option>
+        <option value="ابنة">ابنة</option>
+        <option value="أخ">أخ</option>
+        <option value="أخت">أخت</option>
+      </select>
+
+      <label>الاسم الكامل:</label>
+      <input type="text" name="name${companionCount}" required>
+
+      <label>تاريخ الميلاد:</label>
+      <input type="date" name="birth${companionCount}" required>
+
+      <label>تاريخ انتهاء الجواز:</label>
+      <input type="date" name="passport${companionCount}" required>
+
+      <button type="button" class="remove-companion-btn" onclick="this.parentElement.remove()">🗑️ إزالة</button>
+    </fieldset>
+  `;
+
+  container.appendChild(block);
+}
+
+function toggleCompanionSection() {
+  const type = document.getElementById("reservationType").value;
+  document.getElementById("companionsSection").style.display =
+    type === "منفرد" ? "none" : "block";
+}
+
+function validateStep(stepIndex) {
+  const step = steps[stepIndex];
+  const required = step.querySelectorAll("input[required], select[required]");
+  for (let field of required) {
+    if (!field.value) {
+      field.style.border="2px solid red";
+      setTimeout(()=> field.style.border="1px solid #ccc",1200);
+      return false;
+    }
+  }
+  return true;
+}
+
+/*— إرسال النموذج —*/
+document.getElementById("hadjForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const formData = new FormData(this);
+
+  document.getElementById("message").style.display="block";
+  this.style.display="none";
+
+  fetch("YOUR_SCRIPT_URL", {
+    method:"POST",
+    body:formData
+  })
+  .then(res=>res.text())
+  .then(()=>{
+    let sec=10;
+    const cd=document.getElementById("countdown");
+    const timer=setInterval(()=>{
+      sec--; cd.textContent=sec;
+      if(sec===0){
+        clearInterval(timer);
+        document.getElementById("message").style.display="none";
+        document.getElementById("passportChoice").style.display="block";
+      }
+    },1000);
+  })
+  .catch(err=>{
+    alert("خطأ: "+err.message);
+    this.style.display="block";
+    document.getElementById("message").style.display="none";
+  });
+
+});
+</script>
+
+</body>
+</html>
