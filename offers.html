@@ -1,235 +1,228 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>عروض العمرة | طريق العمرة</title>
+
 <style>
-  body {
-    font-family: 'Tajawal', Tahoma, Arial, sans-serif;
-    margin: 0; padding: 0;
-    background: url("https://i.postimg.cc/mk1k1LW3/FB-IMG-1757788923321.jpg") no-repeat center center fixed;
-    background-size: cover;
-    position: relative;
-  }
+body{
+  font-family:'Tajawal',Tahoma,Arial,sans-serif;
+  margin:0;
+  background:url("https://i.postimg.cc/mk1k1LW3/FB-IMG-1757788923321.jpg") no-repeat center fixed;
+  background-size:cover;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(255,255,255,.25);
+  z-index:-1;
+}
 
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(255,255,255,0.2);
-    z-index: -1;
-  }
+nav{
+  background:#FFD700;
+  padding:12px;
+  text-align:center;
+}
+nav a{
+  color:#000;
+  font-weight:800;
+  text-decoration:none;
+}
 
-  nav { background: #FFD700; padding: 12px; text-align: center; }
-  nav a { text-decoration: none; color: #000; font-weight: bold; margin: 0 10px; }
+.page{
+  max-width:1100px;
+  margin:20px auto 60px;
+  padding:16px;
+}
 
-  .page { max-width: 1100px; margin: 20px auto 60px; padding: 18px; }
+.title-box{
+  background:rgba(255,255,255,.35);
+  backdrop-filter:blur(8px);
+  padding:18px;
+  border-radius:14px;
+  text-align:center;
+  margin-bottom:20px;
+}
+.title-box h1{margin:0;font-size:24px;}
 
-  .title-box {
-    position: relative;
-    padding: 20px 14px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  .title-box h1 { margin: 0; font-size: 24px; font-weight: 700; color: #000; text-align: center; }
+.filter-box{
+  text-align:center;
+  margin-bottom:25px;
+}
+.filter-box select{
+  padding:8px 14px;
+  font-size:15px;
+  border-radius:8px;
+}
 
-  .filter-box { text-align: center; margin-bottom: 20px; }
-  .filter-box select { padding: 6px 12px; font-size: 15px; border-radius: 6px; }
+/* ====== AIRPORT SECTION ====== */
+.airport-section{margin-bottom:35px;}
 
-  .airport-title { margin-top: 28px; padding: 12px 14px; border-radius: 8px; font-weight: 700; font-size: 18px; background: #eee; }
+.airport-title{
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:12px;
+  padding:12px 16px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#FFD700,#FFC107);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
-  .offers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 12px; }
+/* ====== HORIZONTAL OFFERS ====== */
+.horizontal-scroll{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding-bottom:10px;
+}
+.horizontal-scroll::-webkit-scrollbar{height:6px;}
+.horizontal-scroll::-webkit-scrollbar-thumb{
+  background:#bbb;border-radius:10px;
+}
 
-  .card { border-radius: 14px; padding: 14px; color: #000; min-height: 160px; position: relative; overflow: hidden; background: rgba(255, 255, 255, 0.9); }
+/* ====== CARD ====== */
+.card{
+  min-width:260px;
+  max-width:260px;
+  background:rgba(255,255,255,.96);
+  border-radius:16px;
+  padding:14px;
+  box-shadow:0 6px 16px rgba(0,0,0,.15);
+  scroll-snap-align:start;
+  transition:.25s;
+}
+.card:hover{transform:translateY(-4px);}
+.card h3{margin:0 0 6px;font-size:18px;}
+.card p{margin:6px 0;font-size:14px;}
 
-  .overlay { position: absolute; inset: 0; border-radius: 14px; background: rgba(255,255,255,0.3); }
-
-  .card-content { position: relative; z-index: 2; }
-
-  .card h3 { margin: 0 0 8px 0; font-size: 18px; }
-  .card p { margin: 6px 0; font-size: 15px; }
-
-  .card-buttons { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
-  .btn {
-    padding: 7px 11px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 14px;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-  }
-  .btn.details { background: #007bff; }
-  .btn.share { background: #28a745; }
-  .btn.like { background: #e53935; }
-
+.card-buttons{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+.btn{
+  flex:1;
+  border:none;
+  padding:8px;
+  font-size:14px;
+  font-weight:700;
+  border-radius:8px;
+  cursor:pointer;
+  color:#fff;
+}
+.btn.details{background:#007bff;}
+.btn.like{background:#e53935;}
 </style>
 </head>
+
 <body>
-  <nav><a href="index.html">🏠 الرئيسية</a></nav>
-  <div class="page">
-    <div class="title-box">
-      <h1>🕋 عروض العمرة وكالة تقرت للسياحة و سفر </h1>
-    </div>
 
-    <div class="filter-box">
-      <label>✈️ اختر المطار: </label>
-      <select id="airportFilter" onchange="renderFiltered()">
-        <option value="all">الكل</option>
-        <option value="الجزائر">الجزائر</option>
-        <option value="تمنغست">تمنغست</option>
-        <option value="ورقلة">ورقلة</option>
-        <option value="وهران">وهران</option>
-        <option value="عنابة">عنابة</option>
-        <option value="قسنطينة">قسنطينة</option>
-      </select>
-    </div>
+<nav>
+  <a href="index.html">🏠 الرئيسية</a>
+</nav>
 
-    <div id="offersContainer"><p style="text-align:center;">⏳ جاري تحميل العروض...</p></div>
+<div class="page">
+
+  <div class="title-box">
+    <h1>🕋 عروض العمرة – وكالة تقرت للسياحة و السفر</h1>
   </div>
 
+  <div class="filter-box">
+    ✈️ اختر المطار:
+    <select id="airportFilter" onchange="renderFiltered()">
+      <option value="all">الكل</option>
+      <option value="الجزائر">الجزائر</option>
+      <option value="ورقلة">ورقلة</option>
+      <option value="وهران">وهران</option>
+      <option value="عنابة">عنابة</option>
+      <option value="قسنطينة">قسنطينة</option>
+      <option value="تمنغست">تمنغست</option>
+    </select>
+  </div>
+
+  <div id="offersContainer" style="text-align:center">⏳ جاري تحميل العروض...</div>
+
+</div>
+
 <script>
-const airportOverlayColors = {
-  "الجزائر": "rgba(255, 182, 193, 0.3)",
-  "تمنغست": "rgba(173, 216, 230, 0.6)",
-  "ورقلة": "rgba(144, 238, 144, 0.2)",
-  "وهران": "rgba(255, 255, 224, 0.6)",
-  "عنابة": "rgba(211, 211, 211, 0.6)",
-  "قسنطينة": "rgba(221, 160, 221, 0.2)",
-  "default": "rgba(255,255,255,0.65)"
-};
+const SHEET_URL="https://script.google.com/macros/s/AKfycbzu_D4Gy4PL5NLfHXsFBOQD8Se8W1kJDH3rEEGna5WDZ0uTNUcgLsUGcrUIQlIzXZgj/exec";
+let offersData=[];
 
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbzu_D4Gy4PL5NLfHXsFBOQD8Se8W1kJDH3rEEGna5WDZ0uTNUcgLsUGcrUIQlIzXZgj/exec";
-let offersData = [];
-
-function parseDate(value) { return new Date(value || "1970-01-01"); }
-
-function toggleLike(id) {
-  if (localStorage.getItem("liked_" + id)) {
-    alert("لقد قمت بالإعجاب بهذا العرض من قبل ❤️");
+function toggleLike(id){
+  if(localStorage.getItem("liked_"+id)){
+    alert("❤️ سبق لك الإعجاب بهذا العرض");
     return;
   }
-
-  // إرسال طلب إلى السكربت لزيادة الإعجاب
-  fetch(SHEET_URL + "?action=like&id=" + encodeURIComponent(id))
-    .then(res => res.json())
-    .then(res => {
-      if (res.success) {
-        let counter = document.getElementById("like-count-" + id);
-        counter.textContent = res.likes; // العدد الجديد من الجدول
-        localStorage.setItem("liked_" + id, "true");
-      } else {
-        alert("❌ فشل تسجيل الإعجاب");
-      }
-    })
-    .catch(err => {
-      alert("⚠️ حدث خطأ في الاتصال بالسيرفر");
-      console.error(err);
-    });
-
+  fetch(SHEET_URL+"?action=like&id="+id)
+  .then(r=>r.json())
+  .then(r=>{
+    if(r.success){
+      document.getElementById("like-count-"+id).textContent=r.likes;
+      localStorage.setItem("liked_"+id,"1");
+    }
+  });
 }
 
-function renderOffers(data, filter="all") {
-  const container = document.getElementById("offersContainer");
-  container.innerHTML = "";
+function renderOffers(data,filter="all"){
+  const c=document.getElementById("offersContainer");
+  c.innerHTML="";
 
-  const grouped = {};
-  data.forEach(item => {
-    const airport = (item["المطار"] || "غير محدد").trim();
-    if (!grouped[airport]) grouped[airport] = [];
-    grouped[airport].push(item);
+  const grouped={};
+  data.forEach(o=>{
+    const a=(o["المطار"]||"غير محدد").trim();
+    if(!grouped[a])grouped[a]=[];
+    grouped[a].push(o);
   });
 
-  Object.keys(grouped).forEach(airport => {
-    if (filter !== "all" && filter !== airport) return;
+  Object.keys(grouped).forEach(airport=>{
+    if(filter!=="all" && filter!==airport) return;
 
-    const list = grouped[airport];
-    list.sort((a,b)=> parseDate(a["تاريخ  الر حلة"]) - parseDate(b["تاريخ  الر حلة"]));
+    const section=document.createElement("div");
+    section.className="airport-section";
 
-    const title = document.createElement("div");
-    title.className = "airport-title";
-    title.textContent = "🛫 مطار " + airport;
-    container.appendChild(title);
+    section.innerHTML=`<div class="airport-title">🛫 مطار ${airport}</div>`;
+    const scroll=document.createElement("div");
+    scroll.className="horizontal-scroll";
 
-    const grid = document.createElement("div");
-    grid.className = "offers-grid";
-
-    list.forEach(item => {
-      const card = document.createElement("div");
-      card.className = "card";
-
-      const overlay = document.createElement("div");
-      overlay.className = "overlay";
-      overlay.style.background = airportOverlayColors[airport] || airportOverlayColors["default"];
-      card.appendChild(overlay);
-
-      const id = item["ID"] || Math.random().toString(36).substr(2,9);
-      const url = `offer-details.html?id=${encodeURIComponent(id)}`;
-      const likedBefore = localStorage.getItem("liked_"+id);
-
-      const content = document.createElement("div");
-      content.className = "card-content";
-
-      content.innerHTML = `
-        <h3>${item["اسم العرض"] || "عرض"}</h3>
-        <p>✈️ المطار: ${airport}</p>
-        <p>🏨 الفندق: ${item["الفندق"] || ""}</p>
-        <p>📅 ${item["تاريخ  الر حلة"] || ""} ⏳ ${item["مدة الرحلة"] || ""}</p>
-        <p>💵 ${item["السعر الغرفة الجماعية (دج)"] || ""} دج</p>
+    grouped[airport].forEach(o=>{
+      const id=o["ID"]||Math.random().toString(36).substr(2,9);
+      scroll.innerHTML+=`
+      <div class="card">
+        <h3>${o["اسم العرض"]||"عرض عمرة"}</h3>
+        <p>🏨 ${o["الفندق"]||""}</p>
+        <p>📅 ${o["تاريخ  الر حلة"]||""}</p>
+        <p>⏳ ${o["مدة الرحلة"]||""}</p>
+        <p><strong>💵 ${o["السعر الغرفة الجماعية (دج)"]||""} دج</strong></p>
         <div class="card-buttons">
-          <a class="btn details" href="${url}">📖 تفاصيل الرحلة🧳</a>
-          <button class="btn like">❤️ <span id="like-count-${id}">${item["likes"] || 0}</span>
-</button>
+          <a class="btn details" href="offer-details.html?id=${id}">📖 التفاصيل</a>
+          <button class="btn like" onclick="toggleLike('${id}')">
+            ❤️ <span id="like-count-${id}">${o["likes"]||0}</span>
+          </button>
         </div>
-      `;
-      card.appendChild(content);
-      grid.appendChild(card);
-
-      // إضافة الأحداث بعد إنشاء العناصر
-      content.querySelector(".btn.like").addEventListener("click", () => toggleLike(id));
-
-      const shareBtn = document.createElement("button");
-      shareBtn.className = "btn share";
-      shareBtn.textContent = "🔄 مشاركة";
-      shareBtn.addEventListener("click", () => {
-        const text = `🕋 عرض عمرة من مطار ${airport} - فندق ${item['الفندق']||''} - السعر ${item['السعر الغرفة الجماعية (دج)']||''} دج 📅 ${item['تاريخ  الر حلة']||''} ⏳ ${item['مدة الرحلة']||''} 🌐 ${location.origin}/${url}`;
-        if (navigator.share) {
-          navigator.share({ title: 'عرض عمرة', text: text, url: location.href });
-        } else {
-          prompt('انسخ النص وشاركه:', text);
-        }
-      });
-      content.querySelector(".card-buttons").appendChild(shareBtn);
+      </div>`;
     });
 
-    container.appendChild(grid);
+    section.appendChild(scroll);
+    c.appendChild(section);
   });
 }
 
-function loadOffers() {
-  fetch(SHEET_URL)
-    .then(res => res.json())
-    .then(data => {
-      offersData = data;
-      renderOffers(offersData);
-    })
-    .catch(err => {
-      document.getElementById("offersContainer").innerHTML = "<p style='color:red;text-align:center;'>❌ فشل تحميل البيانات</p>";
-      console.error(err);
-    });
+function renderFiltered(){
+  renderOffers(offersData,document.getElementById("airportFilter").value);
 }
 
-function renderFiltered() {
-  const filter = document.getElementById("airportFilter").value;
-  renderOffers(offersData, filter);
-}
-
-loadOffers();
+fetch(SHEET_URL)
+.then(r=>r.json())
+.then(d=>{
+  offersData=d;
+  renderOffers(offersData);
+});
 </script>
+
 </body>
 </html>
