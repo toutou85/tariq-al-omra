@@ -226,6 +226,7 @@ startWaiting();
  fetch(webAppUrl+"?phone="+phone)
  .then(r=>r.json())
  .then(d=>{
+stopWaiting();
   if(!d.found){
     result.innerHTML="❌ لم يتم العثور على المعتمر";
     return;
