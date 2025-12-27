@@ -186,6 +186,33 @@ function statusBlock(url){
 }
 
 /* ===== البحث ===== */
+const adhkar = [
+  "أستغفر الله",
+  "أستغفر الله العظيم",
+  "سبحان الله وبحمده",
+  "اللهم صل وسلم على نبينا محمد",
+  "لا إله إلا الله"
+];
+
+let dhikrTimer = null;
+
+function startWaiting(){
+  const box = document.getElementById("waitBox");
+  const text = document.getElementById("dhikr");
+
+  let i = 0;
+  box.style.display = "block";
+  text.innerText = adhkar[0];
+
+  dhikrTimer = setInterval(()=>{
+    text.innerText = adhkar[i++ % adhkar.length];
+  }, 1500);
+}
+
+function stopWaiting(){
+  clearInterval(dhikrTimer);
+  document.getElementById("waitBox").style.display = "none";
+}
 function search(){
  const raw=document.getElementById("phone").value;
  const phone=preparePhone(raw);
@@ -194,6 +221,7 @@ function search(){
    alert("يرجى إدخال رقم هاتف صحيح");
    return;
  }
+startWaiting();
 
  fetch(webAppUrl+"?phone="+phone)
  .then(r=>r.json())
