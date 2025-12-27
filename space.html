@@ -6,7 +6,7 @@
 <title>فضاء المعتمر</title>
 
 <style>
-/* ====== عام ====== */
+/* ===== عام ===== */
 body{
   font-family: Tahoma, Arial;
   background:#f2f4f8;
@@ -36,76 +36,58 @@ img{max-width:240px;border:1px solid #ccc;margin:10px}
 .btns button{margin:5px;background:#198754}
 .loader{text-align:center;margin-top:20px;font-size:18px;color:#555}
 
-/* ====== طباعة A4 ====== */
+/* ===== طباعة ورقة بيانات (A4) ===== */
 .print-a4{
   width:210mm;
   min-height:297mm;
   padding:20mm;
-  position:relative;
 }
-.print-a4::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    url("https://i.ibb.co/bgc4Y7gr/1766852333847.png") center 35% no-repeat,
-    url("https://i.ibb.co/d8K117p/1766852254653.jpg") center 65% no-repeat;
-  background-size:200px,260px;
-  opacity:.06;
-}
-.print-content{position:relative;z-index:1}
-
 .print-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  border-bottom:2px solid #aaa;
+  border-bottom:2px solid #000;
   padding-bottom:10px;
 }
 .print-header img{height:70px}
-.print-title{font-size:22px;font-weight:bold}
-
+.print-title{
+  font-size:22px;
+  font-weight:bold;
+}
 .data-table{
   width:100%;
   border-collapse:collapse;
-  margin-top:20px;
+  margin-top:30px;
 }
 .data-table td{
-  border:1px solid #aaa;
-  padding:8px;
+  border:1px solid #000;
+  padding:10px;
+  font-size:16px;
 }
 .data-table td.label{
   background:#f1f1f1;
   width:30%;
   font-weight:bold;
 }
-.images{margin-top:20px;display:flex;gap:20px}
-.images img{max-width:45%}
 
-/* ====== ملصق الحقيبة ====== */
+/* ===== ملصق الحقيبة (كبير) ===== */
 .sticker{
-  width:9cm;
-  height:6cm;
-  border:2px solid #000;
-  text-align:center;
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   font-weight:bold;
-  position:relative;
-  padding:10px;
+  text-align:center;
 }
-.sticker::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:url("https://i.ibb.co/bgc4Y7gr/1766852333847.png") center no-repeat;
-  background-size:80px;
-  opacity:.12;
-}
-.sticker div{position:relative;z-index:1}
-.sticker .name{font-size:22px}
-.sticker .agency{font-size:16px}
-.sticker .phone{font-size:18px}
+.sticker .name{font-size:60px;margin-bottom:20px}
+.sticker .agency{font-size:40px;margin-bottom:15px}
+.sticker .phone{font-size:36px}
 
-@media print{body{background:white}}
+@media print{
+  body{background:white}
+}
 </style>
 </head>
 
@@ -158,14 +140,12 @@ function search(){
      <p>🏬 الفرع: ${d.branch}</p>
      <p>📅 تاريخ التسجيل: ${d.date}</p>
 
-     <div>
-       <img src="${d.visaImage||''}" onerror="this.style.display='none'">
-       <img src="${d.ticketImage||''}" onerror="this.style.display='none'">
-     </div>
+     <p>🛂 التأشيرة: ${d.visaImage ? "تم إصدارها" : "لم يتم إصدارها بعد"}</p>
+     <p>🎫 التذكرة: ${d.ticketImage ? "تم إصدارها" : "لم يتم إصدارها بعد"}</p>
 
      <div class="btns">
-       <button onclick="printData()">🖨️ طباعة البيانات</button>
-       <button onclick="printSticker()">🧳 ملصق الحقيبة</button>
+       <button onclick="printData()">🖨️ طباعة ورقة البيانات</button>
+       <button onclick="printSticker()">🧳 طباعة ملصق الحقيبة</button>
      </div>
    </div>`;
  });
@@ -175,15 +155,13 @@ function printData(){
  const d=currentData;
  openPrint(`
  <div class="print-a4">
-  <div class="print-content">
-
-   <div class="print-header">
+  <div class="print-header">
     <img src="https://i.ibb.co/d8K117p/1766852254653.jpg">
-    <div class="print-title">استمارة تسجيل معتمر</div>
+    <div class="print-title">استمارة بيانات معتمر</div>
     <img src="https://i.ibb.co/bgc4Y7gr/1766852333847.png">
-   </div>
+  </div>
 
-   <table class="data-table">
+  <table class="data-table">
     <tr><td class="label">الاسم</td><td>${d.firstName} ${d.lastName}</td></tr>
     <tr><td class="label">الهاتف</td><td>${d.phone}</td></tr>
     <tr><td class="label">الوكالة</td><td>${d.agency}</td></tr>
@@ -191,15 +169,8 @@ function printData(){
     <tr><td class="label">السعر</td><td>${d.price}</td></tr>
     <tr><td class="label">الولاية</td><td>${d.wilaya}</td></tr>
     <tr><td class="label">الفرع</td><td>${d.branch}</td></tr>
-    <tr><td class="label">التاريخ</td><td>${d.date}</td></tr>
-   </table>
-
-   <div class="images">
-    <img src="${d.visaImage||''}">
-    <img src="${d.ticketImage||''}">
-   </div>
-
-  </div>
+    <tr><td class="label">تاريخ التسجيل</td><td>${d.date}</td></tr>
+  </table>
  </div>
  `);
 }
