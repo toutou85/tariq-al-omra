@@ -13,6 +13,16 @@ body{
   background:#f2f4f8;
 }
 
+/* ===== MAIN LOGO ===== */
+.main-logo{
+  background:#fff;
+  padding:15px 0;
+  text-align:center;
+}
+.main-logo img{
+  height:55px;
+}
+
 /* ===== TOP BAR ===== */
 .topbar{
   background:#FFD700;
@@ -22,25 +32,82 @@ body{
   justify-content:space-between;
   position:sticky;
   top:0;
+  z-index:1000;
 }
-.menu-btn{font-size:26px;font-weight:900;cursor:pointer}
+.menu-btn{
+  font-size:28px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  position:fixed;
+  top:0;
+  right:-280px;
+  width:280px;
+  height:100%;
+  background:#fff;
+  box-shadow:-4px 0 15px rgba(0,0,0,.3);
+  transition:0.3s;
+  z-index:2000;
+  padding-top:60px;
+}
+.sidebar.active{
+  right:0;
+}
+.sidebar a{
+  display:block;
+  padding:14px 22px;
+  text-decoration:none;
+  color:#333;
+  font-weight:bold;
+  border-bottom:1px solid #eee;
+}
+.sidebar a:hover{
+  background:#f5f5f5;
+}
+.closebtn{
+  position:absolute;
+  top:15px;
+  left:15px;
+  font-size:28px;
+  cursor:pointer;
+}
 
 /* ===== PAGE ===== */
-.page{max-width:900px;margin:30px auto;padding:15px}
+.page{
+  max-width:900px;
+  margin:30px auto;
+  padding:15px;
+}
 .card{
   background:#fff;
-  padding:24px;
+  padding:26px;
   border-radius:14px;
   box-shadow:0 6px 18px rgba(0,0,0,.15);
 }
-input,button{padding:14px;font-size:18px}
+input,button{
+  padding:14px;
+  font-size:18px;
+  width:100%;
+}
 button{
   background:#0d6efd;
   color:#fff;
   border:none;
   cursor:pointer;
+  margin-top:15px;
 }
-.btns button{margin:10px}
+
+/* ===== INFO TEXT ===== */
+.hint{
+  margin:10px 0 20px;
+  color:#b00020;
+  font-size:16px;
+  font-weight:bold;
+  text-align:center;
+}
 
 /* ===== LOADER ===== */
 .loader{
@@ -53,253 +120,115 @@ button{
   background:#f9f9f9;
   border-radius:12px;
 }
-
-/* ===== PRINT ===== */
-@page{size:A4;margin:20mm}
-@media print{body{background:white}}
-
-.print-a4{width:170mm}
-
-/* ===== HEADER WITH TWO LOGOS ===== */
-.print-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:2px solid #000;
-  padding-bottom:12px;
-}
-.print-header img{
-  height:32px;
-  width:auto;
-}
-.print-title{
-  font-size:26px;
-  font-weight:bold;
-}
-
-/* ===== TABLE ===== */
-.table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:40px;
-  font-size:28px;
-}
-.table td{
-  border:1px solid #000;
-  padding:14px;
-}
-.table .label{
-  font-weight:bold;
-  width:35%;
-  background:#f3f3f3;
-}
-
-/* ===== STICKER ===== */
-.sticker{
-  width:100%;
-  height:100%;
-  text-align:center;
-  font-weight:bold;
-}
-.sticker-header{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:30px;
-}
-.sticker-header img{height:32px}
-.sticker .name{font-size:64px}
-.sticker .agency{font-size:44px;margin:20px 0}
-.sticker .phone{font-size:40px}
-
-/* ===== STATUS ===== */
-.status-ok{color:green;font-weight:bold}
-.status-no{color:#b00020;font-weight:bold}
-.download-btn{
-  margin-right:12px;
-  background:#198754;
-  padding:8px 14px;
-  border-radius:8px;
-  text-decoration:none;
-  color:#fff;
-  font-size:16px;
-}
 </style>
 </head>
 
 <body>
 
+<!-- الشعار الرئيسي -->
+<div class="main-logo">
+  <img src="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png" alt="طريق العمرة">
+</div>
+
+<!-- الشريط العلوي -->
 <div class="topbar">
-  <span class="menu-btn">☰</span>
+  <span class="menu-btn" onclick="openSidebar()">☰</span>
   <strong>🕋 طريق العمرة</strong>
 </div>
 
+<!-- القائمة الجانبية -->
+<div id="sidebar" class="sidebar">
+  <span class="closebtn" onclick="closeSidebar()">×</span>
+  <a href="index.html">🏠 الرئيسية</a>
+  <a href="offers.html">🎁 عروض العمرة</a>
+  <a href="space.html">🧾 فضاء المعتمر</a>
+  <a href="upload.html">📤 تحميل جواز السفر</a>
+  <a href="contact.html">📞 اتصل بنا</a>
+  <a href="about.html">❔ من نحن</a>
+</div>
+
+<!-- المحتوى -->
 <div class="page">
   <div class="card">
-    <h3 style="font-size:22px">🔍 البحث عن المعتمر</h3>
+    <h3 style="font-size:24px;text-align:center">🔍 البحث عن المعتمر</h3>
 
-    <!-- صفر ثابت -->
+    <div class="hint">ادخل رقم الهاتف بدون صفر</div>
+
     <input
       id="phone"
       type="tel"
       value="0"
-      maxlength="10"
-      placeholder="أدخل رقم الهاتف"
+      maxlength="14"
+      placeholder="رقم الهاتف"
       onfocus="fixZero(this)"
       oninput="fixZero(this)"
     >
 
     <button onclick="search()">بحث</button>
 
-    <!-- نافذة الانتظار -->
-    <div id="loader" class="loader" style="display:none"></div>
-
+    <div id="loader" class="loader" style="display:none">⏳ أستغفر الله</div>
     <div id="result"></div>
   </div>
 </div>
 
 <script>
-/* رابط Google Apps Script */
 const webAppUrl =
 "https://script.google.com/macros/s/AKfycbxNQlPGbAZyLypzmxm9qqt5WJCA8uRCyTmtZBY8JIo01LLzB_HY1X4Odg2Cv_xcTKHmxQ/exec";
 
-/* الشعارات */
-const mainLogo =
-"https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
-
-function getAgencyLogo(name=""){
-  name=name.replace(/\s+/g,"");
-  if(name.includes("تقرت")) return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
-  if(name.includes("الانسية")) return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
-  if(name.includes("السقيفة")) return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
-  return "";
+/* ===== SIDEBAR CONTROL ===== */
+function openSidebar(){
+  document.getElementById("sidebar").classList.add("active");
+}
+function closeSidebar(){
+  document.getElementById("sidebar").classList.remove("active");
 }
 
-let data=null;
-
-/* ===== أدوات ===== */
+/* ===== PHONE ===== */
 function fixZero(input){
-  input.value=input.value.replace(/[^0-9]/g,"");
-  if(!input.value.startsWith("0")) input.value="0";
+  input.value = input.value.replace(/[^0-9]/g,"");
+  if(!input.value.startsWith("0")){
+    input.value = "0";
+  }
 }
-
-/* 🔥 تنظيف الرقم + فرض الصفر */
 function preparePhone(raw){
-  let p = raw.replace(/\D/g,""); // حذف الفراغات وكل شيء غير رقم
-  if(!p.startsWith("0")) p = "0"+p;
+  let p = raw.replace(/\D/g,"");
+  if(p.startsWith("0")) p = p.substring(1);
+  if(p.startsWith("213")) p = p.substring(3);
   return p;
 }
 
-/* ===== حالة التأشيرة ===== */
-function statusBlock(url){
-  if(url){
-    return `<span class="status-ok">تم إصدارها</span>
-    <a class="download-btn" href="${url}" target="_blank">⬇ تحميل</a>`;
-  }
-  return `<span class="status-no">لم يتم إصدارها بعد</span>`;
-}
-
-/* ===== الذكر ===== */
-const adhkar=[
-  "أستغفر الله",
-  "سبحان الله",
-  "الحمد لله",
-  "لا إله إلا الله",
-  "اللهم صل على محمد"
-];
-let dhikrTimer=null;
-
-/* ===== البحث ===== */
+/* ===== SEARCH ===== */
 function search(){
  const raw=document.getElementById("phone").value;
  const phone=preparePhone(raw);
 
- if(phone.length<10){
-   alert("يرجى إدخال رقم هاتف كامل");
+ if(phone.length<9){
+   alert("يرجى إدخال رقم هاتف صحيح");
    return;
  }
 
  const loader=document.getElementById("loader");
  const result=document.getElementById("result");
 
- // إظهار نافذة الانتظار
- result.innerHTML="";
  loader.style.display="block";
- let i=0;
- loader.innerText="⏳ "+adhkar[0];
- dhikrTimer=setInterval(()=>{
-   loader.innerText="⏳ "+adhkar[i++%adhkar.length];
- },1000);
+ result.innerHTML="";
 
  fetch(webAppUrl+"?phone="+phone)
  .then(r=>r.json())
  .then(d=>{
-  clearInterval(dhikrTimer);
   loader.style.display="none";
 
   if(!d.found){
     result.innerHTML="❌ لم يتم العثور على المعتمر";
     return;
   }
-  data=d;
 
   result.innerHTML=`
-  <hr>
-  <p style="font-size:20px"><strong>الاسم:</strong> ${d.firstName} ${d.lastName}</p>
-  <p style="font-size:20px"><strong>الهاتف:</strong> ${d.phone}</p>
-  <p style="font-size:20px"><strong>الوكالة:</strong> ${d.agency}</p>
-
-  <p style="font-size:20px"><strong>التأشيرة:</strong> ${statusBlock(d.visaImage)}</p>
-  <p style="font-size:20px"><strong>التذكرة:</strong> ${statusBlock(d.ticketImage)}</p>
-
-  <div class="btns">
-    <button onclick="printData()">🖨️ طباعة معلومات الزبون</button>
-    <button onclick="printSticker()">🧳 ملصق الحقيبة</button>
-  </div>`;
+    <p><strong>الاسم:</strong> ${d.firstName} ${d.lastName}</p>
+    <p><strong>الهاتف:</strong> ${d.phone}</p>
+    <p><strong>الوكالة:</strong> ${d.agency}</p>
+  `;
  });
-}
-
-/* ===== طباعة ===== */
-function printData(){
- const d=data;
- openPrint(`
- <div class="print-a4">
-  <div class="print-header">
-    <img src="${mainLogo}">
-    <div class="print-title">استمارة معلومات زبون</div>
-    <img src="${getAgencyLogo(d.agency)}">
-  </div>
-
-  <table class="table">
-    <tr><td class="label">الاسم</td><td>${d.firstName} ${d.lastName}</td></tr>
-    <tr><td class="label">الهاتف</td><td>${d.phone}</td></tr>
-    <tr><td class="label">الوكالة</td><td>${d.agency}</td></tr>
-    <tr><td class="label">التأشيرة</td><td>${d.visaImage?"تم إصدارها":"لم يتم إصدارها بعد"}</td></tr>
-    <tr><td class="label">التذكرة</td><td>${d.ticketImage?"تم إصدارها":"لم يتم إصدارها بعد"}</td></tr>
-  </table>
- </div>
- `);
-}
-
-function printSticker(){
- const d=data;
- openPrint(`
- <div class="sticker">
-  <div class="sticker-header">
-    <img src="${mainLogo}">
-    <img src="${getAgencyLogo(d.agency)}">
-  </div>
-  <div class="name">${d.firstName} ${d.lastName}</div>
-  <div class="agency">${d.agency}</div>
-  <div class="phone">${d.phone}</div>
- </div>
- `);
-}
-
-function openPrint(html){
- const w=window.open("");
- w.document.write(`<html><head><meta charset="UTF-8"></head><body>${html}</body></html>`);
- w.document.close();
- w.print();
 }
 </script>
 
