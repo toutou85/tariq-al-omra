@@ -5,10 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>عرض بيانات المعتمر</title>
 <style>
-  body { font-family: 'Tahoma', sans-serif; padding: 20px; background: #f0f2f5; }
-  input, button { padding: 10px; margin: 5px 0; }
-  .card { background: #fff; padding: 15px; margin-top: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-  img { max-width: 200px; display: block; margin-top: 5px; }
+  body { font-family: 'Tahoma', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+  h2 { color: #333; }
+  input, button { padding: 10px; margin: 5px 0; font-size: 16px; }
+  .card { background: #fff; padding: 20px; margin-top: 20px; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
+  .card h3 { margin-top: 0; }
+  .card p { margin: 5px 0; }
+  img { max-width: 200px; display: block; margin: 10px 0; border-radius: 5px; }
+  .btns { margin-top: 15px; }
+  button.printBtn { background: #007BFF; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+  button.printBtn:hover { background: #0056b3; }
 </style>
 </head>
 <body>
@@ -35,6 +41,7 @@ function search() {
       if (data.found) {
         const div = document.createElement("div");
         div.className = "card";
+        div.id = "cardContent";
         div.innerHTML = `
           <h3>الاسم: ${data.firstName} ${data.lastName}</h3>
           <p>الهاتف: ${data.phone}</p>
@@ -45,10 +52,15 @@ function search() {
           <p>تاريخ انتهاء جواز السفر: ${data.passportExpiry}</p>
           <p>المرافقين: ${data.companions}</p>
           <p>تاريخ الحجز: ${data.date}</p>
+          <hr>
           <p>التأشيرة:</p>
           <img src="${data.visaLink}" alt="صورة التأشيرة">
           <p>التذكرة:</p>
           <img src="${data.ticketLink}" alt="صورة التذكرة">
+          <div class="btns">
+            <button class="printBtn" onclick="printInfo()">طباعة المعلومات فقط</button>
+            <button class="printBtn" onclick="printImages()">طباعة الصور فقط</button>
+          </div>
         `;
         container.appendChild(div);
       } else {
@@ -59,6 +71,39 @@ function search() {
       console.error(err);
       alert("حدث خطأ في جلب البيانات");
     });
+}
+
+// طباعة المعلومات النصية فقط
+function printInfo() {
+  const card = document.getElementById("cardContent");
+  if (!card) return;
+  const clone = card.cloneNode(true);
+  // إزالة الصور
+  clone.querySelectorAll("img").forEach(img => img.remove());
+  clone.querySelector(".btns").remove();
+
+  const printWindow = window.open('', '', 'height=600,width=800');
+  printWindow.document.write('<html><head><title>طباعة المعلومات</title></head><body>');
+  printWindow.document.write(clone.innerHTML);
+  printWindow.document.write('</body></html>');
+  printWindow.document.close();
+  printWindow.print();
+}
+
+// طباعة الصور فقط
+function printImages() {
+  const card = document.getElementById("cardContent");
+  if (!card) return;
+  const clone = card.cloneNode(true);
+  // إزالة النصوص ما عدا الصور
+  clone.querySelectorAll("p,h3,hr,.btns").forEach(el => el.remove());
+
+  const printWindow = window.open('', '', 'height=600,width=800');
+  printWindow.document.write('<html><head><title>طباعة الصور</title></head><body>');
+  printWindow.document.write(clone.innerHTML);
+  printWindow.document.write('</body></html>');
+  printWindow.document.close();
+  printWindow.print();
 }
 </script>
 
