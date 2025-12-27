@@ -18,34 +18,20 @@ body{
   background:#FFD700;
   padding:10px 16px;
   display:grid;
-  grid-template-columns: 40px 1fr 40px; /* يسار | وسط | يمين */
+  grid-template-columns:40px 1fr 40px;
   align-items:center;
   position:sticky;
   top:0;
   z-index:1000;
 }
-
-/* زر القائمة */
 .menu-btn{
   font-size:28px;
   font-weight:900;
   cursor:pointer;
   text-align:right;
 }
-
-/* الشعار في الوسط */
-.topbar-logo{
-  text-align:center;
-}
-.topbar-logo img{
-  height:42px;       /* ⬅ حجم الشعار داخل الشريط */
-  width:auto;
-}
-
-/* عنصر فارغ للموازنة */
-.topbar-spacer{
-  width:40px;
-}
+.topbar-logo{text-align:center}
+.topbar-logo img{height:42px}
 
 /* ===== SIDEBAR ===== */
 .sidebar{
@@ -56,11 +42,11 @@ body{
   height:100%;
   background:#fff;
   box-shadow:-4px 0 15px rgba(0,0,0,.3);
-  transition:0.3s;
+  transition:.3s;
   z-index:2000;
   padding-top:60px;
 }
-.sidebar.active{ right:0; }
+.sidebar.active{right:0}
 .sidebar a{
   display:block;
   padding:14px 22px;
@@ -69,7 +55,7 @@ body{
   font-weight:bold;
   border-bottom:1px solid #eee;
 }
-.sidebar a:hover{ background:#f5f5f5; }
+.sidebar a:hover{background:#f5f5f5}
 .closebtn{
   position:absolute;
   top:15px;
@@ -79,11 +65,7 @@ body{
 }
 
 /* ===== PAGE ===== */
-.page{
-  max-width:900px;
-  margin:30px auto;
-  padding:15px;
-}
+.page{max-width:900px;margin:30px auto;padding:15px}
 .card{
   background:#fff;
   padding:26px;
@@ -103,7 +85,7 @@ button{
   margin-top:15px;
 }
 
-/* ===== INFO TEXT ===== */
+/* ===== INFO ===== */
 .hint{
   margin:10px 0 20px;
   color:#b00020;
@@ -123,20 +105,31 @@ button{
   background:#f9f9f9;
   border-radius:12px;
 }
+
+/* ===== STATUS ===== */
+.status-ok{color:green;font-weight:bold}
+.status-no{color:#b00020;font-weight:bold}
+.download-btn{
+  margin-right:10px;
+  background:#198754;
+  padding:6px 12px;
+  border-radius:6px;
+  text-decoration:none;
+  color:#fff;
+  font-size:14px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- الشريط الأصفر (الشعار داخله) -->
+<!-- الشريط الأصفر -->
 <div class="topbar">
   <span class="menu-btn" onclick="openSidebar()">☰</span>
-
   <div class="topbar-logo">
-    <img src="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png" alt="طريق العمرة">
+    <img src="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png">
   </div>
-
-  <div class="topbar-spacer"></div>
+  <div></div>
 </div>
 
 <!-- القائمة الجانبية -->
@@ -153,8 +146,8 @@ button{
 <!-- المحتوى -->
 <div class="page">
   <div class="card">
-    <h3 style="font-size:24px;text-align:center">🔍 البحث عن المعتمر</h3>
 
+    <h3 style="text-align:center;font-size:24px">🔍 البحث عن المعتمر</h3>
     <div class="hint">ادخل رقم الهاتف بدون صفر</div>
 
     <input
@@ -169,8 +162,9 @@ button{
 
     <button onclick="search()">بحث</button>
 
-    <div id="loader" class="loader" style="display:none">⏳ أستغفر الله</div>
+    <div id="loader" class="loader" style="display:none"></div>
     <div id="result"></div>
+
   </div>
 </div>
 
@@ -188,17 +182,25 @@ function closeSidebar(){
 
 /* ===== PHONE ===== */
 function fixZero(input){
-  input.value = input.value.replace(/[^0-9]/g,"");
-  if(!input.value.startsWith("0")){
-    input.value = "0";
-  }
+  input.value=input.value.replace(/[^0-9]/g,"");
+  if(!input.value.startsWith("0")) input.value="0";
 }
 function preparePhone(raw){
-  let p = raw.replace(/\D/g,"");
-  if(p.startsWith("0")) p = p.substring(1);
-  if(p.startsWith("213")) p = p.substring(3);
+  let p=raw.replace(/\D/g,"");
+  if(p.startsWith("0")) p=p.substring(1);
+  if(p.startsWith("213")) p=p.substring(3);
   return p;
 }
+
+/* ===== LOADER DHIKR ===== */
+const adhkar=[
+  "أستغفر الله",
+  "سبحان الله",
+  "الحمد لله",
+  "لا إله إلا الله",
+  "اللهم صل على محمد"
+];
+let dhikrTimer=null;
 
 /* ===== SEARCH ===== */
 function search(){
@@ -213,12 +215,18 @@ function search(){
  const loader=document.getElementById("loader");
  const result=document.getElementById("result");
 
- loader.style.display="block";
  result.innerHTML="";
+ loader.style.display="block";
+ let i=0;
+ loader.innerText="⏳ "+adhkar[0];
+ dhikrTimer=setInterval(()=>{
+   loader.innerText="⏳ "+adhkar[i++%adhkar.length];
+ },1000);
 
  fetch(webAppUrl+"?phone="+phone)
  .then(r=>r.json())
  .then(d=>{
+  clearInterval(dhikrTimer);
   loader.style.display="none";
 
   if(!d.found){
@@ -227,9 +235,24 @@ function search(){
   }
 
   result.innerHTML=`
+    <hr>
     <p><strong>الاسم:</strong> ${d.firstName} ${d.lastName}</p>
     <p><strong>الهاتف:</strong> ${d.phone}</p>
     <p><strong>الوكالة:</strong> ${d.agency}</p>
+
+    <p><strong>التأشيرة:</strong>
+      ${d.visaImage
+        ? `<span class="status-ok">تم إصدارها</span>
+           <a class="download-btn" href="${d.visaImage}" target="_blank">⬇ تحميل</a>`
+        : `<span class="status-no">لم يتم إصدارها بعد</span>`}
+    </p>
+
+    <p><strong>التذكرة:</strong>
+      ${d.ticketImage
+        ? `<span class="status-ok">تم إصدارها</span>
+           <a class="download-btn" href="${d.ticketImage}" target="_blank">⬇ تحميل</a>`
+        : `<span class="status-no">لم يتم إصدارها بعد</span>`}
+    </p>
   `;
  });
 }
