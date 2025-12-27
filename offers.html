@@ -6,6 +6,8 @@
 <title>عروض العمرة | طريق العمرة</title>
 
 <style>
+*{box-sizing:border-box}
+
 body{
   font-family:'Tajawal',Tahoma,Arial,sans-serif;
   margin:0;
@@ -16,142 +18,189 @@ body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:rgba(255,255,255,.25);
+  background:rgba(255,255,255,.30);
   z-index:-1;
 }
 
-nav{
+/* ===== TOP BAR ===== */
+.topbar{
   background:#FFD700;
-  padding:12px;
-  text-align:center;
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
-nav a{
-  color:#000;
-  font-weight:800;
-  text-decoration:none;
+.topbar h2{
+  margin:0;
+  font-size:18px;
 }
 
+/* ===== HAMBURGER ===== */
+.menu-btn{
+  font-size:26px;
+  cursor:pointer;
+  font-weight:900;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  height:100%;
+  width:0;
+  position:fixed;
+  top:0;
+  right:0;
+  background:#fff;
+  overflow-x:hidden;
+  transition:.3s;
+  box-shadow:-4px 0 15px rgba(0,0,0,.3);
+  padding-top:60px;
+  z-index:999;
+}
+.sidebar a{
+  padding:12px 20px;
+  display:block;
+  text-decoration:none;
+  color:#333;
+  font-weight:700;
+}
+.sidebar a:hover{
+  background:#f2f2f2;
+}
+.closebtn{
+  position:absolute;
+  top:10px;
+  left:15px;
+  font-size:28px;
+  cursor:pointer;
+}
+
+/* ===== PAGE ===== */
 .page{
-  max-width:1100px;
-  margin:20px auto 60px;
+  max-width:1150px;
+  margin:20px auto 70px;
   padding:16px;
 }
 
 .title-box{
-  background:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.45);
   backdrop-filter:blur(8px);
   padding:18px;
-  border-radius:14px;
-  text-align:center;
-  margin-bottom:20px;
-}
-.title-box h1{margin:0;font-size:24px;}
-
-.filter-box{
+  border-radius:16px;
   text-align:center;
   margin-bottom:25px;
 }
+.title-box h1{margin:0;font-size:24px}
+
+/* ===== FILTER ===== */
+.filter-box{
+  text-align:center;
+  margin-bottom:30px;
+}
 .filter-box select{
-  padding:8px 14px;
+  padding:10px 18px;
   font-size:15px;
-  border-radius:8px;
+  border-radius:10px;
+  border:none;
 }
 
-/* ====== AIRPORT SECTION ====== */
-.airport-section{margin-bottom:35px;}
-
+/* ===== AIRPORT ===== */
+.airport-section{margin-bottom:35px}
 .airport-title{
   font-size:20px;
   font-weight:900;
-  margin-bottom:12px;
-  padding:12px 16px;
-  border-radius:12px;
+  margin-bottom:14px;
+  padding:14px;
+  border-radius:14px;
   background:linear-gradient(135deg,#FFD700,#FFC107);
-  display:flex;
-  align-items:center;
-  gap:8px;
 }
 
-/* ====== HORIZONTAL OFFERS ====== */
+/* ===== OFFERS ===== */
 .horizontal-scroll{
   display:flex;
-  gap:14px;
+  gap:16px;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   padding-bottom:10px;
 }
-.horizontal-scroll::-webkit-scrollbar{height:6px;}
+.horizontal-scroll::-webkit-scrollbar{height:6px}
 .horizontal-scroll::-webkit-scrollbar-thumb{
-  background:#bbb;border-radius:10px;
+  background:#aaa;border-radius:10px
 }
 
-/* ====== CARD ====== */
+/* ===== CARD ===== */
 .card{
-  min-width:260px;
-  max-width:260px;
-  background:rgba(255,255,255,.96);
-  border-radius:16px;
-  padding:14px;
-  box-shadow:0 6px 16px rgba(0,0,0,.15);
+  min-width:270px;
+  background:#fff;
+  border-radius:18px;
+  padding:15px;
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
   scroll-snap-align:start;
-  transition:.25s;
+  transition:.3s;
 }
-.card:hover{transform:translateY(-4px);}
-.card h3{margin:0 0 6px;font-size:18px;}
-.card p{margin:6px 0;font-size:14px;}
+.card:hover{transform:translateY(-6px)}
+.card h3{
+  margin:0 0 6px;
+  font-size:18px;
+  color:#007bff;
+}
+.card p{
+  margin:6px 0;
+  font-size:14px;
+}
 
+/* ===== BUTTONS ===== */
 .card-buttons{
   display:flex;
-  gap:8px;
-  margin-top:10px;
+  gap:10px;
+  margin-top:12px;
 }
 .btn{
   flex:1;
   border:none;
-  padding:8px;
+  padding:10px;
   font-size:14px;
-  font-weight:700;
-  border-radius:8px;
+  font-weight:800;
+  border-radius:10px;
   cursor:pointer;
   color:#fff;
 }
-.btn.details{background:#007bff;}
-.btn.like{background:#e53935;}
+.btn.details{background:#007bff}
+.btn.details:hover{background:#0056b3}
+.btn.like{background:#e53935}
+.btn.like:hover{background:#c62828}
 </style>
 </head>
 
 <body>
 
-<nav>
-  <a href="index.html">🏠 الرئيسية</a>
-</nav>
+<!-- TOP BAR -->
+<div class="topbar">
+  <span class="menu-btn" onclick="openSidebar()">☰</span>
+  <h2>🕋 عروض العمرة</h2>
+</div>
 
-  <!-- ✅ القائمة الجانبية -->
-  <div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
-    <a href="index.html">🏠 الرئيسية</a>
-    <a href="offers.html">🎁 عروض العمرة</a>
-    <a href="contact.html">📞 اتصل بنا</a>
-    <a href="about.html">❔ من نحن </a>
-    <a href="hajj-space.html"> 🕋 فضاء الحج 1447</a>
-    <a href="join.html">📩 انضم إلينا</a>
-<a href="upload.html" class="upload-button">📤🪪 تحميل جواز السفر</a>
-<a href="reviews.html">💬 آراء المعتمرين</a>
-a>
-<a href="manha.html">💶 منحة سفر </a>
-<a href="achievements.html">🏅 إنجازاتنا</a>
-<a href="space.html">🧾 فضاء المعتمر</a>
- 
-  </div>
+<!-- SIDEBAR -->
+<div id="mySidebar" class="sidebar">
+  <span class="closebtn" onclick="closeSidebar()">×</span>
+  <a href="index.html">🏠 الرئيسية</a>
+  <a href="offers.html">🎁 عروض العمرة</a>
+  <a href="contact.html">📞 اتصل بنا</a>
+  <a href="about.html">❔ من نحن</a>
+  <a href="hajj-space.html">🕋 فضاء الحج</a>
+  <a href="join.html">📩 انضم إلينا</a>
+  <a href="upload.html">📤 تحميل جواز السفر</a>
+  <a href="reviews.html">💬 آراء المعتمرين</a>
+  <a href="space.html">🧾 فضاء المعتمر</a>
+</div>
 
 <div class="page">
 
   <div class="title-box">
-    <h1>🕋 عروض العمرة – وكالة تقرت للسياحة و السفر</h1>
+    <h1>🌙 أحدث عروض العمرة – وكالة تقرت للسياحة و السفر</h1>
   </div>
 
   <div class="filter-box">
-    ✈️ اختر المطار:
+    ✈️ اختر مطار الانطلاق:
     <select id="airportFilter" onchange="renderFiltered()">
       <option value="all">الكل</option>
       <option value="الجزائر">الجزائر</option>
@@ -171,6 +220,9 @@ a>
 const SHEET_URL="https://script.google.com/macros/s/AKfycbzu_D4Gy4PL5NLfHXsFBOQD8Se8W1kJDH3rEEGna5WDZ0uTNUcgLsUGcrUIQlIzXZgj/exec";
 let offersData=[];
 
+function openSidebar(){document.getElementById("mySidebar").style.width="260px";}
+function closeSidebar(){document.getElementById("mySidebar").style.width="0";}
+
 function toggleLike(id){
   if(localStorage.getItem("liked_"+id)){
     alert("❤️ سبق لك الإعجاب بهذا العرض");
@@ -189,8 +241,8 @@ function toggleLike(id){
 function renderOffers(data,filter="all"){
   const c=document.getElementById("offersContainer");
   c.innerHTML="";
-
   const grouped={};
+
   data.forEach(o=>{
     const a=(o["المطار"]||"غير محدد").trim();
     if(!grouped[a])grouped[a]=[];
@@ -202,7 +254,6 @@ function renderOffers(data,filter="all"){
 
     const section=document.createElement("div");
     section.className="airport-section";
-
     section.innerHTML=`<div class="airport-title">🛫 مطار ${airport}</div>`;
     const scroll=document.createElement("div");
     scroll.className="horizontal-scroll";
