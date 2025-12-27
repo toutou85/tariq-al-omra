@@ -29,45 +29,58 @@ body{
 .page{max-width:900px;margin:30px auto;padding:15px}
 .card{
   background:#fff;
-  padding:22px;
+  padding:24px;
   border-radius:14px;
   box-shadow:0 6px 18px rgba(0,0,0,.15);
 }
-input,button{padding:12px;font-size:17px}
+input,button{padding:14px;font-size:18px}
 button{
   background:#0d6efd;
   color:#fff;
   border:none;
   cursor:pointer;
 }
-.btns button{margin:8px}
+.btns button{margin:10px}
 
-/* ===== PRINT ===== */
+/* ===== PRINT A4 ===== */
 @page{size:A4;margin:20mm}
 @media print{body{background:white}}
 
 .print-a4{width:170mm}
+
+/* ===== HEADER WITH TWO LOGOS ===== */
 .print-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   border-bottom:2px solid #000;
-  padding-bottom:10px;
+  padding-bottom:12px;
 }
-.print-header img{max-height:28px} /* ⬅ تصغير الشعارات */
-.print-title{font-size:10px;font-weight:bold}
+.print-header img{
+  height:32px;        /* 🔥 نفس الحجم */
+  width:auto;
+}
+.print-title{
+  font-size:40px;     /* 🔥 تكبير العنوان */
+  font-weight:bold;
+}
 
+/* ===== TABLE ===== */
 .table{
   width:100%;
   border-collapse:collapse;
-  margin-top:50px;
-  font-size:50px; /* ⬅ تكبير الكتابة */
+  margin-top:40px;
+  font-size:35px;     /* 🔥 تكبير الكتابة */
 }
 .table td{
   border:1px solid #000;
-  padding:10px;
+  padding:14px;
 }
-.table .label{font-weight:bold;width:35%;background:#f3f3f3}
+.table .label{
+  font-weight:bold;
+  width:35%;
+  background:#f3f3f3;
+}
 
 /* ===== STICKER ===== */
 .sticker{
@@ -79,24 +92,26 @@ button{
 .sticker-header{
   display:flex;
   justify-content:space-between;
-  margin-bottom:25px;
+  margin-bottom:30px;
 }
-.sticker-header img{max-height:28px} /* ⬅ شعارات صغيرة */
-.sticker .name{font-size:28px}
-.sticker .agency{font-size:28px;margin:15px 0}
-.sticker .phone{font-size:36px}
+.sticker-header img{
+  height:32px;        /* 🔥 نفس حجم شعارات الطباعة */
+}
+.sticker .name{font-size:64px}
+.sticker .agency{font-size:44px;margin:20px 0}
+.sticker .phone{font-size:40px}
 
 /* ===== STATUS ===== */
 .status-ok{color:green;font-weight:bold}
 .status-no{color:#b00020;font-weight:bold}
 .download-btn{
-  margin-right:10px;
+  margin-right:12px;
   background:#198754;
-  padding:6px 12px;
-  border-radius:6px;
+  padding:8px 14px;
+  border-radius:8px;
   text-decoration:none;
   color:#fff;
-  font-size:14px;
+  font-size:16px;
 }
 </style>
 </head>
@@ -110,18 +125,32 @@ button{
 
 <div class="page">
   <div class="card">
-    <h3>🔍 البحث عن المعتمر</h3>
-    <input id="phone" placeholder="أدخل رقم الهاتف">
+    <h3 style="font-size:22px">🔍 البحث عن المعتمر</h3>
+
+    <!-- 🔒 صفر ثابت -->
+    <input
+      id="phone"
+      type="tel"
+      value="0"
+      maxlength="10"
+      placeholder="أدخل رقم الهاتف"
+      onfocus="fixZero(this)"
+      oninput="fixZero(this)"
+    >
+
     <button onclick="search()">بحث</button>
     <div id="result"></div>
   </div>
 </div>
 
 <script>
-const webAppUrl="https://script.google.com/macros/s/AKfycbxNQlPGbAZyLypzmxm9qqt5WJCA8uRCyTmtZBY8JIo01LLzB_HY1X4Odg2Cv_xcTKHmxQ/exec";
+/* رابط Google Apps Script */
+const webAppUrl =
+"https://script.google.com/macros/s/AKfycbxNQlPGbAZyLypzmxm9qqt5WJCA8uRCyTmtZBY8JIo01LLzB_HY1X4Odg2Cv_xcTKHmxQ/exec";
 
 /* الشعار الرئيسي */
-const mainLogo="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
+const mainLogo =
+"https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
 
 /* شعارات الوكالات */
 function getAgencyLogo(name=""){
@@ -134,9 +163,15 @@ function getAgencyLogo(name=""){
 
 let data=null;
 
+/* ===== أدوات ===== */
 function normalizePhone(p){return p.replace(/\D/g,"");}
 
-function statusBlock(label,url){
+function fixZero(input){
+  input.value=input.value.replace(/[^0-9]/g,"");
+  if(!input.value.startsWith("0")) input.value="0";
+}
+
+function statusBlock(url){
   if(url){
     return `<span class="status-ok">تم إصدارها</span>
     <a class="download-btn" href="${url}" target="_blank">⬇ تحميل</a>`;
@@ -144,11 +179,17 @@ function statusBlock(label,url){
   return `<span class="status-no">لم يتم إصدارها بعد</span>`;
 }
 
+/* ===== البحث ===== */
 function search(){
  const raw=document.getElementById("phone").value;
- if(!raw) return alert("أدخل رقم الهاتف");
+ const phone=normalizePhone(raw);
 
- fetch(webAppUrl+"?phone="+normalizePhone(raw))
+ if(phone.length<10){
+   alert("يرجى إدخال رقم هاتف كامل");
+   return;
+ }
+
+ fetch(webAppUrl+"?phone="+phone)
  .then(r=>r.json())
  .then(d=>{
   if(!d.found){
@@ -159,12 +200,12 @@ function search(){
 
   result.innerHTML=`
   <hr>
-  <p><strong>الاسم:</strong> ${d.firstName} ${d.lastName}</p>
-  <p><strong>الهاتف:</strong> ${d.phone}</p>
-  <p><strong>الوكالة:</strong> ${d.agency}</p>
+  <p style="font-size:20px"><strong>الاسم:</strong> ${d.firstName} ${d.lastName}</p>
+  <p style="font-size:20px"><strong>الهاتف:</strong> ${d.phone}</p>
+  <p style="font-size:20px"><strong>الوكالة:</strong> ${d.agency}</p>
 
-  <p><strong>التأشيرة:</strong> ${statusBlock("visa",d.visaImage)}</p>
-  <p><strong>التذكرة:</strong> ${statusBlock("ticket",d.ticketImage)}</p>
+  <p style="font-size:20px"><strong>التأشيرة:</strong> ${statusBlock(d.visaImage)}</p>
+  <p style="font-size:20px"><strong>التذكرة:</strong> ${statusBlock(d.ticketImage)}</p>
 
   <div class="btns">
     <button onclick="printData()">🖨️ طباعة معلومات الزبون</button>
@@ -173,6 +214,7 @@ function search(){
  });
 }
 
+/* ===== طباعة ورقة المعلومات ===== */
 function printData(){
  const d=data;
  openPrint(`
@@ -194,6 +236,7 @@ function printData(){
  `);
 }
 
+/* ===== ملصق الحقيبة ===== */
 function printSticker(){
  const d=data;
  openPrint(`
@@ -212,7 +255,8 @@ function printSticker(){
 function openPrint(html){
  const w=window.open("");
  w.document.write(`<html><head><meta charset="UTF-8"></head><body>${html}</body></html>`);
- w.document.close(); w.print();
+ w.document.close();
+ w.print();
 }
 </script>
 
