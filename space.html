@@ -138,6 +138,49 @@ button{
     width:65px;
   }
 }
+/* ===== STICKER PRINT LANDSCAPE ===== */
+@media print{
+  @page{
+    size: A4 landscape;   /* الطباعة بالعرض */
+    margin: 15mm;
+  }
+}
+
+/* ===== STICKER ===== */
+.sticker{
+  width:100%;
+  text-align:center;
+  font-weight:bold;
+  direction:rtl;
+}
+
+/* الشعارين في الأعلى وعلى نفس المستوى */
+.sticker-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:40px;
+}
+
+.sticker-header img{
+  height:120px;   /* حجم الشعار */
+}
+
+/* النصوص كبيرة */
+.sticker .name{
+  font-size:80px;
+  margin:30px 0;
+}
+
+.sticker .agency{
+  font-size:80px;
+  margin:30px 0;
+}
+
+.sticker .phone{
+  font-size:80px;
+  margin-top:30px;
+}
 </style>
 </head>
 
@@ -283,10 +326,12 @@ function printSticker(){
       <img src="${mainLogo}">
       <img src="${getAgencyLogo(data.agency)}">
     </div>
+
     <div class="name">${data.firstName} ${data.lastName}</div>
     <div class="agency">${data.agency}</div>
     <div class="phone">${data.phone}</div>
-  </div>`);
+  </div>
+  `);
 }
 </script>
 
