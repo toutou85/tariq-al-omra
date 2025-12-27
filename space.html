@@ -95,8 +95,13 @@ button{
   border-bottom:2px solid #000;
   padding-bottom:10px;
 }
-.print-header img{height:60px}
-.print-title{font-size:20px;font-weight:bold}
+.print-header img{
+  height:65px;
+}
+.print-title{
+  font-size:20px;
+  font-weight:bold;
+}
 
 .table{
   width:100%;
@@ -148,33 +153,27 @@ button{
   <a href="contact.html">📞 اتصل بنا</a>
 </div>
 
-<!-- PAGE -->
 <div class="page">
-
   <div class="card">
     <h3>🔍 البحث عن المعتمر</h3>
     <input id="phone" placeholder="أدخل رقم الهاتف">
     <button onclick="search()">بحث</button>
     <div id="result"></div>
   </div>
-
 </div>
 
 <script>
-/* رابط Google Apps Script */
 const webAppUrl="https://script.google.com/macros/s/AKfycbxNQlPGbAZyLypzmxm9qqt5WJCA8uRCyTmtZBY8JIo01LLzB_HY1X4Odg2Cv_xcTKHmxQ/exec";
 
-/* شعارات */
-const logoAgency="https://i.ibb.co/d8K117p/1766852254653.jpg";
-const logoPath="https://i.ibb.co/bgc4Y7gr/1766852333847.png";
+/* 🔥 الشعار الشفاف */
+const logoAgency="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
+const logoPath="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
 
 let data=null;
 
-/* Sidebar */
 function openSidebar(){document.getElementById("mySidebar").style.width="260px";}
 function closeSidebar(){document.getElementById("mySidebar").style.width="0";}
 
-/* Search */
 function search(){
  const phone=document.getElementById("phone").value.trim();
  if(!phone) return alert("أدخل رقم الهاتف");
@@ -192,20 +191,16 @@ function search(){
    <p><strong>الاسم:</strong> ${d.firstName} ${d.lastName}</p>
    <p><strong>الهاتف:</strong> ${d.phone}</p>
    <p><strong>الوكالة:</strong> ${d.agency}</p>
-   <p><strong>الغرفة:</strong> ${d.roomType}</p>
-   <p><strong>السعر:</strong> ${d.price||"-"}</p>
    <p><strong>التأشيرة:</strong> ${d.visaImage?"تم إصدارها":"لم يتم إصدارها بعد"}</p>
    <p><strong>التذكرة:</strong> ${d.ticketImage?"تم إصدارها":"لم يتم إصدارها بعد"}</p>
 
    <div class="btns">
      <button onclick="printData()">🖨️ طباعة البيانات</button>
      <button onclick="printSticker()">🧳 ملصق الحقيبة</button>
-   </div>
-   `;
+   </div>`;
  });
 }
 
-/* Print Data */
 function printData(){
  const d=data;
  openPrint(`
@@ -220,8 +215,6 @@ function printData(){
     <tr><td class="label">الاسم</td><td>${d.firstName} ${d.lastName}</td></tr>
     <tr><td class="label">الهاتف</td><td>${d.phone}</td></tr>
     <tr><td class="label">الوكالة</td><td>${d.agency}</td></tr>
-    <tr><td class="label">الغرفة</td><td>${d.roomType}</td></tr>
-    <tr><td class="label">السعر</td><td>${d.price||"-"}</td></tr>
     <tr><td class="label">التأشيرة</td><td>${d.visaImage?"تم إصدارها":"لم يتم إصدارها بعد"}</td></tr>
     <tr><td class="label">التذكرة</td><td>${d.ticketImage?"تم إصدارها":"لم يتم إصدارها بعد"}</td></tr>
   </table>
@@ -229,7 +222,6 @@ function printData(){
  `);
 }
 
-/* Print Sticker */
 function printSticker(){
  const d=data;
  openPrint(`
