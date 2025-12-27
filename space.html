@@ -7,35 +7,111 @@
 <style>
   body {
     font-family: 'Tahoma', sans-serif;
-    background: #f0f2f5;
+    background: linear-gradient(120deg, #e0eafc, #cfdef3);
     margin: 0;
     padding: 20px;
   }
   .container {
-    max-width: 700px;
+    max-width: 750px;
     margin: auto;
     background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
   }
-  h2 { text-align: center; color: #007bff; }
-  input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; }
-  button { padding: 12px; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; background: #007bff; color: white; width: 100%; font-size: 1rem; }
-  button:hover { background: #0056b3; }
-  #result { margin-top: 20px; }
-  .data-field { margin: 5px 0; padding: 8px; background: #f9f9f9; border-radius: 6px; }
-  .action-btns button { margin-bottom: 10px; }
+  .container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+  }
+  h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+  input {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+  input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,123,255,0.5);
+  }
+  button {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  button:hover {
+    opacity: 0.9;
+  }
+  .search-btn { background: #007bff; color: #fff; }
+  .action-btns button { margin-bottom: 10px; background: #28a745; color: white; }
+  .data-field {
+    margin: 8px 0;
+    padding: 10px 12px;
+    background: #f9f9f9;
+    border-left: 5px solid #007bff;
+    border-radius: 8px;
+  }
+  #result h3 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 15px;
+  }
+
+  /* تنسيق الطباعة */
+  @media print {
+    body { background: #fff; }
+    .container { box-shadow: none; }
+    .action-btns, input, button, #searchPhone { display: none; }
+    #result h3 { text-align: center; }
+    .data-field {
+      border-left: none;
+      border-top: 2px solid #007bff;
+      padding: 8px;
+      font-size: 1rem;
+    }
+    #print-header {
+      display: block;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #print-header img { max-width: 200px; }
+    #print-header h4 { margin-top: 10px; color: #007bff; }
+  }
+
+  #print-header { display: none; }
 </style>
 </head>
 <body>
+
 <div class="container">
   <h2>فضاء المعتمر</h2>
   <p>أدخل رقم هاتفك المسجل للحصول على معلوماتك:</p>
   <input type="tel" id="searchPhone" placeholder="رقم الهاتف">
-  <button onclick="search()">بحث</button>
+  <button class="search-btn" onclick="search()">🔍 بحث</button>
 
   <div id="result"></div>
+</div>
+
+<!-- رأس للطباعة يحتوي على شعار وأسعار -->
+<div id="print-header">
+  <img src="https://i.postimg.cc/JhKnMv57/FB-IMG-1753464094985.jpg" alt="شعار الوكالة">
+  <h4>أسعار الرحلات:</h4>
+  <p>🛫 ثنائية: 22 مليون | ثلاثية: 14 مليون | رباعية: حسب الطلب | جماعية: حسب العرض</p>
 </div>
 
 <script>
@@ -83,10 +159,10 @@ function search() {
     });
 }
 
-// دوال الأزرار الإضافية
 function requestVisa() { alert("سيتم تحويلك إلى صفحة طلب التأشيرة"); }
 function requestTicket() { alert("سيتم تحويلك إلى صفحة طلب التذكرة"); }
 function sendInquiry() { alert("سيتم فتح نافذة إرسال الاستفسار"); }
 </script>
+
 </body>
 </html>
