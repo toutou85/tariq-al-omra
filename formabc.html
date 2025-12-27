@@ -254,6 +254,11 @@
           ⚠️ تنبيه: يبقى تسجيلكم شكليًا إلى حين دفع مستحقات الرحلة في مقر الوكالة، ثم يتم تأكيد الحجز نهائيًا.
           يرجى قراءة الشروط بعناية قبل الإرسال...
         </p>
+<div class="buttons">
+  <button type="button" onclick="prevStep()">السابق</button>
+  <button type="submit">إرسال</button>
+  <button type="button" onclick="goToSpace()">🎉 إنهاء والانتقال لفضاء المعتمر</button>
+</div>
       </div>
     </div>
     <label>
@@ -473,6 +478,10 @@ const agencyBranches = {
       document.getElementById("message").style.display = "none";
     });
   });
+function goToSpace() {
+  // التوجيه مباشرة لصفحة Space.html
+  window.location.href = "Space.html";
+}
 </script>
 
 
