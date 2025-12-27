@@ -2,23 +2,20 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>فضاء المعتمر</title>
 
 <style>
-/* ===== عام ===== */
+/* ========== عام ========== */
 body{
   font-family: Tahoma, Arial;
   background:#f2f4f8;
   padding:20px;
 }
-h2{text-align:center;color:#0d6efd}
+h2{text-align:center}
 input,button{
-  padding:12px;
+  padding:10px;
   font-size:16px;
-  border-radius:6px;
 }
-input{width:70%;border:1px solid #ccc}
 button{
   background:#0d6efd;
   color:#fff;
@@ -27,20 +24,24 @@ button{
 }
 .card{
   background:#fff;
-  margin-top:20px;
   padding:20px;
-  border-radius:12px;
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
+  margin-top:20px;
+  border-radius:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
 }
-img{max-width:240px;border:1px solid #ccc;margin:10px}
-.btns button{margin:5px;background:#198754}
-.loader{text-align:center;margin-top:20px;font-size:18px;color:#555}
+.btns button{margin:5px}
 
-/* ===== طباعة ورقة بيانات (A4) ===== */
+/* ========== طباعة A4 ========== */
+@page{
+  size:A4;
+  margin:20mm;
+}
+@media print{
+  body{background:white}
+}
+
 .print-a4{
-  width:210mm;
-  min-height:297mm;
-  padding:20mm;
+  width:170mm;
 }
 .print-header{
   display:flex;
@@ -49,28 +50,28 @@ img{max-width:240px;border:1px solid #ccc;margin:10px}
   border-bottom:2px solid #000;
   padding-bottom:10px;
 }
-.print-header img{height:70px}
+.print-header img{height:60px}
 .print-title{
-  font-size:22px;
-  font-weight:bold;
-}
-.data-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:30px;
-}
-.data-table td{
-  border:1px solid #000;
-  padding:10px;
-  font-size:16px;
-}
-.data-table td.label{
-  background:#f1f1f1;
-  width:30%;
+  font-size:20px;
   font-weight:bold;
 }
 
-/* ===== ملصق الحقيبة (كبير) ===== */
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:25px;
+}
+.table td{
+  border:1px solid #000;
+  padding:8px;
+}
+.table .label{
+  width:35%;
+  font-weight:bold;
+  background:#f1f1f1;
+}
+
+/* ========== ملصق الحقيبة ========== */
 .sticker{
   width:100%;
   height:100%;
@@ -78,16 +79,12 @@ img{max-width:240px;border:1px solid #ccc;margin:10px}
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  font-weight:bold;
   text-align:center;
+  font-weight:bold;
 }
-.sticker .name{font-size:60px;margin-bottom:20px}
-.sticker .agency{font-size:40px;margin-bottom:15px}
-.sticker .phone{font-size:36px}
-
-@media print{
-  body{background:white}
-}
+.sticker .name{font-size:56px}
+.sticker .agency{font-size:38px;margin:15px 0}
+.sticker .phone{font-size:32px}
 </style>
 </head>
 
@@ -95,101 +92,101 @@ img{max-width:240px;border:1px solid #ccc;margin:10px}
 
 <h2>🔍 البحث عن المعتمر</h2>
 
-<div style="display:flex;gap:10px;justify-content:center">
-  <input id="phone" placeholder="أدخل رقم الهاتف">
-  <button onclick="search()">بحث</button>
-</div>
+<input id="phone" placeholder="أدخل رقم الهاتف">
+<button onclick="search()">بحث</button>
 
-<div id="loader" class="loader"></div>
 <div id="result"></div>
 
 <script>
+// 🔴 رابط Google Apps Script
 const webAppUrl =
 "https://script.google.com/macros/s/AKfycbxNQlPGbAZyLypzmxm9qqt5WJCA8uRCyTmtZBY8JIo01LLzB_HY1X4Odg2Cv_xcTKHmxQ/exec";
 
-const dhikr=[
- "أستغفر الله","سبحان الله","الحمد لله","لا إله إلا الله","اللهم صل على محمد"
-];
+// شعارات
+const logoAgency = "https://i.ibb.co/d8K117p/1766852254653.jpg";
+const logoPath = "https://i.ibb.co/bgc4Y7gr/1766852333847.png";
 
-let currentData=null;
+let data = null;
 
 function search(){
- const phone=document.getElementById("phone").value.trim();
- if(!phone)return alert("أدخل رقم الهاتف");
+  const phone = document.getElementById("phone").value.trim();
+  if(!phone) return alert("أدخل رقم الهاتف");
 
- const loader=document.getElementById("loader");
- let i=0;
- loader.innerText="⏳ جاري البحث...";
- const t=setInterval(()=>loader.innerText="⏳ جاري البحث... "+dhikr[i++%dhikr.length],1000);
+  fetch(webAppUrl+"?phone="+encodeURIComponent(phone))
+  .then(r=>r.json())
+  .then(d=>{
+    if(!d.found){
+      result.innerHTML="❌ لم يتم العثور على المعتمر";
+      return;
+    }
+    data=d;
 
- fetch(webAppUrl+"?phone="+encodeURIComponent(phone))
- .then(r=>r.json())
- .then(d=>{
-   clearInterval(t); loader.innerText="";
-   if(!d.found){result.innerHTML="❌ لم يتم العثور";return;}
-   currentData=d;
+    result.innerHTML=`
+    <div class="card">
+      <h3>${d.firstName} ${d.lastName}</h3>
+      <p>📞 الهاتف: ${d.phone}</p>
+      <p>🏢 الوكالة: ${d.agency}</p>
+      <p>🛏️ الغرفة: ${d.roomType}</p>
+      <p>💰 السعر: ${d.price || "-"}</p>
+      <p>📍 الولاية: ${d.wilaya}</p>
+      <p>🏬 الفرع: ${d.branch}</p>
+      <p>📅 تاريخ التسجيل: ${d.date || "-"}</p>
 
-   result.innerHTML=`
-   <div class="card">
-     <h3>${d.firstName} ${d.lastName}</h3>
-     <p>📞 الهاتف: ${d.phone}</p>
-     <p>🏢 الوكالة: ${d.agency}</p>
-     <p>🛏️ الغرفة: ${d.roomType}</p>
-     <p>💰 السعر: ${d.price}</p>
-     <p>📍 الولاية: ${d.wilaya}</p>
-     <p>🏬 الفرع: ${d.branch}</p>
-     <p>📅 تاريخ التسجيل: ${d.date}</p>
+      <p>🛂 التأشيرة: ${d.visaImage ? "تم إصدارها" : "لم يتم إصدارها بعد"}</p>
+      <p>🎫 التذكرة: ${d.ticketImage ? "تم إصدارها" : "لم يتم إصدارها بعد"}</p>
 
-     <p>🛂 التأشيرة: ${d.visaImage ? "تم إصدارها" : "لم يتم إصدارها بعد"}</p>
-     <p>🎫 التذكرة: ${d.ticketImage ? "تم إصدارها" : "لم يتم إصدارها بعد"}</p>
-
-     <div class="btns">
-       <button onclick="printData()">🖨️ طباعة ورقة البيانات</button>
-       <button onclick="printSticker()">🧳 طباعة ملصق الحقيبة</button>
-     </div>
-   </div>`;
- });
+      <div class="btns">
+        <button onclick="printData()">🖨️ طباعة بيانات المعتمر</button>
+        <button onclick="printSticker()">🧳 طباعة ملصق الحقيبة</button>
+      </div>
+    </div>`;
+  });
 }
 
+/* ===== طباعة ورقة البيانات ===== */
 function printData(){
- const d=currentData;
- openPrint(`
- <div class="print-a4">
-  <div class="print-header">
-    <img src="https://i.ibb.co/d8K117p/1766852254653.jpg">
-    <div class="print-title">استمارة بيانات معتمر</div>
-    <img src="https://i.ibb.co/bgc4Y7gr/1766852333847.png">
-  </div>
+  const d=data;
+  openPrint(`
+  <div class="print-a4">
+    <div class="print-header">
+      <img src="${logoAgency}">
+      <div class="print-title">استمارة بيانات معتمر</div>
+      <img src="${logoPath}">
+    </div>
 
-  <table class="data-table">
-    <tr><td class="label">الاسم</td><td>${d.firstName} ${d.lastName}</td></tr>
-    <tr><td class="label">الهاتف</td><td>${d.phone}</td></tr>
-    <tr><td class="label">الوكالة</td><td>${d.agency}</td></tr>
-    <tr><td class="label">الغرفة</td><td>${d.roomType}</td></tr>
-    <tr><td class="label">السعر</td><td>${d.price}</td></tr>
-    <tr><td class="label">الولاية</td><td>${d.wilaya}</td></tr>
-    <tr><td class="label">الفرع</td><td>${d.branch}</td></tr>
-    <tr><td class="label">تاريخ التسجيل</td><td>${d.date}</td></tr>
-  </table>
- </div>
- `);
+    <table class="table">
+      <tr><td class="label">الاسم الكامل</td><td>${d.firstName} ${d.lastName}</td></tr>
+      <tr><td class="label">رقم الهاتف</td><td>${d.phone}</td></tr>
+      <tr><td class="label">الوكالة</td><td>${d.agency}</td></tr>
+      <tr><td class="label">نوع الغرفة</td><td>${d.roomType}</td></tr>
+      <tr><td class="label">السعر</td><td>${d.price || "-"}</td></tr>
+      <tr><td class="label">الولاية</td><td>${d.wilaya}</td></tr>
+      <tr><td class="label">الفرع</td><td>${d.branch}</td></tr>
+      <tr><td class="label">تاريخ التسجيل</td><td>${d.date || "-"}</td></tr>
+      <tr><td class="label">التأشيرة</td><td>${d.visaImage ? "تم إصدارها" : "لم يتم إصدارها بعد"}</td></tr>
+      <tr><td class="label">التذكرة</td><td>${d.ticketImage ? "تم إصدارها" : "لم يتم إصدارها بعد"}</td></tr>
+    </table>
+  </div>
+  `);
 }
 
+/* ===== طباعة ملصق الحقيبة ===== */
 function printSticker(){
- const d=currentData;
- openPrint(`
- <div class="sticker">
-  <div class="name">${d.firstName} ${d.lastName}</div>
-  <div class="agency">${d.agency}</div>
-  <div class="phone">${d.phone}</div>
- </div>
- `);
+  const d=data;
+  openPrint(`
+    <div class="sticker">
+      <div class="name">${d.firstName} ${d.lastName}</div>
+      <div class="agency">${d.agency}</div>
+      <div class="phone">${d.phone}</div>
+    </div>
+  `);
 }
 
 function openPrint(html){
- const w=window.open("");
- w.document.write(`<html><head><meta charset="UTF-8"></head><body>${html}</body></html>`);
- w.document.close(); w.print();
+  const w=window.open("");
+  w.document.write(`<html><head><meta charset="UTF-8"></head><body>${html}</body></html>`);
+  w.document.close();
+  w.print();
 }
 </script>
 
