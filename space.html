@@ -42,7 +42,19 @@ button{
 }
 .btns button{margin:10px}
 
-/* ===== PRINT A4 ===== */
+/* ===== LOADER ===== */
+.loader{
+  margin-top:20px;
+  padding:20px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+  color:#0d6efd;
+  background:#f9f9f9;
+  border-radius:12px;
+}
+
+/* ===== PRINT ===== */
 @page{size:A4;margin:20mm}
 @media print{body{background:white}}
 
@@ -57,11 +69,11 @@ button{
   padding-bottom:12px;
 }
 .print-header img{
-  height:32px;        /* 🔥 نفس الحجم */
+  height:32px;
   width:auto;
 }
 .print-title{
-  font-size:40px;     /* 🔥 تكبير العنوان */
+  font-size:26px;
   font-weight:bold;
 }
 
@@ -70,7 +82,7 @@ button{
   width:100%;
   border-collapse:collapse;
   margin-top:40px;
-  font-size:35px;     /* 🔥 تكبير الكتابة */
+  font-size:28px;
 }
 .table td{
   border:1px solid #000;
@@ -94,9 +106,7 @@ button{
   justify-content:space-between;
   margin-bottom:30px;
 }
-.sticker-header img{
-  height:32px;        /* 🔥 نفس حجم شعارات الطباعة */
-}
+.sticker-header img{height:32px}
 .sticker .name{font-size:64px}
 .sticker .agency{font-size:44px;margin:20px 0}
 .sticker .phone{font-size:40px}
@@ -127,7 +137,7 @@ button{
   <div class="card">
     <h3 style="font-size:22px">🔍 البحث عن المعتمر</h3>
 
-    <!-- 🔒 صفر ثابت -->
+    <!-- صفر ثابت -->
     <input
       id="phone"
       type="tel"
@@ -139,6 +149,10 @@ button{
     >
 
     <button onclick="search()">بحث</button>
+
+    <!-- نافذة الانتظار -->
+    <div id="loader" class="loader" style="display:none"></div>
+
     <div id="result"></div>
   </div>
 </div>
@@ -148,11 +162,10 @@ button{
 const webAppUrl =
 "https://script.google.com/macros/s/AKfycbxNQlPGbAZyLypzmxm9qqt5WJCA8uRCyTmtZBY8JIo01LLzB_HY1X4Odg2Cv_xcTKHmxQ/exec";
 
-/* الشعار الرئيسي */
+/* الشعارات */
 const mainLogo =
 "https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
 
-/* شعارات الوكالات */
 function getAgencyLogo(name=""){
   name=name.replace(/\s+/g,"");
   if(name.includes("تقرت")) return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
@@ -164,13 +177,19 @@ function getAgencyLogo(name=""){
 let data=null;
 
 /* ===== أدوات ===== */
-function normalizePhone(p){return p.replace(/\D/g,"");}
-
 function fixZero(input){
   input.value=input.value.replace(/[^0-9]/g,"");
   if(!input.value.startsWith("0")) input.value="0";
 }
 
+/* 🔥 تنظيف الرقم + فرض الصفر */
+function preparePhone(raw){
+  let p = raw.replace(/\D/g,""); // حذف الفراغات وكل شيء غير رقم
+  if(!p.startsWith("0")) p = "0"+p;
+  return p;
+}
+
+/* ===== حالة التأشيرة ===== */
 function statusBlock(url){
   if(url){
     return `<span class="status-ok">تم إصدارها</span>
@@ -179,19 +198,44 @@ function statusBlock(url){
   return `<span class="status-no">لم يتم إصدارها بعد</span>`;
 }
 
+/* ===== الذكر ===== */
+const adhkar=[
+  "أستغفر الله",
+  "سبحان الله",
+  "الحمد لله",
+  "لا إله إلا الله",
+  "اللهم صل على محمد"
+];
+let dhikrTimer=null;
+
 /* ===== البحث ===== */
 function search(){
  const raw=document.getElementById("phone").value;
- const phone=normalizePhone(raw);
+ const phone=preparePhone(raw);
 
  if(phone.length<10){
    alert("يرجى إدخال رقم هاتف كامل");
    return;
  }
 
+ const loader=document.getElementById("loader");
+ const result=document.getElementById("result");
+
+ // إظهار نافذة الانتظار
+ result.innerHTML="";
+ loader.style.display="block";
+ let i=0;
+ loader.innerText="⏳ "+adhkar[0];
+ dhikrTimer=setInterval(()=>{
+   loader.innerText="⏳ "+adhkar[i++%adhkar.length];
+ },1000);
+
  fetch(webAppUrl+"?phone="+phone)
  .then(r=>r.json())
  .then(d=>{
+  clearInterval(dhikrTimer);
+  loader.style.display="none";
+
   if(!d.found){
     result.innerHTML="❌ لم يتم العثور على المعتمر";
     return;
@@ -214,7 +258,7 @@ function search(){
  });
 }
 
-/* ===== طباعة ورقة المعلومات ===== */
+/* ===== طباعة ===== */
 function printData(){
  const d=data;
  openPrint(`
@@ -236,7 +280,6 @@ function printData(){
  `);
 }
 
-/* ===== ملصق الحقيبة ===== */
 function printSticker(){
  const d=data;
  openPrint(`
