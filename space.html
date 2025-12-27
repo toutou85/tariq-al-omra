@@ -113,10 +113,10 @@ button{
 
 .logos img{
   width:20px;          /* الحجم الأساسي للشعارات */
-  max-width:100%;
+  max-width:10%;
   height:auto;
   object-fit:contain;
-  filter: drop-shadow(0 3px 6px rgba(0,0,0,.4));
+  filter: drop-shadow(0 3px 2px rgba(0,0,0,.4));
   transition: all .3s ease;
 }
 
@@ -155,7 +155,7 @@ button{
     <input
       id="phone"
       type="tel"
-      placeholder="أدخل رقم الهاتف بدون صفر"
+      placeholder="أدخل رقم الهاتف "
       maxlength="10"
       onfocus="fixZero(this)"
       oninput="fixZero(this)"
@@ -261,7 +261,7 @@ function openPrint(html){
 function printData(){
   if(!data) return;
   openPrint(`
-  <div class="print-a4">
+  <div class="print-a3">
     <div class="print-header">
       <img src="${mainLogo}">
       <div class="print-title">استمارة معتمر</div>
