@@ -1,489 +1,173 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>حجز رحلة مع وكالة تقرت للسياحة و سفر</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      background: url('https://i.postimg.cc/JhKnMv57/FB-IMG-1753464094985.jpg') no-repeat center center fixed;
-      background-size: cover;            /* تغطية كاملة للشاشة */
-      background-position: center;
-      background-repeat: no-repeat;
-      margin: 0;
-      padding: 0;
-      font-family: 'Tahoma', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .container {
-      background: rgba(255, 255, 255, 0.85); /* شفافية متوسطة */
-      backdrop-filter: blur(5px);
-      max-width: 450px;
-      width: 90%;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      padding: 20px;
-    }
-    .step {
-      display: none;
-    }
-    .step.active {
-      display: block;
-    }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فضاء المعتمر</title>
+<style>
+  body {
+    font-family: 'Tahoma', sans-serif;
+    background: linear-gradient(120deg, #e0eafc, #cfdef3);
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    max-width: 750px;
+    margin: auto;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+  .container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+  }
+  h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+  input {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+  input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,123,255,0.5);
+  }
+  button {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  button:hover {
+    opacity: 0.9;
+  }
+  .search-btn { background: #007bff; color: #fff; }
+  .action-btns button { margin-bottom: 10px; background: #28a745; color: white; }
+  .data-field {
+    margin: 8px 0;
+    padding: 10px 12px;
+    background: #f9f9f9;
+    border-left: 5px solid #007bff;
+    border-radius: 8px;
+  }
+  #result h3 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 15px;
+  }
+
+  /* تنسيق الطباعة */
+  @media print {
+    body { background: #fff; }
+    .container { box-shadow: none; }
+    .action-btns, input, button, #searchPhone { display: none; }
+    #result h3 { text-align: center; }
+    .data-field {
+      border-left: none;
+      border-top: 2px solid #007bff;
+      padding: 8px;
       font-size: 1rem;
     }
-    h2 {
+    #print-header {
+      display: block;
       text-align: center;
-      color: #222; /* لون غامق وواضح */
-      font-size: 1.5rem;
       margin-bottom: 20px;
-      background-color: rgba(255, 255, 255, 0.4); /* لون خلفي نصف شفاف */
-      backdrop-filter: blur(4px); /* ضبابة */
-      border-radius: 8px;
-      padding: 10px;
     }
-    label {
-      display: block;
-      font-weight: bold;
-      color: #222;
-      background: rgba(255, 255, 255, 0.6); /* خلفية شفافة */
-      backdrop-filter: blur(4px);           /* تأثير الضبابة */
-      padding: 5px 10px;
-      border-radius: 6px;
-      margin-top: 15px;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #007bff;
-      color: white;
-      font-size: 1rem;
-      margin-top: 10px;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    .remove-companion-btn {
-      background: red;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-      margin-top: 5px;
-    }
-    #message, #passportChoice {
-      text-align: center;
-      padding: 20px;
-    }
-    /* تحسين العرض على الشاشات الصغيرة */
-    @media (max-width: 480px) {
-      .container {
-        padding: 15px;
-      }
-      h2 {
-        font-size: 1.3rem;
-      }
-      input, select, button {
-        font-size: 0.95rem;
-        padding: 10px;
-      }
-    }
-    .popup-box {
-      display: none; /* تظهر عند الحاجة فقط */
-      text-align: center;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.9); /* خلفية بيضاء شبه شفافة */
-      margin: 30px auto;
-      max-width: 500px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(6px); /* تأثير الضباب */
-      color: #222; /* لون نص واضح */
-      font-size: 18px;
-      position: relative;
-      z-index: 1000;
-    }
-    .popup-box h3 {
-      font-size: 22px;
-      font-weight: bold;
-      color: #111;
-      margin-bottom: 15px;
-      background: rgba(255, 255, 255, 0.6);
-      padding: 12px;
-      border-radius: 10px;
-      backdrop-filter: blur(3px);
-    }
-    .popup-box p {
-      font-size: 17px;
-      color: #444;
-      margin: 10px 0;
-    }
-    .popup-box button {
-      margin: 8px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background-color: #007bff;
-      color: white;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .popup-box button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+    #print-header img { max-width: 200px; }
+    #print-header h4 { margin-top: 10px; color: #007bff; }
+  }
+
+  #print-header { display: none; }
+</style>
 </head>
 <body>
 
-<form id="umrahForm">
-  <!-- الخطوة 0: معلومات العرض -->
-  <div class="step active" id="step0">
-    <h2>معلومات العرض</h2>
-    <div class="form-group">
-      <label for="agencyDisplay">اسم الوكالة</label>
-      <input type="text" id="agencyDisplay" disabled />
-      <input type="hidden" id="agencyName" name="agencyName" />
-    </div>
-    <div class="form-group">
-      <label for="offerNumber">رقم العرض</label>
-      <input type="text" id="offerNumber" name="offerNumber" readonly />
-    </div>
-    <div class="buttons">
-      <button type="button" onclick="nextStep()">التالي</button>
-    </div>
-  </div>
+<div class="container">
+  <h2>فضاء المعتمر</h2>
+  <p>أدخل رقم هاتفك دون صفر (0) المسجل للحصول على معلوماتك:</p>
+  <input type="tel" id="searchPhone" placeholder="رقم الهاتف">
+  <button class="search-btn" onclick="search()">🔍 بحث</button>
 
-  <!-- الخطوة 1: معلومات الزبون -->
-  <div class="step" id="step1">
-    <h2>معلومات الزبون</h2>
-    <label for="firstName">الاسم:</label>  
-    <input type="text" id="firstName" name="firstName" required>  
-    <label for="lastName">اللقب:</label>  
-    <input type="text" id="lastName" name="lastName" required>  
-    <label for="phone">رقم الهاتف:</label>  
-    <input type="tel" id="phone" name="phone" required>  
-   
-    <div class="buttons">
-      <button type="button" onclick="prevStep()">السابق</button>
-      <button type="button" onclick="nextStep()">التالي</button>
-    </div>
-  </div>
-
-  <!-- الخطوة 2: الولاية والفرع -->
-  <div class="step" id="step2">
-    <h2>اختيار الولاية والفرع</h2>
-  <label for="wilaya">الولاية:</label>
-  <select id="wilaya" name="wilaya" required></select>
-
-  <label for="branch">الفرع الأقرب:</label>
-  <select id="branch" name="branch" required>
-    <option value="" disabled selected>اختر الفرع</option>
-  </select>
-
-  <div class="buttons">
-    <button type="button" onclick="prevStep()">السابق</button>
-    <button type="button" onclick="nextStep()">التالي</button>
-  </div>
+  <div id="result"></div>
 </div>
 
-
-  <!-- الخطوة 3: المرافقون -->
-  <div class="step" id="step3">
-    <h2>المرافقون</h2>
-    <label for="roomType">نوع الغرفة:</label>
-    <select id="roomType" name="roomType" required>
-      <option value="" disabled selected>اختر نوع الغرفة</option>
-      <option value="غرفة ثنائية">غرفة ثنائية</option>
-      <option value="غرفة ثلاثية">غرفة ثلاثية</option>
-      <option value="غرفة رباعية">غرفة رباعية</option>
-      <option value="غرفة خماسية">غرفة خماسية</option>
-      <option value="غرفة جماعية">غرفة جماعية</option>
-    </select>
-    <label for="reservationType">صفة الحجز:</label>
-    <select id="reservationType" name="reservationType" required onchange="toggleCompanionSection()">
-      <option value="" disabled selected>اختر صفة الحجز</option>
-      <option value="منفرد">منفرد</option>
-      <option value="مع صديق">مع صديق</option>
-      <option value="مع الأسرة">مع الأسرة</option>
-    </select>
-    <!-- قسم المرافقين -->
-    <div id="companionsSection" style="display: none;">
-      <div id="companionsContainer"></div>
-      <button type="button" onclick="addCompanion()">➕ إضافة مرافق</button>
-    </div>
-    <div class="buttons">
-      <button type="button" onclick="prevStep()">السابق</button>
-      <button type="button" onclick="nextStep()">التالي</button>
-    </div>
-  </div>
-
-  <!-- الخطوة 4: الشروط -->
-  <div class="step" id="step4">
-    <h2>الشروط والأحكام</h2>
-    <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
-      <div class="confirmation-message" style="margin-top: 30px; padding: 20px; border: 1px solid #ccc; border-radius: 12px; background-color: #f9f9f9;">
-        <p>✨ <strong>طريق العمرة</strong> هي منصة جزائرية لتسهيل استكشاف عروض العمرة والتسجيل الأولي بدون دفع إلكتروني.</p>
-        <p>📍 هذا المشروع من إنجاز <strong>طه برقيقة</strong>، مرافق معتمد لدى وكالة <strong>تقرت للسياحة والسفر</strong>.</p>
-        <p>🕌 التسجيل الإلكتروني مجاني، ويتم تأكيد الحجز فقط عند التوجه إلى الفرع المعتمد ودفع المستحقات.</p>
-        <p style="color: red; font-weight: bold;">
-          ⚠️ تنبيه: يبقى تسجيلكم شكليًا إلى حين دفع مستحقات الرحلة في مقر الوكالة، ثم يتم تأكيد الحجز نهائيًا.
-          يرجى قراءة الشروط بعناية قبل الإرسال...
-        </p>
-
-      </div>
-    </div>
-    <label>
-      <input type="checkbox" id="agree" required> أوافق على الشروط والأحكام
-    </label>
-    <div class="buttons">
-      <button type="button" onclick="prevStep()">السابق</button>
-      <button type="submit">إرسال</button>
-    </div>
-  </div>
-</form>
-
-<!-- نافذة الانتظار -->
-<div id="message" class="popup-box">
-  <h3>⏳ الرجاء الانتظار <span id="countdown">10</span> ثواني...</h3>
-  <p>✨ لا تنسَ الاستغفار أثناء الانتظار ✨</p>
-</div>
-
-<!-- نافذة اختيار تحميل جواز السفر -->
-<div id="passportChoice" class="popup-box">
-  <h3>📄 هل ترغب في تحميل صور جواز السفر الآن؟</h3>
-  <button onclick="location.href='upload.html'">📤 نعم، أريد تحميل الصور</button>
-  <button onclick="location.href='index.html'">⏭️ لا، سأحملها لاحقًا</button>
-
-<div class="buttons">
-  <button type="button" onclick="goToSpace()">🧾  فضاء المعتمر</button>
-
+<!-- رأس للطباعة يحتوي على شعار وأسعار -->
+<div id="print-header">
+  <img src="https://i.postimg.cc/JhKnMv57/FB-IMG-1753464094985.jpg" alt="شعار الوكالة">
+  <h4>أسعار الرحلات:</h4>
+  <p>🛫 ثنائية: 22 مليون | ثلاثية: 14 مليون | رباعية: حسب الطلب | جماعية: حسب العرض</p>
 </div>
 
 <script>
-  let currentStep = 0;
-  const steps = document.querySelectorAll('.step');
+function search() {
+  const phone = document.getElementById("searchPhone").value.trim();
+  if (!phone) { alert("يرجى إدخال رقم الهاتف"); return; }
 
-  function showStep(index) {
-    steps.forEach((step, i) => step.classList.toggle('active', i === index));
-  }
+  const url = `https://script.google.com/macros/s/AKfycbxvjpJyMB0S-S9c-91LWV4HZce0zcXK-bzZt-g953Qv7dyELMOWMw0YhGBPjzXbNfL8Vw/exec?phone=${phone}`;
 
-  function nextStep() {
-    const inputs = steps[currentStep].querySelectorAll('input, select');
-    for (let input of inputs) {
-      if (input.required && !input.value) {
-        alert('يرجى ملء جميع الحقول');
-        return;
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "";
+      if (data.found) {
+        const visaText = data.visaStatus ? `✅ ${data.visaStatus}` : "⏳ في انتظار صدور التأشيرة";
+        const ticketText = data.ticketStatus ? `✅ ${data.ticketStatus}` : "⏳ في انتظار صدور التذكرة";
+
+        resultDiv.innerHTML = `
+          <h3>بياناتك:</h3>
+          <div class="data-field">رقم العرض: ${data.offerNumber}</div>
+          <div class="data-field">اسم الوكالة: ${data.agency}</div>
+          <div class="data-field">نوع الغرفة: ${data.roomType}</div>
+          <div class="data-field">السعر: ${data.price}</div>
+          <div class="data-field">صفة الحجز: ${data.reservationType}</div>
+          <div class="data-field">الولاية: ${data.wilaya}</div>
+          <div class="data-field">الفرع: ${data.branch}</div>
+          <div class="data-field">الاسم: ${data.firstName} ${data.lastName}</div>
+          <div class="data-field">الهاتف: ${data.phone}</div>
+          <div class="data-field">البريد: ${data.email}</div>
+          <div class="data-field">العمر: ${data.age}</div>
+          <div class="data-field">تاريخ انتهاء الجواز: ${data.passportExpiry}</div>
+          <div class="data-field">المرافقون: ${data.companions || "لا يوجد"}</div>
+          <div class="data-field">تاريخ التسجيل: ${data.date}</div>
+          <div class="data-field">التأشيرة: ${visaText}</div>
+          <div class="data-field">التذكرة: ${ticketText}</div>
+          <div class="action-btns">
+            <button onclick="window.print()">🖨️ طباعة بياناتك</button>
+            <button onclick="requestVisa()">📄 طلب تأشيرة</button>
+            <button onclick="requestTicket()">✈️ طلب تذكرة</button>
+            <button onclick="sendInquiry()">❓ استفسار</button>
+          </div>
+        `;
+      } else {
+        resultDiv.innerHTML = "<p>لم يتم العثور على بياناتك.</p>";
       }
-    }
-    if (currentStep < steps.length - 1) {
-      steps[currentStep].classList.remove('active');
-      currentStep++;
-      showStep(currentStep);
-    }
-  }
-
-  function prevStep() {
-    if (currentStep > 0) {
-      steps[currentStep].classList.remove('active');
-      currentStep--;
-      showStep(currentStep);
-    }
-  }
-
-  // بدء العرض عند الخطوة الأولى
-  window.addEventListener("DOMContentLoaded", () => {
-    showStep(currentStep);
-
-    const params = new URLSearchParams(window.location.search);
-    const agencyParam = params.get("agency");
-    const offerID = params.get("offerID");
-
-    if (agencyParam) {
-      document.getElementById("agencyDisplay").value = agencyParam;
-      document.getElementById("agencyName").value = agencyParam;
-      updateBranches();
-    }
-    if (offerID) {
-      document.getElementById("offerNumber").value = offerID;
-    }
-
-    // ملء قائمة الولايات
-    const wilayas = ["أدرار", "الشلف", "الأغواط", "أم البواقي", "باتنة", "بجاية", "بسكرة", "بشار", "البليدة", "البويرة", "تمنراست", "تبسة", "تلمسان", "تيارت", "تيزي وزو", "الجزائر", "الجلفة", "جيجل", "سطيف", "سعيدة", "سكيكدة", "سيدي بلعباس", "عنابة", "قالمة", "قسنطينة", "المدية", "مستغانم", "المسيلة", "معسكر", "ورقلة", "وهران", "البيض", "إليزي", "برج بوعريريج", "بومرداس", "الطارف", "تندوف", "تيسمسيلت", "الوادي", "خنشلة", "سوق أهراس", "تيبازة", "ميلة", "عين الدفلى", "النعامة", "عين تموشنت", "غرداية", "غليزان", "تميمون", "برج باجي مختار", "أولاد جلال", "بني عباس", "عين صالح", "عين قزام", "تقرت", "جانت", "المغير", "المنيعة"];
-    const wilayaSelect = document.getElementById("wilaya");
-    wilayas.forEach(w => {
-      let opt = document.createElement("option");
-      opt.value = w;
-      opt.textContent = w;
-      wilayaSelect.appendChild(opt);
-    });
-  });
-
-const agencyBranches = {
-
-  "وكالة تقرت للسياحة و السفر": [
-    "تقرت",
-    "الجزائر العاصمة (خميس الخشنة)",
-    "بومرداس",
-    "العلمة",
-    "المغير",
-    "الجلفة",
-    "المدية",
-    "مستغانم",
-    "بشار",
-    "الشلف",
-    "عنابة",
-    "تمنراست",
-    "وهران"
-  ],
-
-  "وكالة السقيفة للسياحة و السفر": [
-    "قسنطينة",
-    "جيجل",
-    "سكيكدة",
-    "سوق أهراس",
-    "ميلة",
-    "عنابة"
-  ],
-
-  "وكالة الأنسية للسياحة و السفر": [
-    "مستغانم",
-    "عنابة"
-   
-  ]
-
-};
-
-  function updateBranches() {
-  const branchSelect = document.getElementById("branch");
-  branchSelect.innerHTML = '<option value="" disabled selected>اختر الفرع</option>';
-  const selectedAgency = document.getElementById("agencyDisplay").value.trim();
-
-  for (let key in agencyBranches) {
-    if (key.replace(/\s+/g, "") === selectedAgency.replace(/\s+/g, "")) {
-      agencyBranches[key].forEach(branch => {
-        let opt = document.createElement("option");
-        opt.value = branch;
-        opt.textContent = branch;
-        branchSelect.appendChild(opt);
-      });
-    }
-  }
-}
-
-  // مرافقون
-  let companionCount = 0;
-  function addCompanion() {
-    companionCount++;
-    const container = document.getElementById("companionsContainer");
-    const div = document.createElement("div");
-    div.innerHTML = `
-      <fieldset style="margin:10px 0; padding:10px; border:1px solid #ccc;">
-        <legend>المرافق ${companionCount}</legend>
-        <label>الصفة:</label>
-        <select name="companionRelation${companionCount}" required>
-          <option value="">اختر</option>
-          <option value="زوجة">زوجة</option>
-          <option value="ابن">ابن</option>
-          <option value="ابنة">ابنة</option>
-          <option value="أخ">أخ</option>
-          <option value="أخت">أخت</option>
-          <option value="أم">أم</option>
-          <option value="أب">أب</option>
-        </select>
-        <label>الاسم الكامل:</label>
-        <input type="text" name="companionName${companionCount}" required>
-        <label>تاريخ الميلاد:</label>
-        <input type="date" name="companionBirth${companionCount}" required>
-        <label>تاريخ انتهاء الجواز:</label>
-        <input type="date" name="companionPassport${companionCount}" required>
-        <button type="button" class="remove-companion-btn" onclick="this.parentElement.remove()">🗑️ إزالة</button>
-      </fieldset>
-    `;
-    container.appendChild(div);
-  }
-
-  function toggleCompanionSection() {
-    const type = document.getElementById("reservationType").value;
-    const companionsDiv = document.getElementById("companionsSection");
-    companionsDiv.style.display = (type === "منفرد") ? "none" : "block";
-  }
-
-  // إرسال النموذج
-  document.getElementById("umrahForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-
-    // بيانات المرافقين
-    const companions = [];
-    document.querySelectorAll("#companionsContainer fieldset").forEach((fieldset, i) => {
-      const relation = fieldset.querySelector(`select[name="companionRelation${i+1}"]`)?.value || "";
-      const name = fieldset.querySelector(`input[name="companionName${i+1}"]`)?.value || "";
-      const birth = fieldset.querySelector(`input[name="companionBirth${i+1}"]`)?.value || "";
-      const passport = fieldset.querySelector(`input[name="companionPassport${i+1}"]`)?.value || "";
-      if (name) companions.push(`${relation}: ${name} - ميلاد: ${birth} - انتهاء جواز: ${passport}`);
-    });
-    formData.append("companions", companions.join(" | "));
-
-    document.getElementById("message").style.display = "block";
-    form.style.display = "none";
-
-    fetch("https://script.google.com/macros/s/AKfycbwzPE5BMBiOx5x9RNzFozijomTvUcgAzaWTo39Pc7e8Zb7ZU7Zq6Df3k6iWC0oz5O7lyg/exec", {
-      method: "POST",
-      body: formData
-    })
-    .then(res => res.text())
-    .then(res => {
-      let counter = 10;
-      const countdownElem = document.getElementById("countdown");
-      const interval = setInterval(() => {
-        counter--;
-        countdownElem.textContent = counter;
-        if (counter === 0) {
-          clearInterval(interval);
-          alert("✅ تم إرسال طلبك بنجاح!");
-          document.getElementById("message").style.display = "none";
-          document.getElementById("passportChoice").style.display = "block";
-        }
-      }, 1000);
     })
     .catch(err => {
-      alert("❌ حدث خطأ: " + err.message);
-      form.style.display = "block";
-      document.getElementById("message").style.display = "none";
+      alert("حدث خطأ: " + err.message);
     });
-  });
-function goToSpace() {
-  // التوجيه مباشرة لصفحة Space.html
-  window.location.href = "Space.html";
 }
-</script>
 
+function requestVisa() { alert("سيتم تحويلك إلى صفحة طلب التأشيرة"); }
+function requestTicket() { alert("سيتم تحويلك إلى صفحة طلب التذكرة"); }
+function sendInquiry() { alert("سيتم فتح نافذة إرسال الاستفسار"); }
+</script>
 
 </body>
 </html>
