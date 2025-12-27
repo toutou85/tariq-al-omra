@@ -3,107 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>عرض بيانات المعتمر</title>
+<title>فضاء المعتمر</title>
+
 <style>
-  body { font-family: 'Tahoma', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
-  h2 { color: #333; }
-  input, button { padding: 10px; margin: 5px 0; font-size: 16px; }
-  .card { background: #fff; padding: 20px; margin-top: 20px; border-radius: 10px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
-  .card h3 { margin-top: 0; }
-  .card p { margin: 5px 0; }
-  img { max-width: 200px; display: block; margin: 10px 0; border-radius: 5px; }
-  .btns { margin-top: 15px; }
-  button.printBtn { background: #007BFF; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
-  button.printBtn:hover { background: #0056b3; }
+body{
+  font-family: Tahoma, Arial;
+  background:#f2f4f8;
+  padding:20px;
+}
+input,button{
+  padding:10px;
+  font-size:16px;
+}
+.card{
+  background:#fff;
+  margin-top:20px;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+img{
+  max-width:260px;
+  margin:10px 0;
+  border:1px solid #ccc;
+}
+.btns button{
+  margin:5px;
+  background:#0d6efd;
+  color:#fff;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
 </style>
 </head>
+
 <body>
 
-<h2>ابحث عن بيانات المعتمر</h2>
-<input type="text" id="phoneInput" placeholder="أدخل رقم الهاتف">
+<h2>🔍 البحث عن المعتمر</h2>
+<input id="phone" placeholder="أدخل رقم الهاتف">
 <button onclick="search()">بحث</button>
 
 <div id="result"></div>
 
 <script>
-const webAppUrl = "https://script.google.com/macros/s/AKfycbxq1F9x3qn0eH4w00P3DXz3pGg66nuAnr0rLYe65k0JT2dIf6D3E9i0Jm49IMUBCtktOQ/exec";
+const webAppUrl =
+"https://script.google.com/macros/s/AKfycbyCK1clmMlObIIwQTVbXzey-YkT3T18v-ARdqOYw-uQvBhPXN5of-7sBSQDwmy6LDP9ZA/exec";
 
-function search() {
-  const phone = document.getElementById("phoneInput").value.trim();
-  if (!phone) { alert("يرجى إدخال رقم الهاتف"); return; }
+function search(){
+  const phone = document.getElementById("phone").value.trim();
+  if(!phone){ alert("أدخل رقم الهاتف"); return; }
 
-  fetch(`${webAppUrl}?phone=${phone}`)
-    .then(res => res.json())
-    .then(data => {
-      const container = document.getElementById("result");
-      container.innerHTML = "";
+  fetch(webAppUrl + "?phone=" + phone)
+  .then(r=>r.json())
+  .then(d=>{
+    const box=document.getElementById("result");
+    box.innerHTML="";
 
-      if (data.found) {
-        const div = document.createElement("div");
-        div.className = "card";
-        div.id = "cardContent";
-        div.innerHTML = `
-          <h3>الاسم: ${data.firstName} ${data.lastName}</h3>
-          <p>الهاتف: ${data.phone}</p>
-          <p>البريد: ${data.email}</p>
-          <p>العرض: ${data.offerNumber} | الوكالة: ${data.agency}</p>
-          <p>نوع الغرفة: ${data.roomType} | السعر: ${data.price}</p>
-          <p>نوع الحجز: ${data.reservationType} | الولاية: ${data.wilaya} | الفرع: ${data.branch}</p>
-          <p>تاريخ انتهاء جواز السفر: ${data.passportExpiry}</p>
-          <p>المرافقين: ${data.companions}</p>
-          <p>تاريخ الحجز: ${data.date}</p>
-          <hr>
-          <p>التأشيرة:</p>
-          <img src="${data.visaLink}" alt="صورة التأشيرة">
-          <p>التذكرة:</p>
-          <img src="${data.ticketLink}" alt="صورة التذكرة">
-          <div class="btns">
-            <button class="printBtn" onclick="printInfo()">طباعة المعلومات فقط</button>
-            <button class="printBtn" onclick="printImages()">طباعة الصور فقط</button>
-          </div>
-        `;
-        container.appendChild(div);
-      } else {
-        container.textContent = "لم يتم العثور على المعتمر بهذا الرقم.";
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      alert("حدث خطأ في جلب البيانات");
-    });
+    if(!d.found){
+      box.innerHTML="<p>❌ لم يتم العثور على المعتمر</p>";
+      return;
+    }
+
+    box.innerHTML=`
+    <div class="card" id="printArea">
+      <h3>${d.firstName} ${d.lastName}</h3>
+      <p>📞 ${d.phone}</p>
+      <p>📧 ${d.email}</p>
+      <p>🏢 ${d.agency}</p>
+      <p>🛏️ ${d.roomType} | 💰 ${d.price}</p>
+
+      <hr>
+
+      <h4>🛂 التأشيرة</h4>
+      <img src="${d.visaLink}" onerror="this.style.display='none'">
+
+      <h4>🎫 التذكرة</h4>
+      <img src="${d.ticketLink}" onerror="this.style.display='none'">
+
+      <div class="btns">
+        <button onclick="printText()">🖨️ طباعة المعلومات</button>
+        <button onclick="printImages()">🖼️ طباعة الصور</button>
+      </div>
+    </div>`;
+  });
 }
 
-// طباعة المعلومات النصية فقط
-function printInfo() {
-  const card = document.getElementById("cardContent");
-  if (!card) return;
-  const clone = card.cloneNode(true);
-  // إزالة الصور
-  clone.querySelectorAll("img").forEach(img => img.remove());
-  clone.querySelector(".btns").remove();
-
-  const printWindow = window.open('', '', 'height=600,width=800');
-  printWindow.document.write('<html><head><title>طباعة المعلومات</title></head><body>');
-  printWindow.document.write(clone.innerHTML);
-  printWindow.document.write('</body></html>');
-  printWindow.document.close();
-  printWindow.print();
+function printText(){
+  const area=document.getElementById("printArea").cloneNode(true);
+  area.querySelectorAll("img,.btns").forEach(e=>e.remove());
+  openPrint(area.innerHTML);
 }
 
-// طباعة الصور فقط
-function printImages() {
-  const card = document.getElementById("cardContent");
-  if (!card) return;
-  const clone = card.cloneNode(true);
-  // إزالة النصوص ما عدا الصور
-  clone.querySelectorAll("p,h3,hr,.btns").forEach(el => el.remove());
+function printImages(){
+  const area=document.getElementById("printArea").cloneNode(true);
+  area.querySelectorAll("p,h3,h4,.btns").forEach(e=>e.remove());
+  openPrint(area.innerHTML);
+}
 
-  const printWindow = window.open('', '', 'height=600,width=800');
-  printWindow.document.write('<html><head><title>طباعة الصور</title></head><body>');
-  printWindow.document.write(clone.innerHTML);
-  printWindow.document.write('</body></html>');
-  printWindow.document.close();
-  printWindow.print();
+function openPrint(html){
+  const w=window.open("","_blank");
+  w.document.write("<html><body>"+html+"</body></html>");
+  w.document.close();
+  w.print();
 }
 </script>
 
