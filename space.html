@@ -15,6 +15,9 @@ input,button{
   padding:10px;
   font-size:16px;
 }
+button{
+  cursor:pointer;
+}
 .card{
   background:#fff;
   margin-top:20px;
@@ -33,7 +36,6 @@ img{
   color:#fff;
   border:none;
   border-radius:5px;
-  cursor:pointer;
 }
 </style>
 </head>
@@ -41,69 +43,91 @@ img{
 <body>
 
 <h2>🔍 البحث عن المعتمر</h2>
+
 <input id="phone" placeholder="أدخل رقم الهاتف">
 <button onclick="search()">بحث</button>
 
 <div id="result"></div>
 
 <script>
+// 🔴 ضع رابط Web App الصحيح هنا
 const webAppUrl =
-"https://script.google.com/macros/s/AKfycbyCK1clmMlObIIwQTVbXzey-YkT3T18v-ARdqOYw-uQvBhPXN5of-7sBSQDwmy6LDP9ZA/exec";
+"https://script.google.com/macros/s/AKfycbxNQlPGbAZyLypzmxm9qqt5WJCA8uRCyTmtZBY8JIo01LLzB_HY1X4Odg2Cv_xcTKHmxQ/exec";
 
 function search(){
   const phone = document.getElementById("phone").value.trim();
-  if(!phone){ alert("أدخل رقم الهاتف"); return; }
+  if(!phone){
+    alert("يرجى إدخال رقم الهاتف");
+    return;
+  }
 
-  fetch(webAppUrl + "?phone=" + phone)
-  .then(r=>r.json())
-  .then(d=>{
-    const box=document.getElementById("result");
-    box.innerHTML="";
+  fetch(webAppUrl + "?phone=" + encodeURIComponent(phone))
+  .then(r => r.json())
+  .then(d => {
+    const box = document.getElementById("result");
+    box.innerHTML = "";
 
     if(!d.found){
-      box.innerHTML="<p>❌ لم يتم العثور على المعتمر</p>";
+      box.innerHTML = "<p>❌ لم يتم العثور على المعتمر</p>";
       return;
     }
 
-    box.innerHTML=`
+    box.innerHTML = `
     <div class="card" id="printArea">
       <h3>${d.firstName} ${d.lastName}</h3>
-      <p>📞 ${d.phone}</p>
-      <p>📧 ${d.email}</p>
-      <p>🏢 ${d.agency}</p>
-      <p>🛏️ ${d.roomType} | 💰 ${d.price}</p>
+
+      <p>📞 الهاتف: ${d.phone}</p>
+      <p>📧 البريد: ${d.email || "-"}</p>
+      <p>🏢 الوكالة: ${d.agency}</p>
+      <p>🛏️ الغرفة: ${d.roomType}</p>
+      <p>💰 السعر: ${d.price}</p>
+      <p>📍 الولاية: ${d.wilaya}</p>
+      <p>🏬 الفرع: ${d.branch}</p>
+      <p>📅 تاريخ التسجيل: ${d.date}</p>
 
       <hr>
 
       <h4>🛂 التأشيرة</h4>
-      <img src="${d.visaLink}" onerror="this.style.display='none'">
+      <img src="${d.visaImage}" onerror="this.style.display='none'">
 
       <h4>🎫 التذكرة</h4>
-      <img src="${d.ticketLink}" onerror="this.style.display='none'">
+      <img src="${d.ticketImage}" onerror="this.style.display='none'">
 
       <div class="btns">
         <button onclick="printText()">🖨️ طباعة المعلومات</button>
         <button onclick="printImages()">🖼️ طباعة الصور</button>
       </div>
     </div>`;
+  })
+  .catch(() => {
+    document.getElementById("result").innerHTML =
+      "<p>⚠️ خطأ في الاتصال بالخادم</p>";
   });
 }
 
 function printText(){
-  const area=document.getElementById("printArea").cloneNode(true);
-  area.querySelectorAll("img,.btns").forEach(e=>e.remove());
+  const area = document.getElementById("printArea").cloneNode(true);
+  area.querySelectorAll("img,.btns").forEach(e => e.remove());
   openPrint(area.innerHTML);
 }
 
 function printImages(){
-  const area=document.getElementById("printArea").cloneNode(true);
-  area.querySelectorAll("p,h3,h4,.btns").forEach(e=>e.remove());
+  const area = document.getElementById("printArea").cloneNode(true);
+  area.querySelectorAll("p,h3,h4,.btns").forEach(e => e.remove());
   openPrint(area.innerHTML);
 }
 
 function openPrint(html){
-  const w=window.open("","_blank");
-  w.document.write("<html><body>"+html+"</body></html>");
+  const w = window.open("", "_blank");
+  w.document.write(`
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>طباعة</title>
+      </head>
+      <body>${html}</body>
+    </html>
+  `);
   w.document.close();
   w.print();
 }
