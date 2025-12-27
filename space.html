@@ -96,7 +96,7 @@ button{
   padding-bottom:10px;
 }
 .print-header img{
-  height:65px;
+  max-height:55px;
 }
 .print-title{
   font-size:20px;
@@ -129,8 +129,17 @@ button{
   text-align:center;
   font-weight:bold;
 }
+.sticker-header{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+.sticker-header img{
+  max-height:45px;
+}
 .sticker .name{font-size:56px}
-.sticker .agency{font-size:36px;margin:15px 0}
+.sticker .agency{font-size:34px;margin:10px 0}
 .sticker .phone{font-size:30px}
 </style>
 </head>
@@ -163,16 +172,27 @@ button{
 </div>
 
 <script>
+/* رابط Google Apps Script */
 const webAppUrl="https://script.google.com/macros/s/AKfycbxNQlPGbAZyLypzmxm9qqt5WJCA8uRCyTmtZBY8JIo01LLzB_HY1X4Odg2Cv_xcTKHmxQ/exec";
 
-/* 🔥 الشعار الشفاف */
-const logoAgency="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
-const logoPath="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
+/* الشعار الرئيسي (يسار) */
+const mainLogo="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
+
+/* شعارات الوكالات (يمين) */
+const agencyLogos={
+  "وكالة تقرت للسياحة و السفر":"https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png",
+  "وكالة الانسية للسياحة و السفر":"https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png",
+  "وكالة السقيفة للسياحة و السفر":"https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png"
+};
 
 let data=null;
 
 function openSidebar(){document.getElementById("mySidebar").style.width="260px";}
 function closeSidebar(){document.getElementById("mySidebar").style.width="0";}
+
+function getAgencyLogo(name){
+  return agencyLogos[name] || "";
+}
 
 function search(){
  const phone=document.getElementById("phone").value.trim();
@@ -195,9 +215,10 @@ function search(){
    <p><strong>التذكرة:</strong> ${d.ticketImage?"تم إصدارها":"لم يتم إصدارها بعد"}</p>
 
    <div class="btns">
-     <button onclick="printData()">🖨️ طباعة البيانات</button>
-     <button onclick="printSticker()">🧳 ملصق الحقيبة</button>
-   </div>`;
+     <button onclick="printData()">🖨️ طباعة معلومات الزبون</button>
+     <button onclick="printSticker()">🧳 طباعة ملصق الحقيبة</button>
+   </div>
+   `;
  });
 }
 
@@ -206,9 +227,9 @@ function printData(){
  openPrint(`
  <div class="print-a4">
   <div class="print-header">
-    <img src="${logoAgency}">
-    <div class="print-title">استمارة بيانات معتمر</div>
-    <img src="${logoPath}">
+    <img src="${mainLogo}">
+    <div class="print-title">استمارة معلومات زبون</div>
+    <img src="${getAgencyLogo(d.agency)}">
   </div>
 
   <table class="table">
@@ -226,6 +247,10 @@ function printSticker(){
  const d=data;
  openPrint(`
  <div class="sticker">
+   <div class="sticker-header">
+     <img src="${mainLogo}">
+     <img src="${getAgencyLogo(d.agency)}">
+   </div>
    <div class="name">${d.firstName} ${d.lastName}</div>
    <div class="agency">${d.agency}</div>
    <div class="phone">${d.phone}</div>
