@@ -11,31 +11,93 @@ body{
   background:#f2f4f8;
   padding:20px;
 }
+h2{
+  text-align:center;
+  color:#0d6efd;
+}
 input,button{
-  padding:10px;
+  padding:12px;
   font-size:16px;
+  border-radius:6px;
+}
+input{
+  width:70%;
+  border:1px solid #ccc;
 }
 button{
+  background:#0d6efd;
+  color:#fff;
+  border:none;
   cursor:pointer;
 }
 .card{
   background:#fff;
   margin-top:20px;
   padding:20px;
-  border-radius:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,.15);
+  border-radius:12px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
 }
 img{
   max-width:260px;
-  margin:10px 0;
   border:1px solid #ccc;
+  margin:10px 0;
 }
 .btns button{
   margin:5px;
-  background:#0d6efd;
-  color:#fff;
-  border:none;
-  border-radius:5px;
+  background:#198754;
+}
+.loader{
+  text-align:center;
+  margin-top:20px;
+  font-size:18px;
+  color:#555;
+}
+
+/* ====== ورقة بيانات المعتمر ====== */
+.print-page{
+  position:relative;
+  padding:30px;
+}
+.print-page::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    url("https://i.ibb.co/bgc4Y7gr/1766852333847.png") center 30% no-repeat,
+    url("https://i.ibb.co/d8K117p/1766852254653.jpg") center 70% no-repeat;
+  background-size:180px,220px;
+  opacity:0.08;
+}
+.print-content{
+  position:relative;
+  z-index:1;
+}
+
+/* ====== ملصق الحقيبة ====== */
+.sticker{
+  width:320px;
+  height:200px;
+  border:2px dashed #ff9800;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:24px;
+  font-weight:bold;
+  position:relative;
+}
+.sticker::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url("https://i.ibb.co/bgc4Y7gr/1766852333847.png") center no-repeat;
+  background-size:120px;
+  opacity:0.12;
+}
+.sticker div{
+  position:relative;
+  z-index:1;
 }
 </style>
 </head>
@@ -44,40 +106,53 @@ img{
 
 <h2>🔍 البحث عن المعتمر</h2>
 
-<input id="phone" placeholder="أدخل رقم الهاتف">
-<button onclick="search()">بحث</button>
+<div style="display:flex;gap:10px;justify-content:center;">
+  <input id="phone" placeholder="أدخل رقم الهاتف">
+  <button onclick="search()">بحث</button>
+</div>
 
+<div id="loader" class="loader"></div>
 <div id="result"></div>
 
 <script>
-// 🔴 ضع رابط Web App الصحيح هنا
 const webAppUrl =
 "https://script.google.com/macros/s/AKfycbxNQlPGbAZyLypzmxm9qqt5WJCA8uRCyTmtZBY8JIo01LLzB_HY1X4Odg2Cv_xcTKHmxQ/exec";
 
+const dhikr = [
+  "أستغفر الله",
+  "سبحان الله",
+  "الحمد لله",
+  "لا إله إلا الله",
+  "اللهم صل على محمد"
+];
+
 function search(){
   const phone = document.getElementById("phone").value.trim();
-  if(!phone){
-    alert("يرجى إدخال رقم الهاتف");
-    return;
-  }
+  if(!phone) return alert("أدخل رقم الهاتف");
+
+  const loader = document.getElementById("loader");
+  let i=0;
+  loader.innerText = "⏳ جاري البحث...";
+
+  const interval = setInterval(()=>{
+    loader.innerText = "⏳ جاري البحث... " + dhikr[i++ % dhikr.length];
+  },1000);
 
   fetch(webAppUrl + "?phone=" + encodeURIComponent(phone))
-  .then(r => r.json())
-  .then(d => {
-    const box = document.getElementById("result");
-    box.innerHTML = "";
+  .then(r=>r.json())
+  .then(d=>{
+    clearInterval(interval);
+    loader.innerText="";
 
     if(!d.found){
-      box.innerHTML = "<p>❌ لم يتم العثور على المعتمر</p>";
+      result.innerHTML="❌ لم يتم العثور على المعتمر";
       return;
     }
 
-    box.innerHTML = `
+    result.innerHTML=`
     <div class="card" id="printArea">
       <h3>${d.firstName} ${d.lastName}</h3>
-
       <p>📞 الهاتف: ${d.phone}</p>
-      <p>📧 البريد: ${d.email || "-"}</p>
       <p>🏢 الوكالة: ${d.agency}</p>
       <p>🛏️ الغرفة: ${d.roomType}</p>
       <p>💰 السعر: ${d.price}</p>
@@ -86,48 +161,53 @@ function search(){
       <p>📅 تاريخ التسجيل: ${d.date}</p>
 
       <hr>
-
       <h4>🛂 التأشيرة</h4>
       <img src="${d.visaImage}" onerror="this.style.display='none'">
-
       <h4>🎫 التذكرة</h4>
       <img src="${d.ticketImage}" onerror="this.style.display='none'">
 
       <div class="btns">
-        <button onclick="printText()">🖨️ طباعة المعلومات</button>
-        <button onclick="printImages()">🖼️ طباعة الصور</button>
+        <button onclick="printData()">🖨️ طباعة البيانات</button>
+        <button onclick="printSticker()">🧳 طباعة ملصق الحقيبة</button>
       </div>
     </div>`;
   })
-  .catch(() => {
-    document.getElementById("result").innerHTML =
-      "<p>⚠️ خطأ في الاتصال بالخادم</p>";
+  .catch(()=>{
+    clearInterval(interval);
+    loader.innerText="⚠️ خطأ في الاتصال";
   });
 }
 
-function printText(){
-  const area = document.getElementById("printArea").cloneNode(true);
-  area.querySelectorAll("img,.btns").forEach(e => e.remove());
-  openPrint(area.innerHTML);
+function printData(){
+  openPrint(`
+  <div class="print-page">
+    <div class="print-content">
+      ${document.getElementById("printArea").innerHTML}
+    </div>
+  </div>
+  `);
 }
 
-function printImages(){
-  const area = document.getElementById("printArea").cloneNode(true);
-  area.querySelectorAll("p,h3,h4,.btns").forEach(e => e.remove());
-  openPrint(area.innerHTML);
+function printSticker(){
+  const area=document.getElementById("printArea");
+  const name=area.querySelector("h3").innerText;
+  const agency=area.querySelector("p:nth-child(3)").innerText;
+  const phone=area.querySelector("p:nth-child(2)").innerText;
+
+  openPrint(`
+    <div class="sticker">
+      <div>
+        ${name}<br>
+        ${agency}<br>
+        ${phone}
+      </div>
+    </div>
+  `);
 }
 
 function openPrint(html){
-  const w = window.open("", "_blank");
-  w.document.write(`
-    <html>
-      <head>
-        <meta charset="UTF-8">
-        <title>طباعة</title>
-      </head>
-      <body>${html}</body>
-    </html>
-  `);
+  const w=window.open("");
+  w.document.write(`<html><head><meta charset="UTF-8"></head><body>${html}</body></html>`);
   w.document.close();
   w.print();
 }
