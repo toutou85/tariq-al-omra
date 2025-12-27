@@ -13,31 +13,38 @@ body{
   background:#f2f4f8;
 }
 
-/* ===== MAIN LOGO ===== */
-.main-logo{
-  background:#fff;
-  padding:15px 0;
-  text-align:center;
-}
-.main-logo img{
-  height:55px;
-}
-
 /* ===== TOP BAR ===== */
 .topbar{
   background:#FFD700;
-  padding:12px 16px;
-  display:flex;
+  padding:10px 16px;
+  display:grid;
+  grid-template-columns: 40px 1fr 40px; /* يسار | وسط | يمين */
   align-items:center;
-  justify-content:space-between;
   position:sticky;
   top:0;
   z-index:1000;
 }
+
+/* زر القائمة */
 .menu-btn{
   font-size:28px;
   font-weight:900;
   cursor:pointer;
+  text-align:right;
+}
+
+/* الشعار في الوسط */
+.topbar-logo{
+  text-align:center;
+}
+.topbar-logo img{
+  height:42px;       /* ⬅ حجم الشعار داخل الشريط */
+  width:auto;
+}
+
+/* عنصر فارغ للموازنة */
+.topbar-spacer{
+  width:40px;
 }
 
 /* ===== SIDEBAR ===== */
@@ -53,9 +60,7 @@ body{
   z-index:2000;
   padding-top:60px;
 }
-.sidebar.active{
-  right:0;
-}
+.sidebar.active{ right:0; }
 .sidebar a{
   display:block;
   padding:14px 22px;
@@ -64,9 +69,7 @@ body{
   font-weight:bold;
   border-bottom:1px solid #eee;
 }
-.sidebar a:hover{
-  background:#f5f5f5;
-}
+.sidebar a:hover{ background:#f5f5f5; }
 .closebtn{
   position:absolute;
   top:15px;
@@ -125,15 +128,15 @@ button{
 
 <body>
 
-<!-- الشعار الرئيسي -->
-<div class="main-logo">
-  <img src="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png" alt="طريق العمرة">
-</div>
-
-<!-- الشريط العلوي -->
+<!-- الشريط الأصفر (الشعار داخله) -->
 <div class="topbar">
   <span class="menu-btn" onclick="openSidebar()">☰</span>
-  <strong>🕋 طريق العمرة</strong>
+
+  <div class="topbar-logo">
+    <img src="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png" alt="طريق العمرة">
+  </div>
+
+  <div class="topbar-spacer"></div>
 </div>
 
 <!-- القائمة الجانبية -->
@@ -175,7 +178,7 @@ button{
 const webAppUrl =
 "https://script.google.com/macros/s/AKfycbxNQlPGbAZyLypzmxm9qqt5WJCA8uRCyTmtZBY8JIo01LLzB_HY1X4Odg2Cv_xcTKHmxQ/exec";
 
-/* ===== SIDEBAR CONTROL ===== */
+/* ===== SIDEBAR ===== */
 function openSidebar(){
   document.getElementById("sidebar").classList.add("active");
 }
