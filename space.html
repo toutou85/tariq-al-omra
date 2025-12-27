@@ -22,72 +22,31 @@ body{
   justify-content:space-between;
   position:sticky;
   top:0;
-  z-index:100;
 }
-.topbar h2{margin:0;font-size:18px}
-.menu-btn{font-size:26px;cursor:pointer;font-weight:900}
-
-/* ===== SIDEBAR ===== */
-.sidebar{
-  height:100%;
-  width:0;
-  position:fixed;
-  top:0;
-  right:0;
-  background:#fff;
-  overflow-x:hidden;
-  transition:.3s;
-  box-shadow:-4px 0 15px rgba(0,0,0,.3);
-  padding-top:60px;
-  z-index:999;
-}
-.sidebar a{
-  padding:12px 20px;
-  display:block;
-  text-decoration:none;
-  color:#333;
-  font-weight:700;
-}
-.sidebar a:hover{background:#f2f2f2}
-.closebtn{
-  position:absolute;
-  top:10px;
-  left:15px;
-  font-size:28px;
-  cursor:pointer;
-}
+.menu-btn{font-size:26px;font-weight:900;cursor:pointer}
 
 /* ===== PAGE ===== */
-.page{
-  max-width:800px;
-  margin:30px auto;
-  padding:15px;
-}
+.page{max-width:900px;margin:30px auto;padding:15px}
 .card{
   background:#fff;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 5px 15px rgba(0,0,0,.15);
+  padding:22px;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.15);
 }
-input,button{
-  padding:12px;
-  font-size:16px;
-}
+input,button{padding:12px;font-size:17px}
 button{
   background:#0d6efd;
   color:#fff;
   border:none;
   cursor:pointer;
 }
-.btns button{margin:6px}
+.btns button{margin:8px}
 
-/* ===== PRINT A4 ===== */
+/* ===== PRINT ===== */
 @page{size:A4;margin:20mm}
 @media print{body{background:white}}
 
-.print-a4{
-  width:170mm;
-}
+.print-a4{width:170mm}
 .print-header{
   display:flex;
   justify-content:space-between;
@@ -95,71 +54,58 @@ button{
   border-bottom:2px solid #000;
   padding-bottom:10px;
 }
-.print-header img{
-  max-height:55px;
-}
-.print-title{
-  font-size:20px;
-  font-weight:bold;
-}
+.print-header img{max-height:42px} /* ⬅ تصغير الشعارات */
+.print-title{font-size:22px;font-weight:bold}
 
 .table{
   width:100%;
   border-collapse:collapse;
-  margin-top:25px;
+  margin-top:30px;
+  font-size:18px; /* ⬅ تكبير الكتابة */
 }
 .table td{
   border:1px solid #000;
-  padding:8px;
+  padding:10px;
 }
-.table .label{
-  width:35%;
-  font-weight:bold;
-  background:#f1f1f1;
-}
+.table .label{font-weight:bold;width:35%;background:#f3f3f3}
 
 /* ===== STICKER ===== */
 .sticker{
   width:100%;
   height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
   text-align:center;
   font-weight:bold;
 }
 .sticker-header{
-  width:100%;
   display:flex;
   justify-content:space-between;
-  margin-bottom:20px;
+  margin-bottom:25px;
 }
-.sticker-header img{
-  max-height:45px;
+.sticker-header img{max-height:35px} /* ⬅ شعارات صغيرة */
+.sticker .name{font-size:60px}
+.sticker .agency{font-size:42px;margin:15px 0}
+.sticker .phone{font-size:36px}
+
+/* ===== STATUS ===== */
+.status-ok{color:green;font-weight:bold}
+.status-no{color:#b00020;font-weight:bold}
+.download-btn{
+  margin-right:10px;
+  background:#198754;
+  padding:6px 12px;
+  border-radius:6px;
+  text-decoration:none;
+  color:#fff;
+  font-size:14px;
 }
-.sticker .name{font-size:56px}
-.sticker .agency{font-size:34px;margin:10px 0}
-.sticker .phone{font-size:30px}
 </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
-  <span class="menu-btn" onclick="openSidebar()">☰</span>
-  <h2>🕋 طريق العمرة</h2>
-</div>
-
-<!-- SIDEBAR -->
-<div id="mySidebar" class="sidebar">
-  <span class="closebtn" onclick="closeSidebar()">×</span>
-  <a href="index.html">🏠 الرئيسية</a>
-  <a href="offers.html">🎁 عروض العمرة</a>
-  <a href="space.html">🧾 فضاء المعتمر</a>
-  <a href="upload.html">📤 تحميل جواز السفر</a>
-  <a href="contact.html">📞 اتصل بنا</a>
+  <span class="menu-btn">☰</span>
+  <strong>🕋 طريق العمرة</strong>
 </div>
 
 <div class="page">
@@ -172,53 +118,58 @@ button{
 </div>
 
 <script>
-/* رابط Google Apps Script */
 const webAppUrl="https://script.google.com/macros/s/AKfycbxNQlPGbAZyLypzmxm9qqt5WJCA8uRCyTmtZBY8JIo01LLzB_HY1X4Odg2Cv_xcTKHmxQ/exec";
 
-/* الشعار الرئيسي (يسار) */
+/* الشعار الرئيسي */
 const mainLogo="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
 
-/* شعارات الوكالات (يمين) */
-const agencyLogos={
-  "وكالة تقرت للسياحة و السفر":"https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png",
-  "وكالة الانسية للسياحة و السفر":"https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png",
-  "وكالة السقيفة للسياحة و السفر":"https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png"
-};
+/* شعارات الوكالات */
+function getAgencyLogo(name=""){
+  name=name.replace(/\s+/g,"");
+  if(name.includes("تقرت")) return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
+  if(name.includes("الانسية")) return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
+  if(name.includes("السقيفة")) return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
+  return "";
+}
 
 let data=null;
 
-function openSidebar(){document.getElementById("mySidebar").style.width="260px";}
-function closeSidebar(){document.getElementById("mySidebar").style.width="0";}
+function normalizePhone(p){return p.replace(/\D/g,"");}
 
-function getAgencyLogo(name){
-  return agencyLogos[name] || "";
+function statusBlock(label,url){
+  if(url){
+    return `<span class="status-ok">تم إصدارها</span>
+    <a class="download-btn" href="${url}" target="_blank">⬇ تحميل</a>`;
+  }
+  return `<span class="status-no">لم يتم إصدارها بعد</span>`;
 }
 
 function search(){
- const phone=document.getElementById("phone").value.trim();
- if(!phone) return alert("أدخل رقم الهاتف");
+ const raw=document.getElementById("phone").value;
+ if(!raw) return alert("أدخل رقم الهاتف");
 
- fetch(webAppUrl+"?phone="+encodeURIComponent(phone))
+ fetch(webAppUrl+"?phone="+normalizePhone(raw))
  .then(r=>r.json())
  .then(d=>{
-   if(!d.found){
-     result.innerHTML="❌ لم يتم العثور على المعتمر";
-     return;
-   }
-   data=d;
-   result.innerHTML=`
-   <hr>
-   <p><strong>الاسم:</strong> ${d.firstName} ${d.lastName}</p>
-   <p><strong>الهاتف:</strong> ${d.phone}</p>
-   <p><strong>الوكالة:</strong> ${d.agency}</p>
-   <p><strong>التأشيرة:</strong> ${d.visaImage?"تم إصدارها":"لم يتم إصدارها بعد"}</p>
-   <p><strong>التذكرة:</strong> ${d.ticketImage?"تم إصدارها":"لم يتم إصدارها بعد"}</p>
+  if(!d.found){
+    result.innerHTML="❌ لم يتم العثور على المعتمر";
+    return;
+  }
+  data=d;
 
-   <div class="btns">
-     <button onclick="printData()">🖨️ طباعة معلومات الزبون</button>
-     <button onclick="printSticker()">🧳 طباعة ملصق الحقيبة</button>
-   </div>
-   `;
+  result.innerHTML=`
+  <hr>
+  <p><strong>الاسم:</strong> ${d.firstName} ${d.lastName}</p>
+  <p><strong>الهاتف:</strong> ${d.phone}</p>
+  <p><strong>الوكالة:</strong> ${d.agency}</p>
+
+  <p><strong>التأشيرة:</strong> ${statusBlock("visa",d.visaImage)}</p>
+  <p><strong>التذكرة:</strong> ${statusBlock("ticket",d.ticketImage)}</p>
+
+  <div class="btns">
+    <button onclick="printData()">🖨️ طباعة معلومات الزبون</button>
+    <button onclick="printSticker()">🧳 ملصق الحقيبة</button>
+  </div>`;
  });
 }
 
@@ -247,13 +198,13 @@ function printSticker(){
  const d=data;
  openPrint(`
  <div class="sticker">
-   <div class="sticker-header">
-     <img src="${mainLogo}">
-     <img src="${getAgencyLogo(d.agency)}">
-   </div>
-   <div class="name">${d.firstName} ${d.lastName}</div>
-   <div class="agency">${d.agency}</div>
-   <div class="phone">${d.phone}</div>
+  <div class="sticker-header">
+    <img src="${mainLogo}">
+    <img src="${getAgencyLogo(d.agency)}">
+  </div>
+  <div class="name">${d.firstName} ${d.lastName}</div>
+  <div class="agency">${d.agency}</div>
+  <div class="phone">${d.phone}</div>
  </div>
  `);
 }
@@ -261,8 +212,7 @@ function printSticker(){
 function openPrint(html){
  const w=window.open("");
  w.document.write(`<html><head><meta charset="UTF-8"></head><body>${html}</body></html>`);
- w.document.close();
- w.print();
+ w.document.close(); w.print();
 }
 </script>
 
