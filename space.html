@@ -24,118 +24,69 @@ body{
   top:0;
   z-index:1000;
 }
-.menu-btn{
-  font-size:28px;
-  font-weight:900;
-  cursor:pointer;
-}
-.topbar-center{
-  text-align:center;
-}
-.topbar-center img{
-  height:42px;
-  display:block;
-  margin:0 auto;
-}
-.topbar-center span{
-  font-size:16px;
-  font-weight:900;
-}
-.topbar-title{
-  text-align:left;
-  font-size:20px;
-  font-weight:900;
-  color:#000;
-}
+.menu-btn{font-size:28px;font-weight:900;cursor:pointer}
+.topbar-center{text-align:center}
+.topbar-center img{height:42px;display:block;margin:0 auto}
+.topbar-center span{font-size:15px;font-weight:900}
+.topbar-title{text-align:left;font-size:20px;font-weight:900}
 
 /* ===== SIDEBAR ===== */
 .sidebar{
-  position:fixed;
-  top:0;
-  right:-280px;
-  width:280px;
-  height:100%;
-  background:#fff;
-  box-shadow:-4px 0 15px rgba(0,0,0,.3);
-  transition:.3s;
-  z-index:2000;
-  padding-top:60px;
+  position:fixed;top:0;right:-280px;width:280px;height:100%;
+  background:#fff;box-shadow:-4px 0 15px rgba(0,0,0,.3);
+  transition:.3s;z-index:2000;padding-top:60px;
 }
 .sidebar.active{right:0}
 .sidebar a{
-  display:block;
-  padding:14px 22px;
-  text-decoration:none;
-  color:#333;
-  font-weight:bold;
-  border-bottom:1px solid #eee;
+  display:block;padding:14px 22px;text-decoration:none;
+  color:#333;font-weight:bold;border-bottom:1px solid #eee;
 }
-.sidebar a:hover{background:#f5f5f5}
-.closebtn{
-  position:absolute;
-  top:15px;
-  left:15px;
-  font-size:28px;
-  cursor:pointer;
-}
+.closebtn{position:absolute;top:15px;left:15px;font-size:28px;cursor:pointer}
 
 /* ===== PAGE ===== */
-.page{
-  max-width:900px;
-  margin:30px auto;
-  padding:15px;
-}
+.page{max-width:900px;margin:30px auto;padding:15px}
 .card{
-  background:#fff;
-  padding:26px;
-  border-radius:14px;
+  background:#fff;padding:26px;border-radius:14px;
   box-shadow:0 6px 18px rgba(0,0,0,.15);
 }
-input,button{
-  padding:14px;
-  font-size:18px;
-  width:100%;
-}
+input,button{padding:14px;font-size:18px;width:100%}
 button{
-  background:#0d6efd;
-  color:#fff;
-  border:none;
-  cursor:pointer;
-  margin-top:15px;
+  background:#0d6efd;color:#fff;border:none;
+  cursor:pointer;margin-top:15px
 }
-button:disabled{
-  opacity:.6;
-  cursor:not-allowed;
-}
+button:disabled{opacity:.6}
 
 /* ===== INFO ===== */
 .hint{
-  margin:10px 0 20px;
-  color:#b00020;
-  font-size:16px;
-  font-weight:bold;
-  text-align:center;
+  margin:10px 0 20px;color:#b00020;
+  font-size:16px;font-weight:bold;text-align:center
 }
 
 /* ===== LOADER ===== */
 .loader{
-  margin-top:20px;
-  padding:20px;
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
-  color:#0d6efd;
-  background:#f9f9f9;
-  border-radius:12px;
-  display:none;
+  margin-top:20px;padding:20px;text-align:center;
+  font-size:22px;font-weight:bold;color:#0d6efd;
+  background:#f9f9f9;border-radius:12px;display:none
 }
 
 /* ===== RESULT ===== */
-.result{
-  margin-top:20px;
-  line-height:1.9;
-  font-size:18px;
+.result{margin-top:20px;font-size:18px;line-height:1.9}
+
+/* ===== LOGOS & BADGE ===== */
+.result-card{
+  border:1px solid #eee;border-radius:14px;padding:20px
 }
+.logos{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:15px
+}
+.logos img{height:50px}
+.badge{
+  display:inline-block;padding:6px 14px;border-radius:20px;
+  font-size:14px;font-weight:bold;color:#fff;margin-bottom:15px
+}
+.badge.ok{background:#198754}
+.badge.wait{background:#ffc107;color:#000}
 </style>
 </head>
 
@@ -144,30 +95,27 @@ button:disabled{
 <!-- TOP BAR -->
 <div class="topbar">
   <span class="menu-btn" onclick="openSidebar()">☰</span>
-
   <div class="topbar-center">
     <img src="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png">
-  
+    <span>طريق العمرة</span>
   </div>
-
-  <div class="topbar-title">فضاء المعتمر🧾</div>
+  <div class="topbar-title">فضاء المعتمر 🧾</div>
 </div>
 
 <!-- SIDEBAR -->
 <div id="sidebar" class="sidebar">
   <span class="closebtn" onclick="closeSidebar()">×</span>
-  <a href="#">🏠 الرئيسية</a>
-  <a href="#">🎁 عروض العمرة</a>
-  <a href="#">🧾 فضاء المعتمر</a>
-  <a href="#">📤 تحميل جواز السفر</a>
-  <a href="#">📞 اتصل بنا</a>
-  <a href="#">❔ من نحن</a>
+  <a href="index.html">🏠 الرئيسية</a>
+  <a href="offers.html">🎁 عروض العمرة</a>
+  <a href="client.html">🧾 فضاء المعتمر</a>
+  <a href="upload-passport.html">📤 تحميل جواز السفر</a>
+  <a href="contact.html">📞 اتصل بنا</a>
+  <a href="about.html">❔ من نحن</a>
 </div>
 
 <!-- CONTENT -->
 <div class="page">
   <div class="card">
-
     <h3 style="text-align:center;font-size:26px">🔍 البحث عن المعتمر</h3>
     <div class="hint">ادخل رقم الهاتف بدون صفر</div>
 
@@ -178,7 +126,6 @@ button:disabled{
 
     <div id="loader" class="loader"></div>
     <div id="result" class="result"></div>
-
   </div>
 </div>
 
@@ -189,74 +136,83 @@ const loader = document.getElementById("loader");
 const result = document.getElementById("result");
 const searchBtn = document.getElementById("searchBtn");
 
-function openSidebar(){ sidebar.classList.add("active"); }
-function closeSidebar(){ sidebar.classList.remove("active"); }
+// الشعار الرئيسي
+const mainLogo = "https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
 
-function fixZero(input){
-  input.value = input.value.replace(/[^0-9]/g,"");
-  if(!input.value.startsWith("0")) input.value = "0";
+// شعارات الوكالات
+const agencyLogos = {
+  "وكالة تقرت للسياحة و سفر": "https://i.ibb.co/XXXX/toqert.png",
+  "وكالة السقيفة للسياحة و سفر": "https://i.ibb.co/XXXX/saqifa.png",
+  "وكالة الانسية للسياحة و سفر": "https://i.ibb.co/XXXX/insia.png"
+};
+
+function openSidebar(){sidebar.classList.add("active")}
+function closeSidebar(){sidebar.classList.remove("active")}
+
+function fixZero(i){
+  i.value=i.value.replace(/[^0-9]/g,"");
+  if(!i.value.startsWith("0")) i.value="0";
+}
+function preparePhone(p){
+  p=p.replace(/\D/g,"");
+  if(p.startsWith("0")) p=p.slice(1);
+  if(p.startsWith("213")) p=p.slice(3);
+  return p;
 }
 
-function preparePhone(phone){
-  phone = phone.replace(/\D/g,"");
-  if(phone.startsWith("0")) phone = phone.slice(1);
-  if(phone.startsWith("213")) phone = phone.slice(3);
-  return phone;
-}
+const adhkar=["أستغفر الله","سبحان الله","الحمد لله","لا إله إلا الله","الله أكبر"];
+let timer=null;
 
-const adhkar = [
-  "أستغفر الله",
-  "سبحان الله",
-  "الحمد لله",
-  "لا إله إلا الله",
-  "الله أكبر"
-];
-let timer = null;
+function getBadge(status){
+  if(status==="confirmed") return `<span class="badge ok">✔️ ملف مؤكد</span>`;
+  return `<span class="badge wait">⏳ قيد المعالجة</span>`;
+}
 
 function search(){
-  const phone = preparePhone(document.getElementById("phone").value);
+ const phone=preparePhone(phoneInput.value=document.getElementById("phone").value);
+ if(phone.length<9){alert("رقم غير صحيح");return}
 
-  if(phone.length < 9){
-    alert("رقم الهاتف غير صحيح");
-    return;
-  }
+ result.innerHTML="";
+ loader.style.display="block";
+ searchBtn.disabled=true;
 
-  result.innerHTML = "";
-  loader.style.display = "block";
-  searchBtn.disabled = true;
+ let i=0;
+ loader.innerText="⏳ "+adhkar[0];
+ timer=setInterval(()=>loader.innerText="⏳ "+adhkar[i++%adhkar.length],1000);
 
-  let i = 0;
-  loader.innerText = "⏳ " + adhkar[0];
-  timer = setInterval(()=>{
-    loader.innerText = "⏳ " + adhkar[i++ % adhkar.length];
-  },1000);
+ fetch(webAppUrl+"?phone="+phone)
+ .then(r=>r.json())
+ .then(d=>{
+  clearInterval(timer);
+  loader.style.display="none";
+  searchBtn.disabled=false;
 
-  fetch(webAppUrl + "?phone=" + phone)
-    .then(res => res.json())
-    .then(data => {
-      clearInterval(timer);
-      loader.style.display = "none";
-      searchBtn.disabled = false;
+  if(!d.found){result.innerHTML="❌ لم يتم العثور على المعتمر";return}
 
-      if(!data.found){
-        result.innerHTML = "❌ لم يتم العثور على المعتمر";
-        return;
-      }
+  const agencyLogo=agencyLogos[d.agency]||"";
 
-      result.innerHTML = `
-        <hr>
-        <p><strong>الاسم:</strong> ${data.firstName} ${data.lastName}</p>
-        <p><strong>الهاتف:</strong> ${data.phone}</p>
-        <p><strong>الوكالة:</strong> ${data.agency}</p>
-        <button onclick="window.print()">🖨️ طباعة معلومات الزبون</button>
-      `;
-    })
-    .catch(()=>{
-      clearInterval(timer);
-      loader.style.display = "none";
-      searchBtn.disabled = false;
-      alert("حدث خطأ في الاتصال بالخادم");
-    });
+  result.innerHTML=`
+   <div class="result-card">
+     <div class="logos">
+       <img src="${mainLogo}">
+       ${agencyLogo?`<img src="${agencyLogo}">`:""}
+     </div>
+
+     ${getBadge(d.status)}
+
+     <p><strong>الاسم:</strong> ${d.firstName} ${d.lastName}</p>
+     <p><strong>الهاتف:</strong> ${d.phone}</p>
+     <p><strong>الوكالة:</strong> ${d.agency}</p>
+
+     <button onclick="window.print()">🖨️ طباعة بيانات المعتمر</button>
+   </div>`;
+ })
+ .catch(()=>{
+  clearInterval(timer);
+  loader.style.display="none";
+  searchBtn.disabled=false;
+  alert("خطأ في الاتصال");
+ });
 }
 </script>
 
