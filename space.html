@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فضاء المعتمر | طريق العمرة</title>
+
+<style>
+body{
+  font-family:Tajawal, Tahoma;
+  background:#f1f3f5;
+  margin:0;
+  padding:20px;
+}
+.box{
+  max-width:700px;
+  margin:auto;
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 0 15px rgba(0,0,0,.1);
+}
+h2,h3{text-align:center}
+input,select,textarea,button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+button{
+  background:#0d6efd;
+  color:#fff;
+  border:none;
+}
+button:hover{opacity:.9}
+.section{
+  margin-top:25px;
+  padding:15px;
+  border:1px dashed #ccc;
+  border-radius:10px;
+}
+.hidden{display:none}
+.print{background:#198754}
+.visa{background:#fd7e14}
+.ask{background:#6f42c1}
+
+@media print{
+  input,button,select,textarea{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>🕌 فضاء المعتمر</h2>
+
+<!-- البحث -->
+<div id="search">
+  <label>📱 رقم الهاتف المسجَّل:</label>
+  <input type="tel" id="phone">
+  <button onclick="search()">🔍 عرض معلوماتي</button>
+</div>
+
+<!-- المعلومات -->
+<div id="info" class="hidden section">
+  <h3>📄 معلومات التسجيل</h3>
+  <p><b>الاسم:</b> <span id="name"></span></p>
+  <p><b>الهاتف:</b> <span id="phoneOut"></span></p>
+  <p><b>الوكالة:</b> <span id="agency"></span></p>
+  <p><b>رقم العرض:</b> <span id="offer"></span></p>
+  <p><b>الولاية:</b> <span id="wilaya"></span></p>
+  <p><b>الفرع:</b> <span id="branch"></span></p>
+  <p><b>نوع الغرفة:</b> <span id="room"></span></p>
+  <p><b>المرافقون:</b> <span id="companions"></span></p>
+
+  <button class="print" onclick="window.print()">🖨️ طباعة</button>
+</div>
+
+<!-- التأشيرة -->
+<div id="visa" class="hidden section">
+  <h3>✈️ طلب تأشيرة / تذكرة</h3>
+  <select id="visaType">
+    <option value="">اختر الطلب</option>
+    <option>تأشيرة فقط</option>
+    <option>تذكرة فقط</option>
+    <option>تأشيرة + تذكرة</option>
+  </select>
+  <button class="visa" onclick="sendVisa()">📤 إرسال</button>
+</div>
+
+<!-- الاستفسار -->
+<div id="ask" class="hidden section">
+  <h3>❓ استفسار</h3>
+  <textarea id="question"></textarea>
+  <button class="ask" onclick="sendQuestion()">📩 إرسال</button>
+</div>
+
+</div>
+
+<script>
+const SCRIPT_URL = "ضع_هنا_رابط_الويب_آب";
+
+let currentPhone = "";
+
+function search(){
+  const phone = document.getElementById("phone").value.trim();
+  if(!phone){alert("أدخل رقم الهاتف");return;}
+
+  fetch(SCRIPT_URL+"?action=search&phone="+phone)
+  .then(r=>r.json())
+  .then(d=>{
+    if(!d.found){alert("❌ لا يوجد تسجيل");return;}
+
+    currentPhone = phone;
+    document.getElementById("search").style.display="none";
+    document.querySelectorAll(".hidden").forEach(e=>e.classList.remove("hidden"));
+
+    document.getElementById("name").textContent = d.name;
+    document.getElementById("phoneOut").textContent = phone;
+    document.getElementById("agency").textContent = d.agency;
+    document.getElementById("offer").textContent = d.offer;
+    document.getElementById("wilaya").textContent = d.wilaya;
+    document.getElementById("branch").textContent = d.branch;
+    document.getElementById("room").textContent = d.room;
+    document.getElementById("companions").textContent = d.companions || "—";
+  });
+}
+
+function sendVisa(){
+  const type = document.getElementById("visaType").value;
+  if(!type){alert("اختر الطلب");return;}
+
+  fetch(SCRIPT_URL,{
+    method:"POST",
+    body:new URLSearchParams({
+      action:"visa",
+      phone:currentPhone,
+      type:type
+    })
+  }).then(()=>alert("✅ تم إرسال الطلب"));
+}
+
+function sendQuestion(){
+  const q = document.getElementById("question").value;
+  if(!q){alert("اكتب الاستفسار");return;}
+
+  fetch(SCRIPT_URL,{
+    method:"POST",
+    body:new URLSearchParams({
+      action:"question",
+      phone:currentPhone,
+      question:q
+    })
+  }).then(()=>{
+    alert("📩 تم الإرسال");
+    document.getElementById("question").value="";
+  });
+}
+</script>
+
+</body>
+</html>
