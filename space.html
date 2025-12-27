@@ -103,6 +103,10 @@ button{
   cursor:pointer;
   margin-top:15px;
 }
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
 
 /* ===== INFO ===== */
 .hint{
@@ -123,19 +127,14 @@ button{
   color:#0d6efd;
   background:#f9f9f9;
   border-radius:12px;
+  display:none;
 }
 
-/* ===== STATUS ===== */
-.status-ok{color:green;font-weight:bold}
-.status-no{color:#b00020;font-weight:bold}
-.download-btn{
-  margin-right:10px;
-  background:#198754;
-  padding:6px 12px;
-  border-radius:6px;
-  text-decoration:none;
-  color:#fff;
-  font-size:14px;
+/* ===== RESULT ===== */
+.result{
+  margin-top:20px;
+  line-height:1.9;
+  font-size:18px;
 }
 </style>
 </head>
@@ -148,10 +147,10 @@ button{
 
   <div class="topbar-center">
     <img src="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png">
-    <span>طريق العمرة</span>
+  
   </div>
 
-  <div class="topbar-title">فضاء المعتمر</div>
+  <div class="topbar-title">فضاء المعتمر🧾</div>
 </div>
 
 <!-- SIDEBAR -->
@@ -175,75 +174,89 @@ button{
     <input id="phone" type="tel" value="0"
       onfocus="fixZero(this)" oninput="fixZero(this)">
 
-    <button onclick="search()">بحث</button>
+    <button id="searchBtn" onclick="search()">بحث</button>
 
-    <div id="loader" class="loader" style="display:none"></div>
-    <div id="result"></div>
+    <div id="loader" class="loader"></div>
+    <div id="result" class="result"></div>
 
   </div>
 </div>
 
 <script>
-const webAppUrl="PUT_YOUR_GOOGLE_SCRIPT_URL_HERE";
-const mainLogo="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
-const sidebar=document.getElementById("sidebar");
+const webAppUrl = "PUT_YOUR_GOOGLE_SCRIPT_URL_HERE";
+const sidebar = document.getElementById("sidebar");
+const loader = document.getElementById("loader");
+const result = document.getElementById("result");
+const searchBtn = document.getElementById("searchBtn");
 
-function openSidebar(){sidebar.classList.add("active")}
-function closeSidebar(){sidebar.classList.remove("active")}
+function openSidebar(){ sidebar.classList.add("active"); }
+function closeSidebar(){ sidebar.classList.remove("active"); }
 
-function fixZero(i){
-  i.value=i.value.replace(/[^0-9]/g,"");
-  if(!i.value.startsWith("0")) i.value="0";
-}
-function preparePhone(p){
-  p=p.replace(/\D/g,"");
-  if(p.startsWith("0")) p=p.slice(1);
-  if(p.startsWith("213")) p=p.slice(3);
-  return p;
+function fixZero(input){
+  input.value = input.value.replace(/[^0-9]/g,"");
+  if(!input.value.startsWith("0")) input.value = "0";
 }
 
-const adhkar=["أستغفر الله","سبحان الله","الحمد لله","لا إله إلا الله","الله أكبر"];
-let timer=null;
+function preparePhone(phone){
+  phone = phone.replace(/\D/g,"");
+  if(phone.startsWith("0")) phone = phone.slice(1);
+  if(phone.startsWith("213")) phone = phone.slice(3);
+  return phone;
+}
+
+const adhkar = [
+  "أستغفر الله",
+  "سبحان الله",
+  "الحمد لله",
+  "لا إله إلا الله",
+  "الله أكبر"
+];
+let timer = null;
 
 function search(){
- const phone=preparePhone(document.getElementById("phone").value);
- if(phone.length<9){
-   alert("رقم غير صحيح");
-   return;
- }
+  const phone = preparePhone(document.getElementById("phone").value);
 
- loader.style.display="block";
- let i=0;
- loader.innerText="⏳ "+adhkar[0];
- timer=setInterval(()=>{
-   loader.innerText="⏳ "+adhkar[i++%adhkar.length];
- },1000);
-
- fetch(webAppUrl+"?phone="+phone)
- .then(r=>r.json())
- .then(d=>{
-  clearInterval(timer);
-  loader.style.display="none";
-
-  if(!d.found){
-    result.innerHTML="❌ لم يتم العثور على المعتمر";
+  if(phone.length < 9){
+    alert("رقم الهاتف غير صحيح");
     return;
   }
 
-  result.innerHTML=`
-  <hr>
-  <p><strong>الاسم:</strong> ${d.firstName} ${d.lastName}</p>
-  <p><strong>الهاتف:</strong> ${d.phone}</p>
-  <p><strong>الوكالة:</strong> ${d.agency}</p>
+  result.innerHTML = "";
+  loader.style.display = "block";
+  searchBtn.disabled = true;
 
-  <button onclick="window.print()">🖨️ طباعة معلومات الزبون</button>
-  `;
- })
- .catch(()=>{
-  clearInterval(timer);
-  loader.style.display="none";
-  alert("حدث خطأ في الاتصال");
- });
+  let i = 0;
+  loader.innerText = "⏳ " + adhkar[0];
+  timer = setInterval(()=>{
+    loader.innerText = "⏳ " + adhkar[i++ % adhkar.length];
+  },1000);
+
+  fetch(webAppUrl + "?phone=" + phone)
+    .then(res => res.json())
+    .then(data => {
+      clearInterval(timer);
+      loader.style.display = "none";
+      searchBtn.disabled = false;
+
+      if(!data.found){
+        result.innerHTML = "❌ لم يتم العثور على المعتمر";
+        return;
+      }
+
+      result.innerHTML = `
+        <hr>
+        <p><strong>الاسم:</strong> ${data.firstName} ${data.lastName}</p>
+        <p><strong>الهاتف:</strong> ${data.phone}</p>
+        <p><strong>الوكالة:</strong> ${data.agency}</p>
+        <button onclick="window.print()">🖨️ طباعة معلومات الزبون</button>
+      `;
+    })
+    .catch(()=>{
+      clearInterval(timer);
+      loader.style.display = "none";
+      searchBtn.disabled = false;
+      alert("حدث خطأ في الاتصال بالخادم");
+    });
 }
 </script>
 
