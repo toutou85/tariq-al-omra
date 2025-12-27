@@ -18,7 +18,7 @@ body{
   background:#FFD700;
   padding:10px 16px;
   display:grid;
-  grid-template-columns:40px 1fr 40px;
+  grid-template-columns:40px 1fr auto;
   align-items:center;
   position:sticky;
   top:0;
@@ -29,15 +29,23 @@ body{
   font-weight:900;
   cursor:pointer;
 }
-.topbar-center{text-align:center}
+.topbar-center{
+  text-align:center;
+}
 .topbar-center img{
-  height:40px;
+  height:42px;
   display:block;
   margin:0 auto;
 }
 .topbar-center span{
-  font-size:14px;
-  font-weight:bold;
+  font-size:16px;
+  font-weight:900;
+}
+.topbar-title{
+  text-align:left;
+  font-size:20px;
+  font-weight:900;
+  color:#000;
 }
 
 /* ===== SIDEBAR ===== */
@@ -129,43 +137,6 @@ button{
   color:#fff;
   font-size:14px;
 }
-
-/* ===== PRINT ===== */
-@page{size:A4;margin:20mm}
-@media print{body{background:white}}
-
-.print-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:2px solid #000;
-  padding-bottom:10px;
-}
-.print-header img{height:30px}
-.print-title{font-size:26px;font-weight:bold}
-.print-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:40px;
-  font-size:26px;
-}
-.print-table td{
-  border:1px solid #000;
-  padding:14px;
-}
-.label{font-weight:bold;background:#f3f3f3}
-
-/* ===== STICKER ===== */
-.sticker{text-align:center;font-weight:bold}
-.sticker-header{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:30px;
-}
-.sticker-header img{height:30px}
-.sticker .name{font-size:60px}
-.sticker .agency{font-size:40px;margin:20px 0}
-.sticker .phone{font-size:36px}
 </style>
 </head>
 
@@ -174,11 +145,13 @@ button{
 <!-- TOP BAR -->
 <div class="topbar">
   <span class="menu-btn" onclick="openSidebar()">☰</span>
+
   <div class="topbar-center">
     <img src="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png">
     <span>طريق العمرة</span>
   </div>
-  <div></div>
+
+  <div class="topbar-title">فضاء المعتمر</div>
 </div>
 
 <!-- SIDEBAR -->
@@ -196,7 +169,7 @@ button{
 <div class="page">
   <div class="card">
 
-    <h3 style="text-align:center;font-size:24px">🔍 البحث عن المعتمر</h3>
+    <h3 style="text-align:center;font-size:26px">🔍 البحث عن المعتمر</h3>
     <div class="hint">ادخل رقم الهاتف بدون صفر</div>
 
     <input id="phone" type="tel" value="0"
@@ -213,13 +186,7 @@ button{
 <script>
 const webAppUrl="PUT_YOUR_GOOGLE_SCRIPT_URL_HERE";
 const mainLogo="https://i.ibb.co/HDMQfZKG/1766852333847-removebg-preview.png";
-
-function getAgencyLogo(name=""){
-  if(name.includes("تقرت")) return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
-  if(name.includes("الانسية")) return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
-  if(name.includes("السقيفة")) return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
-  return "";
-}
+const sidebar=document.getElementById("sidebar");
 
 function openSidebar(){sidebar.classList.add("active")}
 function closeSidebar(){sidebar.classList.remove("active")}
@@ -235,22 +202,27 @@ function preparePhone(p){
   return p;
 }
 
-const adhkar=["أستغفر الله","سبحان الله","الحمد لله","لا إله إلا الله ", "الله أكبر"];
-let t=null;
+const adhkar=["أستغفر الله","سبحان الله","الحمد لله","لا إله إلا الله","الله أكبر"];
+let timer=null;
 
 function search(){
  const phone=preparePhone(document.getElementById("phone").value);
- if(phone.length<9){alert("رقم غير صحيح");return}
+ if(phone.length<9){
+   alert("رقم غير صحيح");
+   return;
+ }
 
  loader.style.display="block";
  let i=0;
  loader.innerText="⏳ "+adhkar[0];
- t=setInterval(()=>loader.innerText="⏳ "+adhkar[i++%adhkar.length],1000);
+ timer=setInterval(()=>{
+   loader.innerText="⏳ "+adhkar[i++%adhkar.length];
+ },1000);
 
  fetch(webAppUrl+"?phone="+phone)
  .then(r=>r.json())
  .then(d=>{
-  clearInterval(t);
+  clearInterval(timer);
   loader.style.display="none";
 
   if(!d.found){
@@ -264,59 +236,14 @@ function search(){
   <p><strong>الهاتف:</strong> ${d.phone}</p>
   <p><strong>الوكالة:</strong> ${d.agency}</p>
 
-  <p><strong>التأشيرة:</strong>
-    ${d.visaImage?`<span class="status-ok">تم إصدارها</span>
-    <a class="download-btn" href="${d.visaImage}" target="_blank">تحميل</a>`
-    :`<span class="status-no">لم يتم إصدارها بعد</span>`}
-  </p>
-
-  <p><strong>التذكرة:</strong>
-    ${d.ticketImage?`<span class="status-ok">تم إصدارها</span>
-    <a class="download-btn" href="${d.ticketImage}" target="_blank">تحميل</a>`
-    :`<span class="status-no">لم يتم إصدارها بعد</span>`}
-  </p>
-
-  <button onclick="printData(d)">🖨️ طباعة معلومات الزبون</button>
-  <button onclick="printSticker(d)">🧳 ملصق الحقيبة</button>
+  <button onclick="window.print()">🖨️ طباعة معلومات الزبون</button>
   `;
+ })
+ .catch(()=>{
+  clearInterval(timer);
+  loader.style.display="none";
+  alert("حدث خطأ في الاتصال");
  });
-}
-
-function printData(d){
- openPrint(`
- <div>
-  <div class="print-header">
-    <img src="${mainLogo}">
-    <div class="print-title">معلومات الزبون – طريق العمرة</div>
-    <img src="${getAgencyLogo(d.agency)}">
-  </div>
-  <table class="print-table">
-    <tr><td class="label">الاسم</td><td>${d.firstName} ${d.lastName}</td></tr>
-    <tr><td class="label">الهاتف</td><td>${d.phone}</td></tr>
-    <tr><td class="label">الوكالة</td><td>${d.agency}</td></tr>
-  </table>
- </div>
- `);
-}
-
-function printSticker(d){
- openPrint(`
- <div class="sticker">
-  <div class="sticker-header">
-    <img src="${mainLogo}">
-    <img src="${getAgencyLogo(d.agency)}">
-  </div>
-  <div class="name">${d.firstName} ${d.lastName}</div>
-  <div class="agency">${d.agency}</div>
-  <div class="phone">${d.phone}</div>
- </div>
- `);
-}
-
-function openPrint(html){
- const w=window.open("");
- w.document.write(`<html><head><meta charset="UTF-8"></head><body>${html}</body></html>`);
- w.document.close(); w.print();
 }
 </script>
 
