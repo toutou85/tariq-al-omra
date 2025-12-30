@@ -129,6 +129,7 @@ body::before{
 
 /* ===== CARD ===== */
 .card{
+  position:relative;
   min-width:270px;
   background:#fff;
   border-radius:18px;
@@ -146,6 +147,24 @@ body::before{
 .card p{
   margin:6px 0;
   font-size:14px;
+}
+
+/* ===== AGENCY LOGO (إضافة فقط) ===== */
+.card-logo{
+  position:absolute;
+  top:12px;
+  left:12px;
+  width:48px;
+  height:48px;
+  background:#fff;
+  border-radius:12px;
+  padding:4px;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+.card-logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
 }
 
 /* ===== BUTTONS ===== */
@@ -223,6 +242,14 @@ let offersData=[];
 function openSidebar(){document.getElementById("mySidebar").style.width="260px";}
 function closeSidebar(){document.getElementById("mySidebar").style.width="0";}
 
+/* ===== اختيار شعار الوكالة (إضافة فقط) ===== */
+function getAgencyLogo(name=""){
+  if(name.includes("تقرت")) return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
+  if(name.includes("الانسية")) return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
+  if(name.includes("السقيفة")) return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
+  return "";
+}
+
 function toggleLike(id){
   if(localStorage.getItem("liked_"+id)){
     alert("❤️ سبق لك الإعجاب بهذا العرض");
@@ -260,8 +287,12 @@ function renderOffers(data,filter="all"){
 
     grouped[airport].forEach(o=>{
       const id=o["ID"]||Math.random().toString(36).substr(2,9);
+      const agency=o["اسم الوكالة"]||"";
+      const logo=getAgencyLogo(agency);
+
       scroll.innerHTML+=`
       <div class="card">
+        ${logo?`<div class="card-logo"><img src="${logo}"></div>`:""}
         <h3>${o["اسم العرض"]||"عرض عمرة"}</h3>
         <p>🏨 ${o["الفندق"]||""}</p>
         <p>📅 ${o["تاريخ  الر حلة"]||""}</p>
