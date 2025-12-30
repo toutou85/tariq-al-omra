@@ -248,8 +248,33 @@ function toggleLike(id){
 }
 
 /* ===== RENDER ===== */
+function parseDateArabic(dateStr){
+  if(!dateStr) return null;
+
+  // مثال: 12-01-2025 أو 12/01/2025
+  const clean = dateStr.replace(/-/g,"/").trim();
+  const parts = clean.split("/");
+
+  if(parts.length !== 3) return null;
+
+  const day = parseInt(parts[0],10);
+  const month = parseInt(parts[1],10) - 1;
+  const year = parseInt(parts[2],10);
+
+  return new Date(year, month, day);
+}
 function renderOffers(data,filter="all"){
-  const c=document.getElementById("offersContainer");
+  const
+data.sort((a,b)=>{
+  const da = parseDateArabic(a["تاريخ الرحلة"]);
+  const db = parseDateArabic(b["تاريخ الرحلة"]);
+
+  if(!da && !db) return 0;
+  if(!da) return 1;
+  if(!db) return -1;
+
+  return da - db; // من الأقرب إلى الأبعد
+}); c=document.getElementById("offersContainer");
   c.innerHTML="";
   const grouped={};
 
