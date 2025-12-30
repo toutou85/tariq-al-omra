@@ -149,17 +149,13 @@ body::before{
   font-size:14px;
 }
 
-/* ===== AGENCY LOGO (إضافة فقط) ===== */
+/* ===== AGENCY LOGO (بدون خلفية وبدون إطار) ===== */
 .card-logo{
   position:absolute;
-  top:12px;
-  left:12px;
-  width:48px;
-  height:48px;
-  background:#fff;
-  border-radius:12px;
-  padding:4px;
-  box-shadow:0 4px 10px rgba(0,0,0,.25);
+  top:10px;
+  left:10px;
+  width:46px;
+  height:46px;
 }
 .card-logo img{
   width:100%;
@@ -215,7 +211,7 @@ body::before{
 <div class="page">
 
   <div class="title-box">
-    <h1>🌙 أحدث عروض العمرة – وكالة تقرت للسياحة و السفر</h1>
+    <h1>🌙 أحدث عروض العمرة – وكالات معتمدة</h1>
   </div>
 
   <div class="filter-box">
@@ -242,17 +238,21 @@ let offersData=[];
 function openSidebar(){document.getElementById("mySidebar").style.width="260px";}
 function closeSidebar(){document.getElementById("mySidebar").style.width="0";}
 
-/* ===== اختيار شعار الوكالة (إصلاح فقط) ===== */
+/* ===== اختيار شعار الوكالة (إصلاح شامل) ===== */
 function getAgencyLogo(name=""){
-  name = String(name).trim().toLowerCase();
+  name = String(name)
+    .toLowerCase()
+    .replace(/[إأآ]/g,"ا")
+    .replace(/ة/g,"ه")
+    .trim();
 
   if(name.includes("تقرت"))
     return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
 
-  if(name.includes("الانسية") || name.includes("الإنسية"))
+  if(name.includes("انسية") || name.includes("انسيه"))
     return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
 
-  if(name.includes("السقيفة"))
+  if(name.includes("السقيفة") || name.includes("السقيفه"))
     return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
 
   return "";
@@ -296,7 +296,6 @@ function renderOffers(data,filter="all"){
     grouped[airport].forEach(o=>{
       const id=o["ID"]||Math.random().toString(36).substr(2,9);
 
-      /* ===== هنا الإصلاح الحقيقي ===== */
       const agency =
         o["اسم الوكالة"] ||
         o["الوكالة"] ||
