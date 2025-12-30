@@ -285,18 +285,22 @@ function parseArabicDayMonth(text){
 }
 
   // 🔹 ترتيب حسب تاريخ الرحلة (من الأقرب إلى الأبعد)
+function renderOffers(data, filter = "all") {
+
+  // 🔹 ترتيب حسب يوم الرحلة (جانفي → فيفري → مارس)
   data.sort((a, b) => {
-  const da = parseArabicDayMonth(a["تاريخ الرحلة"]);
-  const db = parseArabicDayMonth(b["تاريخ الرحلة"]);
+    const da = parseArabicDayMonth(a["تاريخ الرحلة"]);
+    const db = parseArabicDayMonth(b["تاريخ الرحلة"]);
 
-  if (!da && !db) return 0;
-  if (!da) return 1;
-  if (!db) return -1;
+    if (!da && !db) return 0;
+    if (!da) return 1;
+    if (!db) return -1;
 
-  return da.getMonth() !== db.getMonth()
-    ? da.getMonth() - db.getMonth()
-    : da.getDate() - db.getDate();
-});
+    return da.getMonth() !== db.getMonth()
+      ? da.getMonth() - db.getMonth()
+      : da.getDate() - db.getDate();
+  });
+
   const c = document.getElementById("offersContainer");
   c.innerHTML = "";
 
