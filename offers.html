@@ -136,9 +136,7 @@ body::before{
   scroll-snap-align:start;
   transition:.3s;
 }
-.card.has-logo{
-  padding-top:110px; /* ✨ هنا تنسحب الكتابة */
-}
+.card.has-logo{padding-top:110px}
 .card:hover{transform:translateY(-6px)}
 .card h3{
   margin:0 0 6px;
@@ -150,7 +148,7 @@ body::before{
   font-size:14px;
 }
 
-/* ===== AGENCY LOGO (90px - لا يغطي النص) ===== */
+/* ===== LOGO ===== */
 .card-logo{
   position:absolute;
   top:12px;
@@ -170,6 +168,7 @@ body::before{
   display:flex;
   gap:10px;
   margin-top:12px;
+  flex-wrap:wrap;
 }
 .btn{
   flex:1;
@@ -184,7 +183,29 @@ body::before{
 .btn.details{background:#007bff}
 .btn.details:hover{background:#0056b3}
 .btn.like{background:#e53935}
-.btn.like:hover{background:#c62828}
+
+/* ===== BOOK NOW BUTTON (جديد) ===== */
+.btn.book{
+  background:linear-gradient(135deg,#28a745,#20c997);
+  animation:pulse 2.5s infinite, shake 6s infinite;
+}
+.btn.book:hover{
+  transform:scale(1.05);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(40,167,69,.6)}
+  70%{box-shadow:0 0 0 12px rgba(40,167,69,0)}
+  100%{box-shadow:0 0 0 0 rgba(40,167,69,0)}
+}
+@keyframes shake{
+  0%,90%,100%{transform:translateX(0)}
+  92%{transform:translateX(-3px)}
+  94%{transform:translateX(3px)}
+  96%{transform:translateX(-3px)}
+  98%{transform:translateX(3px)}
+}
 </style>
 </head>
 
@@ -201,11 +222,6 @@ body::before{
   <a href="offers.html">🎁 عروض العمرة</a>
   <a href="contact.html">📞 اتصل بنا</a>
   <a href="about.html">❔ من نحن</a>
-  <a href="hajj-space.html">🕋 فضاء الحج</a>
-  <a href="join.html">📩 انضم إلينا</a>
-  <a href="upload.html">📤 تحميل جواز السفر</a>
-  <a href="reviews.html">💬 آراء المعتمرين</a>
-  <a href="space.html">🧾 فضاء المعتمر</a>
 </div>
 
 <div class="page">
@@ -221,13 +237,10 @@ body::before{
       <option value="الجزائر">الجزائر</option>
       <option value="ورقلة">ورقلة</option>
       <option value="وهران">وهران</option>
-      <option value="عنابة">عنابة</option>
-      <option value="قسنطينة">قسنطينة</option>
-      <option value="تمنغست">تمنغست</option>
     </select>
   </div>
 
-  <div id="offersContainer" style="text-align:center">⏳ جاري تحميل العروض...</div>
+  <div id="offersContainer">⏳ جاري تحميل العروض...</div>
 
 </div>
 
@@ -235,36 +248,15 @@ body::before{
 const SHEET_URL="https://script.google.com/macros/s/AKfycbzu_D4Gy4PL5NLfHXsFBOQD8Se8W1kJDH3rEEGna5WDZ0uTNUcgLsUGcrUIQlIzXZgj/exec";
 let offersData=[];
 
-function openSidebar(){document.getElementById("mySidebar").style.width="260px";}
-function closeSidebar(){document.getElementById("mySidebar").style.width="0";}
+function openSidebar(){mySidebar.style.width="260px";}
+function closeSidebar(){mySidebar.style.width="0";}
 
 function getAgencyLogo(name=""){
-  name = String(name).toLowerCase()
-    .replace(/[إأآ]/g,"ا")
-    .replace(/ة/g,"ه");
-
-  if(name.includes("تقرت"))
-    return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
-  if(name.includes("انسية") || name.includes("انسيه"))
-    return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
-  if(name.includes("السقيفة") || name.includes("السقيفه"))
-    return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
+  name=String(name).toLowerCase().replace(/[إأآ]/g,"ا").replace(/ة/g,"ه");
+  if(name.includes("تقرت")) return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
+  if(name.includes("انسية")) return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
+  if(name.includes("السقيفة")) return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
   return "";
-}
-
-function toggleLike(id){
-  if(localStorage.getItem("liked_"+id)){
-    alert("❤️ سبق لك الإعجاب بهذا العرض");
-    return;
-  }
-  fetch(SHEET_URL+"?action=like&id="+id)
-  .then(r=>r.json())
-  .then(r=>{
-    if(r.success){
-      document.getElementById("like-count-"+id).textContent=r.likes;
-      localStorage.setItem("liked_"+id,"1");
-    }
-  });
 }
 
 function renderOffers(data,filter="all"){
@@ -300,11 +292,11 @@ function renderOffers(data,filter="all"){
         <p>📅 ${o["تاريخ  الر حلة"]||""}</p>
         <p>⏳ ${o["مدة الرحلة"]||""}</p>
         <p><strong>💵 ${o["السعر الغرفة الجماعية (دج)"]||""} دج</strong></p>
+
         <div class="card-buttons">
           <a class="btn details" href="offer-details.html?id=${id}">📖 التفاصيل</a>
-          <button class="btn like" onclick="toggleLike('${id}')">
-            ❤️ <span id="like-count-${id}">${o["likes"]||0}</span>
-          </button>
+          <button class="btn like">❤️</button>
+          <a class="btn book" href="offer-details.html?id=${id}">🟢 أحجز الآن</a>
         </div>
       </div>`;
     });
@@ -315,14 +307,14 @@ function renderOffers(data,filter="all"){
 }
 
 function renderFiltered(){
-  renderOffers(offersData,document.getElementById("airportFilter").value);
+  renderOffers(offersData,airportFilter.value);
 }
 
 fetch(SHEET_URL)
 .then(r=>r.json())
 .then(d=>{
   offersData=d;
-  renderOffers(offersData);
+  renderOffers(d);
 });
 </script>
 
