@@ -30,15 +30,8 @@ body::before{
   align-items:center;
   justify-content:space-between;
 }
-.topbar h2{
-  margin:0;
-  font-size:18px;
-}
-.menu-btn{
-  font-size:26px;
-  cursor:pointer;
-  font-weight:900;
-}
+.topbar h2{margin:0;font-size:18px}
+.menu-btn{font-size:26px;font-weight:900;cursor:pointer}
 
 /* ===== SIDEBAR ===== */
 .sidebar{
@@ -61,9 +54,6 @@ body::before{
   color:#333;
   font-weight:700;
 }
-.sidebar a:hover{
-  background:#f2f2f2;
-}
 .closebtn{
   position:absolute;
   top:10px;
@@ -73,11 +63,7 @@ body::before{
 }
 
 /* ===== PAGE ===== */
-.page{
-  max-width:1150px;
-  margin:20px auto 70px;
-  padding:16px;
-}
+.page{max-width:1150px;margin:20px auto 70px;padding:16px}
 .title-box{
   background:rgba(255,255,255,.45);
   backdrop-filter:blur(8px);
@@ -87,18 +73,6 @@ body::before{
   margin-bottom:25px;
 }
 .title-box h1{margin:0;font-size:24px}
-
-/* ===== FILTER ===== */
-.filter-box{
-  text-align:center;
-  margin-bottom:30px;
-}
-.filter-box select{
-  padding:10px 18px;
-  font-size:15px;
-  border-radius:10px;
-  border:none;
-}
 
 /* ===== AIRPORT ===== */
 .airport-section{margin-bottom:35px}
@@ -111,17 +85,12 @@ body::before{
   background:linear-gradient(135deg,#FFD700,#FFC107);
 }
 
-/* ===== OFFERS ===== */
+/* ===== SCROLL ===== */
 .horizontal-scroll{
   display:flex;
   gap:16px;
   overflow-x:auto;
-  scroll-snap-type:x mandatory;
   padding-bottom:10px;
-}
-.horizontal-scroll::-webkit-scrollbar{height:6px}
-.horizontal-scroll::-webkit-scrollbar-thumb{
-  background:#aaa;border-radius:10px
 }
 
 /* ===== CARD ===== */
@@ -131,22 +100,14 @@ body::before{
   background:#fff;
   border-radius:18px;
   padding:15px;
-  padding-top:15px;
   box-shadow:0 10px 22px rgba(0,0,0,.18);
-  scroll-snap-align:start;
   transition:.3s;
 }
 .card.has-logo{padding-top:110px}
 .card:hover{transform:translateY(-6px)}
-.card h3{
-  margin:0 0 6px;
-  font-size:18px;
-  color:#007bff;
-}
-.card p{
-  margin:6px 0;
-  font-size:14px;
-}
+
+.card h3{margin:0 0 6px;font-size:18px;color:#0d6efd}
+.card p{margin:6px 0;font-size:14px}
 
 /* ===== LOGO ===== */
 .card-logo{
@@ -155,7 +116,6 @@ body::before{
   left:12px;
   width:90px;
   height:90px;
-  pointer-events:none;
 }
 .card-logo img{
   width:100%;
@@ -163,40 +123,59 @@ body::before{
   object-fit:contain;
 }
 
-/* ===== BUTTONS ===== */
+/* ===== MODERN BUTTONS ===== */
 .card-buttons{
-  display:flex;
+  display:grid;
+  grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-top:12px;
-  flex-wrap:wrap;
+  margin-top:14px;
 }
 .btn{
-  flex:1;
   border:none;
-  padding:10px;
+  padding:12px;
   font-size:14px;
-  font-weight:800;
-  border-radius:10px;
+  font-weight:900;
+  border-radius:14px;
   cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  transition:.25s;
+}
+
+/* تفاصيل */
+.btn.details{
+  background:linear-gradient(135deg,#0d6efd,#4dabf7);
   color:#fff;
 }
-.btn.details{background:#007bff}
-.btn.details:hover{background:#0056b3}
-.btn.like{background:#e53935}
 
-/* ===== BOOK NOW BUTTON (جديد) ===== */
-.btn.book{
-  background:linear-gradient(135deg,#28a745,#20c997);
-  animation:pulse 2.5s infinite, shake 6s infinite;
+/* إعجاب */
+.btn.like{
+  background:#fff;
+  color:#e53935;
+  border:2px solid #e53935;
 }
-.btn.book:hover{
-  transform:scale(1.05);
+.btn.like span{
+  background:#e53935;
+  color:#fff;
+  padding:2px 8px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+/* احجز */
+.btn.book{
+  grid-column:1/3;
+  background:linear-gradient(135deg,#28a745,#20c997);
+  color:#fff;
+  animation:pulse 2.5s infinite, shake 6s infinite;
 }
 
 /* ===== ANIMATIONS ===== */
 @keyframes pulse{
   0%{box-shadow:0 0 0 0 rgba(40,167,69,.6)}
-  70%{box-shadow:0 0 0 12px rgba(40,167,69,0)}
+  70%{box-shadow:0 0 0 14px rgba(40,167,69,0)}
   100%{box-shadow:0 0 0 0 rgba(40,167,69,0)}
 }
 @keyframes shake{
@@ -216,98 +195,99 @@ body::before{
   <h2>🕋 عروض العمرة</h2>
 </div>
 
+<!-- SIDEBAR -->
 <div id="mySidebar" class="sidebar">
   <span class="closebtn" onclick="closeSidebar()">×</span>
   <a href="index.html">🏠 الرئيسية</a>
   <a href="offers.html">🎁 عروض العمرة</a>
   <a href="contact.html">📞 اتصل بنا</a>
   <a href="about.html">❔ من نحن</a>
+  <a href="hajj-space.html">🕋 فضاء الحج</a>
+  <a href="join.html">📩 انضم إلينا</a>
+  <a href="upload.html">📤 تحميل جواز السفر</a>
+  <a href="reviews.html">💬 آراء المعتمرين</a>
+  <a href="space.html">🧾 فضاء المعتمر</a>
 </div>
 
 <div class="page">
-
   <div class="title-box">
     <h1>🌙 أحدث عروض العمرة – وكالات معتمدة</h1>
   </div>
 
-  <div class="filter-box">
-    ✈️ اختر مطار الانطلاق:
-    <select id="airportFilter" onchange="renderFiltered()">
-      <option value="all">الكل</option>
-      <option value="الجزائر">الجزائر</option>
-      <option value="ورقلة">ورقلة</option>
-      <option value="وهران">وهران</option>
-    </select>
-  </div>
-
   <div id="offersContainer">⏳ جاري تحميل العروض...</div>
-
 </div>
 
 <script>
 const SHEET_URL="https://script.google.com/macros/s/AKfycbzu_D4Gy4PL5NLfHXsFBOQD8Se8W1kJDH3rEEGna5WDZ0uTNUcgLsUGcrUIQlIzXZgj/exec";
 let offersData=[];
 
-function openSidebar(){mySidebar.style.width="260px";}
-function closeSidebar(){mySidebar.style.width="0";}
+function openSidebar(){mySidebar.style.width="260px"}
+function closeSidebar(){mySidebar.style.width="0"}
+
+/* ===== LOGO FIX (يشمل الأنسية) ===== */
+function normalize(txt){
+  return String(txt)
+    .toLowerCase()
+    .replace(/[إأآ]/g,"ا")
+    .replace(/ة/g,"ه")
+    .replace(/ّ/g,"")
+    .trim();
+}
 
 function getAgencyLogo(name=""){
-  name=String(name).toLowerCase().replace(/[إأآ]/g,"ا").replace(/ة/g,"ه");
-  if(name.includes("تقرت")) return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
-  if(name.includes("انسية")) return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
-  if(name.includes("السقيفة")) return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
+  const n=normalize(name);
+  if(n.includes("تقرت"))
+    return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
+  if(n.includes("انسية") || n.includes("انسيه"))
+    return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
+  if(n.includes("السقيفة") || n.includes("السقيفه"))
+    return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
   return "";
 }
 
-function renderOffers(data,filter="all"){
-  const c=document.getElementById("offersContainer");
-  c.innerHTML="";
-  const grouped={};
-
-  data.forEach(o=>{
-    const a=(o["المطار"]||"غير محدد").trim();
-    if(!grouped[a])grouped[a]=[];
-    grouped[a].push(o);
-  });
-
-  Object.keys(grouped).forEach(airport=>{
-    if(filter!=="all" && filter!==airport) return;
-
-    const section=document.createElement("div");
-    section.className="airport-section";
-    section.innerHTML=`<div class="airport-title">🛫 مطار ${airport}</div>`;
-    const scroll=document.createElement("div");
-    scroll.className="horizontal-scroll";
-
-    grouped[airport].forEach(o=>{
-      const id=o["ID"]||Math.random().toString(36).substr(2,9);
-      const agency=o["اسم الوكالة"]||o["الوكالة"]||"";
-      const logo=getAgencyLogo(agency);
-
-      scroll.innerHTML+=`
-      <div class="card ${logo?'has-logo':''}">
-        ${logo?`<div class="card-logo"><img src="${logo}"></div>`:""}
-        <h3>${o["اسم العرض"]||"عرض عمرة"}</h3>
-        <p>🏨 ${o["الفندق"]||""}</p>
-        <p>📅 ${o["تاريخ  الر حلة"]||""}</p>
-        <p>⏳ ${o["مدة الرحلة"]||""}</p>
-        <p><strong>💵 ${o["السعر الغرفة الجماعية (دج)"]||""} دج</strong></p>
-
-        <div class="card-buttons">
-          <a class="btn details" href="offer-details.html?id=${id}">📖 التفاصيل</a>
-          <button class="btn like">❤️</button>
-          <a class="btn book" href="offer-details.html?id=${id}">🟢 أحجز الآن</a>
-        </div>
-      </div>`;
-    });
-
-    section.appendChild(scroll);
-    c.appendChild(section);
+/* ===== LIKE FIX ===== */
+function toggleLike(id){
+  if(localStorage.getItem("liked_"+id)) return;
+  fetch(SHEET_URL+"?action=like&id="+id)
+  .then(r=>r.json())
+  .then(r=>{
+    if(r.success){
+      document.getElementById("like-"+id).textContent=r.likes;
+      localStorage.setItem("liked_"+id,"1");
+    }
   });
 }
 
-function renderFiltered(){
-  renderOffers(offersData,airportFilter.value);
+function renderOffers(data){
+  const c=document.getElementById("offersContainer");
+  c.innerHTML="";
+
+  data.forEach(o=>{
+    const id=o["ID"]||Math.random().toString(36).substr(2,9);
+    const agency=o["اسم الوكالة"]||o["الوكالة"]||"";
+    const logo=getAgencyLogo(agency);
+
+    c.innerHTML+=`
+    <div class="card ${logo?'has-logo':''}">
+      ${logo?`<div class="card-logo"><img src="${logo}"></div>`:""}
+      <h3>${o["اسم العرض"]||"عرض عمرة"}</h3>
+      <p>🏨 ${o["الفندق"]||""}</p>
+      <p>📅 ${o["تاريخ  الر حلة"]||""}</p>
+      <p><strong>💵 ${o["السعر الغرفة الجماعية (دج)"]||""} دج</strong></p>
+
+      <div class="card-buttons">
+        <a class="btn details" href="offer-details.html?id=${id}">📖 التفاصيل</a>
+
+        <button class="btn like" onclick="toggleLike('${id}')">
+          ❤️ إعجاب <span id="like-${id}">${o["likes"]||0}</span>
+        </button>
+
+        <a class="btn book" href="offer-details.html?id=${id}">
+          🟢 أحجز الآن
+        </a>
+      </div>
+    </div>`;
+  });
 }
 
 fetch(SHEET_URL)
