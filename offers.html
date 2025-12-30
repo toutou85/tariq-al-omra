@@ -274,7 +274,7 @@ function renderOffers(data, filter = "all") {
     if (!da) return 1;
     if (!db) return -1;
 
-    return da - db;
+    return db - da;
   });
 
   const c = document.getElementById("offersContainer");
