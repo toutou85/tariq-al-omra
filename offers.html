@@ -248,22 +248,41 @@ function toggleLike(id){
 }
 
 /* ===== RENDER ===== */
-function parseDateArabic(dateStr){
-  if(!dateStr) return null;
+function parseArabicDayMonth(text){
+  if(!text) return null;
 
-  // مثال: 12-01-2025 أو 12/01/2025
-  const clean = dateStr.replace(/-/g,"/").trim();
-  const parts = clean.split("/");
+  const clean = text
+    .split("_")[0]
+    .replace(/[-–]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim(); // مثال: "12 جانفي"
 
-  if(parts.length !== 3) return null;
+  const match = clean.match(
+    /(\d{1,2})\s*(جانفي|فيفري|مارس|أفريل|ماي|جوان|جويلية|أوت|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/
+  );
 
-  const day = parseInt(parts[0],10);
-  const month = parseInt(parts[1],10) - 1;
-  const year = parseInt(parts[2],10);
+  if(!match) return null;
 
-  return new Date(year, month, day);
+  const day = parseInt(match[1], 10);
+  const monthName = match[2];
+
+  const months = {
+    "جانفي": 0,
+    "فيفري": 1,
+    "مارس": 2,
+    "أفريل": 3,
+    "ماي": 4,
+    "جوان": 5,
+    "جويلية": 6,
+    "أوت": 7,
+    "سبتمبر": 8,
+    "أكتوبر": 9,
+    "نوفمبر": 10,
+    "ديسمبر": 11
+  };
+
+  return new Date(new Date().getFullYear(), months[monthName], day);
 }
-function renderOffers(data, filter = "all") {
 
   // 🔹 ترتيب حسب تاريخ الرحلة (من الأقرب إلى الأبعد)
   data.sort((a, b) => {
