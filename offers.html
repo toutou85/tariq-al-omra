@@ -34,8 +34,6 @@ body::before{
   margin:0;
   font-size:18px;
 }
-
-/* ===== HAMBURGER ===== */
 .menu-btn{
   font-size:26px;
   cursor:pointer;
@@ -80,7 +78,6 @@ body::before{
   margin:20px auto 70px;
   padding:16px;
 }
-
 .title-box{
   background:rgba(255,255,255,.45);
   backdrop-filter:blur(8px);
@@ -134,9 +131,13 @@ body::before{
   background:#fff;
   border-radius:18px;
   padding:15px;
+  padding-top:15px;
   box-shadow:0 10px 22px rgba(0,0,0,.18);
   scroll-snap-align:start;
   transition:.3s;
+}
+.card.has-logo{
+  padding-top:110px; /* ✨ هنا تنسحب الكتابة */
 }
 .card:hover{transform:translateY(-6px)}
 .card h3{
@@ -149,13 +150,14 @@ body::before{
   font-size:14px;
 }
 
-/* ===== AGENCY LOGO (بدون خلفية وبدون إطار) ===== */
+/* ===== AGENCY LOGO (90px - لا يغطي النص) ===== */
 .card-logo{
   position:absolute;
-  top:10px;
-  left:10px;
+  top:12px;
+  left:12px;
   width:90px;
   height:90px;
+  pointer-events:none;
 }
 .card-logo img{
   width:100%;
@@ -188,13 +190,11 @@ body::before{
 
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <span class="menu-btn" onclick="openSidebar()">☰</span>
   <h2>🕋 عروض العمرة</h2>
 </div>
 
-<!-- SIDEBAR -->
 <div id="mySidebar" class="sidebar">
   <span class="closebtn" onclick="closeSidebar()">×</span>
   <a href="index.html">🏠 الرئيسية</a>
@@ -238,23 +238,17 @@ let offersData=[];
 function openSidebar(){document.getElementById("mySidebar").style.width="260px";}
 function closeSidebar(){document.getElementById("mySidebar").style.width="0";}
 
-/* ===== اختيار شعار الوكالة (إصلاح شامل) ===== */
 function getAgencyLogo(name=""){
-  name = String(name)
-    .toLowerCase()
+  name = String(name).toLowerCase()
     .replace(/[إأآ]/g,"ا")
-    .replace(/ة/g,"ه")
-    .trim();
+    .replace(/ة/g,"ه");
 
   if(name.includes("تقرت"))
     return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
-
   if(name.includes("انسية") || name.includes("انسيه"))
     return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
-
   if(name.includes("السقيفة") || name.includes("السقيفه"))
     return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
-
   return "";
 }
 
@@ -295,18 +289,11 @@ function renderOffers(data,filter="all"){
 
     grouped[airport].forEach(o=>{
       const id=o["ID"]||Math.random().toString(36).substr(2,9);
-
-      const agency =
-        o["اسم الوكالة"] ||
-        o["الوكالة"] ||
-        o["agency"] ||
-        o["Agency"] ||
-        "";
-
+      const agency=o["اسم الوكالة"]||o["الوكالة"]||"";
       const logo=getAgencyLogo(agency);
 
       scroll.innerHTML+=`
-      <div class="card">
+      <div class="card ${logo?'has-logo':''}">
         ${logo?`<div class="card-logo"><img src="${logo}"></div>`:""}
         <h3>${o["اسم العرض"]||"عرض عمرة"}</h3>
         <p>🏨 ${o["الفندق"]||""}</p>
