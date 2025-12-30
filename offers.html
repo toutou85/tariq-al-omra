@@ -242,11 +242,19 @@ let offersData=[];
 function openSidebar(){document.getElementById("mySidebar").style.width="260px";}
 function closeSidebar(){document.getElementById("mySidebar").style.width="0";}
 
-/* ===== اختيار شعار الوكالة (إضافة فقط) ===== */
+/* ===== اختيار شعار الوكالة (إصلاح فقط) ===== */
 function getAgencyLogo(name=""){
-  if(name.includes("تقرت")) return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
-  if(name.includes("الانسية")) return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
-  if(name.includes("السقيفة")) return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
+  name = String(name).trim().toLowerCase();
+
+  if(name.includes("تقرت"))
+    return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
+
+  if(name.includes("الانسية") || name.includes("الإنسية"))
+    return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
+
+  if(name.includes("السقيفة"))
+    return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
+
   return "";
 }
 
@@ -287,7 +295,15 @@ function renderOffers(data,filter="all"){
 
     grouped[airport].forEach(o=>{
       const id=o["ID"]||Math.random().toString(36).substr(2,9);
-      const agency=o["اسم الوكالة"]||"";
+
+      /* ===== هنا الإصلاح الحقيقي ===== */
+      const agency =
+        o["اسم الوكالة"] ||
+        o["الوكالة"] ||
+        o["agency"] ||
+        o["Agency"] ||
+        "";
+
       const logo=getAgencyLogo(agency);
 
       scroll.innerHTML+=`
