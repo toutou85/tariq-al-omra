@@ -22,24 +22,55 @@ body::before{
 }
 
 /* ===== TOP BAR ===== */
-.topbar{background:#FFD700;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.topbar{
+  background:#FFD700;
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 .menu-btn{font-size:26px;font-weight:900;cursor:pointer}
 .topbar h2{margin:0;font-size:18px}
 
 /* ===== SIDEBAR ===== */
 .sidebar{
-  height:100%;width:0;position:fixed;top:0;right:0;background:#fff;
-  transition:.3s;box-shadow:-4px 0 15px rgba(0,0,0,.3);padding-top:60px;z-index:999
+  height:100%;
+  width:0;
+  position:fixed;
+  top:0;
+  right:0;
+  background:#fff;
+  overflow-x:hidden;
+  transition:.3s;
+  box-shadow:-4px 0 15px rgba(0,0,0,.3);
+  padding-top:60px;
+  z-index:9999;
 }
-.sidebar a{padding:12px 20px;display:block;text-decoration:none;color:#333;font-weight:700}
+.sidebar a{
+  padding:12px 20px;
+  display:block;
+  text-decoration:none;
+  color:#333;
+  font-weight:700;
+}
 .sidebar a:hover{background:#f2f2f2}
-.closebtn{position:absolute;top:10px;left:15px;font-size:28px;cursor:pointer}
+.closebtn{
+  position:absolute;
+  top:10px;
+  left:15px;
+  font-size:28px;
+  cursor:pointer;
+}
 
 /* ===== PAGE ===== */
 .page{max-width:1150px;margin:20px auto 70px;padding:16px}
 .title-box{
-  background:rgba(255,255,255,.45);backdrop-filter:blur(8px);
-  padding:18px;border-radius:16px;text-align:center;margin-bottom:25px
+  background:rgba(255,255,255,.45);
+  backdrop-filter:blur(8px);
+  padding:18px;
+  border-radius:16px;
+  text-align:center;
+  margin-bottom:25px
 }
 .title-box h1{margin:0;font-size:24px}
 
@@ -50,20 +81,30 @@ body::before{
 /* ===== AIRPORT ===== */
 .airport-section{margin-bottom:35px}
 .airport-title{
-  font-size:20px;font-weight:900;margin-bottom:14px;padding:14px;
-  border-radius:14px;background:linear-gradient(135deg,#FFD700,#FFC107)
+  font-size:20px;font-weight:900;margin-bottom:14px;
+  padding:14px;border-radius:14px;
+  background:linear-gradient(135deg,#FFD700,#FFC107)
 }
 
 /* ===== SCROLL ===== */
 .horizontal-scroll{
-  display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding-bottom:10px
 }
 
 /* ===== CARD ===== */
 .card{
-  position:relative;min-width:270px;background:#fff;border-radius:18px;
-  padding:15px;box-shadow:0 10px 22px rgba(0,0,0,.18);
-  scroll-snap-align:start;transition:.3s
+  position:relative;
+  min-width:270px;
+  background:#fff;
+  border-radius:18px;
+  padding:15px;
+  box-shadow:0 10px 22px rgba(0,0,0,.18);
+  scroll-snap-align:start;
+  transition:.3s
 }
 .card.has-logo{padding-top:110px}
 .card:hover{transform:translateY(-6px)}
@@ -76,25 +117,42 @@ body::before{
 
 /* ===== BUTTONS ===== */
 .card-buttons{
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px
 }
 .btn{
-  border:none;padding:12px;font-size:14px;font-weight:900;border-radius:14px;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px
+  border:none;
+  padding:12px;
+  font-size:14px;
+  font-weight:900;
+  border-radius:14px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px
 }
 .btn.details{background:linear-gradient(135deg,#0d6efd,#4dabf7);color:#fff}
 .btn.like{background:#fff;color:#e53935;border:2px solid #e53935}
 .btn.like span{background:#e53935;color:#fff;padding:2px 8px;border-radius:20px;font-size:12px}
 .btn.book{
-  grid-column:1/3;background:linear-gradient(135deg,#28a745,#20c997);
-  color:#fff;animation:pulse 2.5s infinite, shake 6s infinite
+  grid-column:1/3;
+  background:linear-gradient(135deg,#28a745,#20c997);
+  color:#fff;
+  animation:pulse 2.5s infinite, shake 6s infinite
 }
 
 /* ===== ANIM ===== */
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(40,167,69,.6)}70%{box-shadow:0 0 0 14px rgba(40,167,69,0)}}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(40,167,69,.6)}
+  70%{box-shadow:0 0 0 14px rgba(40,167,69,0)}
+}
 @keyframes shake{
   0%,90%,100%{transform:translateX(0)}
-  92%{transform:translateX(-3px)}94%{transform:translateX(3px)}
+  92%{transform:translateX(-3px)}
+  94%{transform:translateX(3px)}
 }
 </style>
 </head>
@@ -106,6 +164,7 @@ body::before{
   <h2>🕋 عروض العمرة</h2>
 </div>
 
+<!-- SIDEBAR -->
 <div id="mySidebar" class="sidebar">
   <span class="closebtn" onclick="closeSidebar()">×</span>
   <a href="index.html">🏠 الرئيسية</a>
@@ -144,12 +203,19 @@ body::before{
 const SHEET_URL="https://script.google.com/macros/s/AKfycbzu_D4Gy4PL5NLfHXsFBOQD8Se8W1kJDH3rEEGna5WDZ0uTNUcgLsUGcrUIQlIzXZgj/exec";
 let offersData=[];
 
-function openSidebar(){mySidebar.style.width="260px"}
-function closeSidebar(){mySidebar.style.width="0"}
+/* ===== FIX SIDEBAR (نهائي) ===== */
+const sidebar = document.getElementById("mySidebar");
 
-/* ===== NORMALIZE STRONG ===== */
-function normalizeArabic(txt){
-  return String(txt)
+function openSidebar(){
+  sidebar.style.width = "260px";
+}
+function closeSidebar(){
+  sidebar.style.width = "0";
+}
+
+/* ===== NORMALIZE ===== */
+function normalizeArabic(t){
+  return String(t)
     .toLowerCase()
     .replace(/[إأآٱ]/g,"ا")
     .replace(/ة/g,"ه")
@@ -159,22 +225,16 @@ function normalizeArabic(txt){
     .trim();
 }
 
-/* ===== FINAL LOGO MATCH (100%) ===== */
+/* ===== LOGO ===== */
 function getAgencyLogo(name=""){
-  const n = normalizeArabic(name);
-
-  if(/تقرت/.test(n))
-    return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
-
-  if(/انسية|انسيه/.test(n))
-    return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
-
-  if(/سقيفه|سقيفة|سقيف/.test(n))
-    return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
-
+  const n=normalizeArabic(name);
+  if(/تقرت/.test(n)) return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
+  if(/انسية|انسيه/.test(n)) return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
+  if(/سقيف/.test(n)) return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
   return "";
 }
 
+/* ===== LIKE ===== */
 function toggleLike(id){
   if(localStorage.getItem("liked_"+id)) return;
   fetch(SHEET_URL+"?action=like&id="+id)
@@ -187,6 +247,7 @@ function toggleLike(id){
   });
 }
 
+/* ===== RENDER ===== */
 function renderOffers(data,filter="all"){
   const c=document.getElementById("offersContainer");
   c.innerHTML="";
