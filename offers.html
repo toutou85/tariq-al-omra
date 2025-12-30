@@ -263,59 +263,67 @@ function parseDateArabic(dateStr){
 
   return new Date(year, month, day);
 }
-function renderOffers(data,filter="all"){
-  const
-data.sort((a,b)=>{
-  const da = parseDateArabic(a["تاريخ الرحلة"]);
-  const db = parseDateArabic(b["تاريخ الرحلة"]);
+function renderOffers(data, filter = "all") {
 
-  if(!da && !db) return 0;
-  if(!da) return 1;
-  if(!db) return -1;
+  // 🔹 ترتيب حسب تاريخ الرحلة (من الأقرب إلى الأبعد)
+  data.sort((a, b) => {
+    const da = parseDateArabic(a["تاريخ الرحلة"]);
+    const db = parseDateArabic(b["تاريخ الرحلة"]);
 
-  return da - db; // من الأقرب إلى الأبعد
-}); c=document.getElementById("offersContainer");
-  c.innerHTML="";
-  const grouped={};
+    if (!da && !db) return 0;
+    if (!da) return 1;
+    if (!db) return -1;
 
-  data.forEach(o=>{
-    const a=(o["المطار"]||"غير محدد").trim();
-    if(!grouped[a]) grouped[a]=[];
-    grouped[a].push(o);
+    return da - db;
   });
 
-  Object.keys(grouped).forEach(airport=>{
-    if(filter!=="all" && filter!==airport) return;
+  const c = document.getElementById("offersContainer");
+  c.innerHTML = "";
 
-    const section=document.createElement("div");
-    section.className="airport-section";
-    section.innerHTML=`<div class="airport-title">🛫 مطار ${airport}</div>`;
+  const grouped = {};
 
-    const scroll=document.createElement("div");
-    scroll.className="horizontal-scroll";
+  data.forEach(o => {
+    const airport = (o["المطار"] || "غير محدد").trim();
+    if (!grouped[airport]) grouped[airport] = [];
+    grouped[airport].push(o);
+  });
 
-    grouped[airport].forEach(o=>{
-      const id=o["ID"]||Math.random().toString(36).substr(2,9);
-      const agency=o["اسم الوكالة"]||o["الوكالة"]||"";
-      const logo=getAgencyLogo(agency);
+  Object.keys(grouped).forEach(airport => {
+    if (filter !== "all" && filter !== airport) return;
 
-      scroll.innerHTML+=`
-      <div class="card ${logo?'has-logo':''}">
-        ${logo?`<div class="card-logo"><img src="${logo}"></div>`:""}
-        <h3>${o["اسم العرض"]||"عرض عمرة"}</h3>
-        <p>🏨 ${o["الفندق"]||""}</p>
-        <p>⏳ المدة: ${o["المدة"] || "غير محددة"}</p>
-<p>📅 تاريخ الرحلة: ${o["تاريخ الرحلة"] || "غير محدد"}</p>
-        <p><strong>💵 ${o["السعر الغرفة الجماعية (دج)"]||""} دج</strong></p>
+    const section = document.createElement("div");
+    section.className = "airport-section";
+    section.innerHTML = `<div class="airport-title">🛫 مطار ${airport}</div>`;
 
-        <div class="card-buttons">
-          <a class="btn details" href="offer-details.html?id=${id}">📖 التفاصيل</a>
-          <button class="btn like" onclick="toggleLike('${id}')">
-            ❤️ إعجاب <span id="like-${id}">${o["likes"]||0}</span>
-          </button>
-          <a class="btn book" href="offer-details.html?id=${id}">🟢 أحجز الآن</a>
+    const scroll = document.createElement("div");
+    scroll.className = "horizontal-scroll";
+
+    grouped[airport].forEach(o => {
+      const id = o["ID"] || Math.random().toString(36).substr(2, 9);
+      const agency = o["اسم الوكالة"] || o["الوكالة"] || "";
+      const logo = getAgencyLogo(agency);
+
+      const duration = o["المدة"] || "";
+      const tripDate = o["تاريخ الرحلة"] || "";
+
+      scroll.innerHTML += `
+        <div class="card ${logo ? 'has-logo' : ''}">
+          ${logo ? `<div class="card-logo"><img src="${logo}"></div>` : ""}
+          <h3>${o["اسم العرض"] || "عرض عمرة"}</h3>
+          <p>🏨 ${o["الفندق"] || ""}</p>
+          ${duration ? `<p>⏳ المدة: ${duration}</p>` : ""}
+          ${tripDate ? `<p>📅 تاريخ الرحلة: ${tripDate}</p>` : ""}
+          <p><strong>💵 ${o["السعر الغرفة الجماعية (دج)"] || ""} دج</strong></p>
+
+          <div class="card-buttons">
+            <a class="btn details" href="offer-details.html?id=${id}">📖 التفاصيل</a>
+            <button class="btn like" onclick="toggleLike('${id}')">
+              ❤️ إعجاب <span id="like-${id}">${o["likes"] || 0}</span>
+            </button>
+            <a class="btn book" href="offer-details.html?id=${id}">🟢 أحجز الآن</a>
+          </div>
         </div>
-      </div>`;
+      `;
     });
 
     section.appendChild(scroll);
