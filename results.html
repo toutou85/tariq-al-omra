@@ -11,6 +11,53 @@ body{
   background:#f5f5f5;
   margin:0;
 }
+
+/* زر 3 خطوط */
+#menuBtn{
+  width:30px;
+  margin:15px;
+  cursor:pointer;
+}
+#menuBtn span{
+  display:block;
+  height:3px;
+  background:#000;
+  margin:6px 0;
+  border-radius:2px;
+}
+
+/* القائمة الجانبية */
+#sideMenu{
+  position:fixed;
+  top:0;
+  right:-260px;
+  width:260px;
+  height:100%;
+  background:#8b0000;
+  padding-top:60px;
+  transition:0.3s;
+  z-index:1000;
+}
+#sideMenu a{
+  display:block;
+  padding:15px;
+  color:#fff;
+  text-decoration:none;
+}
+#sideMenu a:hover{
+  background:rgba(255,255,255,0.2);
+}
+
+/* الخلفية */
+#overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:900;
+}
+
+/* المحتوى */
 .container{
   max-width:600px;
   background:#fff;
@@ -53,6 +100,19 @@ button{
 
 <body>
 
+<!-- زر القائمة -->
+<div id="menuBtn">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<div id="overlay" onclick="closeMenu()"></div>
+
+<nav id="sideMenu">
+  <a href="offers.html" onclick="closeMenu()">🕋 عروض العمرة المتوفرة</a>
+</nav>
+
 <div class="container">
 <h2>📋 متابعة طلب العمرة</h2>
 
@@ -62,7 +122,7 @@ button{
 </p>
 
 <label>رقم الهاتف</label>
-<input type="tel" id="phone" placeholder="مثال: 0550123456">
+<input type="tel" id="phone" placeholder="0550123456">
 
 <button onclick="search()">🔍 بحث</button>
 
@@ -70,10 +130,15 @@ button{
 </div>
 
 <script>
-const apiURL = "PUT_SAME_SHEET_SCRIPT_URL_HERE";
+const apiURL = "PUT_YOUR_GOOGLE_SCRIPT_URL_HERE";
+
+function normalizePhone(phone){
+  return phone.replace(/\D/g,"").replace(/^0+/,'');
+}
 
 function search(){
-  const phone = document.getElementById("phone").value.trim();
+  const phoneInput = document.getElementById("phone").value;
+  const phone = normalizePhone(phoneInput);
   const output = document.getElementById("output");
 
   if(!phone){
@@ -83,7 +148,7 @@ function search(){
 
   output.innerHTML = "⏳ جاري البحث...";
 
-  fetch(apiURL + "?phone=" + encodeURIComponent(phone))
+  fetch(apiURL + "?phone=" + phone)
   .then(res => res.json())
   .then(data => {
     if(!data.found){
@@ -97,11 +162,11 @@ function search(){
     output.innerHTML = `
       <div class="result">
         <p>👤 <strong>الاسم:</strong> ${data.name}</p>
-        <p>📌 <strong>حالة الطلب:</strong> 
+        <p>📌 <strong>حالة الطلب:</strong>
           <span class="status">${data.status}</span>
         </p>
         <div class="note">
-          ⏳ في حال كانت الحالة "قيد المعالجة"، يرجى الانتظار  
+          ⏳ إذا كانت الحالة "قيد المعالجة" يرجى الانتظار  
           وسيتم إضافة العروض قريبًا إن شاء الله
         </div>
       </div>
@@ -110,6 +175,18 @@ function search(){
   .catch(()=>{
     output.innerHTML="❌ حدث خطأ أثناء البحث";
   });
+}
+
+/* القائمة */
+const menu = document.getElementById("sideMenu");
+const overlay = document.getElementById("overlay");
+document.getElementById("menuBtn").onclick = () => {
+  menu.style.right="0";
+  overlay.style.display="block";
+};
+function closeMenu(){
+  menu.style.right="-260px";
+  overlay.style.display="none";
 }
 </script>
 
