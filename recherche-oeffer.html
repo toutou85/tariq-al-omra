@@ -11,6 +11,53 @@ body{
   background:#f5f5f5;
   margin:0;
 }
+
+/* زر 3 خطوط */
+#menuBtn{
+  width:30px;
+  cursor:pointer;
+  margin:15px;
+}
+#menuBtn span{
+  display:block;
+  height:3px;
+  background:#000;
+  margin:6px 0;
+  border-radius:2px;
+}
+
+/* القائمة الجانبية */
+#sideMenu{
+  position:fixed;
+  top:0;
+  right:-260px;
+  width:260px;
+  height:100%;
+  background:#8b0000;
+  padding-top:60px;
+  transition:0.3s;
+  z-index:1000;
+}
+#sideMenu a{
+  display:block;
+  padding:15px;
+  color:#fff;
+  text-decoration:none;
+}
+#sideMenu a:hover{
+  background:rgba(255,255,255,0.2);
+}
+
+/* الخلفية */
+#overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:900;
+}
+
+/* المحتوى */
 .container{
   max-width:600px;
   background:#fff;
@@ -34,6 +81,8 @@ button{
   margin-top:20px;
   cursor:pointer;
 }
+
+/* نافذة الانتظار */
 #loadingPopup{
   display:none;
   position:fixed;
@@ -50,56 +99,28 @@ button{
   text-align:center;
   max-width:320px;
 }
-#menuBtn{
-  font-size:20px;
-  padding:10px;
-  margin:10px;
-}
-#sideMenu{
-  position:fixed;
-  top:0;
-  right:-260px;
-  width:260px;
-  height:100%;
-  background:#8b0000;
-  padding-top:60px;
-  transition:0.3s;
-  z-index:1000;
-}
-#sideMenu a{
-  display:block;
-  padding:15px;
-  color:#fff;
-  text-decoration:none;
-}
-#sideMenu a:hover{
-  background:rgba(255,255,255,0.2);
-}
-#overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.5);
-  z-index:900;
-}
 </style>
 </head>
 
 <body>
 
 <!-- زر القائمة -->
-<button id="menuBtn">☰ القائمة</button>
+<div id="menuBtn">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 
 <!-- الخلفية -->
 <div id="overlay" onclick="closeMenu()"></div>
 
 <!-- القائمة الجانبية -->
 <nav id="sideMenu">
-  <a href="#home" onclick="closeMenu()">الرئيسية</a>
-  <a href="#offers" onclick="closeMenu()">العروض</a>
-  <a href="#contact" onclick="closeMenu()">اتصل بنا</a>
+  <a href="offers.html" onclick="closeMenu()">🕋 عروض طريق العمرة</a>
+  <a href="results.html" onclick="closeMenu()">📄 نتائج العروض</a>
 </nav>
 
+<!-- المحتوى -->
 <div class="container">
 <h2>🔍 ابحث عن عرض العمرة الذي تريد</h2>
 
@@ -196,12 +217,9 @@ const popup = document.getElementById("loadingPopup");
 form.addEventListener("submit", e => {
   e.preventDefault();
   popup.style.display = "flex";
-
   fetch(scriptURL,{method:"POST",body:new FormData(form)})
   .then(()=>{
-    setTimeout(()=>{
-      location.href = "results.html";
-    },3000);
+    setTimeout(()=>{ location.href="results.html"; },3000);
   })
   .catch(()=>{
     popup.style.display="none";
