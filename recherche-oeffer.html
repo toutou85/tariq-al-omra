@@ -50,12 +50,55 @@ button{
   text-align:center;
   max-width:320px;
 }
+#menuBtn{
+  font-size:20px;
+  padding:10px;
+}
+
+#sideMenu{
+  position:fixed;
+  top:0;
+  right:-260px;
+  width:260px;
+  height:100%;
+  background:#8b0000;
+  padding-top:60px;
+  transition:0.3s;
+  z-index:1000;
+}
+
+#sideMenu a{
+  display:block;
+  padding:15px;
+  color:#fff;
+  text-decoration:none;
+}
+
+#sideMenu a:hover{
+  background:rgba(255,255,255,0.2);
+}
+
+#overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:900;
+}
 </style>
 </head>
 
 <body>
+<!-- زر فتح القائمة -->
+<button id="menuBtn">☰ القائمة</button>
 
-<div class="container">
+<!-- خلفية معتمة -->
+<div id="overlay" onclick="closeMenu()"></div>
+
+<!-- القائمة الجانبية -->
+<nav id="sideMenu">
+  <a href="#home" onclick="closeMenu()">الرئيسية</a>
+  <a href="#offers" 
 <h2>🔍 ابحث عن عرض العمرة الذي تريد</h2>
 
 <form id="umrahForm">
@@ -166,5 +209,19 @@ form.addEventListener("submit", e => {
 });
 </script>
 
+<script>
+const menu = document.getElementById("sideMenu");
+const overlay = document.getElementById("overlay");
+
+document.getElementById("menuBtn").onclick = () => {
+  menu.style.right = "0";
+  overlay.style.display = "block";
+};
+
+function closeMenu(){
+  menu.style.right = "-260px";
+  overlay.style.display = "none";
+}
+</script>
 </body>
 </html>
