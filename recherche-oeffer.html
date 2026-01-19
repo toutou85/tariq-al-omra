@@ -18,15 +18,8 @@ body{
   padding:20px;
   border-radius:12px;
 }
-h2{
-  text-align:center;
-  color:#8b0000;
-}
-label{
-  display:block;
-  margin-top:12px;
-  font-weight:bold;
-}
+h2{text-align:center;color:#8b0000}
+label{display:block;margin-top:12px;font-weight:bold}
 input,select,textarea,button{
   width:100%;
   padding:10px;
@@ -40,6 +33,22 @@ button{
   font-size:16px;
   margin-top:20px;
   cursor:pointer;
+}
+#loadingPopup{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+}
+#loadingPopup div{
+  background:#fff;
+  padding:25px;
+  border-radius:12px;
+  text-align:center;
+  max-width:320px;
 }
 </style>
 </head>
@@ -72,7 +81,7 @@ button{
   <option>غرداية</option>
   <option>تمنغاست</option>
   <option>جيجل</option>
-  <option>الودي</option>
+  <option>الوادي</option>
 </select>
 
 <label>نوع الفندق</label>
@@ -120,21 +129,40 @@ button{
 <textarea name="note" rows="3"></textarea>
 
 <button type="submit">📩 إرسال الطلب</button>
-
 </form>
 </div>
 
-<script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbxMeK1KZMJvbpd2q26SDclcxRarVmUWaVqd4mzkDIG-5TfT0D6GRxQutQG_UUJuHXhICA/exec";
+<!-- نافذة الانتظار -->
+<div id="loadingPopup">
+  <div>
+    <h3>⏳ جارٍ إرسال طلبك</h3>
+    <p>استغفر الله العظيم 🤍</p>
+    <p style="font-size:14px;color:#555">
+      تحضير العروض قد يستغرق بعض الوقت
+    </p>
+  </div>
+</div>
 
-document.getElementById("umrahForm").addEventListener("submit", e => {
+<script>
+const scriptURL = "PUT_REQUEST_SHEET_SCRIPT_URL_HERE";
+const form = document.getElementById("umrahForm");
+const popup = document.getElementById("loadingPopup");
+
+form.addEventListener("submit", e => {
   e.preventDefault();
-  fetch(scriptURL, { method: "POST", body: new FormData(e.target)})
-  .then(() => {
-    alert("تم إرسال طلبك بنجاح، سنتواصل معك قريبًا");
-    e.target.reset();
+  const phone = form.phone.value;
+  popup.style.display = "flex";
+
+  fetch(scriptURL,{method:"POST",body:new FormData(form)})
+  .then(()=>{
+    setTimeout(()=>{
+      location.href = "results.html?phone="+encodeURIComponent(phone);
+    },3000);
   })
-  .catch(() => alert("حدث خطأ، حاول مرة أخرى"));
+  .catch(()=>{
+    popup.style.display="none";
+    alert("حدث خطأ، حاول مرة أخرى");
+  });
 });
 </script>
 
