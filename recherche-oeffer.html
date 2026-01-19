@@ -53,8 +53,8 @@ button{
 #menuBtn{
   font-size:20px;
   padding:10px;
+  margin:10px;
 }
-
 #sideMenu{
   position:fixed;
   top:0;
@@ -66,18 +66,15 @@ button{
   transition:0.3s;
   z-index:1000;
 }
-
 #sideMenu a{
   display:block;
   padding:15px;
   color:#fff;
   text-decoration:none;
 }
-
 #sideMenu a:hover{
   background:rgba(255,255,255,0.2);
 }
-
 #overlay{
   display:none;
   position:fixed;
@@ -88,18 +85,22 @@ button{
 </style>
 </head>
 
-<!-- زر فتح القائمة -->
+<body>
+
+<!-- زر القائمة -->
 <button id="menuBtn">☰ القائمة</button>
 
-<!-- خلفية معتمة -->
+<!-- الخلفية -->
 <div id="overlay" onclick="closeMenu()"></div>
 
 <!-- القائمة الجانبية -->
 <nav id="sideMenu">
   <a href="#home" onclick="closeMenu()">الرئيسية</a>
-  <a href="#offers" 
+  <a href="#offers" onclick="closeMenu()">العروض</a>
+  <a href="#contact" onclick="closeMenu()">اتصل بنا</a>
+</nav>
 
-<body>
+<div class="container">
 <h2>🔍 ابحث عن عرض العمرة الذي تريد</h2>
 
 <form id="umrahForm">
@@ -194,13 +195,12 @@ const popup = document.getElementById("loadingPopup");
 
 form.addEventListener("submit", e => {
   e.preventDefault();
-  const phone = form.phone.value;
   popup.style.display = "flex";
 
   fetch(scriptURL,{method:"POST",body:new FormData(form)})
   .then(()=>{
     setTimeout(()=>{
-      location.href = "results.html?phone="+encodeURIComponent(phone);
+      location.href = "results.html";
     },3000);
   })
   .catch(()=>{
@@ -224,5 +224,6 @@ function closeMenu(){
   overlay.style.display = "none";
 }
 </script>
+
 </body>
 </html>
