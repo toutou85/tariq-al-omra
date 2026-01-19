@@ -6,52 +6,111 @@
 <title>نتائج البحث</title>
 
 <style>
-body{font-family:Tajawal;background:#f5f5f5;margin:0}
-.container{max-width:800px;margin:20px auto;padding:15px}
-.card{
+body{
+  font-family:Tajawal,Arial;
+  background:#f5f5f5;
+  margin:0;
+}
+.container{
+  max-width:600px;
   background:#fff;
-  padding:15px;
+  margin:20px auto;
+  padding:20px;
   border-radius:12px;
-  margin-bottom:15px;
 }
 h2{text-align:center;color:#8b0000}
+label{display:block;margin-top:15px;font-weight:bold}
+input,button{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+button{
+  background:#8b0000;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+}
+.result{
+  margin-top:20px;
+  padding:15px;
+  background:#f9f9f9;
+  border-radius:10px;
+}
+.status{
+  font-weight:bold;
+  color:#006400;
+}
+.note{
+  margin-top:10px;
+  font-size:14px;
+  color:#555;
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<h2>📋 نتائج عروض العمرة</h2>
+<h2>📋 متابعة طلب العمرة</h2>
+
 <p style="text-align:center;color:#555">
-⏳ قد تستغرق العروض بعض الوقت، في حال عدم ظهور نتائج يرجى العودة لاحقًا
+أدخل رقم هاتفك للاطلاع على حالة طلبك  
+<br>⏳ قد تستغرق العروض بعض الوقت
 </p>
 
-<div id="results"></div>
+<label>رقم الهاتف</label>
+<input type="tel" id="phone" placeholder="مثال: 0550123456">
+
+<button onclick="search()">🔍 بحث</button>
+
+<div id="output"></div>
 </div>
 
 <script>
-const phone = new URLSearchParams(location.search).get("phone");
-const resultsDiv = document.getElementById("results");
-const apiURL = "PUT_RESULTS_SHEET_SCRIPT_URL_HERE?phone="+phone;
+const apiURL = "PUT_SAME_SHEET_SCRIPT_URL_HERE";
 
-fetch(apiURL)
-.then(res=>res.json())
-.then(data=>{
-  if(data.length===0){
-    resultsDiv.innerHTML="<p style='text-align:center'>لا توجد عروض حالياً</p>";
+function search(){
+  const phone = document.getElementById("phone").value.trim();
+  const output = document.getElementById("output");
+
+  if(!phone){
+    alert("يرجى إدخال رقم الهاتف");
     return;
   }
-  data.forEach(o=>{
-    resultsDiv.innerHTML += `
-      <div class="card">
-        <strong>${o.title}</strong><br>
-        الفندق: ${o.hotel}<br>
-        المدة: ${o.duration}<br>
-        السعر: ${o.price}<br>
-        المسار: ${o.route}
-      </div>`;
+
+  output.innerHTML = "⏳ جاري البحث...";
+
+  fetch(apiURL + "?phone=" + encodeURIComponent(phone))
+  .then(res => res.json())
+  .then(data => {
+    if(!data.found){
+      output.innerHTML = `
+        <div class="result">
+          ❌ لم يتم العثور على طلب بهذا الرقم
+        </div>`;
+      return;
+    }
+
+    output.innerHTML = `
+      <div class="result">
+        <p>👤 <strong>الاسم:</strong> ${data.name}</p>
+        <p>📌 <strong>حالة الطلب:</strong> 
+          <span class="status">${data.status}</span>
+        </p>
+        <div class="note">
+          ⏳ في حال كانت الحالة "قيد المعالجة"، يرجى الانتظار  
+          وسيتم إضافة العروض قريبًا إن شاء الله
+        </div>
+      </div>
+    `;
+  })
+  .catch(()=>{
+    output.innerHTML="❌ حدث خطأ أثناء البحث";
   });
-});
+}
 </script>
 
 </body>
