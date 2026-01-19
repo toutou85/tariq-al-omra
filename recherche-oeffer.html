@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ابحث عن عرض العمرة</title>
+
+<style>
+body{
+  font-family:Tajawal,Arial;
+  background:#f5f5f5;
+  margin:0;
+}
+.container{
+  max-width:600px;
+  background:#fff;
+  margin:20px auto;
+  padding:20px;
+  border-radius:12px;
+}
+h2{
+  text-align:center;
+  color:#8b0000;
+}
+label{
+  display:block;
+  margin-top:12px;
+  font-weight:bold;
+}
+input,select,textarea,button{
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+button{
+  background:#8b0000;
+  color:#fff;
+  font-size:16px;
+  margin-top:20px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>🔍 ابحث عن عرض العمرة الذي تريد</h2>
+
+<form id="umrahForm">
+
+<label>الاسم</label>
+<input type="text" name="name" required>
+
+<label>اللقب</label>
+<input type="text" name="lastname" required>
+
+<label>رقم الهاتف</label>
+<input type="tel" name="phone" required>
+
+<label>المطار المفضل</label>
+<select name="airport" required>
+  <option value="">اختر</option>
+  <option>الجزائر</option>
+  <option>ورقلة</option>
+  <option>قسنطينة</option>
+  <option>وهران</option>
+</select>
+
+<label>نوع الفندق</label>
+<select name="hotel">
+  <option>اقتصادي</option>
+  <option>عادي</option>
+  <option>VIP</option>
+</select>
+
+<label>مدة الرحلة</label>
+<select name="duration">
+  <option>12 يوم</option>
+  <option>14 يوم</option>
+  <option>15 يوم</option>
+  <option>20 يوم</option>
+  <option>28 يوم</option>
+  <option>30 يوم</option>
+  <option>45 يوم</option>
+  <option>55 يوم</option>
+  <option>60 يوم</option>
+</select>
+
+<label>نوع الغرفة</label>
+<select name="room">
+  <option>ثنائية</option>
+  <option>ثلاثية</option>
+  <option>رباعية</option>
+  <option>خماسية</option>
+</select>
+
+<label>مسار الرحلة</label>
+<select name="route">
+  <option>دخول جدة – خروج المدينة</option>
+  <option>دخول المدينة – خروج جدة</option>
+  <option>جدة – جدة</option>
+</select>
+
+<label>نوع الرحلة</label>
+<select name="flight">
+  <option>مباشرة</option>
+  <option>غير مباشرة</option>
+</select>
+
+<label>ملاحظة</label>
+<textarea name="note" rows="3"></textarea>
+
+<button type="submit">📩 إرسال الطلب</button>
+
+</form>
+</div>
+
+<script>
+const scriptURL = "ضع_رابط_Google_Apps_Script_هنا";
+
+document.getElementById("umrahForm").addEventListener("submit", e => {
+  e.preventDefault();
+  fetch(scriptURL, { method: "POST", body: new FormData(e.target)})
+  .then(() => {
+    alert("تم إرسال طلبك بنجاح، سنتواصل معك قريبًا");
+    e.target.reset();
+  })
+  .catch(() => alert("حدث خطأ، حاول مرة أخرى"));
+});
+</script>
+
+</body>
+</html>
