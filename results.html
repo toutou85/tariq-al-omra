@@ -164,7 +164,7 @@ const apiURL =
 
 // 🔗 رابط عروض الوكالات
 const OFFERS_API =
-"https://script.google.com/macros/s/AKfycbyJGUtLiQNl2BZIOurSqEue3hNzKiFB07RPGHpe9QozQrBY9vL-72S4NDqSi7_qVugX2w/exec";
+"https://script.google.com/macros/s/AKfycbx-Q6L4AHvlTXoSuU61aX_ndXT-WdLvWQ9TlCSRF-0P2DiBI5GlnX8UOcGOVFxSyn_lOQ/exec";
 
 // 🔁 توحيد رقم الهاتف
 function normalizePhone(phone){
@@ -271,6 +271,16 @@ document.getElementById("menuBtn").onclick = () => {
   menu.style.right = "0";
   overlay.style.display = "block";
 };
+function formatDate(dateStr){
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
+
+  return d.toLocaleDateString("ar-DZ", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  });
+}
 
 function closeMenu(){
   menu.style.right = "-260px";
