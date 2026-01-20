@@ -7,95 +7,20 @@
 
 <style>
 *{box-sizing:border-box}
-
 body{
   margin:0;
-  font-family:Tajawal,Arial,sans-serif;
+  font-family:Tajawal,Arial;
   background:#f5f5f5;
 }
-
-/* زر القائمة */
-.menu-btn{
-  position:fixed;
-  top:15px;
-  right:15px;
-  background:#8b0000;
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  padding:10px 14px;
-  font-size:20px;
-  cursor:pointer;
-  z-index:1003;
-}
-
-/* الخلفية المعتمة */
-.overlay{
-  position:fixed;
-  top:0;
-  right:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,.4);
-  display:none;
-  z-index:1001;
-}
-.overlay.active{display:block}
-
-/* القائمة الجانبية */
-.sidebar{
-  position:fixed;
-  top:0;
-  right:-280px;
-  width:260px;
-  height:100%;
-  background:#fff;
-  padding:20px;
-  box-shadow:-2px 0 10px rgba(0,0,0,.2);
-  transition:.3s ease;
-  z-index:1002;
-}
-.sidebar.active{right:0}
-
-.sidebar h3{
-  margin-top:0;
-  color:#8b0000;
-  text-align:center;
-}
-
-.sidebar a{
-  display:block;
-  margin:15px 0;
-  padding:12px;
-  background:#8b0000;
-  color:#fff;
-  text-decoration:none;
-  border-radius:6px;
-  text-align:center;
-  font-weight:bold;
-}
-.sidebar a:hover{opacity:.9}
-
-/* المحتوى */
 .container{
   max-width:800px;
+  margin:40px auto;
   background:#fff;
-  margin:70px auto 20px;
   padding:20px;
   border-radius:10px;
 }
-
-h2{
-  text-align:center;
-  color:#8b0000;
-}
-
-label{
-  display:block;
-  margin-top:12px;
-  font-weight:bold;
-}
-
+h2{text-align:center;color:#8b0000}
+label{display:block;margin-top:12px;font-weight:bold}
 input,select{
   width:100%;
   padding:10px;
@@ -103,14 +28,9 @@ input,select{
   border:1px solid #ccc;
   border-radius:6px;
 }
-
-.row{
-  display:flex;
-  gap:10px;
-}
-.row > div{flex:1}
-
-button.submit{
+.row{display:flex;gap:10px}
+.row>div{flex:1}
+button{
   width:100%;
   margin-top:20px;
   padding:14px;
@@ -121,29 +41,33 @@ button.submit{
   font-size:16px;
   cursor:pointer;
 }
-button.submit:hover{opacity:.9}
+#logoBox{
+  text-align:center;
+  margin:15px 0;
+}
+#logoBox img{
+  max-width:160px;
+  max-height:100px;
+  display:none;
+}
 </style>
 </head>
 
 <body>
 
-<button class="menu-btn" onclick="openMenu()">☰</button>
-
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-<div class="sidebar" id="sidebar">
-  <h3>📂 القائمة</h3>
-  <a href="results.html">🔍 العروض / نتائج البحث</a>
-  <a href="index.html">🏠 الصفحة الرئيسية</a>
-</div>
-
 <div class="container">
-<h2>📋 إدراج عرض عمرة جديد</h2>
+<h2>📋 إدراج عرض عمرة</h2>
 
 <form id="offerForm">
 
-<label>اسم الوكالة</label>
-<input name="agency" required>
+<label>الوكالة</label>
+<select name="agency" id="agencySelect" required>
+  <option value="">⏳ تحميل الوكالات...</option>
+</select>
+
+<div id="logoBox">
+  <img id="agencyLogo">
+</div>
 
 <div class="row">
   <div>
@@ -166,7 +90,7 @@ button.submit:hover{opacity:.9}
   </div>
   <div>
     <label>المدة</label>
-    <input name="duration" placeholder="مثال: 15 يوم" required>
+    <input name="duration" required>
   </div>
 </div>
 
@@ -178,76 +102,69 @@ button.submit:hover{opacity:.9}
 </select>
 
 <label>مطار الإقلاع</label>
-<select name="airport" required>
-  <option value="">اختر مطار الإقلاع</option>
-  <option>مطار هواري بومدين – الجزائر</option>
-  <option>مطار أحمد بن بلة – وهران</option>
-  <option>مطار رابح بيطاط – عنابة</option>
-  <option>مطار محمد بوضياف – قسنطينة</option>
-  <option>مطار مصطفى بن بولعيد – باتنة</option>
-  <option>مطار غرداية – نوميرات</option>
-  <option>مطار أدرار – توات</option>
-  <option>مطار تمنراست – أقا الناظر</option>
-  <option>مطار جيجل</option>
-  <option>مطار ورقلة</option>
-</select>
-
-<h3>💰 الأسعار</h3>
+<input name="airport" required>
 
 <div class="row">
-  <div><input name="group" placeholder="غرفة جماعية"></div>
+  <div><input name="group" placeholder="جماعية"></div>
   <div><input name="five" placeholder="خماسية"></div>
 </div>
-
 <div class="row">
   <div><input name="four" placeholder="رباعية"></div>
   <div><input name="three" placeholder="ثلاثية"></div>
 </div>
 
-<label>غرفة ثنائية</label>
-<input name="two">
+<input name="two" placeholder="ثنائية">
+<input name="hotel" placeholder="اسم الفندق" required>
+<input name="phone" placeholder="الهاتف" required>
 
-<label>اسم الفندق</label>
-<input name="hotel" required>
+<button type="submit">🚀 نشر العرض</button>
+<p id="msg" style="text-align:center"></p>
 
-<label>رقم الهاتف</label>
-<input name="phone" required>
-
-<button type="submit" class="submit">🚀 انطلق</button>
 </form>
-
-<p id="msg" style="text-align:center;margin-top:15px"></p>
 </div>
 
 <script>
+const API_URL = "https://script.google.com/macros/s/AKfycbyi80ahWAbFrOPWxzwa_qM01iE0elSW4nRKmVMk86EJ2Q7AbLfQQSNgIO3RAYOjDHsWTA/exec";
+
+const agencySelect = document.getElementById("agencySelect");
+const logoImg = document.getElementById("agencyLogo");
+const msg = document.getElementById("msg");
 const form = document.getElementById("offerForm");
-const msg  = document.getElementById("msg");
 
-form.addEventListener("submit", e=>{
-  e.preventDefault();
-  msg.innerText="⏳ جاري الإرسال...";
+let agencies = {};
 
-  fetch("https://script.google.com/macros/s/AKfycbyi80ahWAbFrOPWxzwa_qM01iE0elSW4nRKmVMk86EJ2Q7AbLfQQSNgIO3RAYOjDHsWTA/exec",{
-    method:"POST",
-    body:new FormData(form)
-  })
-  .then(()=>{
-    msg.innerText="✅ تم نشر العرض بنجاح";
-    form.reset();
-  })
-  .catch(()=>{
-    msg.innerText="❌ حدث خطأ أثناء الإرسال";
+// 🔽 جلب الوكالات من Google Sheets
+fetch(API_URL)
+.then(res=>res.json())
+.then(data=>{
+  agencySelect.innerHTML = `<option value="">اختر الوكالة</option>`;
+  data.forEach(o=>{
+    if(!agencies[o.agency]){
+      agencies[o.agency] = o.logo;
+      agencySelect.innerHTML += `<option value="${o.agency}">${o.agency}</option>`;
+    }
   });
 });
 
-function openMenu(){
-  sidebar.classList.add("active");
-  overlay.classList.add("active");
-}
-function closeMenu(){
-  sidebar.classList.remove("active");
-  overlay.classList.remove("active");
-}
+// 🖼️ عرض الشعار عند اختيار الوكالة
+agencySelect.addEventListener("change",()=>{
+  const logo = agencies[agencySelect.value];
+  if(logo){
+    logoImg.src = logo;
+    logoImg.style.display = "block";
+  }else{
+    logoImg.style.display = "none";
+  }
+});
+
+// 🚀 إرسال النموذج
+form.addEventListener("submit",e=>{
+  e.preventDefault();
+  msg.textContent="⏳ جاري الإرسال...";
+  fetch(API_URL,{method:"POST",body:new FormData(form)})
+  .then(()=>msg.textContent="✅ تم نشر العرض")
+  .catch(()=>msg.textContent="❌ خطأ");
+});
 </script>
 
 </body>
