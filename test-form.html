@@ -1,3 +1,337 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متابعة طلب العمرة + العروض</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{font-family:Tajawal,Arial;background:#f5f5f5;margin:0}
+
+/* زر القائمة */
+#menuBtn{
+  width:30px;
+  margin:15px;
+  cursor:pointer;
+}
+#menuBtn span{
+  display:block;
+  height:3px;
+  background:#000;
+  margin:6px 0;
+  border-radius:2px;
+}
+
+/* القائمة الجانبية */
+#sideMenu{
+  position:fixed;
+  top:0;
+  right:-260px;
+  width:260px;
+  height:100%;
+  background:#8b0000;
+  padding-top:60px;
+  transition:.3s;
+  z-index:10000;
+}
+#sideMenu a{
+  display:block;
+  padding:15px;
+  color:#fff;
+  text-decoration:none;
+}
+#sideMenu a:hover{
+  background:rgba(255,255,255,.2);
+}
+
+/* الخلفية */
+#overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  z-index:9000;
+}
+
+.container{
+  max-width:650px;
+  background:#fff;
+  margin:20px auto;
+  padding:20px;
+  border-radius:12px;
+}
+
+h2{text-align:center;color:#8b0000}
+
+button,input{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border-radius:8px;
+  border:1px solid #ccc
+}
+button{background:#8b0000;color:#fff;cursor:pointer}
+
+.result{
+  background:#f9f9f9;
+  padding:15px;
+  border-radius:10px;
+  margin-top:15px;
+}
+
+.offer-card{
+  background:#fafafa;
+  margin-top:15px;
+  padding:15px;
+  border-radius:10px;
+  border:1px solid #eee;
+}
+
+/* Modal */
+#modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:9999;
+}
+#modalBox{
+  background:#fff;
+  max-width:420px;
+  margin:10% auto;
+  padding:20px;
+  border-radius:12px;
+}
+
+/* WhatsApp */
+.whatsapp-top{
+  position:fixed;
+  top:15px;
+  left:15px;
+  width:55px;
+  height:55px;
+  background:#25D366;
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  z-index:11000;
+}
+.offer-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.offer-agency{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:bold;
+}
+
+
+.offer-logo{
+  width:40px;
+  height:40px;
+  object-fit:contain;
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  padding:0;
+}
+
+.offer-card{
+  background:#ffffff;
+  border-radius:16px;
+  padding:16px;
+  margin-top:18px;
+  border:1px solid #eee;
+  box-shadow:0 6px 20px rgba(0,0,0,.05);
+}
+
+.offer-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.offer-agency{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+  color:#333;
+}
+
+.offer-logo{
+  width:42px;
+  height:42px;
+  object-fit:contain;
+  background:transparent;
+}
+
+.offer-title{
+  font-size:18px;
+  font-weight:800;
+  color:#8b0000;
+  margin:8px 0 10px;
+  line-height:1.4;
+}
+
+.offer-info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px 12px;
+  font-size:14px;
+  color:#444;
+}
+
+.offer-info span{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.offer-price{
+  margin-top:12px;
+  background:#f8f4ef;
+  border-radius:12px;
+  padding:10px;
+  font-weight:800;
+  color:#8b0000;
+  text-align:center;
+}
+
+.offer-card button{
+  margin-top:14px;
+  border-radius:12px;
+  font-weight:700;
+}
+</style>
+</head>
+
+<body>
+
+<!-- زر واتساب -->
+<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- زر القائمة -->
+<div id="menuBtn">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<div id="overlay"></div>
+
+<!-- القائمة الجانبية -->
+<nav id="sideMenu">
+ 
+  <a href="offers.html" onclick="closeMenu()">🕋 عروض طريق العمرة</a>
+  <a href="recherche-oeffer.html" onclick="closeMenu()"> 🔎أبحث عن عرض المناسب </a>
+</nav>
+
+<div class="container">
+
+<!-- البحث -->
+<h2>📋 متابعة طلب العمرة</h2>
+<input type="tel" id="phone" placeholder="0550123456">
+<button id="searchBtn">🔍 بحث</button>
+<div id="output"></div>
+
+<hr style="margin:30px 0">
+
+<!-- العروض -->
+<h2>🕋 عروض العمرة المتوفرة</h2>
+<div id="offers">⏳ جاري تحميل العروض...</div>
+
+</div>
+
+<!-- النافذة -->
+<div id="modal">
+  <div id="modalBox">
+    <h3 id="m_offer"></h3>
+    <p id="m_agency"></p>
+    <p id="m_date"></p>
+    <p id="m_flight"></p>
+    <p id="m_airport"></p>
+    <p id="m_hotel"></p>
+    <p id="m_prices"></p>
+
+    <input id="c_name" placeholder="الاسم الكامل">
+    <input id="c_phone" placeholder="رقم الهاتف">
+    <input id="c_email" placeholder="البريد الإلكتروني">
+
+    <button id="sendBtn">✅ سجل الآن</button>
+    <button id="closeBtn" style="background:#777">إغلاق</button>
+  </div>
+</div>
+
+<script>
+// ===== التحكم في القائمة =====
+menuBtn.onclick=()=>{
+  sideMenu.style.right="0";
+  overlay.style.display="block";
+};
+overlay.onclick=()=>{
+  sideMenu.style.right="-260px";
+  overlay.style.display="none";
+};
+
+// ===== الروابط =====
+const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
+const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
+const EMAIL_API="https://script.google.com/macros/s/AKfycbzcxJ2mvd-Nnr5mdzPItK6_3pWnX3kR_EIQuKZanjW93RGIh06d4PDqcdWwMV0AyiVB/exec";
+
+function normalizePhone(p){
+  p=p.replace(/\D/g,"");
+  if(p.startsWith("213"))p=p.slice(3);
+  if(p.startsWith("0"))p=p.slice(1);
+  return p;
+}
+function formatDate(d){
+  return new Date(d).toLocaleDateString("ar-DZ",{day:"2-digit",month:"long",year:"numeric"});
+}
+
+// ===== البحث =====
+searchBtn.onclick=()=>{
+  const p=normalizePhone(phone.value);
+  if(!p){alert("أدخل رقم الهاتف");return;}
+  output.innerHTML="⏳ جاري البحث...";
+  fetch(SEARCH_API+"?phone="+p)
+  .then(r=>r.json())
+  .then(d=>{
+    output.innerHTML=d.found?
+      `<div class="result">👤 ${d.name}<br>📌 الحالة: <strong>${d.status}</strong></div>`:
+      `<div class="result">❌ لا يوجد طلب</div>`;
+  });
+};
+
+// ===== العروض =====
+let offersData=[],selectedOffer=null;
+fetch(OFFERS_API)
+.then(r=>r.json())
+.then(data=>{
+  offersData=data;
+  offers.innerHTML="";
+  data.forEach((o,i)=>{
+    const div=document.createElement("div");
+    div.className="offer-card";
+    
+
+
 div.innerHTML = `
   <div class="offer-header">
     <div class="offer-agency">
@@ -26,3 +360,43 @@ div.innerHTML = `
 
   <button>تفاصيل العرض</button>
 `;
+    div.querySelector("button").onclick=()=>openModal(i);
+    offers.appendChild(div);
+  });
+});
+
+// ===== نافذة =====
+function openModal(i){
+  const o=offersData[i];
+  selectedOffer=o;
+  m_offer.innerText=o.offer;
+  m_agency.innerText="🏢 "+o.agency;
+  m_date.innerText="📅 "+formatDate(o.date);
+  m_flight.innerText="✈️ "+o.flight;
+  m_airport.innerText="🛫 "+o.airport;
+  m_hotel.innerText="🏨 "+o.hotel;
+  m_prices.innerHTML=
+    `جماعية: ${o.group||"-"}<br>
+     خماسية: ${o.five||"-"}<br>
+     رباعية: ${o.four||"-"}<br>
+     ثلاثية: ${o.three||"-"}<br>
+     ثنائية: ${o.two||"-"}`;
+  modal.style.display="block";
+}
+closeBtn.onclick=()=>modal.style.display="none";
+
+// ===== إرسال =====
+sendBtn.onclick=()=>{
+  if(!c_name.value||!c_phone.value){alert("الاسم والهاتف إجباريان");return;}
+  fetch(EMAIL_API,{
+    method:"POST",
+    body:JSON.stringify({
+      customer:{name:c_name.value,phone:c_phone.value,email:c_email.value},
+      offer:selectedOffer
+    })
+  }).then(()=>{alert("✅ تم الإرسال");modal.style.display="none";});
+};
+</script>
+
+</body>
+</html>
