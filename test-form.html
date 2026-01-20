@@ -38,6 +38,13 @@ body{
   margin:6px 0;
   border-radius:2px;
 }
+#modal{
+  animation:fadeIn .3s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0}
+  to{opacity:1}
+}
 
 /* القائمة الجانبية */
 #sideMenu{
@@ -263,8 +270,9 @@ button{background:#8b0000;color:#fff;cursor:pointer}
 </div>
 
 <!-- النافذة -->
-<div id="modal">
-  <div id="modalBox">
+<div id="modal" onclick="closeModal()">
+  <div id="modalBox" onclick="event.stopPropagation()">
+
     <h3 id="m_offer"></h3>
     <p id="m_agency"></p>
     <p id="m_date"></p>
