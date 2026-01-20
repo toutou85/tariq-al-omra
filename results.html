@@ -262,6 +262,33 @@ function showOfferDetails(o){
     "💰 ثنائية: " + o.two
   );
 }
+<!-- نافذة منبثقة -->
+<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000">
+  <div style="background:#fff;max-width:420px;margin:10% auto;padding:20px;border-radius:12px">
+    
+    <h3 id="m_offer" style="color:#8b0000"></h3>
+
+    <p id="m_agency"></p>
+    <p id="m_date"></p>
+    <p id="m_flight"></p>
+    <p id="m_airport"></p>
+    <p id="m_hotel"></p>
+
+    <p><strong>الأسعار:</strong></p>
+    <p id="m_prices"></p>
+
+    <hr>
+
+    <h4>📋 معلومات الزبون</h4>
+    <input id="c_name" placeholder="الاسم الكامل">
+    <input id="c_phone" placeholder="رقم الهاتف">
+    <input id="c_email" placeholder="البريد الإلكتروني">
+
+    <button onclick="sendOrder()">✅ سجل الآن</button>
+    <button onclick="closeModal()" style="background:#777;margin-top:5px">إغلاق</button>
+
+  </div>
+</div>
 
 // 📂 القائمة الجانبية
 const menu = document.getElementById("sideMenu");
@@ -289,6 +316,63 @@ function closeMenu(){
 
 // 🚀 تحميل العروض عند فتح الصفحة
 loadOffers();
+  let selectedOffer = null;
+
+// فتح النافذة
+function showOfferDetails(o){
+  selectedOffer = o;
+
+  document.getElementById("m_offer").innerText = o.offer;
+  document.getElementById("m_agency").innerText = "🏢 الوكالة: " + o.agency;
+  document.getElementById("m_date").innerText = "📅 تاريخ الرحلة: " + formatDate(o.date);
+  document.getElementById("m_flight").innerText = "✈️ نوع الرحلة: " + o.flight;
+  document.getElementById("m_airport").innerText = "🛫 مطار الإقلاع: " + o.airport;
+  document.getElementById("m_hotel").innerText = "🏨 الفندق: " + o.hotel;
+
+  document.getElementById("m_prices").innerHTML =
+    "جماعية: " + (o.group||"-") + "<br>" +
+    "خماسية: " + (o.five||"-") + "<br>" +
+    "رباعية: " + (o.four||"-") + "<br>" +
+    "ثلاثية: " + (o.three||"-") + "<br>" +
+    "ثنائية: " + (o.two||"-");
+
+  document.getElementById("modal").style.display = "block";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
+}
+
+// إرسال الطلب
+function sendOrder(){
+  const name  = document.getElementById("c_name").value;
+  const phone = document.getElementById("c_phone").value;
+  const email = document.getElementById("c_email").value;
+
+  if(!name || !phone){
+    alert("يرجى ملء الاسم ورقم الهاتف");
+    return;
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbzcxJ2mvd-Nnr5mdzPItK6_3pWnX3kR_EIQuKZanjW93RGIh06d4PDqcdWwMV0AyiVB/exec",{
+    method:"POST",
+    body: JSON.stringify({
+      customer:{
+        name, phone, email
+      },
+      offer:selectedOffer
+    })
+  })
+  .then(r=>r.text())
+  .then(()=>{
+    alert("✅ تم إرسال طلبك، سيتم التواصل معك قريبًا");
+    closeModal();
+  })
+  .catch(()=>{
+    alert("❌ حدث خطأ أثناء الإرسال");
+  });
+}
+
 </script>
 
 </body>
