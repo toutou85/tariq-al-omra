@@ -125,12 +125,10 @@ button{background:#8b0000;color:#fff;cursor:pointer}
     <option value="3">مارس</option>
     <option value="4">أفريل</option>
   </select>
- 
-<select id="filterDuration">
-  <option value="">⏳ كل المدد</option>
-</select>
+  <select id="filterDuration">
+    <option value="">⏳ كل المدد</option>
+  </select>
 </div>
-
 
 <button onclick="resetFilters()">🔄 إعادة التعيين</button>
 
@@ -194,32 +192,29 @@ let offersData=[],selectedOffer=null;
 fetch(OFFERS_API)
 .then(r=>r.json())
 .then(data=>{
-  offersData = data;
+  offersData=data;
 
-  const agencies = new Map();
-  const airports = new Set();
-  const durations = new Set(); // 👈 جديد
+  const agencies=new Map();
+  const airports=new Set();
+  const durations=new Set();
 
   offersData.forEach(o=>{
-    const a = cleanText(o.agency);
-    if(a && !agencies.has(a)) agencies.set(a,a);
+    const a=cleanText(o.agency);
+    if(a && !agencies.has(a))agencies.set(a,a);
 
-    const ap = cleanText(o.airport);
-    if(ap) airports.add(ap);
+    const ap=cleanText(o.airport);
+    if(ap)airports.add(ap);
 
-    const dur = cleanText(o.duration);
-    if(dur) durations.add(dur); // 👈 جلب المدد من الشيت
+    const dur=cleanText(o.duration);
+    if(dur)durations.add(dur);
   });
 
-  agencies.forEach(v => filterAgency.add(new Option(v, v)));
-  airports.forEach(v => filterAirport.add(new Option(v, v)));
-
-  durations.forEach(v => filterDuration.add(new Option(v, v))); // 👈 تعبئة الفلتر
+  agencies.forEach(v=>filterAgency.add(new Option(v,v)));
+  airports.forEach(v=>filterAirport.add(new Option(v,v)));
+  durations.forEach(v=>filterDuration.add(new Option(v,v)));
 
   renderOffers(offersData);
 });
-
-  
 
 function renderOffers(data){
   offers.innerHTML="";
