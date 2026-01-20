@@ -109,11 +109,15 @@ button{background:#8b0000;color:#fff;cursor:pointer}
 }
 #modalBox{
   background:#fff;
-  max-width:420px;
-  margin:10% auto;
-  padding:20px;
-  border-radius:12px;
+  max-width:360px;        /* ← أصغر من قبل */
+  width:90%;
+  margin:8% auto;        /* ← أقرب للأعلى */
+  padding:16px;          /* ← مسافة داخلية أقل */
+  border-radius:14px;
+  max-height:75vh;       /* ← يمنع الطول الزائد */
+  overflow-y:auto;       /* ← سكرول داخلي عند الحاجة */
 }
+
 
 /* WhatsApp */
 .whatsapp-top{
