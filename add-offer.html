@@ -44,10 +44,86 @@ button{
   cursor:pointer;
 }
 button:hover{opacity:.9}
+/* زر فتح القائمة */
+.menu-btn{
+  position:fixed;
+  top:15px;
+  right:15px;
+  background:#8b0000;
+  color:#fff;
+  border:none;
+  padding:10px 14px;
+  border-radius:6px;
+  font-size:18px;
+  cursor:pointer;
+  z-index:1001;
+}
+
+/* الخلفية المعتمة */
+.overlay{
+  position:fixed;
+  top:0; right:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,.4);
+  display:none;
+  z-index:1000;
+}
+
+/* القائمة الجانبية */
+.sidebar{
+  position:fixed;
+  top:0; right:-260px;
+  width:260px;
+  height:100%;
+  background:#fff;
+  padding:20px;
+  box-shadow:-2px 0 10px rgba(0,0,0,.2);
+  transition:.3s;
+  z-index:1002;
+}
+
+.sidebar.active{right:0}
+.overlay.active{display:block}
+
+.sidebar h3{
+  margin-top:0;
+  color:#8b0000;
+  text-align:center;
+}
+
+.sidebar a{
+  display:block;
+  margin:15px 0;
+  padding:12px;
+  background:#8b0000;
+  color:#fff;
+  text-decoration:none;
+  border-radius:6px;
+  text-align:center;
+  font-weight:bold;
+}
+
+.sidebar a:hover{opacity:.9}
 </style>
 </head>
 
+
 <body>
+<button class="menu-btn" onclick="openMenu()">☰</button>
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<div class="sidebar" id="sidebar">
+  <h3>📂 القائمة</h3>
+
+  <a href="results.html">
+    🔍 العروض / نتائج البحث
+  </a>
+
+  <a href="index.html">
+    🏠 الصفحة الرئيسية
+  </a>
+</div>
 <div class="container">
 <h2>📋 إدراج عرض عمرة جديد</h2>
 
@@ -150,6 +226,17 @@ form.addEventListener("submit", e=>{
     document.getElementById("msg").innerText="❌ خطأ في الإرسال";
   });
 });
+</script>
+<script>
+function openMenu(){
+  document.getElementById("sidebar").classList.add("active");
+  document.getElementById("overlay").classList.add("active");
+}
+
+function closeMenu(){
+  document.getElementById("sidebar").classList.remove("active");
+  document.getElementById("overlay").classList.remove("active");
+}
 </script>
 
 </body>
