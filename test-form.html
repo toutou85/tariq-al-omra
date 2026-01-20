@@ -7,159 +7,63 @@
 
 <style>
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:Tajawal,Arial;
-  background:#f5f5f5;
-}
-
-/* زر القائمة */
-.menu-btn{
-  position:fixed;
-  top:15px;
-  right:15px;
-  background:#8b0000;
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  padding:10px 14px;
-  font-size:20px;
-  cursor:pointer;
-  z-index:1003;
-}
-
-/* الخلفية المعتمة */
-.overlay{
-  position:fixed;
-  top:0;
-  right:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,.4);
-  display:none;
-  z-index:1001;
-}
-
-.overlay.active{display:block}
-
-/* القائمة الجانبية */
-.sidebar{
-  position:fixed;
-  top:0;
-  right:-280px;
-  width:260px;
-  height:100%;
-  background:#fff;
-  padding:20px;
-  box-shadow:-2px 0 10px rgba(0,0,0,.2);
-  transition:.3s ease;
-  z-index:1002;
-}
-
-.sidebar.active{right:0}
-
-.sidebar h3{
-  margin-top:0;
-  color:#8b0000;
-  text-align:center;
-}
-
-.sidebar a{
-  display:block;
-  margin:15px 0;
-  padding:12px;
-  background:#8b0000;
-  color:#fff;
-  text-decoration:none;
-  border-radius:6px;
-  text-align:center;
-  font-weight:bold;
-}
-
-.sidebar a:hover{opacity:.9}
-
-/* المحتوى */
-.container{
-  max-width:800px;
-  background:#fff;
-  margin:70px auto 20px;
-  padding:20px;
-  border-radius:10px;
-}
-
-h2{
-  text-align:center;
-  color:#8b0000;
-}
-
-label{
-  display:block;
-  margin-top:12px;
-  font-weight:bold;
-}
-
-input,select{
-  width:100%;
-  padding:10px;
-  margin-top:5px;
-  border:1px solid #ccc;
-  border-radius:6px;
-}
-
-.row{
-  display:flex;
-  gap:10px;
-}
-.row > div{flex:1}
-
-button.submit{
-  width:100%;
-  margin-top:20px;
-  padding:14px;
-  background:#8b0000;
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  font-size:16px;
-  cursor:pointer;
-}
-
-button.submit:hover{opacity:.9}
+body{margin:0;font-family:Tajawal,Arial;background:#f5f5f5}
+.container{max-width:800px;background:#fff;margin:70px auto 20px;padding:20px;border-radius:10px}
+h2,h3{text-align:center;color:#8b0000}
+label{display:block;margin-top:12px;font-weight:bold}
+input,select{width:100%;padding:10px;margin-top:5px;border:1px solid #ccc;border-radius:6px}
+.row{display:flex;gap:10px}
+.row>div{flex:1}
+button{width:100%;margin-top:15px;padding:14px;border:none;border-radius:8px;font-size:16px;cursor:pointer}
+.submit{background:#8b0000;color:#fff}
+.gray{background:#555;color:#fff}
 </style>
 </head>
 
 <body>
 
-<button class="menu-btn" onclick="openMenu()">☰</button>
-
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-<div class="sidebar" id="sidebar">
-  <h3>📂 القائمة</h3>
-  <a href="results.html">🔍 العروض / نتائج البحث</a>
-  <a href="index.html">🏠 الصفحة الرئيسية</a>
-</div>
-
 <div class="container">
-<h2>📋 إدراج عرض عمرة جديد</h2>
+<h2>📋 إدراج عرض عمرة</h2>
 
 <form id="offerForm">
 
+<!-- نوع الوكالة -->
+<label>نوع الوكالة</label>
+<select id="agencyMode" required>
+  <option value="">اختر</option>
+  <option value="new">➕ وكالة جديدة</option>
+  <option value="old">📂 وكالة موجودة</option>
+</select>
+
+<!-- قائمة الوكالات -->
+<div id="agencySelectBox" style="display:none">
+  <label>اختر وكالتك</label>
+  <select id="agencySelect">
+    <option value="">-- اختر --</option>
+  </select>
+</div>
+
+<!-- بيانات الوكالة -->
 <label>اسم الوكالة</label>
-<input name="agency" required>
+<input name="agency" id="agency" required>
 
 <div class="row">
   <div>
     <label>الولاية</label>
-    <input name="state" required>
+    <input name="state" id="state" required>
   </div>
   <div>
     <label>البلدية</label>
-    <input name="city" required>
+    <input name="city" id="city" required>
   </div>
 </div>
 
+<label>رقم الهاتف</label>
+<input name="phone" id="phone" required>
+
+<hr>
+
+<!-- بيانات العرض -->
 <label>اسم العرض</label>
 <input name="offer" required>
 
@@ -183,16 +87,9 @@ button.submit:hover{opacity:.9}
 
 <label>مطار الإقلاع</label>
 <select name="airport" required>
-  <option value="">اختر مطار الإقلاع</option>
+  <option value="">اختر</option>
   <option>مطار هواري بومدين – الجزائر</option>
   <option>مطار أحمد بن بلة – وهران</option>
-  <option>مطار رابح بيطاط – عنابة</option>
-  <option>مطار محمد بوضياف – قسنطينة</option>
-  <option>مطار مصطفى بن بولعيد – باتنة</option>
-  <option>مطار غرداية – نوميرات</option>
-  <option>مطار أدرار – توات</option>
-  <option>مطار تمنراست – أقا الناظر</option>
-  <option>مطار جيجل</option>
   <option>مطار ورقلة</option>
 </select>
 
@@ -214,45 +111,71 @@ button.submit:hover{opacity:.9}
 <label>اسم الفندق</label>
 <input name="hotel" required>
 
-<label>رقم الهاتف</label>
-<input name="phone" required>
+<button type="submit" class="submit">🚀 إرسال العرض</button>
+<p id="msg" style="text-align:center;margin-top:10px"></p>
 
-<button type="submit" class="submit">🚀 انطلق</button>
 </form>
-
-<p id="msg" style="text-align:center;margin-top:15px"></p>
 </div>
 
 <script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYkiYg21-llVR_GGKGbFttEI229RrTIaLk-RVFs5YJqbqmkvnCo6VgvNFJGVnyifkJeA/exec";
+
+const agencyMode = document.getElementById("agencyMode");
+const agencySelectBox = document.getElementById("agencySelectBox");
+const agencySelect = document.getElementById("agencySelect");
+
+const agency = document.getElementById("agency");
+const state  = document.getElementById("state");
+const city   = document.getElementById("city");
+const phone  = document.getElementById("phone");
+
+let agenciesData = {};
+
+// تغيير نوع الوكالة
+agencyMode.onchange = () => {
+  if(agencyMode.value === "old"){
+    agencySelectBox.style.display = "block";
+    loadAgencies();
+  }else{
+    agencySelectBox.style.display = "none";
+    agency.value = state.value = city.value = phone.value = "";
+  }
+};
+
+// جلب الوكالات
+function loadAgencies(){
+  fetch(SCRIPT_URL + "?getAgencies=1")
+  .then(r=>r.json())
+  .then(data=>{
+    agenciesData = data;
+    agencySelect.innerHTML = '<option value="">-- اختر --</option>';
+    for(let name in data){
+      agencySelect.innerHTML += `<option value="${name}">${name}</option>`;
+    }
+  });
+}
+
+// تعبئة تلقائية
+agencySelect.onchange = ()=>{
+  const a = agenciesData[agencySelect.value];
+  if(!a) return;
+  agency.value = agencySelect.value;
+  state.value  = a.state;
+  city.value   = a.city;
+  phone.value  = a.phone;
+};
+
+// الإرسال (نفس الطريقة السابقة)
 const form = document.getElementById("offerForm");
 const msg  = document.getElementById("msg");
 
 form.addEventListener("submit", e=>{
   e.preventDefault();
   msg.innerText="⏳ جاري الإرسال...";
-
-  fetch("https://script.google.com/macros/s/AKfycbxYkiYg21-llVR_GGKGbFttEI229RrTIaLk-RVFs5YJqbqmkvnCo6VgvNFJGVnyifkJeA/exec",{
-    method:"POST",
-    body:new FormData(form)
-  })
-  .then(()=>{
-    msg.innerText="✅ تم نشر العرض بنجاح";
-    form.reset();
-  })
-  .catch(()=>{
-    msg.innerText="❌ خطأ في الإرسال";
-  });
+  fetch(SCRIPT_URL,{method:"POST",body:new FormData(form)})
+  .then(()=>{msg.innerText="✅ تم الحفظ بنجاح";form.reset();})
+  .catch(()=>{msg.innerText="❌ خطأ في الإرسال";});
 });
-
-function openMenu(){
-  sidebar.classList.add("active");
-  overlay.classList.add("active");
-}
-
-function closeMenu(){
-  sidebar.classList.remove("active");
-  overlay.classList.remove("active");
-}
 </script>
 
 </body>
