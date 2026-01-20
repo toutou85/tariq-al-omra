@@ -38,6 +38,10 @@ body{
   margin:6px 0;
   border-radius:2px;
 }
+  body.modal-open{
+  overflow: hidden;
+}
+
 #modal{
   animation:fadeIn .3s ease;
 }
@@ -392,9 +396,16 @@ function openModal(i){
      رباعية: ${o.four||"-"}<br>
      ثلاثية: ${o.three||"-"}<br>
      ثنائية: ${o.two||"-"}`;
-  modal.style.display="block";
+modal.style.display = "block";
+document.body.classList.add("modal-open");
+window.scrollTo({ top: 0, behavior: "smooth" });
 }
-closeBtn.onclick=()=>modal.style.display="none";
+function closeModal(){
+  modal.style.display = "none";
+  document.body.classList.remove("modal-open");
+}
+closeBtn.onclick = closeModal;
+
 
 // ===== إرسال =====
 sendBtn.onclick=()=>{
