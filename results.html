@@ -118,9 +118,8 @@ button{
 </div>
 
 <script>
+  // 🔗 رابط Google Apps Script (طلبات المعتمرين) const apiURL = "https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec"; // 🔗 رابط عروض الوكالات const OFFERS_API = "https://script.google.com/macros/s/AKfycbx-Q6L4AHvlTXoSuU61aX_ndXT-WdLvWQ9TlCSRF-0P2DiBI5GlnX8UOcGOVFxSyn_lOQ/exec"; // 🔁 توحيد رقم الهاتف function normalizePhone(phone){ phone = phone.replace(/\D/g,""); if(phone.startsWith("213")) phone = phone.substring(3); if(phone.startsWith("0")) phone = phone.substring(1); return phone; } // 🔍 البحث عن حالة الطلب (كما هو) function search(){ const phoneInput = document.getElementById("phone").value; const phone = normalizePhone(phoneInput); const output = document.getElementById("output"); if(!phone){ alert("يرجى إدخال رقم الهاتف"); return; } output.innerHTML = "⏳ جاري البحث..."; fetch(apiURL + "?phone=" + phone) .then(res => res.json()) .then(data => { if(!data.found){ output.innerHTML = <div class="result"> ❌ لم يتم العثور على طلب بهذا الرقم </div>; return; } output.innerHTML = <div class="result"> <p>👤 <strong>الاسم:</strong> ${data.name}</p> <p>📌 <strong>حالة الطلب:</strong> <span class="status">${data.status}</span> </p> <div class="note"> ⏳ إذا كانت الحالة "قيد المعالجة" يرجى الانتظار وسيتم التواصل معكم قريبًا إن شاء الله </div> </div> ; }) .catch(() => { output.innerHTML = "❌ حدث خطأ أثناء الاتصال بالخادم"; }); }
 // ========= روابطك =========
-const OFFERS_API =
-"https://script.google.com/macros/s/AKfycbx-Q6L4AHvlTXoSuU61aX_ndXT-WdLvWQ9TlCSRF-0P2DiBI5GlnX8UOcGOVFxSyn_lOQ/exec";
 
 const EMAIL_API =
 "https://script.google.com/macros/s/AKfycbzcxJ2mvd-Nnr5mdzPItK6_3pWnX3kR_EIQuKZanjW93RGIh06d4PDqcdWwMV0AyiVB/exec";
