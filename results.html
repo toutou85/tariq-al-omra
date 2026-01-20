@@ -219,18 +219,7 @@ fetch(OFFERS_API)
   renderOffers(offersData);
 });
 
-  offersData.forEach(o=>{
-    const a=cleanText(o.agency);
-    if(a && !agencies.has(a))agencies.set(a,a);
-    const ap=cleanText(o.airport);
-    if(ap)airports.add(ap);
-  });
-
-  agencies.forEach(v=>filterAgency.add(new Option(v,v)));
-  airports.forEach(v=>filterAirport.add(new Option(v,v)));
-
-  renderOffers(offersData);
-});
+  
 
 function renderOffers(data){
   offers.innerHTML="";
