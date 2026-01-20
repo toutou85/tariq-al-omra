@@ -164,7 +164,7 @@ const apiURL =
 
 // 🔗 رابط عروض الوكالات
 const OFFERS_API =
-"https://script.google.com/macros/s/AKfycbwE0tzbjwM-LpgaqDrIA1gjxGRGWymJiiRRRY9a_-OSO0KhDr1T7UbZzi-RbVHenBtTJQ/exec";
+"https://script.google.com/macros/s/AKfycbx-yBFOW_CaeAO4teRfRyb0OFziKGs2D-bPutG28RPDiLkWdWoszgHeqyOUkWlrWXgrtg/exec";
 
 // 🔁 توحيد رقم الهاتف
 function normalizePhone(phone){
@@ -235,7 +235,7 @@ function loadOffers(){
           <div class="offer-card">
             <h3>${o.offer}</h3>
             <p>🏢 <strong>الوكالة:</strong> ${o.agency}</p>
-            <p>📅 <strong>تاريخ الرحلة:</strong> ${o.datev}</p>
+            <p>📅 <strong>تاريخ الرحلة:</strong> ${o.date}</p>
             <p>💰 <strong>سعر الغرفة الجماعية:</strong> ${o.group || "-"}</p>
             <button onclick="showOfferDetails(${JSON.stringify(o)})">
               تفاصيل العرض
