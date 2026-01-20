@@ -278,7 +278,18 @@ function loadOffers(){
 }
 
 
-
+// تفاصيل العرض (مبدئيًا)
+function showOfferDetails(o){
+  alert(
+    "🏨 الفندق: " + o.hotel + "\n" +
+    "✈️ نوع الرحلة: " + o.flight + "\n" +
+    "🛫 مطار الإقلاع: " + o.airport + "\n" +
+    "💰 خماسية: " + o.five + "\n" +
+    "💰 رباعية: " + o.four + "\n" +
+    "💰 ثلاثية: " + o.three + "\n" +
+    "💰 ثنائية: " + o.two
+  );
+}
 // 📂 القائمة الجانبية
 const menu = document.getElementById("sideMenu");
 const overlay = document.getElementById("overlay");
