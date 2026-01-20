@@ -16,7 +16,8 @@ input,select{width:100%;padding:10px;margin-top:5px;border:1px solid #ccc;border
 .row>div{flex:1}
 button{width:100%;margin-top:15px;padding:14px;border:none;border-radius:8px;font-size:16px;cursor:pointer}
 .submit{background:#8b0000;color:#fff}
-.gray{background:#555;color:#fff}
+hr{margin:20px 0}
+small{color:#777}
 </style>
 </head>
 
@@ -60,6 +61,11 @@ button{width:100%;margin-top:15px;padding:14px;border:none;border-radius:8px;fon
 
 <label>رقم الهاتف</label>
 <input name="phone" id="phone" required>
+
+<!-- الشعار (اختياري) -->
+<label>رابط شعار الوكالة (اختياري)</label>
+<input name="logo" id="logo" placeholder="https://example.com/logo.png">
+<small>يمكن ترك هذا الحقل فارغًا</small>
 
 <hr>
 
@@ -128,6 +134,7 @@ const agency = document.getElementById("agency");
 const state  = document.getElementById("state");
 const city   = document.getElementById("city");
 const phone  = document.getElementById("phone");
+const logo   = document.getElementById("logo");
 
 let agenciesData = {};
 
@@ -138,7 +145,7 @@ agencyMode.onchange = () => {
     loadAgencies();
   }else{
     agencySelectBox.style.display = "none";
-    agency.value = state.value = city.value = phone.value = "";
+    agency.value = state.value = city.value = phone.value = logo.value = "";
   }
 };
 
@@ -155,14 +162,15 @@ function loadAgencies(){
   });
 }
 
-// تعبئة تلقائية
+// تعبئة تلقائية (مع الشعار إن وجد)
 agencySelect.onchange = ()=>{
   const a = agenciesData[agencySelect.value];
   if(!a) return;
   agency.value = agencySelect.value;
-  state.value  = a.state;
-  city.value   = a.city;
-  phone.value  = a.phone;
+  state.value  = a.state || "";
+  city.value   = a.city || "";
+  phone.value  = a.phone || "";
+  logo.value   = a.logo || ""; // اختياري
 };
 
 // الإرسال (نفس الطريقة السابقة)
