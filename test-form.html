@@ -394,29 +394,27 @@ searchBtn.onclick=()=>{
 };
 
 // ===== العروض =====
-let offersData=[],selectedOffer=null;
+let offersData=[], selectedOffer=null;
+
 fetch(OFFERS_API)
 .then(r=>r.json())
 .then(data=>{
-  offersData=data;
-  offers.innerHTML="";
-  data.forEach((o,i)=>{
-    const div=document.createElement("div");
-    div.className="offer-card";
-    
-// تعبئة الوكالات
-[...new Set(offersData.map(o=>o.agency))].forEach(v=>{
-  filterAgency.add(new Option(v,v));
+  offersData = data;
+
+  // تعبئة الوكالات
+  [...new Set(offersData.map(o=>o.agency))].forEach(v=>{
+    filterAgency.add(new Option(v,v));
+  });
+
+  // تعبئة المطارات
+  [...new Set(offersData.map(o=>o.airport))].forEach(v=>{
+    filterAirport.add(new Option(v,v));
+  });
+
+  // عرض العروض أول مرة
+  renderOffers(offersData);
 });
-
-// تعبئة المطارات
-[...new Set(offersData.map(o=>o.airport))].forEach(v=>{
-  filterAirport.add(new Option(v,v));
-});
-
-// عرض كل العروض أول مرة
-renderOffers(offersData);
-
+<button onclick="resetFilters()">🔄 إعادة التعيين</button>
 
 div.innerHTML = `
   <div class="offer-header">
@@ -493,6 +491,13 @@ function renderOffers(data){
     offers.appendChild(div);
   });
 }
+function resetFilters(){
+  filterAgency.value="";
+  filterAirport.value="";
+  filterMonth.value="";
+  filterDuration.value="";
+  renderOffers(offersData);
+}
 
 // ===== نافذة =====
 function openModal(i){
@@ -559,6 +564,10 @@ sendBtn.onclick=()=>{
 
   renderOffers(filtered);
 }
+filterAgency.onchange  = applyFilters;
+filterAirport.onchange = applyFilters;
+filterMonth.onchange   = applyFilters;
+filterDuration.onchange= applyFilters;
 
 </script>
 
