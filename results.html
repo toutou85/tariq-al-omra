@@ -6,75 +6,27 @@
 <title>عروض العمرة</title>
 
 <style>
-body{
-  font-family:Tajawal,Arial;
-  background:#f5f5f5;
-  margin:0;
-}
-.container{
-  max-width:700px;
-  background:#fff;
-  margin:20px auto;
-  padding:20px;
-  border-radius:12px;
-}
-h2{text-align:center;color:#8b0000}
-input,button{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
-button{
-  background:#8b0000;
-  color:#fff;
-  font-size:16px;
-  cursor:pointer;
-}
-.card{
-  background:#fafafa;
-  padding:15px;
-  border-radius:10px;
-  margin-top:15px;
-}
+body{font-family:Tajawal;background:#f5f5f5;margin:0}
+.container{max-width:700px;margin:20px auto;background:#fff;padding:20px;border-radius:12px}
+.card{background:#fafafa;padding:15px;border-radius:10px;margin-top:15px}
 .card h3{margin:0;color:#8b0000}
-.card p{margin:6px 0}
-
-/* Modal */
-#modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.6);
-}
-#modalBox{
-  background:#fff;
-  margin:10% auto;
-  padding:20px;
-  max-width:400px;
-  border-radius:12px;
-}
+button{width:100%;padding:10px;border:none;border-radius:8px;background:#8b0000;color:#fff;cursor:pointer}
+#modal{display:none;position:fixed;inset:0;background:#0008}
+#modalBox{background:#fff;margin:10% auto;padding:20px;max-width:400px;border-radius:12px}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-  <h2>🕋 عروض العمرة المتوفرة</h2>
-
-  <p style="color:#555;text-align:center">
-    يمكنك ترك رقم الهاتف فارغًا لعرض كل العروض  
-    أو إدخاله لعرض العروض التي اخترتها سابقًا
-  </p>
+  <h2 style="text-align:center;color:#8b0000">🕋 عروض العمرة</h2>
 
   <input id="phone" placeholder="رقم الهاتف (اختياري)">
   <button onclick="search()">🔍 بحث</button>
 
-  <div id="offers"></div>
+  <div id="offers">⏳ جاري تحميل العروض...</div>
 </div>
 
-<!-- نافذة التفاصيل -->
 <div id="modal">
   <div id="modalBox">
     <div id="modalContent"></div>
@@ -83,73 +35,82 @@ button{
 </div>
 
 <script>
-// 🔗 رابط طلبات المعتمرين
 const ORDERS_API =
 "https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
 
-// 🔗 رابط عروض الوكالات
 const OFFERS_API =
 "https://script.google.com/macros/s/AKfycbyjoK1PBB91jup0o2Gh3zWY8eyFOV_Uld6zofeJAWyiTZiOGTY5MCFFUemhg7IVu2xrjQ/exec";
 
-// 🔁 توحيد رقم الهاتف
 function normalizePhone(p){
-  p = p.replace(/\D/g,'');
-  if(p.startsWith('213')) p = p.substring(3);
-  if(p.startsWith('0')) p = p.substring(1);
-  return p;
+  return p.replace(/\D/g,'').replace(/^213/,'').replace(/^0/,'');
 }
 
-// 🟢 تحميل كل العروض (الحالة العامة)
+// 🟢 تحميل كل العروض
 function loadAllOffers(){
   fetch(OFFERS_API)
   .then(r=>r.json())
-  .then(showOffers);
+  .then(data=>{
+    if(!Array.isArray(data)){
+      document.getElementById("offers").innerHTML="❌ خطأ في بيانات العروض";
+      return;
+    }
+    showOffers(data);
+  })
+  .catch(()=>{
+    document.getElementById("offers").innerHTML="❌ تعذر تحميل العروض";
+  });
 }
 
-// 🔵 تحميل العروض المطابقة للمعتمر
-function loadUserOffers(phone){
+// 🔵 البحث برقم الهاتف
+function search(){
+  const phone = normalizePhone(document.getElementById("phone").value);
+
+  if(!phone){
+    loadAllOffers();
+    return;
+  }
 
   fetch(ORDERS_API + "?phone=" + phone)
   .then(r=>r.json())
-  .then(orderData=>{
-
-    if(!orderData.found){
-      document.getElementById("offers").innerHTML =
-        "❌ لا توجد طلبات بهذا الرقم";
+  .then(order=>{
+    if(!order.found){
+      document.getElementById("offers").innerHTML="❌ لا يوجد طلب بهذا الرقم";
       return;
     }
 
     fetch(OFFERS_API)
     .then(r=>r.json())
     .then(offers=>{
-      const matched = offers.filter(o =>
-        o.agency == orderData.agency &&
-        o.offer  == orderData.offer &&
-        o.date   == orderData.date
+      const filtered = offers.filter(o =>
+        o.agency == order.agency &&
+        o.offer  == order.offer &&
+        o.date   == order.date
       );
-      showOffers(matched);
+      showOffers(filtered);
     });
-
+  })
+  .catch(()=>{
+    document.getElementById("offers").innerHTML="❌ خطأ أثناء البحث";
   });
 }
 
 // 🧱 عرض البطاقات
-function showOffers(data){
+function showOffers(list){
   const box = document.getElementById("offers");
-  box.innerHTML = "";
+  box.innerHTML="";
 
-  if(!data || data.length === 0){
-    box.innerHTML = "❌ لا توجد عروض متوفرة";
+  if(list.length===0){
+    box.innerHTML="❌ لا توجد عروض مطابقة";
     return;
   }
 
-  data.forEach(o=>{
-    box.innerHTML += `
+  list.forEach(o=>{
+    box.innerHTML+=`
       <div class="card">
         <h3>${o.offer}</h3>
         <p>🏢 ${o.agency}</p>
         <p>📅 ${o.date}</p>
-        <p>💰 غرفة جماعية: ${o.group}</p>
+        <p>💰 جماعية: ${o.group || "-"}</p>
         <button onclick='showDetails(${JSON.stringify(o)})'>
           تفاصيل العرض
         </button>
@@ -158,26 +119,12 @@ function showOffers(data){
   });
 }
 
-// 🔍 زر البحث
-function search(){
-  const phone = normalizePhone(
-    document.getElementById("phone").value
-  );
-
-  if(phone){
-    loadUserOffers(phone);
-  }else{
-    loadAllOffers();
-  }
-}
-
-// 🪟 نافذة التفاصيل
+// 🪟 التفاصيل
 function showDetails(o){
-  document.getElementById("modalContent").innerHTML = `
-    <p><strong>🏢 الوكالة:</strong> ${o.agency}</p>
-    <p><strong>🏨 الفندق:</strong> ${o.hotel}</p>
-    <p><strong>✈️ نوع الرحلة:</strong> ${o.flight}</p>
-    <p><strong>🛫 مطار الإقلاع:</strong> ${o.airport}</p>
+  document.getElementById("modalContent").innerHTML=`
+    <p>🏨 الفندق: ${o.hotel}</p>
+    <p>✈️ الرحلة: ${o.flight}</p>
+    <p>🛫 المطار: ${o.airport}</p>
     <p>💰 خماسية: ${o.five}</p>
     <p>💰 رباعية: ${o.four}</p>
     <p>💰 ثلاثية: ${o.three}</p>
@@ -189,7 +136,7 @@ function closeModal(){
   document.getElementById("modal").style.display="none";
 }
 
-// 🚀 تحميل أولي
+// 🚀 تشغيل أولي
 loadAllOffers();
 </script>
 
