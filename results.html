@@ -145,6 +145,75 @@ button{background:#8b0000;color:#fff;cursor:pointer}
   box-shadow:none;
   padding:0;
 }
+
+.offer-card{
+  background:#ffffff;
+  border-radius:16px;
+  padding:16px;
+  margin-top:18px;
+  border:1px solid #eee;
+  box-shadow:0 6px 20px rgba(0,0,0,.05);
+}
+
+.offer-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.offer-agency{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+  color:#333;
+}
+
+.offer-logo{
+  width:42px;
+  height:42px;
+  object-fit:contain;
+  background:transparent;
+}
+
+.offer-title{
+  font-size:18px;
+  font-weight:800;
+  color:#8b0000;
+  margin:8px 0 10px;
+  line-height:1.4;
+}
+
+.offer-info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px 12px;
+  font-size:14px;
+  color:#444;
+}
+
+.offer-info span{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.offer-price{
+  margin-top:12px;
+  background:#f8f4ef;
+  border-radius:12px;
+  padding:10px;
+  font-weight:800;
+  color:#8b0000;
+  text-align:center;
+}
+
+.offer-card button{
+  margin-top:14px;
+  border-radius:12px;
+  font-weight:700;
+}
 </style>
 </head>
 
@@ -257,17 +326,34 @@ fetch(OFFERS_API)
   data.forEach((o,i)=>{
     const div=document.createElement("div");
     div.className="offer-card";
-    div.innerHTML = `
+    
+
+
+div.innerHTML = `
   <div class="offer-header">
     <div class="offer-agency">
-      <img src="${o.logo || ''}" class="offer-logo"
+      <img src="${o.logo || ''}"
+           class="offer-logo"
            onerror="this.style.display='none'">
       <span>${o.agency}</span>
     </div>
   </div>
 
-  <h3>${o.offer}</h3>
-  <p>📅 ${formatDate(o.date)}</p>
+  <div class="offer-title">
+    🕋 ${o.offer}
+  </div>
+
+  <div class="offer-info">
+    <span>📅 ${formatDate(o.date)}</span>
+    <span>⏳ ${o.duration || "—"}</span>
+
+    <span>🏨 ${o.hotel || "—"}</span>
+    <span>✈️ ${o.flight || "—"}</span>
+  </div>
+
+  <div class="offer-price">
+    💰 غرفة جماعية: ${o.group ? o.group + " دج" : "غير متوفر"}
+  </div>
 
   <button>تفاصيل العرض</button>
 `;
