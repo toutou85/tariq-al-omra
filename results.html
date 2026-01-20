@@ -235,7 +235,7 @@ function loadOffers(){
           <div class="offer-card">
             <h3>${o.offer}</h3>
             <p>🏢 <strong>الوكالة:</strong> ${o.agency}</p>
-            <p>📅 <strong>تاريخ الرحلة:</strong> ${o.date}</p>
+          <p>📅 <strong>تاريخ الرحلة:</strong> ${formatDate(o.date)}</p>
             <p>💰 <strong>سعر الغرفة الجماعية:</strong> ${o.group || "-"}</p>
             <button onclick="showOfferDetails(${JSON.stringify(o)})">
               تفاصيل العرض
