@@ -6,373 +6,151 @@
 <title>متابعة طلب العمرة</title>
 
 <style>
-body{
-  font-family:Tajawal,Arial;
-  background:#f5f5f5;
-  margin:0;
+body{font-family:Tajawal,Arial;background:#f5f5f5;margin:0}
+#menuBtn{width:30px;margin:15px;cursor:pointer}
+#menuBtn span{display:block;height:3px;background:#000;margin:6px 0;border-radius:2px}
+#sideMenu{position:fixed;top:0;right:-260px;width:260px;height:100%;background:#8b0000;padding-top:60px;transition:.3s;z-index:1000}
+#sideMenu a{display:block;padding:15px;color:#fff;text-decoration:none}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:900}
+.container{max-width:600px;background:#fff;margin:20px auto;padding:20px;border-radius:12px}
+button,input{width:100%;padding:10px;margin-top:8px;border-radius:8px;border:1px solid #ccc}
+button{background:#8b0000;color:#fff;cursor:pointer}
+.offer-card{background:#fafafa;margin-top:15px;padding:15px;border-radius:10px;border:1px solid #eee}
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000}
+#modalBox{background:#fff;max-width:420px;margin:10% auto;padding:20px;border-radius:12px}
+.whatsapp-top{
+  position: fixed;
+  top: 15px;
+  left: 15px; /* ← هنا التغيير */
+  width: 55px;
+  height: 55px;
+  background: #25D366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  text-decoration: none;
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-/* زر 3 خطوط */
-#menuBtn{
-  width:30px;
-  margin:15px;
-  cursor:pointer;
-}
-#menuBtn span{
-  display:block;
-  height:3px;
-  background:#000;
-  margin:6px 0;
-  border-radius:2px;
+.whatsapp-top:hover{
+  background: #1ebe5d;
 }
 
-/* القائمة الجانبية */
-#sideMenu{
-  position:fixed;
-  top:0;
-  right:-260px;
-  width:260px;
-  height:100%;
-  background:#8b0000;
-  padding-top:60px;
-  transition:0.3s;
-  z-index:1000;
-}
-#sideMenu a{
-  display:block;
-  padding:15px;
-  color:#fff;
-  text-decoration:none;
-}
-#sideMenu a:hover{
-  background:rgba(255,255,255,0.2);
-}
 
-/* الخلفية */
-#overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.5);
-  z-index:900;
-}
-
-/* المحتوى */
-.container{
-  max-width:600px;
-  background:#fff;
-  margin:20px auto;
-  padding:20px;
-  border-radius:12px;
-}
-h2{text-align:center;color:#8b0000}
-label{display:block;margin-top:15px;font-weight:bold}
-input,button{
-  width:100%;
-  padding:10px;
-  margin-top:8px;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
-button{
-  background:#8b0000;
-  color:#fff;
-  font-size:16px;
-  cursor:pointer;
-}
-.result{
-  margin-top:20px;
-  padding:15px;
-  background:#f9f9f9;
-  border-radius:10px;
-}
-.status{
-  font-weight:bold;
-  color:#006400;
-}
-.note{
-  margin-top:10px;
-  font-size:14px;
-  color:#555;
-}
-
-/* بطاقات العروض */
-.offer-card{
-  background:#fafafa;
-  margin-top:15px;
-  padding:15px;
-  border-radius:10px;
-  border:1px solid #eee;
-}
-.offer-card h3{
-  margin:0;
-  color:#8b0000;
-}
-.offer-card p{
-  margin:6px 0;
-  color:#333;
-}
-.offer-card button{
-  margin-top:10px;
-}
 </style>
+
 </head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
 
 <body>
 
-<!-- زر القائمة -->
-<div id="menuBtn">
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
+<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
+  <i class="fab fa-whatsapp"></i>
+</a>
 
+<div id="menuBtn"><span></span><span></span><span></span></div>
 <div id="overlay" onclick="closeMenu()"></div>
 
-<nav id="sideMenu">
-  <a href="offers.html" onclick="closeMenu()">🕋 عروض العمرة المتوفرة</a>
-</nav>
-
 <div class="container">
-
-<h2>📋 متابعة طلب العمرة</h2>
-
-<p style="text-align:center;color:#555">
-أدخل رقم هاتفك للاطلاع على حالة طلبك  
-<br>⏳ قد تستغرق معالجة الطلب بعض الوقت
-</p>
-
-<label>رقم الهاتف</label>
-<input type="tel" id="phone" placeholder="0550123456">
-
-<button onclick="search()">🔍 بحث</button>
-
-<div id="output"></div>
-
-<hr style="margin:30px 0">
-
 <h2>🕋 عروض العمرة المتوفرة</h2>
-
 <div id="offers">⏳ جاري تحميل العروض...</div>
-
 </div>
-<!-- نافذة منبثقة -->
-<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000">
-  <div style="background:#fff;max-width:420px;margin:10% auto;padding:20px;border-radius:12px">
-    
-    <h3 id="m_offer" style="color:#8b0000"></h3>
 
+<!-- النافذة المنبثقة -->
+<div id="modal">
+  <div id="modalBox">
+    <h3 id="m_offer"></h3>
     <p id="m_agency"></p>
     <p id="m_date"></p>
     <p id="m_flight"></p>
     <p id="m_airport"></p>
     <p id="m_hotel"></p>
-
-    <p><strong>الأسعار:</strong></p>
     <p id="m_prices"></p>
 
-    <hr>
-
-    <h4>📋 معلومات الزبون</h4>
     <input id="c_name" placeholder="الاسم الكامل">
     <input id="c_phone" placeholder="رقم الهاتف">
     <input id="c_email" placeholder="البريد الإلكتروني">
 
     <button onclick="sendOrder()">✅ سجل الآن</button>
-    <button onclick="closeModal()" style="background:#777;margin-top:5px">إغلاق</button>
-
+    <button onclick="closeModal()" style="background:#777">إغلاق</button>
   </div>
 </div>
 
 <script>
-// 🔗 رابط Google Apps Script (طلبات المعتمرين)
-const apiURL =
-"https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
+const OFFERS_API = "https://script.google.com/macros/s/AKfycbx-Q6L4AHvlTXoSuU61aX_ndXT-WdLvWQ9TlCSRF-0P2DiBI5GlnX8UOcGOVFxSyn_lOQ/exec";
+const EMAIL_API  = "https://script.google.com/macros/s/AKfycbzcxJ2mvd-Nnr5mdzPItK6_3pWnX3kR_EIQuKZanjW93RGIh06d4PDqcdWwMV0AyiVB/exec";
 
-// 🔗 رابط عروض الوكالات
-const OFFERS_API =
-"https://script.google.com/macros/s/AKfycbx-Q6L4AHvlTXoSuU61aX_ndXT-WdLvWQ9TlCSRF-0P2DiBI5GlnX8UOcGOVFxSyn_lOQ/exec";
+let selectedOffer = null;
 
-// 🔁 توحيد رقم الهاتف
-function normalizePhone(phone){
-  phone = phone.replace(/\D/g,"");
-  if(phone.startsWith("213")) phone = phone.substring(3);
-  if(phone.startsWith("0")) phone = phone.substring(1);
-  return phone;
+// تنسيق التاريخ
+function formatDate(d){
+  return new Date(d).toLocaleDateString("ar-DZ",{day:"2-digit",month:"long",year:"numeric"});
 }
 
-// 🔍 البحث عن حالة الطلب (كما هو)
-function search(){
-  const phoneInput = document.getElementById("phone").value;
-  const phone = normalizePhone(phoneInput);
-  const output = document.getElementById("output");
-
-  if(!phone){
-    alert("يرجى إدخال رقم الهاتف");
-    return;
-  }
-
-  output.innerHTML = "⏳ جاري البحث...";
-
-  fetch(apiURL + "?phone=" + phone)
-    .then(res => res.json())
-    .then(data => {
-
-      if(!data.found){
-        output.innerHTML = `
-          <div class="result">
-            ❌ لم يتم العثور على طلب بهذا الرقم
-          </div>`;
-        return;
-      }
-
-      output.innerHTML = `
-        <div class="result">
-          <p>👤 <strong>الاسم:</strong> ${data.name}</p>
-          <p>📌 <strong>حالة الطلب:</strong>
-            <span class="status">${data.status}</span>
-          </p>
-          <div class="note">
-            ⏳ إذا كانت الحالة "قيد المعالجة" يرجى الانتظار  
-            وسيتم التواصل معكم قريبًا إن شاء الله
-          </div>
-        </div>
-      `;
-    })
-    .catch(() => {
-      output.innerHTML = "❌ حدث خطأ أثناء الاتصال بالخادم";
-    });
-}
-
-// 🕋 تحميل عروض الوكالات فقط
+// تحميل العروض
 function loadOffers(){
   fetch(OFFERS_API)
-    .then(res => res.json())
-    .then(data => {
-      const box = document.getElementById("offers");
-      box.innerHTML = "";
-
-      if(!Array.isArray(data) || data.length === 0){
-        box.innerHTML = "❌ لا توجد عروض حالياً";
-        return;
-      }
-
-      data.forEach(o => {
-        box.innerHTML += `
-          <div class="offer-card">
-            <h3>${o.offer}</h3>
-            <p>🏢 <strong>الوكالة:</strong> ${o.agency}</p>
-          <p>📅 <strong>تاريخ الرحلة:</strong> ${formatDate(o.date)}</p>
-            <p>💰 <strong>سعر الغرفة الجماعية:</strong> ${o.group || "-"}</p>
-            <button onclick="showOfferDetails(${JSON.stringify(o)})">
-              تفاصيل العرض
-            </button>
-          </div>
-        `;
-      });
-    })
-    .catch(() => {
-      document.getElementById("offers").innerHTML =
-        "❌ خطأ في تحميل العروض";
+  .then(r=>r.json())
+  .then(data=>{
+    const box=document.getElementById("offers");
+    box.innerHTML="";
+    data.forEach(o=>{
+      box.innerHTML+=`
+        <div class="offer-card">
+          <h3>${o.offer}</h3>
+          <p>🏢 ${o.agency}</p>
+          <p>📅 ${formatDate(o.date)}</p>
+          <button onclick='openModal(${JSON.stringify(o)})'>تفاصيل العرض</button>
+        </div>`;
     });
-}
-
-
-// تفاصيل العرض (مبدئيًا)
-function showOfferDetails(o){
-  alert(
-    "🏨 الفندق: " + o.hotel + "\n" +
-    "✈️ نوع الرحلة: " + o.flight + "\n" +
-    "🛫 مطار الإقلاع: " + o.airport + "\n" +
-    "💰 خماسية: " + o.five + "\n" +
-    "💰 رباعية: " + o.four + "\n" +
-    "💰 ثلاثية: " + o.three + "\n" +
-    "💰 ثنائية: " + o.two
-  );
-}
-// 📂 القائمة الجانبية
-const menu = document.getElementById("sideMenu");
-const overlay = document.getElementById("overlay");
-
-document.getElementById("menuBtn").onclick = () => {
-  menu.style.right = "0";
-  overlay.style.display = "block";
-};
-function formatDate(dateStr){
-  const d = new Date(dateStr);
-  if (isNaN(d)) return dateStr;
-
-  return d.toLocaleDateString("ar-DZ", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric"
   });
 }
 
-function closeMenu(){
-  menu.style.right = "-260px";
-  overlay.style.display = "none";
-}
-
-// 🚀 تحميل العروض عند فتح الصفحة
-loadOffers();
-  let selectedOffer = null;
-
 // فتح النافذة
-function showOfferDetails(o){
-  selectedOffer = o;
-
-  document.getElementById("m_offer").innerText = o.offer;
-  document.getElementById("m_agency").innerText = "🏢 الوكالة: " + o.agency;
-  document.getElementById("m_date").innerText = "📅 تاريخ الرحلة: " + formatDate(o.date);
-  document.getElementById("m_flight").innerText = "✈️ نوع الرحلة: " + o.flight;
-  document.getElementById("m_airport").innerText = "🛫 مطار الإقلاع: " + o.airport;
-  document.getElementById("m_hotel").innerText = "🏨 الفندق: " + o.hotel;
-
-  document.getElementById("m_prices").innerHTML =
-    "جماعية: " + (o.group||"-") + "<br>" +
-    "خماسية: " + (o.five||"-") + "<br>" +
-    "رباعية: " + (o.four||"-") + "<br>" +
-    "ثلاثية: " + (o.three||"-") + "<br>" +
-    "ثنائية: " + (o.two||"-");
-
-  document.getElementById("modal").style.display = "block";
+function openModal(o){
+  selectedOffer=o;
+  m_offer.innerText=o.offer;
+  m_agency.innerText="🏢 "+o.agency;
+  m_date.innerText="📅 "+formatDate(o.date);
+  m_flight.innerText="✈️ "+o.flight;
+  m_airport.innerText="🛫 "+o.airport;
+  m_hotel.innerText="🏨 "+o.hotel;
+  m_prices.innerHTML=
+    `جماعية: ${o.group||"-"}<br>
+     خماسية: ${o.five||"-"}<br>
+     رباعية: ${o.four||"-"}<br>
+     ثلاثية: ${o.three||"-"}<br>
+     ثنائية: ${o.two||"-"}`;
+  modal.style.display="block";
 }
 
-function closeModal(){
-  document.getElementById("modal").style.display = "none";
-}
+function closeModal(){modal.style.display="none"}
 
-// إرسال الطلب
+// إرسال الطلب بالإيميل
 function sendOrder(){
-  const name  = document.getElementById("c_name").value;
-  const phone = document.getElementById("c_phone").value;
-  const email = document.getElementById("c_email").value;
-
-  if(!name || !phone){
-    alert("يرجى ملء الاسم ورقم الهاتف");
-    return;
-  }
-
-  fetch("https://script.google.com/macros/s/AKfycbzcxJ2mvd-Nnr5mdzPItK6_3pWnX3kR_EIQuKZanjW93RGIh06d4PDqcdWwMV0AyiVB/exec",{
+  fetch(EMAIL_API,{
     method:"POST",
-    body: JSON.stringify({
+    body:JSON.stringify({
       customer:{
-        name, phone, email
+        name:c_name.value,
+        phone:c_phone.value,
+        email:c_email.value
       },
       offer:selectedOffer
     })
-  })
-  .then(r=>r.text())
-  .then(()=>{
-    alert("✅ تم إرسال طلبك، سيتم التواصل معك قريبًا");
+  }).then(()=>{
+    alert("✅ تم إرسال طلبك بنجاح");
     closeModal();
-  })
-  .catch(()=>{
-    alert("❌ حدث خطأ أثناء الإرسال");
   });
 }
 
+loadOffers();
 </script>
 
 </body>
