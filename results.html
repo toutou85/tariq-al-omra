@@ -156,6 +156,33 @@ button{
 <div id="offers">⏳ جاري تحميل العروض...</div>
 
 </div>
+<!-- نافذة منبثقة -->
+<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000">
+  <div style="background:#fff;max-width:420px;margin:10% auto;padding:20px;border-radius:12px">
+    
+    <h3 id="m_offer" style="color:#8b0000"></h3>
+
+    <p id="m_agency"></p>
+    <p id="m_date"></p>
+    <p id="m_flight"></p>
+    <p id="m_airport"></p>
+    <p id="m_hotel"></p>
+
+    <p><strong>الأسعار:</strong></p>
+    <p id="m_prices"></p>
+
+    <hr>
+
+    <h4>📋 معلومات الزبون</h4>
+    <input id="c_name" placeholder="الاسم الكامل">
+    <input id="c_phone" placeholder="رقم الهاتف">
+    <input id="c_email" placeholder="البريد الإلكتروني">
+
+    <button onclick="sendOrder()">✅ سجل الآن</button>
+    <button onclick="closeModal()" style="background:#777;margin-top:5px">إغلاق</button>
+
+  </div>
+</div>
 
 <script>
 // 🔗 رابط Google Apps Script (طلبات المعتمرين)
@@ -250,45 +277,7 @@ function loadOffers(){
     });
 }
 
-// تفاصيل العرض (مبدئيًا)
-function showOfferDetails(o){
-  alert(
-    "🏨 الفندق: " + o.hotel + "\n" +
-    "✈️ نوع الرحلة: " + o.flight + "\n" +
-    "🛫 مطار الإقلاع: " + o.airport + "\n" +
-    "💰 خماسية: " + o.five + "\n" +
-    "💰 رباعية: " + o.four + "\n" +
-    "💰 ثلاثية: " + o.three + "\n" +
-    "💰 ثنائية: " + o.two
-  );
-}
-<!-- نافذة منبثقة -->
-<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000">
-  <div style="background:#fff;max-width:420px;margin:10% auto;padding:20px;border-radius:12px">
-    
-    <h3 id="m_offer" style="color:#8b0000"></h3>
 
-    <p id="m_agency"></p>
-    <p id="m_date"></p>
-    <p id="m_flight"></p>
-    <p id="m_airport"></p>
-    <p id="m_hotel"></p>
-
-    <p><strong>الأسعار:</strong></p>
-    <p id="m_prices"></p>
-
-    <hr>
-
-    <h4>📋 معلومات الزبون</h4>
-    <input id="c_name" placeholder="الاسم الكامل">
-    <input id="c_phone" placeholder="رقم الهاتف">
-    <input id="c_email" placeholder="البريد الإلكتروني">
-
-    <button onclick="sendOrder()">✅ سجل الآن</button>
-    <button onclick="closeModal()" style="background:#777;margin-top:5px">إغلاق</button>
-
-  </div>
-</div>
 
 // 📂 القائمة الجانبية
 const menu = document.getElementById("sideMenu");
