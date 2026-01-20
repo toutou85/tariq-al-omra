@@ -12,9 +12,61 @@ body{
   font-family:Tajawal,Arial;
   background:#f5f5f5;
 }
+
+/* زر القائمة */
+.menu-btn{
+  position:fixed;
+  top:15px;
+  right:15px;
+  background:#8b0000;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  padding:10px 14px;
+  font-size:20px;
+  cursor:pointer;
+  z-index:1003;
+}
+
+/* overlay */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:none;
+  z-index:1001;
+}
+.overlay.active{display:block}
+
+/* sidebar */
+.sidebar{
+  position:fixed;
+  top:0;
+  right:-280px;
+  width:260px;
+  height:100%;
+  background:#fff;
+  padding:20px;
+  box-shadow:-2px 0 10px rgba(0,0,0,.2);
+  transition:.3s;
+  z-index:1002;
+}
+.sidebar.active{right:0}
+.sidebar a{
+  display:block;
+  margin:12px 0;
+  padding:12px;
+  background:#8b0000;
+  color:#fff;
+  text-decoration:none;
+  border-radius:6px;
+  text-align:center;
+}
+
+/* المحتوى */
 .container{
   max-width:800px;
-  margin:40px auto;
+  margin:80px auto 20px;
   background:#fff;
   padding:20px;
   border-radius:10px;
@@ -30,7 +82,11 @@ input,select{
 }
 .row{display:flex;gap:10px}
 .row>div{flex:1}
-button{
+
+#logoBox{text-align:center;margin:10px 0}
+#logoBox img{max-width:150px;display:none}
+
+button.submit{
   width:100%;
   margin-top:20px;
   padding:14px;
@@ -41,19 +97,18 @@ button{
   font-size:16px;
   cursor:pointer;
 }
-#logoBox{
-  text-align:center;
-  margin:15px 0;
-}
-#logoBox img{
-  max-width:160px;
-  max-height:100px;
-  display:none;
-}
 </style>
 </head>
 
 <body>
+
+<button class="menu-btn" onclick="openMenu()">☰</button>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<div class="sidebar" id="sidebar">
+  <a href="index.html">🏠 الرئيسية</a>
+  <a href="results.html">🔍 العروض</a>
+</div>
 
 <div class="container">
 <h2>📋 إدراج عرض عمرة</h2>
@@ -61,24 +116,33 @@ button{
 <form id="offerForm">
 
 <label>الوكالة</label>
-<select name="agency" id="agencySelect" required>
-  <option value="">⏳ تحميل الوكالات...</option>
+<select id="agencySelect">
+  <option value="">اختر وكالة</option>
+  <option value="__new__">➕ وكالة جديدة</option>
 </select>
 
 <div id="logoBox">
   <img id="agencyLogo">
 </div>
 
+<label>اسم الوكالة</label>
+<input name="agency" id="agencyInput" required>
+
 <div class="row">
   <div>
     <label>الولاية</label>
-    <input name="state" required>
+    <input name="state" id="stateInput" required>
   </div>
   <div>
     <label>البلدية</label>
-    <input name="city" required>
+    <input name="city" id="cityInput" required>
   </div>
 </div>
+
+<label>رقم الهاتف</label>
+<input name="phone" id="phoneInput" required>
+
+<hr>
 
 <label>اسم العرض</label>
 <input name="offer" required>
@@ -115,56 +179,72 @@ button{
 
 <input name="two" placeholder="ثنائية">
 <input name="hotel" placeholder="اسم الفندق" required>
-<input name="phone" placeholder="الهاتف" required>
 
-<button type="submit">🚀 نشر العرض</button>
+<button class="submit">🚀 نشر العرض</button>
 <p id="msg" style="text-align:center"></p>
 
 </form>
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbyi80ahWAbFrOPWxzwa_qM01iE0elSW4nRKmVMk86EJ2Q7AbLfQQSNgIO3RAYOjDHsWTA/exec";
+const API="https://script.google.com/macros/s/AKfycbyi80ahWAbFrOPWxzwa_qM01iE0elSW4nRKmVMk86EJ2Q7AbLfQQSNgIO3RAYOjDHsWTA/exec";
 
-const agencySelect = document.getElementById("agencySelect");
-const logoImg = document.getElementById("agencyLogo");
-const msg = document.getElementById("msg");
-const form = document.getElementById("offerForm");
+const agencySelect=document.getElementById("agencySelect");
+const agencyInput=document.getElementById("agencyInput");
+const stateInput=document.getElementById("stateInput");
+const cityInput=document.getElementById("cityInput");
+const phoneInput=document.getElementById("phoneInput");
+const logo=document.getElementById("agencyLogo");
+const form=document.getElementById("offerForm");
+const msg=document.getElementById("msg");
 
-let agencies = {};
+let agencies={};
 
-// 🔽 جلب الوكالات من Google Sheets
-fetch(API_URL)
-.then(res=>res.json())
-.then(data=>{
-  agencySelect.innerHTML = `<option value="">اختر الوكالة</option>`;
+fetch(API).then(r=>r.json()).then(data=>{
   data.forEach(o=>{
     if(!agencies[o.agency]){
-      agencies[o.agency] = o.logo;
-      agencySelect.innerHTML += `<option value="${o.agency}">${o.agency}</option>`;
+      agencies[o.agency]=o;
+      agencySelect.innerHTML+=`<option value="${o.agency}">${o.agency}</option>`;
     }
   });
 });
 
-// 🖼️ عرض الشعار عند اختيار الوكالة
-agencySelect.addEventListener("change",()=>{
-  const logo = agencies[agencySelect.value];
-  if(logo){
-    logoImg.src = logo;
-    logoImg.style.display = "block";
-  }else{
-    logoImg.style.display = "none";
+agencySelect.onchange=()=>{
+  const v=agencySelect.value;
+  if(v==="__new__"){
+    agencyInput.value="";
+    stateInput.value="";
+    cityInput.value="";
+    phoneInput.value="";
+    logo.style.display="none";
+  }else if(agencies[v]){
+    agencyInput.value=v;
+    stateInput.value=agencies[v].state;
+    cityInput.value=agencies[v].city;
+    phoneInput.value=agencies[v].phone;
+    if(agencies[v].logo){
+      logo.src=agencies[v].logo;
+      logo.style.display="block";
+    }
   }
-});
+};
 
-// 🚀 إرسال النموذج
-form.addEventListener("submit",e=>{
+form.onsubmit=e=>{
   e.preventDefault();
   msg.textContent="⏳ جاري الإرسال...";
-  fetch(API_URL,{method:"POST",body:new FormData(form)})
+  fetch(API,{method:"POST",body:new FormData(form)})
   .then(()=>msg.textContent="✅ تم نشر العرض")
   .catch(()=>msg.textContent="❌ خطأ");
-});
+};
+
+function openMenu(){
+  sidebar.classList.add("active");
+  overlay.classList.add("active");
+}
+function closeMenu(){
+  sidebar.classList.remove("active");
+  overlay.classList.remove("active");
+}
 </script>
 
 </body>
