@@ -173,6 +173,9 @@ function normalizePhone(p){
 function formatDate(d){
   return new Date(d).toLocaleDateString("ar-DZ",{day:"2-digit",month:"long",year:"numeric"});
 }
+function cleanText(t){
+  return (t||"").toString().trim();
+}
 
 searchBtn.onclick=()=>{
   const p=normalizePhone(phone.value);
@@ -193,14 +196,26 @@ fetch(OFFERS_API)
 .then(r=>r.json())
 .then(data=>{
   offersData=data;
-  filterAgency.innerHTML+=[...new Set(data.map(o=>o.agency))].map(v=>`<option>${v}</option>`).join("");
-  filterAirport.innerHTML+=[...new Set(data.map(o=>o.airport))].map(v=>`<option>${v}</option>`).join("");
-  renderOffers(data);
+
+  const agencies=new Map();
+  const airports=new Set();
+
+  offersData.forEach(o=>{
+    const a=cleanText(o.agency);
+    if(a && !agencies.has(a))agencies.set(a,a);
+    const ap=cleanText(o.airport);
+    if(ap)airports.add(ap);
+  });
+
+  agencies.forEach(v=>filterAgency.add(new Option(v,v)));
+  airports.forEach(v=>filterAirport.add(new Option(v,v)));
+
+  renderOffers(offersData);
 });
 
 function renderOffers(data){
   offers.innerHTML="";
-  if(!data.length)return offers.innerHTML="❌ لا توجد عروض";
+  if(!data.length){offers.innerHTML="❌ لا توجد عروض";return;}
   data.forEach(o=>{
     const div=document.createElement("div");
     div.className="offer-card";
@@ -264,8 +279,8 @@ sendBtn.onclick=()=>{
 function applyFilters(){
   const a=filterAgency.value, ap=filterAirport.value, m=filterMonth.value, d=filterDuration.value;
   renderOffers(offersData.filter(o=>{
-    if(a && o.agency!==a)return false;
-    if(ap && o.airport!==ap)return false;
+    if(a && cleanText(o.agency)!==a)return false;
+    if(ap && cleanText(o.airport)!==ap)return false;
     if(m && new Date(o.date).getMonth()+1!=m)return false;
     if(d && !o.duration?.includes(d))return false;
     return true;
