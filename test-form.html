@@ -1,43 +1,28 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>تجربة إرسال</title>
-</head>
-<body style="font-family: Tahoma; text-align: center; padding: 50px;">
-  <h2>📤 نموذج إرسال تجريبي</h2>
+div.innerHTML = `
+  <div class="offer-header">
+    <div class="offer-agency">
+      <img src="${o.logo || ''}"
+           class="offer-logo"
+           onerror="this.style.display='none'">
+      <span>${o.agency}</span>
+    </div>
+  </div>
 
-  <form id="myForm">
-    <label>الاسم:</label><br>
-    <input type="text" name="name" required><br><br>
+  <div class="offer-title">
+    🕋 ${o.offer}
+  </div>
 
-    <label>البريد الإلكتروني:</label><br>
-    <input type="email" name="email" required><br><br>
+  <div class="offer-info">
+    <span>📅 ${formatDate(o.date)}</span>
+    <span>⏳ ${o.duration || "—"}</span>
 
-    <button type="submit">إرسال</button>
-  </form>
+    <span>🏨 ${o.hotel || "—"}</span>
+    <span>✈️ ${o.flight || "—"}</span>
+  </div>
 
-  <p id="response" style="color: green; margin-top: 20px;"></p>
+  <div class="offer-price">
+    💰 غرفة جماعية: ${o.group ? o.group + " دج" : "غير متوفر"}
+  </div>
 
-  <script>
-    document.getElementById("myForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = new FormData(form);
-      fetch("https://script.google.com/macros/s/AKfycbywjflN_ZBZRk2R7eDNvUEQt3vvChm7lZCPDmiDGi8pKPyZooI3eossWJEfSTd_Q46k/exec", {
-        method: "POST",
-        body: data
-      })
-      .then(res => res.text())
-      .then(msg => {
-        document.getElementById("response").innerText = msg;
-        form.reset();
-      })
-      .catch(err => {
-        document.getElementById("response").innerText = "⚠️ حدث خطأ أثناء الإرسال.";
-        console.error(err);
-      });
-    });
-  </script>
-</body>
-</html>
+  <button>تفاصيل العرض</button>
+`;
