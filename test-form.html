@@ -235,6 +235,20 @@ button{background:#8b0000;color:#fff;cursor:pointer}
   border-radius:12px;
   font-weight:700;
 }
+  #filters{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+#filters select{
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+
 </style>
 </head>
 
@@ -273,6 +287,47 @@ button{background:#8b0000;color:#fff;cursor:pointer}
 
 <!-- العروض -->
 <h2>🕋 عروض العمرة المتوفرة</h2>
+  <!-- فلترة العروض -->
+<div id="filters">
+
+  <select id="filterAgency">
+    <option value="">🏢 كل الوكالات</option>
+  </select>
+
+  <select id="filterAirport">
+    <option value="">🛫 كل المطارات</option>
+    <option value="">🛫  الجزائر</option>
+    <option value="">🛫 وهران</option>
+    <option value="">🛫 عنابة</option>
+    <option value="">🛫 قسنطينة</option>
+    <option value="">🛫 ورقلة</option>
+    <option value="">🛫 غرداية</option>
+    <option value="">🛫 تمنغاست</option>
+    <option value="">🛫 الوادي</option>
+    <option value="">🛫 جيجل</option>
+  </select>
+
+  <select id="filterMonth">
+    <option value="">📅 كل الأشهر</option>
+    <option value="1">جانفي</option>
+    <option value="2">فيفري</option>
+    <option value="3">مارس</option>
+    <option value="4">أفريل</option>
+  </select>
+
+  <select id="filterDuration">
+    <option value="">⏳ كل المدد</option>
+    <option value="10">10 أيام</option>
+    <option value="15">15 يوم</option>
+    <option value="20">20 يوم</option>
+        <option value="30">30 أيام</option>
+    <option value="40">40 يوم</option>
+    <option value="50">50 يوم</option>
+        <option value="06">60 أيام</option>
+  </select>
+
+</div>
+
 <div id="offers">⏳ جاري تحميل العروض...</div>
 
 </div>
@@ -349,6 +404,18 @@ fetch(OFFERS_API)
     const div=document.createElement("div");
     div.className="offer-card";
     
+// تعبئة الوكالات
+[...new Set(offersData.map(o=>o.agency))].forEach(v=>{
+  filterAgency.add(new Option(v,v));
+});
+
+// تعبئة المطارات
+[...new Set(offersData.map(o=>o.airport))].forEach(v=>{
+  filterAirport.add(new Option(v,v));
+});
+
+// عرض كل العروض أول مرة
+renderOffers(offersData);
 
 
 div.innerHTML = `
@@ -383,6 +450,49 @@ div.innerHTML = `
     offers.appendChild(div);
   });
 });
+function renderOffers(data){
+  offers.innerHTML="";
+  if(!data.length){
+    offers.innerHTML="❌ لا توجد عروض مطابقة";
+    return;
+  }
+
+  data.forEach(o=>{
+    const div=document.createElement("div");
+    div.className="offer-card";
+
+    div.innerHTML = `
+      <div class="offer-header">
+        <div class="offer-agency">
+          <img src="${o.logo||''}" class="offer-logo"
+               onerror="this.style.display='none'">
+          <span>${o.agency}</span>
+        </div>
+      </div>
+
+      <div class="offer-title">🕋 ${o.offer}</div>
+
+      <div class="offer-info">
+        <span>📅 ${formatDate(o.date)}</span>
+        <span>⏳ ${o.duration||"—"}</span>
+        <span>🛫 ${o.airport||"—"}</span>
+        <span>🏨 ${o.hotel||"—"}</span>
+      </div>
+
+      <div class="offer-price">
+        💰 غرفة جماعية: ${o.group ? o.group+" دج" : "غير متوفر"}
+      </div>
+
+      <button>تفاصيل العرض</button>
+    `;
+
+    div.querySelector("button").onclick=()=>{
+      openModal(offersData.indexOf(o));
+    };
+
+    offers.appendChild(div);
+  });
+}
 
 // ===== نافذة =====
 function openModal(i){
@@ -422,6 +532,34 @@ sendBtn.onclick=()=>{
     })
   }).then(()=>{alert("✅ تم الإرسال");modal.style.display="none";});
 };
+  function applyFilters(){
+
+  const agency   = filterAgency.value;
+  const airport  = filterAirport.value;
+  const month    = filterMonth.value;
+  const duration = filterDuration.value;
+
+  const filtered = offersData.filter(o => {
+
+    if(agency && o.agency !== agency) return false;
+
+    if(airport && o.airport !== airport) return false;
+
+    if(month){
+      const offerMonth = new Date(o.date).getMonth() + 1;
+      if(offerMonth != month) return false;
+    }
+
+    if(duration){
+      if(!o.duration || !o.duration.includes(duration)) return false;
+    }
+
+    return true;
+  });
+
+  renderOffers(filtered);
+}
+
 </script>
 
 </body>
