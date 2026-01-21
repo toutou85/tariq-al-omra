@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -8,6 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+/* ====== الأساس ====== */
 body{
   font-family:Tajawal,Arial;
   margin:0;
@@ -16,6 +18,8 @@ body{
     url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
     center/cover fixed no-repeat;
 }
+
+/* ====== الهيدر ====== */
 header{
   height:60px;
   background:#8b0000;
@@ -25,8 +29,14 @@ header{
   padding:0 15px;
 }
 .menu-btn{font-size:26px;cursor:pointer}
-header h1{flex:1;text-align:center;font-size:18px;margin:0}
+header h1{
+  flex:1;
+  text-align:center;
+  font-size:18px;
+  margin:0;
+}
 
+/* ====== القائمة الجانبية ====== */
 #sideMenu{
   position:fixed;
   top:0;right:-260px;
@@ -53,6 +63,7 @@ header h1{flex:1;text-align:center;font-size:18px;margin:0}
   z-index:9000;
 }
 
+/* ====== المحتوى ====== */
 .container{
   max-width:520px;
   background:rgba(255,255,255,.93);
@@ -61,6 +72,7 @@ header h1{flex:1;text-align:center;font-size:18px;margin:0}
   border-radius:18px;
   text-align:center;
 }
+
 h2{color:#8b0000;margin-top:0}
 
 input,button{
@@ -77,6 +89,7 @@ button{
   cursor:pointer;
 }
 
+/* ====== بطاقة الترحيب ====== */
 .welcome{
   margin-top:20px;
   background:#f8f4ef;
@@ -85,15 +98,21 @@ button{
 }
 .welcome strong{color:#8b0000}
 
+/* ====== أزرار الانتقال ====== */
 .actions{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
   margin-top:15px;
 }
-.actions button{background:#444}
-.actions button.primary{background:#8b0000}
+.actions button{
+  background:#444;
+}
+.actions button.primary{
+  background:#8b0000;
+}
 
+/* ====== نافذة الانتظار ====== */
 #popup{
   display:none;
   position:fixed;
@@ -136,6 +155,7 @@ button{
 <div id="result"></div>
 </div>
 
+<!-- نافذة الذكر -->
 <div id="popup">
   <div id="popupBox">
     <h3>⏳ يرجى الانتظار</h3>
@@ -190,7 +210,7 @@ function check(){
 }
 
 function go(type){
-  location.href="results.html?view="+type;
+   location.href="results.html?view="+type;
 }
 
 function openMenu(){
