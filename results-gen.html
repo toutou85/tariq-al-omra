@@ -28,6 +28,45 @@ header{
 .menu-btn{font-size:26px;cursor:pointer}
 header h1{flex:1;text-align:center;font-size:18px;margin:0}
 
+.whatsapp-top{
+  position:fixed;
+  top:10px;
+  left:12px;
+  width:48px;
+  height:48px;
+  background:#25D366;
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  z-index:13000;
+}
+
+#sideMenu{
+  position:fixed;
+  top:0;right:-260px;
+  width:260px;height:100%;
+  background:#8b0000;
+  padding-top:70px;
+  transition:.3s;
+  z-index:10000
+}
+#sideMenu a{
+  display:block;
+  padding:14px 18px;
+  color:#fff;
+  text-decoration:none;
+}
+#overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:9000
+}
+
 .container{
   max-width:1200px;
   margin:25px auto;
@@ -122,9 +161,21 @@ select{padding:8px;border-radius:8px}
 
 <body>
 
+<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
+<i class="fab fa-whatsapp"></i>
+</a>
+
 <header>
+<div class="menu-btn" onclick="openMenu()">☰</div>
 <h1>🕋 العروض العامة</h1>
 </header>
+
+<nav id="sideMenu">
+<a href="results-gen.html">🕋 العروض العامة</a>
+<a href="recherche-form.html">📩 طلب عرض عمرة</a>
+<a href="recherche-n.html">👤 صفحتي الخاصة</a>
+</nav>
+<div id="overlay" onclick="closeMenu()"></div>
 
 <div class="container">
 
@@ -162,9 +213,9 @@ const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiL
 
 let offersData=[], selectedOffer=null;
 
-const fAgency=fAgencyEl=document.getElementById("fAgency");
-const fState=fStateEl=document.getElementById("fState");
-const fDate=fDateEl=document.getElementById("fDate");
+const fAgency=document.getElementById("fAgency");
+const fState=document.getElementById("fState");
+const fDate=document.getElementById("fDate");
 const offers=document.getElementById("offers");
 
 function formatDate(d){
@@ -219,16 +270,16 @@ function render(){
           <img src="${o.logo||''}" onerror="this.style.display='none'">
           <div>
             <strong>${o.offer}</strong><br>
-            <small>${o.agency}</small>
+            <small>${o.agency} – ${o.state}</small>
           </div>
         </div>
 
-        <div>📅 ${formatDate(o.date)}</div>
         <div>🏨 ${o.hotel}</div>
         <div class="price">💰 ${o.group} دج</div>
 
         <div class="card-actions">
           <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>
+          <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة</button>
           <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
         </div>
       `;
@@ -248,13 +299,27 @@ function openDetails(o){
   detailsContent.innerHTML=`
     <p>🕋 العرض: ${o.offer}</p>
     <p>🏢 الوكالة: ${o.agency}</p>
+    <p>📍 الولاية: ${o.state}</p>
     <p>✈️ المطار: ${o.airport}</p>
     <p>📅 التاريخ: ${formatDate(o.date)}</p>
+    <p>🏨 الفندق: ${o.hotel}</p>
     <p>💰 السعر: ${o.group} دج</p>
   `;
   detailsModal.style.display="flex";
 }
 function closeDetails(){detailsModal.style.display="none";}
+
+function shareOffer(o){
+  const text=`🕋 عرض عمرة
+${o.offer}
+🏢 ${o.agency}
+✈️ ${o.airport}
+📅 ${formatDate(o.date)}
+💰 ${o.group} دج`;
+  navigator.share
+    ? navigator.share({text})
+    : window.open("https://wa.me/?text="+encodeURIComponent(text));
+}
 
 function openRegister(o){
   selectedOffer=o;
@@ -279,6 +344,9 @@ function sendRegister(){
 
   location.href="send.html";
 }
+
+function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}
+function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 </script>
 
 </body>
