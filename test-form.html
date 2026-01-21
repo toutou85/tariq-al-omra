@@ -152,7 +152,7 @@ body{
 <div id="overlay"></div>
 
 <nav id="sideMenu">
-  <a href="#" onclick="openTrack()">📋 متابعة طلبي</a>
+  <a href="track.html">📋 متابعة طلبي</a>
   <a href="offers.html">🕋 العروض</a>
 </nav>
 
@@ -160,7 +160,7 @@ body{
 
 <div class="filters">
   <select id="fAgency"><option value="">🏢 الوكالة</option></select>
-  <select id="fAirport"><option value="">🛫 المطار</option></select>
+  <select id="fState"><option value="">📍 الولاية</option></select>
   <select id="fMonth"><option value="">📅 الشهر</option></select>
   <select id="fDuration"><option value="">⏳ المدة</option></select>
 </div>
@@ -198,10 +198,6 @@ function getTripDate(o){
 menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
 overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
 
-function openTrack(){
-  window.location.href="track.html";
-}
-
 function goRegister(){
   window.location.href="register.html";
 }
@@ -215,7 +211,8 @@ fetch(OFFERS_API).then(r=>r.json()).then(d=>{
 
 function fillFilters(d){
   [...new Set(d.map(o=>o.agency))].forEach(v=>fAgency.add(new Option(v,v)));
-  [...new Set(d.map(o=>o.airport))].forEach(v=>fAirport.add(new Option(v,v)));
+  [...new Set(d.map(o=>o.state).filter(Boolean))]
+    .forEach(v=>fState.add(new Option(v,v)));
   [...new Set(d.map(o=>o.duration))].forEach(v=>fDuration.add(new Option(v,v)));
   [...new Set(d.map(o=>new Date(getTripDate(o)).getMonth()+1))]
     .filter(v=>!isNaN(v))
@@ -273,11 +270,11 @@ function render(data){
   }
 }
 
-[fAgency,fAirport,fDuration,fMonth].forEach(el=>el.onchange=()=>{
+[fAgency,fState,fDuration,fMonth].forEach(el=>el.onchange=()=>{
   render(allData.filter(o=>{
     const tripDate=getTripDate(o);
     if(fAgency.value && o.agency!==fAgency.value)return false;
-    if(fAirport.value && o.airport!==fAirport.value)return false;
+    if(fState.value && o.state!==fState.value)return false;
     if(fDuration.value && !o.duration?.includes(fDuration.value))return false;
     if(fMonth.value && new Date(tripDate).getMonth()+1!=fMonth.value)return false;
     return true;
