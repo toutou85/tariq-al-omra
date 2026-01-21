@@ -285,7 +285,7 @@ function openOffer(o){
   m_state.innerText="📍 الولاية: "+o.state;
   m_city.innerText="🏘️ البلدية: "+o.city;
   m_flight.innerText="✈️ نوع الرحلة: "+o.flight;
-  m_date.innerText="📅 تاريخ الرحلة: "+tripDate;
+  <span>📅 ${formatTripDate(tripDate)}</span>
   m_duration.innerText="⏳ المدة: "+o.duration;
   m_airport.innerText="🛫 مطار الإقلاع: "+o.airport;
   m_hotel.innerText="🏨 الفندق: "+o.hotel;
