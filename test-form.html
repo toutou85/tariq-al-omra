@@ -182,7 +182,7 @@ body{
     <p id="m_airport"></p>
     <p id="m_hotel"></p>
     <p id="m_prices"></p>
-    <button>📲 تسجيل</button>
+    <button onclick="goRegister()">📲 تسجيل</button>
     <button onclick="closeOffer()" style="background:#777">إغلاق</button>
   </div>
 </div>
@@ -190,7 +190,6 @@ body{
 <script>
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
 
-/* قاعدة صارمة لتاريخ الرحلة */
 function getTripDate(o){
   return o.tripDate || o.trip_date || o.dateTrip || o.date;
 }
@@ -198,6 +197,14 @@ function getTripDate(o){
 /* القائمة */
 menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
 overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
+
+function openTrack(){
+  window.location.href="track.html";
+}
+
+function goRegister(){
+  window.location.href="register.html";
+}
 
 let allData=[];
 fetch(OFFERS_API).then(r=>r.json()).then(d=>{
@@ -256,7 +263,7 @@ function render(data){
         <div class="offer-price">💰 غرفة جماعية: ${o.group||"-"} دج</div>
 
         <button onclick='openOffer(${JSON.stringify(o)})'>تفاصيل العرض</button>
-        <button>تسجيل</button>
+        <button onclick="goRegister()">تسجيل</button>
       `;
       slider.appendChild(c);
     });
@@ -280,49 +287,35 @@ function render(data){
 function openOffer(o){
   const tripDate=getTripDate(o);
   m_logo.src=o.logo||"";
-  m_offer.innerText=o.offer;
-  m_agency.innerText="🏢 الوكالة: "+o.agency;
-  m_state.innerText="📍 الولاية: "+o.state;
-  m_city.innerText="🏘️ البلدية: "+o.city;
-  m_flight.innerText="✈️ نوع الرحلة: "+o.flight;
-  <span>📅 ${formatTripDate(tripDate)}</span>
-  m_duration.innerText="⏳ المدة: "+o.duration;
-  m_airport.innerText="🛫 مطار الإقلاع: "+o.airport;
-  m_hotel.innerText="🏨 الفندق: "+o.hotel;
+  m_offer.innerText=o.offer||"—";
+  m_agency.innerText="🏢 الوكالة: "+(o.agency||"—");
+  m_state.innerText="📍 الولاية: "+(o.state||"—");
+  m_city.innerText="🏘️ البلدية: "+(o.city||"—");
+  m_flight.innerText="✈️ نوع الرحلة: "+(o.flight||"—");
+  m_date.innerText="📅 تاريخ الرحلة: "+formatTripDate(tripDate);
+  m_duration.innerText="⏳ المدة: "+(o.duration||"—");
+  m_airport.innerText="🛫 مطار الإقلاع: "+(o.airport||"—");
+  m_hotel.innerText="🏨 الفندق: "+(o.hotel||"—");
+
   m_prices.innerHTML=`
-    جماعية: ${o.group}<br>
-    خماسية: ${o.five}<br>
-    رباعية: ${o.four}<br>
-    ثلاثية: ${o.three}<br>
-    ثنائية: ${o.two}
+    جماعية: ${o.group||"-"}<br>
+    خماسية: ${o.five||"-"}<br>
+    رباعية: ${o.four||"-"}<br>
+    ثلاثية: ${o.three||"-"}<br>
+    ثنائية: ${o.two||"-"}
   `;
   offerModal.style.display="block";
 }
-function closeOffer(){offerModal.style.display="none"}
+
+function closeOffer(){
+  offerModal.style.display="none";
+}
+
 function formatTripDate(value){
   if(!value) return "—";
-
-  // إذا كان نص ISO
-  if(typeof value === "string" && value.includes("T")){
-    const d = new Date(value);
-    return d.toLocaleDateString("ar-DZ", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit"
-    });
-  }
-
-  // إذا كان Date Object
-  if(value instanceof Date){
-    return value.toLocaleDateString("ar-DZ", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit"
-    });
-  }
-
-  // إذا كان نص عادي
-  return value;
+  const d=new Date(value);
+  if(isNaN(d)) return value;
+  return d.toLocaleDateString("ar-DZ",{year:"numeric",month:"2-digit",day:"2-digit"});
 }
 </script>
 
