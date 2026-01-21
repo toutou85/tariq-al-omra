@@ -14,23 +14,6 @@ body{
   background:url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg") center/cover fixed no-repeat;
 }
 
-/* واتساب */
-.whatsapp-top{
-  position:fixed;
-  top:15px;
-  left:15px;
-  width:55px;
-  height:55px;
-  background:#25D366;
-  color:#fff;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  z-index:11000;
-}
-
 /* زر القائمة */
 #menuBtn{width:30px;margin:15px;cursor:pointer}
 #menuBtn span{display:block;height:3px;background:#000;margin:6px 0;border-radius:2px}
@@ -50,7 +33,7 @@ body{
 
 .container{
   max-width:650px;
-  background:rgba(255,255,255,.9);
+  background:rgba(255,255,255,.85);
   margin:20px auto;
   padding:20px;
   border-radius:16px;
@@ -58,14 +41,17 @@ body{
 
 h2{text-align:center;color:#8b0000}
 
-/* البطاقات (نفس التصميم) */
+button,input,select{
+  width:100%;padding:10px;margin-top:8px;
+  border-radius:8px;border:1px solid #ccc
+}
+button{background:#8b0000;color:#fff;cursor:pointer}
+
+/* بطاقات – لم تُغيّر */
 .offer-card{
-  background:#fff;
-  border-radius:16px;
-  padding:16px;
-  border:1px solid #eee;
-  box-shadow:0 6px 20px rgba(0,0,0,.05);
-  min-width:260px;
+  background:#fff;border-radius:16px;padding:16px;
+  border:1px solid #eee;box-shadow:0 6px 20px rgba(0,0,0,.05);
+  min-width:260px
 }
 
 .offer-header{display:flex;align-items:center;margin-bottom:8px}
@@ -73,43 +59,16 @@ h2{text-align:center;color:#8b0000}
 .offer-logo{width:42px;height:42px;object-fit:contain}
 
 .offer-title{font-size:18px;font-weight:800;color:#8b0000;margin:8px 0}
-.offer-info{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px;
-  font-size:14px
-}
-.offer-price{
-  margin-top:10px;
-  background:#f8f4ef;
-  padding:10px;
-  border-radius:12px;
-  font-weight:800;
-  text-align:center;
-  color:#8b0000
-}
+.offer-info{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:14px}
+.offer-price{margin-top:10px;background:#f8f4ef;padding:10px;border-radius:12px;font-weight:800;text-align:center;color:#8b0000}
 
-/* تجميع أفقي */
+/* تجميع أفقي حسب المطار */
 .airport-block{margin-top:25px}
-.airport-title{
-  font-weight:800;
-  color:#8b0000;
-  margin-bottom:10px
-}
-.airport-row{
-  display:flex;
-  gap:14px;
-  overflow-x:auto;
-  padding-bottom:10px
-}
+.airport-title{font-weight:800;color:#8b0000;margin-bottom:10px}
+.airport-row{display:flex;gap:14px;overflow-x:auto;padding-bottom:10px}
 
 /* الفلاتر */
-#filters{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-bottom:10px
-}
+#filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 
 /* نافذة */
 #modal{
@@ -117,21 +76,24 @@ h2{text-align:center;color:#8b0000}
   background:rgba(0,0,0,.6);z-index:9999
 }
 #modalBox{
-  background:#fff;
-  max-width:360px;
-  width:90%;
-  margin:8% auto;
-  padding:16px;
-  border-radius:14px;
-  max-height:75vh;
-  overflow:auto
+  background:#fff;max-width:360px;width:90%;
+  margin:8% auto;padding:16px;border-radius:14px;
+  max-height:75vh;overflow:auto
+}
+
+/* واتساب */
+.whatsapp-top{
+  position:fixed;top:15px;left:15px;
+  width:55px;height:55px;background:#25D366;
+  color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;z-index:11000
 }
 </style>
 </head>
 
 <body>
 
-<!-- زر واتساب -->
 <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
   <i class="fab fa-whatsapp"></i>
 </a>
@@ -159,7 +121,6 @@ h2{text-align:center;color:#8b0000}
 <div id="offers">⏳ جاري تحميل العروض...</div>
 </div>
 
-<!-- نافذة -->
 <div id="modal">
   <div id="modalBox">
     <h3 id="m_offer"></h3>
@@ -182,34 +143,40 @@ overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
 
 let offersData=[];
 
-fetch(OFFERS_API)
-.then(r=>r.json())
-.then(data=>{
+const WILAYAS=[
+"أدرار","الشلف","الأغواط","أم البواقي","باتنة","بجاية","بسكرة","بشار","البليدة","البويرة",
+"تمنراست","تبسة","تلمسان","تيارت","تيزي وزو","الجزائر","الجلفة","جيجل","سطيف","سعيدة",
+"سكيكدة","سيدي بلعباس","عنابة","قالمة","قسنطينة","المدية","مستغانم","المسيلة","معسكر","ورقلة",
+"وهران","البيض","إليزي","برج بوعريريج","بومرداس","الطارف","تندوف","تيسمسيلت","الوادي","خنشلة",
+"سوق أهراس","تيبازة","ميلة","عين الدفلى","النعامة","عين تموشنت","غرداية","غليزان",
+"تيميمون","برج باجي مختار","أولاد جلال","بني عباس","إن صالح","إن قزام","تقرت","جانت","المغير","المنيعة"
+];
+
+WILAYAS.forEach(w=>filterWilaya.add(new Option(w,w)));
+
+fetch(OFFERS_API).then(r=>r.json()).then(data=>{
   offersData=data;
 
   const agencies=new Set();
-  const wilayas=new Set();
   const durations=new Set();
 
   data.forEach(o=>{
     if(o.agency)agencies.add(o.agency);
-    if(o.wilaya)wilayas.add(o.wilaya); // ✅ العمود C
     if(o.duration)durations.add(o.duration);
   });
 
-  agencies.forEach(v=>filterAgency.add(new Option(v,v)));
-  wilayas.forEach(v=>filterWilaya.add(new Option(v,v)));
-  durations.forEach(v=>filterDuration.add(new Option(v,v)));
+  agencies.forEach(a=>filterAgency.add(new Option(a,a)));
+  durations.forEach(d=>filterDuration.add(new Option(d,d)));
 
   renderOffers(data);
 });
 
 function renderOffers(data){
   offers.innerHTML="";
-
   const grouped={};
+
   data.forEach(o=>{
-    const key=o.airport || "بدون مطار";
+    const key=o.airport||"بدون مطار";
     if(!grouped[key])grouped[key]=[];
     grouped[key].push(o);
   });
@@ -232,18 +199,15 @@ function renderOffers(data){
             <span>${o.agency}</span>
           </div>
         </div>
-
         <div class="offer-title">🕋 ${o.offer}</div>
-
         <div class="offer-info">
-          <span>📍 ${o.wilaya || "غير محددة"}</span>
+          <span>📍 ${o.wilaya}</span>
           <span>📅 ${new Date(o.date).toLocaleDateString("ar-DZ")}</span>
           <span>⏳ ${o.duration}</span>
           <span>🏨 ${o.hotel}</span>
         </div>
-
         <div class="offer-price">💰 ${o.group} دج</div>
-        <button onclick='openModal(${JSON.stringify(o)})'>تفاصيل</button>
+        <button onclick='openModal(${JSON.stringify(o)})'>تفاصيل العرض</button>
       `;
       row.appendChild(card);
     });
@@ -261,13 +225,7 @@ function openModal(o){
   m_airport.innerText="🛫 "+o.airport;
   m_hotel.innerText="🏨 "+o.hotel;
   m_duration.innerText="⏳ "+o.duration;
-  m_prices.innerHTML=`
-    جماعية: ${o.group}<br>
-    خماسية: ${o.five}<br>
-    رباعية: ${o.four}<br>
-    ثلاثية: ${o.three}<br>
-    ثنائية: ${o.two}
-  `;
+  m_prices.innerHTML=`جماعية: ${o.group}<br>خماسية: ${o.five}<br>رباعية: ${o.four}<br>ثلاثية: ${o.three}<br>ثنائية: ${o.two}`;
   modal.style.display="block";
 }
 function closeModal(){modal.style.display="none"}
