@@ -14,6 +14,23 @@ body{
   background:url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg") center/cover fixed no-repeat;
 }
 
+/* واتساب */
+.whatsapp-top{
+  position:fixed;
+  top:15px;
+  left:15px;
+  width:55px;
+  height:55px;
+  background:#25D366;
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  z-index:11000;
+}
+
 /* زر القائمة */
 #menuBtn{width:30px;margin:15px;cursor:pointer}
 #menuBtn span{display:block;height:3px;background:#000;margin:6px 0;border-radius:2px}
@@ -33,7 +50,7 @@ body{
 
 .container{
   max-width:650px;
-  background:rgba(255,255,255,.85);
+  background:rgba(255,255,255,.9);
   margin:20px auto;
   padding:20px;
   border-radius:16px;
@@ -41,19 +58,15 @@ body{
 
 h2{text-align:center;color:#8b0000}
 
-button,input,select{
-  width:100%;padding:10px;margin-top:8px;
-  border-radius:8px;border:1px solid #ccc
-}
-button{background:#8b0000;color:#fff;cursor:pointer}
-
-/* البطاقات (لم تُغيّر) */
+/* البطاقات (نفس التصميم) */
 .offer-card{
-  background:#fff;border-radius:16px;padding:16px;margin-top:18px;
-  border:1px solid #eee;box-shadow:0 6px 20px rgba(0,0,0,.05);
-  transition:.3s
+  background:#fff;
+  border-radius:16px;
+  padding:16px;
+  border:1px solid #eee;
+  box-shadow:0 6px 20px rgba(0,0,0,.05);
+  min-width:260px;
 }
-.offer-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.12)}
 
 .offer-header{display:flex;align-items:center;margin-bottom:8px}
 .offer-agency{display:flex;align-items:center;gap:10px;font-weight:700}
@@ -76,6 +89,20 @@ button{background:#8b0000;color:#fff;cursor:pointer}
   color:#8b0000
 }
 
+/* تجميع أفقي */
+.airport-block{margin-top:25px}
+.airport-title{
+  font-weight:800;
+  color:#8b0000;
+  margin-bottom:10px
+}
+.airport-row{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  padding-bottom:10px
+}
+
 /* الفلاتر */
 #filters{
   display:grid;
@@ -90,14 +117,24 @@ button{background:#8b0000;color:#fff;cursor:pointer}
   background:rgba(0,0,0,.6);z-index:9999
 }
 #modalBox{
-  background:#fff;max-width:360px;width:90%;
-  margin:8% auto;padding:16px;border-radius:14px;
-  max-height:75vh;overflow:auto
+  background:#fff;
+  max-width:360px;
+  width:90%;
+  margin:8% auto;
+  padding:16px;
+  border-radius:14px;
+  max-height:75vh;
+  overflow:auto
 }
 </style>
 </head>
 
 <body>
+
+<!-- زر واتساب -->
+<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
+  <i class="fab fa-whatsapp"></i>
+</a>
 
 <div id="menuBtn"><span></span><span></span><span></span></div>
 <div id="overlay"></div>
@@ -114,7 +151,6 @@ button{background:#8b0000;color:#fff;cursor:pointer}
 <div id="filters">
   <select id="filterAgency"><option value="">🏢 كل الوكالات</option></select>
   <select id="filterWilaya"><option value="">📍 كل الولايات</option></select>
-  <select id="filterMonth"><option value="">📅 كل الأشهر</option></select>
   <select id="filterDuration"><option value="">⏳ كل المدد</option></select>
 </div>
 
@@ -144,7 +180,7 @@ const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiL
 menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"};
 overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"};
 
-let offersData=[],selectedOffer=null;
+let offersData=[];
 
 fetch(OFFERS_API)
 .then(r=>r.json())
@@ -153,14 +189,12 @@ fetch(OFFERS_API)
 
   const agencies=new Set();
   const wilayas=new Set();
-  const months=new Set();
   const durations=new Set();
 
   data.forEach(o=>{
     if(o.agency)agencies.add(o.agency);
     if(o.wilaya)wilayas.add(o.wilaya); // ✅ العمود C
     if(o.duration)durations.add(o.duration);
-    months.add(new Date(o.date).getMonth()+1);
   });
 
   agencies.forEach(v=>filterAgency.add(new Option(v,v)));
@@ -172,38 +206,54 @@ fetch(OFFERS_API)
 
 function renderOffers(data){
   offers.innerHTML="";
-  if(!data.length){offers.innerHTML="❌ لا توجد عروض";return;}
 
+  const grouped={};
   data.forEach(o=>{
-    const div=document.createElement("div");
-    div.className="offer-card";
-    div.innerHTML=`
-      <div class="offer-header">
-        <div class="offer-agency">
-          <img src="${o.logo||''}" class="offer-logo" onerror="this.style.display='none'">
-          <span>${o.agency}</span>
+    const key=o.airport || "بدون مطار";
+    if(!grouped[key])grouped[key]=[];
+    grouped[key].push(o);
+  });
+
+  Object.keys(grouped).forEach(ap=>{
+    const block=document.createElement("div");
+    block.className="airport-block";
+    block.innerHTML=`<div class="airport-title">🛫 ${ap}</div>`;
+
+    const row=document.createElement("div");
+    row.className="airport-row";
+
+    grouped[ap].forEach(o=>{
+      const card=document.createElement("div");
+      card.className="offer-card";
+      card.innerHTML=`
+        <div class="offer-header">
+          <div class="offer-agency">
+            <img src="${o.logo||''}" class="offer-logo" onerror="this.style.display='none'">
+            <span>${o.agency}</span>
+          </div>
         </div>
-      </div>
 
-      <div class="offer-title">🕋 ${o.offer}</div>
+        <div class="offer-title">🕋 ${o.offer}</div>
 
-      <div class="offer-info">
-        <span>📍 ${o.wilaya}</span>
-        <span>📅 ${new Date(o.date).toLocaleDateString("ar-DZ")}</span>
-        <span>⏳ ${o.duration}</span>
-        <span>🏨 ${o.hotel}</span>
-      </div>
+        <div class="offer-info">
+          <span>📍 ${o.wilaya || "غير محددة"}</span>
+          <span>📅 ${new Date(o.date).toLocaleDateString("ar-DZ")}</span>
+          <span>⏳ ${o.duration}</span>
+          <span>🏨 ${o.hotel}</span>
+        </div>
 
-      <div class="offer-price">💰 ${o.group} دج</div>
-      <button>تفاصيل العرض</button>
-    `;
-    div.querySelector("button").onclick=()=>openModal(o);
-    offers.appendChild(div);
+        <div class="offer-price">💰 ${o.group} دج</div>
+        <button onclick='openModal(${JSON.stringify(o)})'>تفاصيل</button>
+      `;
+      row.appendChild(card);
+    });
+
+    block.appendChild(row);
+    offers.appendChild(block);
   });
 }
 
 function openModal(o){
-  selectedOffer=o;
   m_offer.innerText=o.offer;
   m_agency.innerText="🏢 "+o.agency;
   m_wilaya.innerText="📍 "+o.wilaya;
@@ -225,12 +275,11 @@ function closeModal(){modal.style.display="none"}
 function resetFilters(){
   filterAgency.value="";
   filterWilaya.value="";
-  filterMonth.value="";
   filterDuration.value="";
   renderOffers(offersData);
 }
 
-[filterAgency,filterWilaya,filterMonth,filterDuration].forEach(f=>{
+[filterAgency,filterWilaya,filterDuration].forEach(f=>{
   f.onchange=()=>{
     renderOffers(offersData.filter(o=>{
       if(filterAgency.value && o.agency!==filterAgency.value)return false;
