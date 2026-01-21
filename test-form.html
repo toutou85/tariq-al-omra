@@ -11,13 +11,12 @@
 body{
   font-family:Tajawal,Arial;
   margin:0;
-  background:url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
-  center/cover fixed no-repeat;
+  background:url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg") center/cover fixed no-repeat;
 }
 .container{
   max-width:1200px;
   margin:90px auto 20px;
-  background:rgba(255,255,255,.93);
+  background:rgba(255,255,255,.92);
   padding:20px;
   border-radius:18px
 }
@@ -25,7 +24,7 @@ body{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:10px;
-  margin-bottom:20px
+  margin-bottom:25px
 }
 .filters select{
   padding:10px;
@@ -46,9 +45,9 @@ body{
 .offer-card{
   min-width:300px;
   background:#fff;
-  padding:15px;
-  border-radius:15px;
-  box-shadow:0 5px 15px rgba(0,0,0,.1)
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 6px 20px rgba(0,0,0,.08)
 }
 .offer-title{
   font-weight:800;
@@ -58,10 +57,15 @@ body{
   font-size:14px;
   margin-top:8px
 }
+.offer-price{
+  margin-top:8px;
+  font-weight:800;
+  color:#8b0000
+}
 .offer-card button{
   width:100%;
   margin-top:6px;
-  padding:8px;
+  padding:9px;
   border:none;
   border-radius:8px;
   background:#8b0000;
@@ -79,10 +83,9 @@ body{
   background:#fff;
   width:90%;
   max-width:420px;
-  margin:10% auto;
-  padding:20px;
-  border-radius:15px;
-  text-align:center
+  margin:8% auto;
+  padding:16px;
+  border-radius:18px
 }
 </style>
 </head>
@@ -90,9 +93,8 @@ body{
 <body>
 
 <div class="container">
-
-  <div id="pilgrimName"></div>
-  <div id="pilgrimDetails"></div>
+  <div id="pilgrimName" style="display:none;font-weight:800"></div>
+  <div id="pilgrimDetails" style="display:none;margin-bottom:15px"></div>
 
   <div class="filters">
     <select id="fAgency"><option value="">🏢 الوكالة</option></select>
@@ -113,14 +115,6 @@ body{
   </div>
 </div>
 
-<!-- نافذة انتظار -->
-<div class="modal" id="loadingModal">
-  <div class="modal-box">
-    ⏳ جاري البحث...<br>
-    🤍 استغفر الله
-  </div>
-</div>
-
 <!-- تفاصيل العرض -->
 <div class="modal" id="detailsModal">
   <div class="modal-box">
@@ -130,12 +124,12 @@ body{
   </div>
 </div>
 
-<!-- تسجيل -->
+<!-- التسجيل -->
 <div class="modal" id="registerModal">
   <div class="modal-box">
     <h3>📝 تأكيد التسجيل</h3>
     <div id="registerContent"></div>
-    <button onclick="sendEmail()">📧 إرسال</button>
+    <button onclick="sendEmail()">📧 إرسال الطلب</button>
   </div>
 </div>
 
@@ -144,18 +138,22 @@ const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiL
 const TRACK_API="https://script.google.com/macros/s/AKfycby_IBGmSV8Z9YboH15QsB4lSWL1FyC6lrVLtUId1xbuIdT5zp1Zz2zbqtrdNxZLTwQgfg/exec";
 const EMAIL_API="https://script.google.com/macros/s/AKfycbwIPOrlarBhvw59DOm4in1MfvLaXGARiWgeTyIYEAQw-xzWNtz8EPZgwemLxrWxieOb/exec";
 
-let allOffers=[], currentOffers=[], currentPilgrim=null, currentOffer=null;
+let allOffers=[], currentOffers=[];
+let currentPilgrim=null, currentOffer=null;
 
+/* ===== أدوات ===== */
 function closeAll(){
   document.querySelectorAll(".modal").forEach(m=>m.style.display="none");
 }
-
-function formatDate(d){
-  const x=new Date(d);
-  return isNaN(x)?d:x.toLocaleDateString("ar-DZ");
+document.querySelectorAll(".modal").forEach(m=>{
+  m.onclick=e=>{ if(e.target===m) closeAll(); }
+});
+function formatDate(v){
+  const d=new Date(v);
+  return isNaN(d)?v:d.toLocaleDateString("ar-DZ");
 }
 
-/* تحميل العروض */
+/* ===== جلب العروض ===== */
 fetch(OFFERS_API).then(r=>r.json()).then(d=>{
   allOffers=d;
   currentOffers=d;
@@ -163,7 +161,7 @@ fetch(OFFERS_API).then(r=>r.json()).then(d=>{
   renderOffers(d);
 });
 
-/* الفلاتر */
+/* ===== الفلاتر ===== */
 function buildFilters(data){
   const u=k=>[...new Set(data.map(o=>o[k]).filter(Boolean))];
   u("agency").forEach(v=>fAgency.innerHTML+=`<option>${v}</option>`);
@@ -172,7 +170,6 @@ function buildFilters(data){
   u("date").forEach(v=>fDate.innerHTML+=`<option value="${v}">${formatDate(v)}</option>`);
   document.querySelectorAll(".filters select").forEach(s=>s.onchange=applyFilters);
 }
-
 function applyFilters(){
   let d=[...currentOffers];
   if(fAgency.value) d=d.filter(o=>o.agency===fAgency.value);
@@ -182,7 +179,7 @@ function applyFilters(){
   renderOffers(d);
 }
 
-/* عرض */
+/* ===== عرض العروض ===== */
 function renderOffers(data){
   offers.innerHTML="";
   const byAirport={};
@@ -202,9 +199,9 @@ function renderOffers(data){
             📅 ${formatDate(o.date)}<br>
             ⏳ ${o.duration} يوم<br>
             📍 ${o.state}<br>
-            🏨 ${o.hotel}<br>
-            💰 ${o.group} دج
+            🏨 ${o.hotel}
           </div>
+          <div class="offer-price">💰 ${o.group} دج</div>
           <button onclick='showDetails(${JSON.stringify(o)})'>تفاصيل</button>
           <button onclick='prepareRegister(${JSON.stringify(o)})'>تسجيل</button>
         </div>
@@ -213,24 +210,23 @@ function renderOffers(data){
   }
 }
 
-/* تفاصيل كاملة */
+/* ===== تفاصيل العرض ===== */
 function showDetails(o){
-  let h="";
+  let html="";
   for(const k in o){
-    h+=`<div><strong>${k}</strong>: ${k==="date"?formatDate(o[k]):o[k]}</div>`;
+    html+=`<div><strong>${k}</strong>: ${k==="date"?formatDate(o[k]):o[k]}</div>`;
   }
-  detailsContent.innerHTML=h;
+  detailsContent.innerHTML=html;
   detailsModal.style.display="block";
 }
 
-/* متابعة */
+/* ===== البحث عن الزبون ===== */
 function searchOrder(){
-  loadingModal.style.display="block";
   fetch(TRACK_API+"?phone="+trackPhone.value)
   .then(r=>r.json())
   .then(d=>{
-    closeAll();
     currentPilgrim=d;
+
     pilgrimName.innerText="مرحبا 👋 "+d.name;
     pilgrimDetails.innerHTML=`📞 ${d.phone} | 🛫 ${d.airport}`;
     pilgrimName.style.display=pilgrimDetails.style.display="block";
@@ -240,17 +236,21 @@ function searchOrder(){
       ...allOffers.filter(o=>o.airport!==d.airport)
     ];
     renderOffers(currentOffers);
+    closeAll();
   });
 }
 
-/* تسجيل */
+/* ===== التسجيل ===== */
 function prepareRegister(o){
   currentOffer=o;
-  registerContent.innerHTML=`${o.offer}<br>${o.group} دج`;
+  registerContent.innerHTML=`
+    <strong>${o.offer}</strong><br>
+    السعر: ${o.group} دج
+  `;
   registerModal.style.display="block";
 }
 
-/* إرسال */
+/* ===== إرسال الإيميل ===== */
 function sendEmail(){
   fetch(EMAIL_API,{
     method:"POST",
@@ -258,10 +258,12 @@ function sendEmail(){
       pilgrim:currentPilgrim,
       offer:currentOffer
     })
-  }).then(()=>alert("✅ تم إرسال الطلب"));
+  }).then(()=>{
+    alert("✅ تم إرسال الطلب بنجاح");
+    closeAll();
+  });
 }
 </script>
 
 </body>
 </html>
-
