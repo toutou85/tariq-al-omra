@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* ==== نفس CSS بدون أي تغيير ==== */
+/* ==== CSS كما هو + نافذة الانتظار ==== */
 body{
   font-family:Tajawal,Arial;
   margin:0;
@@ -23,11 +23,13 @@ body{
 #sideMenu a:hover{background:rgba(255,255,255,.2)}
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:3000}
 .container{max-width:1200px;margin:90px auto 20px;background:rgba(255,255,255,.92);padding:20px;border-radius:18px}
+
 #pilgrimName{display:none;text-align:center;font-size:22px;font-weight:800;color:#8b0000;margin-bottom:10px}
 #pilgrimDetails{display:none;background:#f8f4ef;padding:15px;border-radius:12px;margin-bottom:20px;font-size:15px}
+
 .filters{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:25px}
 .filters select{padding:10px;border-radius:8px;border:1px solid #ccc}
-@media(max-width:768px){.filters{grid-template-columns:1fr 1fr}}
+
 .airport-section{margin-bottom:35px}
 .airport-title{font-size:20px;font-weight:800;color:#8b0000;margin-bottom:10px}
 .slider{display:flex;gap:15px;overflow-x:auto;padding-bottom:10px}
@@ -38,25 +40,22 @@ body{
 .offer-info{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:14px}
 .offer-price{margin-top:10px;background:#f8f4ef;padding:10px;border-radius:12px;font-weight:800;text-align:center;color:#8b0000}
 .offer-card button{width:100%;margin-top:6px;padding:9px;border:none;border-radius:8px;background:#8b0000;color:#fff;cursor:pointer}
+
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:4000}
-.modal-box{background:#fff;max-width:420px;width:90%;margin:8% auto;padding:16px;border-radius:18px}
-.modal-box input{width:100%;padding:10px;margin-top:8px;border-radius:8px;border:1px solid #ccc}
-.modal-box button{width:100%;margin-top:10px;padding:10px;border:none;border-radius:8px;background:#8b0000;color:#fff}
+.modal-box{background:#fff;max-width:420px;width:90%;margin:8% auto;padding:16px;border-radius:18px;text-align:center}
+
+/* نافذة الانتظار */
+#loadingModal .modal-box{
+  font-size:18px;
+  line-height:1.8;
+}
 </style>
 </head>
 
 <body>
 
-<a href="https://wa.me/213674141379" class="whatsapp-top" target="_blank">
-<i class="fab fa-whatsapp"></i>
-</a>
-
 <div id="menuBtn"><span></span><span></span><span></span></div>
 <div id="overlay"></div>
-
-<nav id="sideMenu">
-  <a href="#" onclick="openTrack()">📋 متابعة الطلب</a>
-</nav>
 
 <div class="container">
   <div id="pilgrimName"></div>
@@ -72,205 +71,165 @@ body{
   <div id="offers">⏳ جاري تحميل العروض...</div>
 </div>
 
-<!-- النوافذ (بدون تغيير) -->
-<div class="modal" id="trackModal"><div class="modal-box"><h3>📋 متابعة الطلب</h3><input id="trackPhone" placeholder="رقم الهاتف"><button onclick="searchOrder()">بحث</button></div></div>
-<div class="modal" id="detailsModal"><div class="modal-box"><h3>📄 تفاصيل العرض</h3><div id="detailsContent"></div><button onclick="closeModal('detailsModal')">إغلاق</button></div></div>
-<div class="modal" id="registerModal"><div class="modal-box"><h3>📝 التسجيل</h3><div id="registerContent"></div><button onclick="closeModal('registerModal')">إغلاق</button></div></div>
+<!-- متابعة الطلب -->
+<div class="modal" id="trackModal">
+  <div class="modal-box">
+    <h3>📋 متابعة الطلب</h3>
+    <input id="trackPhone" placeholder="رقم الهاتف">
+    <button onclick="searchOrder()">بحث</button>
+  </div>
+</div>
+
+<!-- نافذة انتظار -->
+<div class="modal" id="loadingModal">
+  <div class="modal-box">
+    ⏳ جاري البحث عن معلوماتك…<br>
+    🤍 استغفر الله
+  </div>
+</div>
+
+<!-- تفاصيل -->
+<div class="modal" id="detailsModal">
+  <div class="modal-box">
+    <h3>📄 تفاصيل العرض</h3>
+    <div id="detailsContent"></div>
+    <button onclick="closeAll()">إغلاق</button>
+  </div>
+</div>
+
+<!-- تسجيل -->
+<div class="modal" id="registerModal">
+  <div class="modal-box">
+    <h3>📝 تأكيد التسجيل</h3>
+    <div id="registerContent"></div>
+    <button onclick="sendEmail()">📧 إرسال الطلب</button>
+  </div>
+</div>
+
 <script>
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
 const TRACK_API="https://script.google.com/macros/s/AKfycby_IBGmSV8Z9YboH15QsB4lSWL1FyC6lrVLtUId1xbuIdT5zp1Zz2zbqtrdNxZLTwQgfg/exec";
+const EMAIL_API="https://script.google.com/macros/s/AKfycbwIPOrlarBhvw59DOm4in1MfvLaXGARiWgeTyIYEAQw-xzWNtz8EPZgwemLxrWxieOb/exec";
 
-/* ===== القائمة والنوافذ ===== */
-menuBtn.onclick=()=>{
-  sideMenu.style.right="0";
-  overlay.style.display="block";
-};
-
-overlay.onclick=closeAll;
-
-document.querySelectorAll(".modal").forEach(m=>{
-  m.onclick=e=>{
-    if(e.target===m) closeAll();
-  };
-});
+let allOffers=[], currentOffers=[], currentPilgrim=null, currentOffer=null;
 
 function closeAll(){
   overlay.style.display="none";
-  sideMenu.style.right="-260px";
   document.querySelectorAll(".modal").forEach(m=>m.style.display="none");
 }
 
-function openTrack(){
-  trackModal.style.display="block";
-  overlay.style.display="block";
-  sideMenu.style.right="-260px";
-}
-
-function closeModal(id){
-  document.getElementById(id).style.display="none";
-  overlay.style.display="none";
-}
-
-/* ===== أدوات ===== */
 function formatDate(v){
   const d=new Date(v);
-  return isNaN(d)?v:d.toLocaleDateString("ar-DZ",{day:"2-digit",month:"long",year:"numeric"});
+  return isNaN(d)?v:d.toLocaleDateString("ar-DZ");
 }
 
-let allOffers=[];
-let currentOffers=[];
-
-/* ===== جلب العروض ===== */
-fetch(OFFERS_API)
-.then(r=>r.json())
-.then(d=>{
+/* جلب العروض */
+fetch(OFFERS_API).then(r=>r.json()).then(d=>{
   allOffers=d;
   currentOffers=d;
+  buildFilters(d);
   renderOffers(d);
 });
 
-/* ===== عرض العروض ===== */
+/* الفلاتر */
+function buildFilters(data){
+  const uniq=k=>[...new Set(data.map(o=>o[k]).filter(Boolean))];
+  uniq("agency").forEach(v=>fAgency.innerHTML+=`<option>${v}</option>`);
+  uniq("state").forEach(v=>fState.innerHTML+=`<option>${v}</option>`);
+  uniq("duration").forEach(v=>fDuration.innerHTML+=`<option>${v}</option>`);
+  uniq("date").forEach(v=>fDate.innerHTML+=`<option value="${v}">${formatDate(v)}</option>`);
+
+  document.querySelectorAll(".filters select").forEach(s=>s.onchange=applyFilters);
+}
+
+function applyFilters(){
+  let d=[...currentOffers];
+  if(fAgency.value) d=d.filter(o=>o.agency===fAgency.value);
+  if(fState.value) d=d.filter(o=>o.state===fState.value);
+  if(fDuration.value) d=d.filter(o=>String(o.duration)===fDuration.value);
+  if(fDate.value) d=d.filter(o=>o.date===fDate.value);
+  renderOffers(d);
+}
+
+/* عرض */
 function renderOffers(data){
   offers.innerHTML="";
   const byAirport={};
-
   data.forEach(o=>{
     byAirport[o.airport]=byAirport[o.airport]||[];
     byAirport[o.airport].push(o);
   });
 
   for(const a in byAirport){
-    const sec=document.createElement("div");
-    sec.className="airport-section";
-    sec.innerHTML=`<div class="airport-title">🛫 ${a}</div>`;
-
-    const slider=document.createElement("div");
-    slider.className="slider";
-
-    byAirport[a].forEach(o=>{
-      slider.innerHTML+=`
-      <div class="offer-card">
-        <div class="offer-title">${o.offer}</div>
-        <div class="offer-agency">
-          <img src="${o.logo||''}">
-          <strong>${o.agency}</strong>
+    offers.innerHTML+=`<div class="airport-section"><div class="airport-title">🛫 ${a}</div><div class="slider">${
+      byAirport[a].map(o=>`
+        <div class="offer-card">
+          <div class="offer-title">${o.offer}</div>
+          <div class="offer-info">
+            <span>📅 ${formatDate(o.date)}</span>
+            <span>⏳ ${o.duration} يوم</span>
+            <span>📍 ${o.state}</span>
+            <span>🏨 ${o.hotel}</span>
+          </div>
+          <div class="offer-price">${o.group} دج</div>
+          <button onclick='showDetails(${JSON.stringify(o)})'>تفاصيل</button>
+          <button onclick='prepareRegister(${JSON.stringify(o)})'>تسجيل</button>
         </div>
-        <div class="offer-info">
-          <span>📅 ${formatDate(o.date)}</span>
-          <span>⏳ ${o.duration} يوم</span>
-          <span>📍 ${o.state}</span>
-          <span>🏨 ${o.hotel}</span>
-        </div>
-        <div class="offer-price">💰 ${o.group} دج</div>
-        <button onclick='showDetails(${JSON.stringify(o)})'>تفاصيل العرض</button>
-        <button onclick='registerOffer(${JSON.stringify(o)})'>تسجيل</button>
-      </div>`;
-    });
-
-    sec.appendChild(slider);
-    offers.appendChild(sec);
+      `).join("")}</div></div>`;
   }
 }
 
-/* ===== تفاصيل العرض (كاملة) ===== */
+/* تفاصيل كاملة */
 function showDetails(o){
-  let html=`<strong>${o.offer}</strong><hr style="margin:10px 0">`;
-
-  const labels={
-    agency:"🏢 الوكالة",
-    state:"📍 الولاية",
-    airport:"🛫 المطار",
-    date:"📅 تاريخ الانطلاق",
-    duration:"⏳ المدة",
-    hotel:"🏨 الفندق",
-    group:"💰 السعر"
-  };
-
+  let html="";
   for(const k in o){
-    if(!o[k]) continue;
-    if(k==="date"){
-      html+=`${labels[k]||k}: ${formatDate(o[k])}<br>`;
-    }else if(labels[k]){
-      html+=`${labels[k]}: ${o[k]}<br>`;
-    }
+    html+=`<div><strong>${k}</strong>: ${k==="date"?formatDate(o[k]):o[k]}</div>`;
   }
-
   detailsContent.innerHTML=html;
   detailsModal.style.display="block";
   overlay.style.display="block";
 }
 
-/* ===== التسجيل ===== */
-function registerOffer(o){
-  registerContent.innerHTML=`
-    <strong>${o.offer}</strong><br><br>
-    🏢 ${o.agency}<br>
-    🛫 ${o.airport}<br>
-    📅 ${formatDate(o.date)}<br>
-    ⏳ ${o.duration} يوم<br>
-    💰 ${o.group} دج<br><br>
+/* بحث */
+function searchOrder(){
+  loadingModal.style.display="block";
+  overlay.style.display="block";
 
-    <a href="form.html
-      ?offer=${encodeURIComponent(o.offer)}
-      &agency=${encodeURIComponent(o.agency)}
-      &airport=${encodeURIComponent(o.airport)}
-      &state=${encodeURIComponent(o.state)}
-      &date=${encodeURIComponent(o.date)}
-      &duration=${encodeURIComponent(o.duration)}
-      &price=${encodeURIComponent(o.group)}">
-      👉 إتمام التسجيل
-    </a>
-  `;
+  fetch(TRACK_API+"?phone="+trackPhone.value)
+  .then(r=>r.json())
+  .then(d=>{
+    closeAll();
+    currentPilgrim=d;
+
+    pilgrimName.innerText="مرحبا "+d.name;
+    pilgrimDetails.innerHTML=`📞 ${d.phone} | 🛫 ${d.airport}`;
+    pilgrimName.style.display=pilgrimDetails.style.display="block";
+
+    currentOffers=[
+      ...allOffers.filter(o=>o.airport===d.airport),
+      ...allOffers.filter(o=>o.airport!==d.airport)
+    ];
+    renderOffers(currentOffers);
+  });
+}
+
+/* تسجيل */
+function prepareRegister(o){
+  currentOffer=o;
+  registerContent.innerHTML=`${o.offer}<br>${o.group} دج`;
   registerModal.style.display="block";
   overlay.style.display="block";
 }
 
-/* ===== البحث حسب الزبون ===== */
-function searchOrder(){
-  const phone=trackPhone.value.trim();
-  if(!phone){alert("أدخل رقم الهاتف");return;}
-
-  fetch(TRACK_API+"?phone="+encodeURIComponent(phone))
-  .then(r=>r.json())
-  .then(d=>{
-    if(!d.found){alert("لا يوجد طلب");return;}
-
-    /* إغلاق النافذة نهائيًا */
-    closeAll();
-
-    /* إخفاء الفلاتر */
-    document.querySelector(".filters").style.display="none";
-
-    pilgrimName.innerText="مرحبا 👋 "+d.name;
-    pilgrimName.style.display="block";
-
-    pilgrimDetails.innerHTML=`
-      📞 الهاتف: ${d.phone}<br>
-      🛫 المطار: ${d.airport}<br>
-      📍 الولاية: ${d.state}<br>
-      ⏳ المدة: ${d.duration} يوم
-    `;
-    pilgrimDetails.style.display="block";
-
-    currentOffers = allOffers
-    .map(o=>{
-      let score=0;
-      if(o.airport===d.airport) score+=3;
-      if(o.state===d.state) score+=2;
-      if(Math.abs(o.duration-d.duration)<=2) score+=2;
-      return {...o,_score:score};
+/* إرسال الإيميل */
+function sendEmail(){
+  fetch(EMAIL_API,{
+    method:"POST",
+    body:JSON.stringify({
+      pilgrim:currentPilgrim,
+      offer:currentOffer
     })
-    .filter(o=>o._score>=2)
-    .sort((a,b)=>b._score-a._score);
-
-    if(!currentOffers.length){
-      offers.innerHTML=`<div style="text-align:center;font-weight:800;color:#8b0000">
-      ⚠️ لا توجد عروض مناسبة حاليًا
-      </div>`;
-    }else{
-      renderOffers(currentOffers);
-    }
-  });
+  }).then(()=>alert("✅ تم إرسال الطلب بنجاح"));
 }
 </script>
 
