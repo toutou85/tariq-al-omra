@@ -140,20 +140,21 @@ form.addEventListener("submit", e => {
   e.preventDefault();
   popup.style.display="flex";
 
-  fetch(scriptURL,{
-    method:"POST",
-    body:new FormData(form)
-  })
-  .then(()=> {
-    alert("تم إرسال طلبك بنجاح");
-    form.reset();
-    popup.style.display="none";
-  })
-  .catch(()=>{
-    popup.style.display="none";
-    alert("حدث خطأ، حاول مرة أخرى");
-  });
+ fetch(scriptURL,{
+  method:"POST",
+  body:new FormData(form),
+  mode: "no-cors"
+})
+.then(() => {
+  popup.style.display = "none";
+  alert("✅ تم إرسال طلبك بنجاح");
+  form.reset();
+})
+.catch(() => {
+  popup.style.display = "none";
+  alert("❌ تعذر الاتصال، لكن إن ظهر الطلب في النظام فهو محفوظ");
 });
+
 </script>
 
 </body>
