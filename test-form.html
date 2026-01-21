@@ -32,8 +32,8 @@ body{
 }
 
 .container{
-  max-width:700px;
-  background:rgba(255,255,255,.9);
+  max-width:650px;
+  background:rgba(255,255,255,.85);
   margin:20px auto;
   padding:20px;
   border-radius:16px;
@@ -47,40 +47,33 @@ button,input,select{
 }
 button{background:#8b0000;color:#fff;cursor:pointer}
 
-/* بطاقات */
-.airport-section{margin-top:25px}
-.airport-title{
-  font-weight:800;
-  color:#8b0000;
-  margin-bottom:10px
-}
-.airport-list{
-  display:flex;
-  gap:14px;
-  overflow-x:auto;
-  padding-bottom:10px
-}
-
+/* البطاقات (لم تُغيّر) */
 .offer-card{
-  min-width:260px;
-  background:#fff;border-radius:16px;padding:14px;
-  border:1px solid #eee;
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
+  background:#fff;border-radius:16px;padding:16px;margin-top:18px;
+  border:1px solid #eee;box-shadow:0 6px 20px rgba(0,0,0,.05);
+  transition:.3s
 }
+.offer-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.12)}
 
-.offer-header{display:flex;align-items:center;gap:8px}
-.offer-logo{width:38px;height:38px;object-fit:contain}
+.offer-header{display:flex;align-items:center;margin-bottom:8px}
+.offer-agency{display:flex;align-items:center;gap:10px;font-weight:700}
+.offer-logo{width:42px;height:42px;object-fit:contain}
 
-.offer-title{font-weight:800;color:#8b0000;margin:6px 0}
-.offer-info{font-size:14px}
+.offer-title{font-size:18px;font-weight:800;color:#8b0000;margin:8px 0}
+.offer-info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  font-size:14px
+}
 .offer-price{
+  margin-top:10px;
   background:#f8f4ef;
-  padding:8px;
-  border-radius:10px;
-  margin-top:8px;
+  padding:10px;
+  border-radius:12px;
   font-weight:800;
-  color:#8b0000;
-  text-align:center
+  text-align:center;
+  color:#8b0000
 }
 
 /* الفلاتر */
@@ -97,57 +90,32 @@ button{background:#8b0000;color:#fff;cursor:pointer}
   background:rgba(0,0,0,.6);z-index:9999
 }
 #modalBox{
-  background:#fff;max-width:380px;width:90%;
-  margin:6% auto;padding:16px;border-radius:14px;
-  max-height:80vh;overflow:auto
-}
-
-/* واتساب */
-.whatsapp-top{
-  position:fixed;top:15px;left:15px;
-  width:55px;height:55px;background:#25D366;
-  color:#fff;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;z-index:11000
+  background:#fff;max-width:360px;width:90%;
+  margin:8% auto;padding:16px;border-radius:14px;
+  max-height:75vh;overflow:auto
 }
 </style>
 </head>
 
 <body>
 
-<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
-  <i class="fab fa-whatsapp"></i>
-</a>
-
 <div id="menuBtn"><span></span><span></span><span></span></div>
 <div id="overlay"></div>
 
 <nav id="sideMenu">
   <a href="offers.html">🕋 عروض طريق العمرة</a>
-  <a href="recherche-oeffer.html">🔎 أبحث عن عرض مناسب</a>
+  <a href="recherche-oeffer.html">🔎 البحث عن عرض</a>
 </nav>
 
 <div class="container">
-
-<h2>📋 متابعة طلب العمرة</h2>
-<input type="tel" id="phone" placeholder="0550123456">
-<button id="searchBtn">🔍 بحث</button>
-<div id="output"></div>
-
-<hr>
 
 <h2>🕋 عروض العمرة المتوفرة</h2>
 
 <div id="filters">
   <select id="filterAgency"><option value="">🏢 كل الوكالات</option></select>
   <select id="filterWilaya"><option value="">📍 كل الولايات</option></select>
-  <select id="filterMonth">
-    <option value="">📅 كل الأشهر</option>
-    <option value="1">جانفي</option>
-    <option value="2">فيفري</option>
-    <option value="3">مارس</option>
-    <option value="4">أفريل</option>
-  </select>
+  <select id="filterMonth"><option value="">📅 كل الأشهر</option></select>
+  <select id="filterDuration"><option value="">⏳ كل المدد</option></select>
 </div>
 
 <button onclick="resetFilters()">🔄 إعادة التعيين</button>
@@ -164,76 +132,73 @@ button{background:#8b0000;color:#fff;cursor:pointer}
     <p id="m_date"></p>
     <p id="m_airport"></p>
     <p id="m_hotel"></p>
+    <p id="m_duration"></p>
     <p id="m_prices"></p>
-
-    <input id="c_name" placeholder="الاسم الكامل">
-    <input id="c_phone" placeholder="رقم الهاتف">
-    <input id="c_email" placeholder="البريد الإلكتروني">
-
-    <button id="sendBtn">✅ سجل الآن</button>
     <button onclick="closeModal()" style="background:#777">إغلاق</button>
   </div>
 </div>
 
 <script>
-const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
-const EMAIL_API="https://script.google.com/macros/s/AKfycbzcxJ2mvd-Nnr5mdzPItK6_3pWnX3kR_EIQuKZanjW93RGIh06d4PDqcdWwMV0AyiVB/exec";
 
 menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"};
 overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"};
 
-const WILAYAS=[...Array(58)].map((_,i)=>`ولاية ${i+1}`);
-WILAYAS.forEach(w=>filterWilaya.add(new Option(w,w)));
-
 let offersData=[],selectedOffer=null;
 
-fetch(OFFERS_API).then(r=>r.json()).then(data=>{
+fetch(OFFERS_API)
+.then(r=>r.json())
+.then(data=>{
   offersData=data;
+
   const agencies=new Set();
-  data.forEach(o=>agencies.add(o.agency));
-  agencies.forEach(a=>filterAgency.add(new Option(a,a)));
+  const wilayas=new Set();
+  const months=new Set();
+  const durations=new Set();
+
+  data.forEach(o=>{
+    if(o.agency)agencies.add(o.agency);
+    if(o.wilaya)wilayas.add(o.wilaya); // ✅ العمود C
+    if(o.duration)durations.add(o.duration);
+    months.add(new Date(o.date).getMonth()+1);
+  });
+
+  agencies.forEach(v=>filterAgency.add(new Option(v,v)));
+  wilayas.forEach(v=>filterWilaya.add(new Option(v,v)));
+  durations.forEach(v=>filterDuration.add(new Option(v,v)));
+
   renderOffers(data);
 });
 
 function renderOffers(data){
   offers.innerHTML="";
-  const grouped={};
+  if(!data.length){offers.innerHTML="❌ لا توجد عروض";return;}
+
   data.forEach(o=>{
-    grouped[o.airport]=grouped[o.airport]||[];
-    grouped[o.airport].push(o);
-  });
-
-  Object.keys(grouped).forEach(ap=>{
-    const sec=document.createElement("div");
-    sec.className="airport-section";
-    sec.innerHTML=`<div class="airport-title">🛫 ${ap}</div>`;
-    const row=document.createElement("div");
-    row.className="airport-list";
-
-    grouped[ap].forEach(o=>{
-      const card=document.createElement("div");
-      card.className="offer-card";
-      card.innerHTML=`
-        <div class="offer-header">
-          <img src="${o.logo||''}" class="offer-logo">
-          <strong>${o.agency}</strong>
+    const div=document.createElement("div");
+    div.className="offer-card";
+    div.innerHTML=`
+      <div class="offer-header">
+        <div class="offer-agency">
+          <img src="${o.logo||''}" class="offer-logo" onerror="this.style.display='none'">
+          <span>${o.agency}</span>
         </div>
-        <div class="offer-title">${o.offer}</div>
-        <div class="offer-info">
-          📍 ${o.wilaya}<br>
-          📅 ${new Date(o.date).toLocaleDateString("ar-DZ")}<br>
-          🏨 ${o.hotel}
-        </div>
-        <div class="offer-price">💰 ${o.group} دج</div>
-        <button>تفاصيل</button>
-      `;
-      card.querySelector("button").onclick=()=>openModal(o);
-      row.appendChild(card);
-    });
+      </div>
 
-    sec.appendChild(row);
-    offers.appendChild(sec);
+      <div class="offer-title">🕋 ${o.offer}</div>
+
+      <div class="offer-info">
+        <span>📍 ${o.wilaya}</span>
+        <span>📅 ${new Date(o.date).toLocaleDateString("ar-DZ")}</span>
+        <span>⏳ ${o.duration}</span>
+        <span>🏨 ${o.hotel}</span>
+      </div>
+
+      <div class="offer-price">💰 ${o.group} دج</div>
+      <button>تفاصيل العرض</button>
+    `;
+    div.querySelector("button").onclick=()=>openModal(o);
+    offers.appendChild(div);
   });
 }
 
@@ -245,6 +210,7 @@ function openModal(o){
   m_date.innerText="📅 "+new Date(o.date).toLocaleDateString("ar-DZ");
   m_airport.innerText="🛫 "+o.airport;
   m_hotel.innerText="🏨 "+o.hotel;
+  m_duration.innerText="⏳ "+o.duration;
   m_prices.innerHTML=`
     جماعية: ${o.group}<br>
     خماسية: ${o.five}<br>
@@ -260,17 +226,20 @@ function resetFilters(){
   filterAgency.value="";
   filterWilaya.value="";
   filterMonth.value="";
+  filterDuration.value="";
   renderOffers(offersData);
 }
 
-filterAgency.onchange=filterWilaya.onchange=filterMonth.onchange=()=>{
-  renderOffers(offersData.filter(o=>{
-    if(filterAgency.value && o.agency!==filterAgency.value)return false;
-    if(filterWilaya.value && o.wilaya!==filterWilaya.value)return false;
-    if(filterMonth.value && new Date(o.date).getMonth()+1!=filterMonth.value)return false;
-    return true;
-  }));
-};
+[filterAgency,filterWilaya,filterMonth,filterDuration].forEach(f=>{
+  f.onchange=()=>{
+    renderOffers(offersData.filter(o=>{
+      if(filterAgency.value && o.agency!==filterAgency.value)return false;
+      if(filterWilaya.value && o.wilaya!==filterWilaya.value)return false;
+      if(filterDuration.value && o.duration!==filterDuration.value)return false;
+      return true;
+    }));
+  };
+});
 </script>
 
 </body>
