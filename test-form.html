@@ -8,56 +8,89 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* ==== CSS كما هو + نافذة الانتظار ==== */
 body{
   font-family:Tajawal,Arial;
   margin:0;
   background:url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
   center/cover fixed no-repeat;
 }
-.whatsapp-top{position:fixed;top:15px;left:15px;width:55px;height:55px;background:#25D366;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;z-index:3000}
-#menuBtn{position:fixed;top:15px;right:15px;width:30px;cursor:pointer;z-index:3001}
-#menuBtn span{display:block;height:3px;background:#000;margin:6px 0;border-radius:2px}
-#sideMenu{position:fixed;top:0;right:-260px;width:260px;height:100%;background:#8b0000;color:#fff;padding-top:60px;transition:.3s;z-index:3002}
-#sideMenu a{display:block;padding:15px;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2)}
-#sideMenu a:hover{background:rgba(255,255,255,.2)}
-#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:3000}
-.container{max-width:1200px;margin:90px auto 20px;background:rgba(255,255,255,.92);padding:20px;border-radius:18px}
-
-#pilgrimName{display:none;text-align:center;font-size:22px;font-weight:800;color:#8b0000;margin-bottom:10px}
-#pilgrimDetails{display:none;background:#f8f4ef;padding:15px;border-radius:12px;margin-bottom:20px;font-size:15px}
-
-.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:25px}
-.filters select{padding:10px;border-radius:8px;border:1px solid #ccc}
-
-.airport-section{margin-bottom:35px}
-.airport-title{font-size:20px;font-weight:800;color:#8b0000;margin-bottom:10px}
-.slider{display:flex;gap:15px;overflow-x:auto;padding-bottom:10px}
-.offer-card{min-width:300px;background:#fff;border-radius:18px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
-.offer-title{font-size:17px;font-weight:800;color:#8b0000}
-.offer-agency{display:flex;align-items:center;gap:10px;margin:8px 0}
-.offer-agency img{width:40px;height:40px;object-fit:contain}
-.offer-info{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:14px}
-.offer-price{margin-top:10px;background:#f8f4ef;padding:10px;border-radius:12px;font-weight:800;text-align:center;color:#8b0000}
-.offer-card button{width:100%;margin-top:6px;padding:9px;border:none;border-radius:8px;background:#8b0000;color:#fff;cursor:pointer}
-
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:4000}
-.modal-box{background:#fff;max-width:420px;width:90%;margin:8% auto;padding:16px;border-radius:18px;text-align:center}
-
-/* نافذة الانتظار */
-#loadingModal .modal-box{
-  font-size:18px;
-  line-height:1.8;
+.container{
+  max-width:1200px;
+  margin:90px auto 20px;
+  background:rgba(255,255,255,.93);
+  padding:20px;
+  border-radius:18px
+}
+.filters{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-bottom:20px
+}
+.filters select{
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc
+}
+.airport-title{
+  font-size:20px;
+  font-weight:800;
+  color:#8b0000;
+  margin:15px 0
+}
+.slider{
+  display:flex;
+  gap:15px;
+  overflow-x:auto
+}
+.offer-card{
+  min-width:300px;
+  background:#fff;
+  padding:15px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,.1)
+}
+.offer-title{
+  font-weight:800;
+  color:#8b0000
+}
+.offer-info{
+  font-size:14px;
+  margin-top:8px
+}
+.offer-card button{
+  width:100%;
+  margin-top:6px;
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  background:#8b0000;
+  color:#fff;
+  cursor:pointer
+}
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:5000
+}
+.modal-box{
+  background:#fff;
+  width:90%;
+  max-width:420px;
+  margin:10% auto;
+  padding:20px;
+  border-radius:15px;
+  text-align:center
 }
 </style>
 </head>
 
 <body>
 
-<div id="menuBtn"><span></span><span></span><span></span></div>
-<div id="overlay"></div>
-
 <div class="container">
+
   <div id="pilgrimName"></div>
   <div id="pilgrimDetails"></div>
 
@@ -75,7 +108,7 @@ body{
 <div class="modal" id="trackModal">
   <div class="modal-box">
     <h3>📋 متابعة الطلب</h3>
-    <input id="trackPhone" placeholder="رقم الهاتف">
+    <input id="trackPhone" placeholder="رقم الهاتف" style="width:100%;padding:10px">
     <button onclick="searchOrder()">بحث</button>
   </div>
 </div>
@@ -83,12 +116,12 @@ body{
 <!-- نافذة انتظار -->
 <div class="modal" id="loadingModal">
   <div class="modal-box">
-    ⏳ جاري البحث عن معلوماتك…<br>
+    ⏳ جاري البحث...<br>
     🤍 استغفر الله
   </div>
 </div>
 
-<!-- تفاصيل -->
+<!-- تفاصيل العرض -->
 <div class="modal" id="detailsModal">
   <div class="modal-box">
     <h3>📄 تفاصيل العرض</h3>
@@ -102,7 +135,7 @@ body{
   <div class="modal-box">
     <h3>📝 تأكيد التسجيل</h3>
     <div id="registerContent"></div>
-    <button onclick="sendEmail()">📧 إرسال الطلب</button>
+    <button onclick="sendEmail()">📧 إرسال</button>
   </div>
 </div>
 
@@ -114,16 +147,15 @@ const EMAIL_API="https://script.google.com/macros/s/AKfycbwIPOrlarBhvw59DOm4in1M
 let allOffers=[], currentOffers=[], currentPilgrim=null, currentOffer=null;
 
 function closeAll(){
-  overlay.style.display="none";
   document.querySelectorAll(".modal").forEach(m=>m.style.display="none");
 }
 
-function formatDate(v){
-  const d=new Date(v);
-  return isNaN(d)?v:d.toLocaleDateString("ar-DZ");
+function formatDate(d){
+  const x=new Date(d);
+  return isNaN(x)?d:x.toLocaleDateString("ar-DZ");
 }
 
-/* جلب العروض */
+/* تحميل العروض */
 fetch(OFFERS_API).then(r=>r.json()).then(d=>{
   allOffers=d;
   currentOffers=d;
@@ -133,12 +165,11 @@ fetch(OFFERS_API).then(r=>r.json()).then(d=>{
 
 /* الفلاتر */
 function buildFilters(data){
-  const uniq=k=>[...new Set(data.map(o=>o[k]).filter(Boolean))];
-  uniq("agency").forEach(v=>fAgency.innerHTML+=`<option>${v}</option>`);
-  uniq("state").forEach(v=>fState.innerHTML+=`<option>${v}</option>`);
-  uniq("duration").forEach(v=>fDuration.innerHTML+=`<option>${v}</option>`);
-  uniq("date").forEach(v=>fDate.innerHTML+=`<option value="${v}">${formatDate(v)}</option>`);
-
+  const u=k=>[...new Set(data.map(o=>o[k]).filter(Boolean))];
+  u("agency").forEach(v=>fAgency.innerHTML+=`<option>${v}</option>`);
+  u("state").forEach(v=>fState.innerHTML+=`<option>${v}</option>`);
+  u("duration").forEach(v=>fDuration.innerHTML+=`<option>${v}</option>`);
+  u("date").forEach(v=>fDate.innerHTML+=`<option value="${v}">${formatDate(v)}</option>`);
   document.querySelectorAll(".filters select").forEach(s=>s.onchange=applyFilters);
 }
 
@@ -161,47 +192,46 @@ function renderOffers(data){
   });
 
   for(const a in byAirport){
-    offers.innerHTML+=`<div class="airport-section"><div class="airport-title">🛫 ${a}</div><div class="slider">${
-      byAirport[a].map(o=>`
+    offers.innerHTML+=`
+    <div class="airport-title">🛫 ${a}</div>
+    <div class="slider">
+      ${byAirport[a].map(o=>`
         <div class="offer-card">
           <div class="offer-title">${o.offer}</div>
           <div class="offer-info">
-            <span>📅 ${formatDate(o.date)}</span>
-            <span>⏳ ${o.duration} يوم</span>
-            <span>📍 ${o.state}</span>
-            <span>🏨 ${o.hotel}</span>
+            📅 ${formatDate(o.date)}<br>
+            ⏳ ${o.duration} يوم<br>
+            📍 ${o.state}<br>
+            🏨 ${o.hotel}<br>
+            💰 ${o.group} دج
           </div>
-          <div class="offer-price">${o.group} دج</div>
           <button onclick='showDetails(${JSON.stringify(o)})'>تفاصيل</button>
           <button onclick='prepareRegister(${JSON.stringify(o)})'>تسجيل</button>
         </div>
-      `).join("")}</div></div>`;
+      `).join("")}
+    </div>`;
   }
 }
 
 /* تفاصيل كاملة */
 function showDetails(o){
-  let html="";
+  let h="";
   for(const k in o){
-    html+=`<div><strong>${k}</strong>: ${k==="date"?formatDate(o[k]):o[k]}</div>`;
+    h+=`<div><strong>${k}</strong>: ${k==="date"?formatDate(o[k]):o[k]}</div>`;
   }
-  detailsContent.innerHTML=html;
+  detailsContent.innerHTML=h;
   detailsModal.style.display="block";
-  overlay.style.display="block";
 }
 
-/* بحث */
+/* متابعة */
 function searchOrder(){
   loadingModal.style.display="block";
-  overlay.style.display="block";
-
   fetch(TRACK_API+"?phone="+trackPhone.value)
   .then(r=>r.json())
   .then(d=>{
     closeAll();
     currentPilgrim=d;
-
-    pilgrimName.innerText="مرحبا "+d.name;
+    pilgrimName.innerText="مرحبا 👋 "+d.name;
     pilgrimDetails.innerHTML=`📞 ${d.phone} | 🛫 ${d.airport}`;
     pilgrimName.style.display=pilgrimDetails.style.display="block";
 
@@ -218,10 +248,9 @@ function prepareRegister(o){
   currentOffer=o;
   registerContent.innerHTML=`${o.offer}<br>${o.group} دج`;
   registerModal.style.display="block";
-  overlay.style.display="block";
 }
 
-/* إرسال الإيميل */
+/* إرسال */
 function sendEmail(){
   fetch(EMAIL_API,{
     method:"POST",
@@ -229,9 +258,10 @@ function sendEmail(){
       pilgrim:currentPilgrim,
       offer:currentOffer
     })
-  }).then(()=>alert("✅ تم إرسال الطلب بنجاح"));
+  }).then(()=>alert("✅ تم إرسال الطلب"));
 }
 </script>
 
 </body>
 </html>
+
