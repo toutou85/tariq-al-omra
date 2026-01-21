@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متابعة طلبي</title>
+<style>
+body{font-family:Tajawal,Arial;background:#f5f5f5;margin:0}
+.box{max-width:500px;margin:40px auto;background:#fff;padding:25px;border-radius:14px;text-align:center}
+input,button{width:100%;padding:12px;margin-top:10px;border-radius:8px;border:1px solid #ccc}
+button{background:#8b0000;color:#fff;font-size:16px;cursor:pointer}
+.result{margin-top:15px;background:#f9f9f9;padding:15px;border-radius:10px}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>📋 متابعة الطلب</h2>
+<input type="tel" id="phone" placeholder="أدخل رقم الهاتف">
+<button onclick="check()">متابعة</button>
+<div id="res"></div>
+</div>
+
+<script>
+const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
+
+const urlPhone=new URLSearchParams(location.search).get("phone");
+if(urlPhone) phone.value=urlPhone;
+
+function norm(p){
+ p=p.replace(/\D/g,"");
+ if(p.startsWith("213"))p=p.slice(3);
+ if(p.startsWith("0"))p=p.slice(1);
+ return p;
+}
+
+function check(){
+ const p=norm(phone.value);
+ if(!p)return alert("أدخل الهاتف");
+ res.innerHTML="⏳ جاري التحقق...";
+ fetch(SEARCH_API+"?phone="+p)
+ .then(r=>r.json())
+ .then(d=>{
+   if(!d.found){
+     res.innerHTML="❌ لا يوجد طلب مسجل";
+     return;
+   }
+   localStorage.setItem("umrah_phone",p);
+   res.innerHTML=`
+     <div class="result">
+       👤 مرحبًا <strong>${d.name}</strong><br>
+       نسأل الله أن ييسر لك العمرة 🌙<br><br>
+       <button onclick="go()">🕋 عرض العروض المناسبة</button>
+     </div>`;
+ });
+}
+
+function go(){
+ location.href="test-adidas3.html";
+}
+</script>
+</body>
+</html>
