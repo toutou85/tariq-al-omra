@@ -11,23 +11,23 @@
 body{
   font-family:Tajawal,Arial;
   margin:0;
-  background:#f4f4f4;
+  background:url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg") center/cover fixed no-repeat;
 }
 
 /* واتساب */
-.whatsapp{
+.whatsapp-top{
   position:fixed;top:15px;left:15px;
   width:55px;height:55px;
   background:#25D366;color:#fff;
   border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:30px;z-index:10000
+  font-size:30px;z-index:20000
 }
 
 /* زر القائمة */
 #menuBtn{
   position:fixed;top:18px;right:15px;
-  width:30px;cursor:pointer;z-index:10001
+  width:30px;cursor:pointer;z-index:20001
 }
 #menuBtn span{
   display:block;height:3px;background:#000;
@@ -36,10 +36,10 @@ body{
 
 /* القائمة الجانبية */
 #sideMenu{
-  position:fixed;top:0;right:-270px;
-  width:270px;height:100%;
+  position:fixed;top:0;right:-260px;
+  width:260px;height:100%;
   background:#8b0000;color:#fff;
-  padding-top:60px;transition:.3s;z-index:10002
+  padding-top:60px;transition:.3s;z-index:20002
 }
 #sideMenu a{
   display:block;padding:15px;color:#fff;
@@ -49,14 +49,15 @@ body{
 
 #overlay{
   display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.5);z-index:10000
+  background:rgba(0,0,0,.5);z-index:20000
 }
 
-/* المحتوى */
+/* الحاوية */
 .container{
   max-width:1200px;
+  background:rgba(255,255,255,.88);
   margin:90px auto 20px;
-  padding:0 15px;
+  padding:20px;border-radius:18px;
 }
 
 /* الفلاتر */
@@ -72,60 +73,76 @@ body{
   .filters{grid-template-columns:1fr 1fr}
 }
 
-/* قسم المطار */
+/* أقسام المطارات */
 .airport-section{margin-bottom:35px}
 .airport-title{
   font-size:20px;
   margin-bottom:10px;
-  color:#8b0000
+  color:#8b0000;font-weight:800
 }
 
-/* سلايدر */
+/* السلايدر */
 .slider{
   display:flex;gap:15px;
   overflow-x:auto;padding-bottom:10px
 }
 .slider::-webkit-scrollbar{height:6px}
-.slider::-webkit-scrollbar-thumb{background:#ccc;border-radius:10px}
-
-/* بطاقة */
-.offer{
-  min-width:260px;
-  background:#fff;border-radius:16px;
-  padding:15px;
-  box-shadow:0 5px 15px rgba(0,0,0,.08)
+.slider::-webkit-scrollbar-thumb{
+  background:#ccc;border-radius:10px
 }
-.offer img{width:42px;height:42px;object-fit:contain}
-.offer h4{margin:8px 0;color:#8b0000}
-.offer .state{font-size:13px;color:#555}
-.offer .price{font-weight:800;color:#8b0000;margin:6px 0}
-.offer button{
+
+/* البطاقة */
+.offer-card{
+  min-width:280px;
+  background:#fff;border-radius:18px;
+  padding:16px;
+  box-shadow:0 6px 20px rgba(0,0,0,.08)
+}
+.offer-header{
+  display:flex;align-items:center;gap:10px
+}
+.offer-logo{
+  width:45px;height:45px;object-fit:contain
+}
+.offer-agency{font-weight:700}
+.offer-state{font-size:13px;color:#555}
+
+.offer-title{
+  font-size:17px;font-weight:800;
+  color:#8b0000;margin:8px 0
+}
+
+.offer-info{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:6px;font-size:14px
+}
+
+.offer-price{
+  margin-top:10px;
+  background:#f8f4ef;
+  padding:10px;border-radius:12px;
+  font-weight:800;text-align:center;color:#8b0000
+}
+
+.offer-card button{
   width:100%;margin-top:6px;
-  padding:8px;border:none;
+  padding:9px;border:none;
   border-radius:8px;
   background:#8b0000;color:#fff;cursor:pointer
 }
 
-/* نافذة عامة */
+/* النوافذ */
 .modal{
   display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.6);z-index:20000
+  background:rgba(0,0,0,.6);z-index:30000
 }
 .modal-box{
-  background:#fff;
-  max-width:380px;width:90%;
-  margin:8% auto;padding:16px;
-  border-radius:16px;
-  max-height:80vh;overflow:auto
+  background:#fff;max-width:400px;width:90%;
+  margin:6% auto;padding:16px;
+  border-radius:18px;max-height:85vh;overflow:auto
 }
-.modal-box input{
-  width:100%;padding:10px;
-  margin-top:8px;border-radius:8px;border:1px solid #ccc
-}
-.modal-box button{
-  width:100%;margin-top:10px;
-  padding:10px;border:none;
-  border-radius:8px;background:#8b0000;color:#fff
+.modal-box img{
+  width:80px;display:block;margin:10px auto
 }
 </style>
 </head>
@@ -133,15 +150,14 @@ body{
 <body>
 
 <!-- واتساب -->
-<a href="https://wa.me/213674141379" target="_blank" class="whatsapp">
+<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
 <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- زر القائمة -->
+<!-- القائمة -->
 <div id="menuBtn"><span></span><span></span><span></span></div>
 <div id="overlay"></div>
 
-<!-- القائمة الجانبية -->
 <nav id="sideMenu">
   <a href="#" onclick="openTrack()">📋 متابعة طلبي</a>
   <a href="offers.html">🕋 العروض</a>
@@ -171,7 +187,7 @@ body{
 <div class="modal" id="trackModal">
   <div class="modal-box">
     <h3>📋 متابعة الطلب</h3>
-    <input id="trackPhone" placeholder="رقم الهاتف">
+    <input id="trackPhone" placeholder="رقم الهاتف" style="width:100%;padding:10px">
     <button onclick="searchOrder()">🔍 بحث</button>
     <div id="trackResult"></div>
     <button onclick="closeTrack()" style="background:#777">إغلاق</button>
@@ -181,10 +197,14 @@ body{
 <!-- نافذة تفاصيل العرض -->
 <div class="modal" id="offerModal">
   <div class="modal-box">
+    <img id="m_logo">
     <h3 id="m_offer"></h3>
     <p id="m_agency"></p>
     <p id="m_state"></p>
+    <p id="m_city"></p>
+    <p id="m_flight"></p>
     <p id="m_date"></p>
+    <p id="m_duration"></p>
     <p id="m_airport"></p>
     <p id="m_hotel"></p>
     <p id="m_prices"></p>
@@ -199,7 +219,7 @@ const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUp
 
 /* القائمة */
 menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
-overlay.onclick=()=>{sideMenu.style.right="-270px";overlay.style.display="none"}
+overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
 
 /* جلب العروض */
 let allData=[];
@@ -219,6 +239,7 @@ function fillFilters(d){
 function render(data){
   offers.innerHTML="";
   const byAirport={};
+
   data.forEach(o=>{
     byAirport[o.airport]=byAirport[o.airport]||[];
     byAirport[o.airport].push(o);
@@ -233,14 +254,28 @@ function render(data){
 
     byAirport[a].forEach(o=>{
       const c=document.createElement("div");
-      c.className="offer";
+      c.className="offer-card";
       c.innerHTML=`
-        <img src="${o.logo||''}">
-        <h4>${o.offer}</h4>
-        <div>${o.agency}</div>
-        <div class="state">📍 ${o.state||"—"}</div>
-        <div class="price">${o.group||"-"} دج</div>
-        <button onclick='openOffer(${JSON.stringify(o)})'>تفاصيل</button>
+        <div class="offer-header">
+          <img src="${o.logo||''}" class="offer-logo">
+          <div>
+            <div class="offer-agency">${o.agency}</div>
+            <div class="offer-state">📍 ${o.state||"—"}</div>
+          </div>
+        </div>
+
+        <div class="offer-title">🕋 ${o.offer}</div>
+
+        <div class="offer-info">
+          <span>📅 ${o.date}</span>
+          <span>⏳ ${o.duration||"—"}</span>
+          <span>🛫 ${o.airport||"—"}</span>
+          <span>🏨 ${o.hotel||"—"}</span>
+        </div>
+
+        <div class="offer-price">💰 غرفة جماعية: ${o.group||"-"} دج</div>
+
+        <button onclick='openOffer(${JSON.stringify(o)})'>تفاصيل العرض</button>
         <button>تسجيل</button>
       `;
       slider.appendChild(c);
@@ -264,13 +299,23 @@ function render(data){
 
 /* نافذة التفاصيل */
 function openOffer(o){
+  m_logo.src=o.logo||"";
   m_offer.innerText=o.offer;
-  m_agency.innerText="🏢 "+o.agency;
-  m_state.innerText="📍 "+o.state;
-  m_date.innerText="📅 "+o.date;
-  m_airport.innerText="🛫 "+o.airport;
-  m_hotel.innerText="🏨 "+o.hotel;
-  m_prices.innerHTML=`جماعية: ${o.group}<br>خماسية: ${o.five}<br>رباعية: ${o.four}<br>ثلاثية: ${o.three}<br>ثنائية: ${o.two}`;
+  m_agency.innerText="🏢 الوكالة: "+o.agency;
+  m_state.innerText="📍 الولاية: "+o.state;
+  m_city.innerText="🏘️ البلدية: "+o.city;
+  m_flight.innerText="✈️ نوع الرحلة: "+o.flight;
+  m_date.innerText="📅 تاريخ الرحلة: "+o.date;
+  m_duration.innerText="⏳ المدة: "+o.duration;
+  m_airport.innerText="🛫 مطار الإقلاع: "+o.airport;
+  m_hotel.innerText="🏨 الفندق: "+o.hotel;
+  m_prices.innerHTML=`
+    جماعية: ${o.group}<br>
+    خماسية: ${o.five}<br>
+    رباعية: ${o.four}<br>
+    ثلاثية: ${o.three}<br>
+    ثنائية: ${o.two}
+  `;
   offerModal.style.display="block";
 }
 function closeOffer(){offerModal.style.display="none"}
