@@ -172,7 +172,6 @@ select{padding:8px;border-radius:8px}
 <div class="filters">
 <select id="fAgency"><option value="">🏢 كل الوكالات</option></select>
 <select id="fState"><option value="">📍 كل الولايات</option></select>
-<select id="fAirport"><option value="">✈️ كل المطارات</option></select>
 <select id="fDate"><option value="">📅 كل التواريخ</option></select>
 </div>
 
@@ -223,7 +222,7 @@ function render(){
       c.className="card";
       c.innerHTML=`
         <strong>${o.agency}</strong><br>
-        <small>${o.state}</small>
+        <small>📍${o.state}</small>
         <div>📅 ${formatDate(o.date)}</div>
         <div>🏨 ${o.hotel}</div>
         <div class="price">💰 ${o.group} دج</div>
