@@ -172,7 +172,7 @@ select{padding:8px;border-radius:8px}
 
 <nav id="sideMenu">
 <a href="results-gen.html">🕋 العروض العامة</a>
-<a href="recherche-form.html">📩 طلب عرض عمرة</a>
+<a href="recherche-offer.html">📩 طلب عرض عمرة</a>
 <a href="recherche-n.html">👤 صفحتي الخاصة</a>
 </nav>
 <div id="overlay" onclick="closeMenu()"></div>
@@ -274,6 +274,8 @@ function render(){
           </div>
         </div>
 
+
+        <div>📅 ${formatDate(o.date)}</div>
         <div>🏨 ${o.hotel}</div>
         <div class="price">💰 ${o.group} دج</div>
 
