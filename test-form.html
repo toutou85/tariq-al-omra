@@ -11,154 +11,83 @@
 body{
   font-family:Tajawal,Arial;
   margin:0;
-  background:#f3f3f3;
+  background:url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
+    center/cover fixed no-repeat;
 }
 
 /* واتساب */
-.whatsapp{
-  position:fixed;
-  top:15px;
-  left:15px;
-  width:55px;
-  height:55px;
-  background:#25D366;
-  color:#fff;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  z-index:9999;
+.whatsapp-top{
+  position:fixed;top:15px;left:15px;
+  width:55px;height:55px;background:#25D366;
+  color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;z-index:5000
 }
 
 /* زر القائمة */
 #menuBtn{
-  position:fixed;
-  top:15px;
-  right:15px;
-  width:30px;
-  cursor:pointer;
-  z-index:9999;
+  position:fixed;top:15px;right:15px;
+  width:30px;cursor:pointer;z-index:5001
 }
 #menuBtn span{
-  display:block;
-  height:3px;
-  background:#000;
-  margin:6px 0;
-  border-radius:2px;
+  display:block;height:3px;background:#000;
+  margin:6px 0;border-radius:2px
 }
 
 /* القائمة الجانبية */
 #sideMenu{
-  position:fixed;
-  top:0;
-  right:-260px;
-  width:260px;
-  height:100%;
-  background:#8b0000;
-  color:#fff;
-  padding-top:60px;
-  transition:.3s;
-  z-index:9998;
+  position:fixed;top:0;right:-260px;
+  width:260px;height:100%;
+  background:#8b0000;color:#fff;
+  padding-top:60px;transition:.3s;z-index:5002
 }
 #sideMenu a{
-  display:block;
-  padding:15px;
-  color:#fff;
-  text-decoration:none;
+  display:block;padding:15px;color:#fff;
+  text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2)
 }
-#sideMenu a:hover{
-  background:rgba(255,255,255,.2);
-}
+#sideMenu a:hover{background:rgba(255,255,255,.2)}
 
 #overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  z-index:9997;
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.5);z-index:5000
 }
 
-/* المحتوى */
+/* الحاوية */
 .container{
-  max-width:1100px;
+  max-width:1200px;
   margin:90px auto 20px;
-  background:#fff;
-  padding:20px;
-  border-radius:16px;
+  background:rgba(255,255,255,.92);
+  padding:20px;border-radius:18px;
 }
 
-/* العروض */
-.airport-title{
-  font-size:20px;
+/* معلومات المعتمر */
+#pilgrimName{
+  display:none;
+  text-align:center;
+  font-size:22px;
   font-weight:800;
   color:#8b0000;
-  margin:20px 0 10px;
+  margin-bottom:10px
 }
-.slider{
-  display:flex;
-  gap:15px;
-  overflow-x:auto;
-}
-.offer{
-  min-width:260px;
-  background:#fff;
-  border-radius:14px;
-  padding:14px;
-  box-shadow:0 4px 12px rgba(0,0,0,.1);
-}
-.offer h4{
-  margin:0 0 5px;
-  color:#8b0000;
-}
-.offer small{
-  display:block;
-  color:#555;
-}
-.offer button{
-  width:100%;
-  margin-top:6px;
-  padding:8px;
-  border:none;
-  border-radius:8px;
-  background:#8b0000;
-  color:#fff;
-  cursor:pointer;
-}
-
-/* النوافذ */
-.modal{
+#pilgrimDetails{
   display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:10000;
-}
-.modal-box{
-  background:#fff;
-  max-width:420px;
-  width:90%;
-  margin:10% auto;
-  padding:20px;
-  border-radius:16px;
-}
-.modal-box input{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
+  background:#f8f4ef;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:25px;
+  font-size:15px;
+  line-height:1.9
 }
 </style>
 </head>
 
 <body>
 
-<a class="whatsapp" href="https://wa.me/213674141379" target="_blank">
-  <i class="fab fa-whatsapp"></i>
+<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
+<i class="fab fa-whatsapp"></i>
 </a>
 
-<div id="menuBtn">
-  <span></span><span></span><span></span>
-</div>
+<div id="menuBtn"><span></span><span></span><span></span></div>
 <div id="overlay"></div>
 
 <nav id="sideMenu">
@@ -166,144 +95,65 @@ body{
 </nav>
 
 <div class="container">
+  <div id="pilgrimName"></div>
+  <div id="pilgrimDetails"></div>
   <div id="offers">⏳ جاري تحميل العروض...</div>
 </div>
 
+<!-- نافذة متابعة الطلب -->
 <div class="modal" id="trackModal">
   <div class="modal-box">
     <h3>📋 متابعة الطلب</h3>
     <input id="trackPhone" placeholder="رقم الهاتف">
     <button onclick="searchOrder()">بحث</button>
-    <div id="clientInfo" style="margin-top:10px"></div>
-  </div>
-</div>
-
-<div class="modal" id="offerModal">
-  <div class="modal-box">
-    <h3 id="offerTitle"></h3>
-    <p id="offerInfo"></p>
-    <button onclick="registerOffer()">📲 تسجيل</button>
-    <button onclick="closeOffer()" style="background:#777;margin-top:6px">إغلاق</button>
   </div>
 </div>
 
 <script>
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
 const TRACK_API="https://script.google.com/macros/s/AKfycbwGU0PmJWNazDVIG83ykcgON-C4YdXk7OIsJpSljljotCZLM6wmbZN1VsX-WKIDLcWVAA/exec";
-const REGISTER_API="https://script.google.com/macros/s/AKfycbwGU0PmJWNazDVIG83ykcgON-C4YdXk7OIsJpSljljotCZLM6wmbZN1VsX-WKIDLcWVAA/exec";
 
-const menuBtn=document.getElementById("menuBtn");
-const sideMenu=document.getElementById("sideMenu");
-const overlay=document.getElementById("overlay");
-const offersDiv=document.getElementById("offers");
-
-const trackModal=document.getElementById("trackModal");
-const trackPhone=document.getElementById("trackPhone");
-const clientInfo=document.getElementById("clientInfo");
-
-const offerModal=document.getElementById("offerModal");
-const offerTitle=document.getElementById("offerTitle");
-const offerInfo=document.getElementById("offerInfo");
-
-let allOffers=[];
-let selectedOffer=null;
-let currentClient=null;
-
-menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"};
-overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"};
-
-fetch(OFFERS_API)
-.then(r=>r.json())
-.then(data=>{
-  allOffers=data;
-  renderOffers(data);
-})
-.catch(()=>offersDiv.innerText="❌ فشل تحميل العروض");
-
-function renderOffers(data){
-  offersDiv.innerHTML="";
-  const byAirport={};
-
-  data.forEach(o=>{
-    if(!byAirport[o.airport]) byAirport[o.airport]=[];
-    byAirport[o.airport].push(o);
-  });
-
-  for(const a in byAirport){
-    const title=document.createElement("div");
-    title.className="airport-title";
-    title.innerText="🛫 "+a;
-    offersDiv.appendChild(title);
-
-    const slider=document.createElement("div");
-    slider.className="slider";
-
-    byAirport[a].forEach(o=>{
-      const card=document.createElement("div");
-      card.className="offer";
-      card.innerHTML=`
-        <h4>${o.offer}</h4>
-        <small>${o.agency}</small>
-        <small>${o.state} | ${o.duration} يوم</small>
-        <button onclick='openOffer(${JSON.stringify(o)})'>تفاصيل العرض</button>
-      `;
-      slider.appendChild(card);
-    });
-
-    offersDiv.appendChild(slider);
-  }
-}
-
-function openOffer(o){
-  selectedOffer=o;
-  offerTitle.innerText=o.offer;
-  offerInfo.innerText=o.agency+" | "+o.airport+" | "+o.duration+" يوم";
-  offerModal.style.display="block";
-}
-
-function closeOffer(){
-  offerModal.style.display="none";
-}
+menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
+overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
 
 function openTrack(){
   trackModal.style.display="block";
-  sideMenu.style.right="-260px";
   overlay.style.display="none";
+  sideMenu.style.right="-260px";
 }
 
+/* متابعة الطلب – مصححة */
 function searchOrder(){
-  const phone=trackPhone.value.trim();
-  if(!phone)return alert("أدخل رقم الهاتف");
-
-  fetch(TRACK_API+"?phone="+encodeURIComponent(phone))
-  .then(r=>r.json())
-  .then(d=>{
-    if(!d.found){
-      clientInfo.innerText="❌ لا يوجد طلب بهذا الرقم";
-      return;
-    }
-    currentClient={name:d.name,phone:phone};
-    clientInfo.innerHTML=`👤 ${d.name}<br>📌 الحالة: ${d.status}`;
-    trackModal.style.display="none";
-  });
-}
-
-function registerOffer(){
-  if(!currentClient || !selectedOffer){
-    alert("تابع الطلب واختر عرضاً أولاً");
+  const phone = trackPhone.value.trim();
+  if(!phone){
+    alert("أدخل رقم الهاتف");
     return;
   }
 
-  const f=new FormData();
-  f.append("client_name",currentClient.name);
-  f.append("client_phone",currentClient.phone);
-  f.append("offer",selectedOffer.offer);
-  f.append("agency",selectedOffer.agency);
-  f.append("airport",selectedOffer.airport);
-  f.append("duration",selectedOffer.duration);
+  fetch(TRACK_API + "?phone=" + encodeURIComponent(phone))
+    .then(r => r.json())
+    .then(d => {
 
-  fetch(REGISTER_API,{method:"POST",body:f,mode:"no-cors"})
-  .then(()=>alert("✅ تم إرسال طلب التسجيل بنجاح"));
+      if(!d.found){
+        alert("❌ لا يوجد طلب بهذا الرقم");
+        return;
+      }
+
+      trackModal.style.display = "none";
+
+      pilgrimName.innerText = "مرحبا 👋 " + d.name;
+      pilgrimName.style.display = "block";
+
+      pilgrimDetails.innerHTML = `
+        👤 <strong>الاسم الكامل:</strong> ${d.name}<br>
+        📞 <strong>رقم الهاتف:</strong> ${phone}<br>
+        📌 <strong>حالة الطلب:</strong> ${d.status}
+      `;
+      pilgrimDetails.style.display = "block";
+    })
+    .catch(()=>{
+      alert("⚠️ تعذر الاتصال بالخادم");
+    });
 }
 </script>
 
