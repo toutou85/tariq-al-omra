@@ -156,6 +156,11 @@ select{padding:8px;border-radius:8px}
   border-radius:8px;
   border:1px solid #ccc;
 }
+.card-info{
+  margin-top:8px;
+  font-size:14px;
+  line-height:1.6;
+}
 </style>
 </head>
 
@@ -281,7 +286,7 @@ function render(){
     <div>📅 ${formatDate(o.date)}</div>
     <div>🏨 ${o.hotel || "-"}</div>
     <div>⏱️ مدة الرحلة: ${o.duration || "-"}</div>
-    <div>🛫 مسار الرحلة: ${o.route || "-"}</div>
+    <div>🛫 مسار الرحلة: ${o.flight || "-"}</div>
   </div>
 
   <!-- السعر -->
