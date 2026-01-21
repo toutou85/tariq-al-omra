@@ -5,27 +5,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>طلب عرض عمرة</title>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
+/* ====== الأساس ====== */
 body{
   font-family:Tajawal,Arial;
-  background:#f5f5f5;
+  margin:0;
+  background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
+    center/cover fixed no-repeat;
+}
+
+/* ====== الهيدر ====== */
+header{
+  height:60px;
+  background:#8b0000;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  padding:0 15px;
+}
+.menu-btn{font-size:26px;cursor:pointer}
+header h1{
+  flex:1;
+  text-align:center;
+  font-size:18px;
   margin:0;
 }
+
+/* ====== القائمة الجانبية ====== */
+#sideMenu{
+  position:fixed;
+  top:0;right:-260px;
+  width:260px;height:100%;
+  background:#8b0000;
+  padding-top:70px;
+  transition:.3s;
+  z-index:10000;
+}
+#sideMenu a{
+  display:block;
+  padding:14px 18px;
+  color:#fff;
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.15);
+}
+#sideMenu a:hover{background:rgba(255,255,255,.15)}
+
+#overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:9000;
+}
+
+/* ====== المحتوى ====== */
 .container{
   max-width:600px;
-  margin:20px auto;
-  background:#fff;
-  padding:20px;
-  border-radius:12px;
+  background:rgba(255,255,255,.92);
+  margin:25px auto;
+  padding:22px;
+  border-radius:16px;
 }
-h2{text-align:center;color:#8b0000}
-label{display:block;margin-top:12px;font-weight:bold}
+
+h2{text-align:center;color:#8b0000;margin-top:0}
+
+label{display:block;margin-top:12px;font-weight:700}
 input,select,textarea,button{
   width:100%;
   padding:10px;
-  margin-top:5px;
+  margin-top:6px;
   border-radius:8px;
   border:1px solid #ccc;
+  font-family:inherit;
 }
 button{
   background:#8b0000;
@@ -35,20 +90,20 @@ button{
   cursor:pointer;
 }
 
-/* النافذة المنبثقة */
+/* ====== نافذة الانتظار ====== */
 #popup{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.6);
-  z-index:9999;
+  background:rgba(0,0,0,.6);
+  z-index:12000;
   align-items:center;
   justify-content:center;
 }
 #popupBox{
   background:#fff;
   padding:25px;
-  border-radius:12px;
+  border-radius:14px;
   text-align:center;
   max-width:320px;
 }
@@ -57,8 +112,20 @@ button{
 
 <body>
 
+<header>
+  <div class="menu-btn" onclick="openMenu()">☰</div>
+  <h1>🕋 طلب عرض عمرة</h1>
+</header>
+
+<nav id="sideMenu">
+  <a href="index.html">🕋 العروض العامة</a>
+  <a href="test-adidas1.html">📩 طلب عرض عمرة</a>
+  <a href="test-adidas2.html">👤 صفحتي الخاصة</a>
+</nav>
+<div id="overlay" onclick="closeMenu()"></div>
+
 <div class="container">
-<h2>🕋 طلب عرض عمرة</h2>
+<h2>أدخل بياناتك</h2>
 
 <form id="umrahForm">
 
@@ -94,31 +161,6 @@ button{
   <option>30 يوم</option>
 </select>
 
-<label>نوع الغرفة</label>
-<select name="room">
-  <option>ثنائية</option>
-  <option>ثلاثية</option>
-  <option>رباعية</option>
-</select>
-
-<label>مسار الرحلة</label>
-<select name="route">
-  <option>دخول جدة – خروج المدينة</option>
-  <option>دخول المدينة – خروج جدة</option>
-</select>
-
-<label>نوع الرحلة</label>
-<select name="flight">
-  <option>مباشرة</option>
-  <option>غير مباشرة</option>
-</select>
-
-<label>مكان الإقامة</label>
-<input type="text" name="residence">
-
-<label>تاريخ انطلاق الرحلة</label>
-<input type="date" name="travel_date" required>
-
 <label>ملاحظة</label>
 <textarea name="note"></textarea>
 
@@ -126,55 +168,45 @@ button{
 </form>
 </div>
 
-<!-- النافذة المنبثقة -->
+<!-- نافذة الذكر -->
 <div id="popup">
   <div id="popupBox">
-    <h3 id="popupTitle">⏳ جارٍ إرسال طلبك</h3>
-    <p id="popupText">استغفر الله العظيم 🤍</p>
+    <h3 id="popTitle">⏳ جارٍ إرسال طلبك</h3>
+    <p id="popText">استغفر الله العظيم 🤍</p>
   </div>
 </div>
 
 <script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbwPmNnhFCL9NR2XcWdERYKPNKr1ubdwV9IqBR6JGvHldOTLgJHPKaRjRzmus47T0UJGKg/exec"; // 🔴 ضع رابط Google Apps Script
-const form = document.getElementById("umrahForm");
-const popup = document.getElementById("popup");
-const popupTitle = document.getElementById("popupTitle");
-const popupText = document.getElementById("popupText");
+const scriptURL="https://script.google.com/macros/s/AKfycbwPmNnhFCL9NR2XcWdERYKPNKr1ubdwV9IqBR6JGvHldOTLgJHPKaRjRzmus47T0UJGKg/exec";
 
-form.addEventListener("submit", e => {
+const form=document.getElementById("umrahForm");
+const popup=document.getElementById("popup");
+
+form.addEventListener("submit",e=>{
   e.preventDefault();
+  const phone=form.phone.value;
 
-  const phone = form.phone.value;
-
-  popup.style.display = "flex";
-  popupTitle.innerText = "⏳ جارٍ إرسال طلبك";
-  popupText.innerText = "استغفر الله العظيم 🤍";
+  popup.style.display="flex";
 
   fetch(scriptURL,{
     method:"POST",
     body:new FormData(form),
     mode:"no-cors"
-  })
-  .then(()=>{
-    popupTitle.innerText = "✅ تم إرسال طلبك بنجاح";
-    popupText.innerText = "سيتم تحويلك لمتابعة الطلب";
-
+  }).then(()=>{
     setTimeout(()=>{
-      window.location.href =
-        "test-adidas2.html
-?phone=" + encodeURIComponent(phone);
+      window.location.href="test-adidas2.html?phone="+encodeURIComponent(phone);
     },2500);
-  })
-  .catch(()=>{
-    popupTitle.innerText = "✅ تم الإرسال";
-    popupText.innerText = "إن شاء الله طلبك محفوظ";
-
-    setTimeout(()=>{
-      window.location.href =
-        "follow.html?phone=" + encodeURIComponent(phone);
-    },3000);
   });
 });
+
+function openMenu(){
+  sideMenu.style.right="0";
+  overlay.style.display="block";
+}
+function closeMenu(){
+  sideMenu.style.right="-260px";
+  overlay.style.display="none";
+}
 </script>
 
 </body>
