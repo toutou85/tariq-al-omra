@@ -11,149 +11,151 @@
 body{
   font-family:Tajawal,Arial;
   margin:0;
-  background:#f5f5f5;
-}
-
-/* أعلى الصفحة */
-header{
-  background:#8b0000;
-  color:#fff;
-  padding:15px;
-  text-align:center;
-  font-weight:800;
-}
-
-/* واتساب */
-.whatsapp-top{
-  position:fixed;top:15px;left:15px;
-  width:55px;height:55px;background:#25D366;
-  color:#fff;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;z-index:20000
+  background:#f4f4f4;
 }
 
 /* زر القائمة */
 #menuBtn{
-  position:fixed;top:18px;right:15px;
-  width:30px;cursor:pointer;z-index:20001
+  position:fixed;top:15px;right:15px;
+  width:30px;cursor:pointer;z-index:3000
 }
 #menuBtn span{
-  display:block;height:3px;background:#fff;
+  display:block;height:3px;background:#000;
   margin:6px 0;border-radius:2px
 }
 
 /* القائمة */
 #sideMenu{
-  position:fixed;top:0;right:-260px;
-  width:260px;height:100%;
+  position:fixed;top:0;right:-260px;width:260px;height:100%;
   background:#8b0000;color:#fff;
-  padding-top:60px;transition:.3s;z-index:20002
+  padding-top:60px;transition:.3s;z-index:3001
 }
 #sideMenu a{
   display:block;padding:15px;color:#fff;
   text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2)
 }
-#sideMenu a:hover{background:rgba(255,255,255,.2)}
-
 #overlay{
   display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.5);z-index:20000
+  background:rgba(0,0,0,.5);z-index:3000
 }
 
 /* الحاوية */
 .container{
-  max-width:1100px;
-  background:#fff;
+  max-width:1200px;
   margin:80px auto 20px;
-  padding:20px;border-radius:18px;
+  background:#fff;
+  padding:20px;
+  border-radius:18px;
 }
 
 /* اسم المعتمر */
 #pilgrimName{
   display:none;
   text-align:center;
-  font-size:20px;
+  font-size:22px;
   font-weight:800;
   color:#8b0000;
   margin-bottom:10px
 }
-
-/* تفاصيل المعتمر */
 #pilgrimDetails{
   display:none;
   background:#f8f4ef;
   padding:15px;
   border-radius:12px;
-  margin-bottom:20px;
+  margin-bottom:25px;
   font-size:15px
 }
 
-/* الفلاتر */
-.filters{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;margin-bottom:20px
-}
-.filters select{
-  padding:10px;border-radius:8px;border:1px solid #ccc
-}
-@media(max-width:768px){
-  .filters{grid-template-columns:1fr 1fr}
+/* المطار */
+.airport-section{margin-bottom:40px}
+.airport-title{
+  font-size:20px;
+  color:#8b0000;
+  font-weight:800;
+  margin-bottom:10px
 }
 
-/* العروض */
+/* سلايدر */
+.slider{
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+  padding-bottom:10px
+}
+
+/* بطاقة */
 .offer-card{
-  background:#fff;border-radius:16px;
-  padding:16px;margin-bottom:16px;
+  min-width:300px;
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
   box-shadow:0 6px 20px rgba(0,0,0,.08)
 }
 .offer-title{
-  font-size:18px;font-weight:800;color:#8b0000;margin-bottom:8px
+  font-size:17px;
+  font-weight:800;
+  color:#8b0000;
+  margin-bottom:6px
+}
+.offer-agency{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px
+}
+.offer-agency img{
+  width:40px;height:40px;object-fit:contain
 }
 .offer-info{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:6px;font-size:14px
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  font-size:14px
 }
 .offer-price{
   margin-top:10px;
   background:#f8f4ef;
-  padding:10px;border-radius:12px;
-  font-weight:800;text-align:center;color:#8b0000
-}
-.offer-card button{
-  width:100%;margin-top:10px;
-  padding:10px;border:none;border-radius:8px;
-  background:#8b0000;color:#fff;cursor:pointer
+  padding:10px;
+  border-radius:12px;
+  font-weight:800;
+  text-align:center;
+  color:#8b0000
 }
 
-/* نافذة متابعة */
+/* نافذة */
 .modal{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.6);z-index:30000
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:5000
 }
 .modal-box{
-  background:#fff;max-width:380px;width:90%;
-  margin:10% auto;padding:16px;
+  background:#fff;
+  max-width:360px;
+  width:90%;
+  margin:12% auto;
+  padding:16px;
   border-radius:16px
 }
-.modal-box input{
-  width:100%;padding:10px;margin-top:8px;
-  border-radius:8px;border:1px solid #ccc
+.modal-box input, .modal-box button{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border-radius:8px;
+  border:1px solid #ccc
+}
+.modal-box button{
+  background:#8b0000;
+  color:#fff;
+  cursor:pointer
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  عروض العمرة
-  <div id="menuBtn"><span></span><span></span><span></span></div>
-</header>
-
-<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
-<i class="fab fa-whatsapp"></i>
-</a>
-
+<div id="menuBtn"><span></span><span></span><span></span></div>
 <div id="overlay"></div>
 
 <nav id="sideMenu">
@@ -162,16 +164,8 @@ header{
 
 <div class="container">
 
-<h2 id="pilgrimName"></h2>
-
+<div id="pilgrimName"></div>
 <div id="pilgrimDetails"></div>
-
-<div class="filters">
-  <select id="fAgency"><option value="">🏢 الوكالة</option></select>
-  <select id="fState"><option value="">📍 الولاية</option></select>
-  <select id="fMonth"><option value="">📅 الشهر</option></select>
-  <select id="fDuration"><option value="">⏳ المدة</option></select>
-</div>
 
 <div id="offers">⏳ جاري تحميل العروض...</div>
 </div>
@@ -181,9 +175,7 @@ header{
   <div class="modal-box">
     <h3>📋 متابعة الطلب</h3>
     <input id="trackPhone" placeholder="رقم الهاتف">
-    <button onclick="searchOrder()">🔍 بحث</button>
-    <div id="trackResult"></div>
-    <button onclick="closeTrack()" style="background:#777;color:#fff">إغلاق</button>
+    <button onclick="searchOrder()">بحث</button>
   </div>
 </div>
 
@@ -195,93 +187,92 @@ const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUp
 menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
 overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
 function openTrack(){trackModal.style.display="block";overlay.style.display="none";sideMenu.style.right="-260px"}
-function closeTrack(){trackModal.style.display="none"}
 
 /* تنسيق التاريخ */
-function formatTripDate(value){
-  const d=new Date(value);
-  if(isNaN(d)) return value;
+function formatDate(v){
+  const d=new Date(v);
+  if(isNaN(d))return v;
   return d.toLocaleDateString("ar-DZ",{day:"2-digit",month:"long",year:"numeric"});
 }
 
 /* تحميل العروض */
-let allData=[];
+let allOffers=[];
 fetch(OFFERS_API).then(r=>r.json()).then(d=>{
-  allData=d;
-  fillFilters(d);
-  render(d);
+  allOffers=d;
+  renderOffers(d);
 });
 
-function fillFilters(d){
-  [...new Set(d.map(o=>o.agency))].forEach(v=>fAgency.add(new Option(v,v)));
-  [...new Set(d.map(o=>o.state).filter(Boolean))].forEach(v=>fState.add(new Option(v,v)));
-  [...new Set(d.map(o=>o.duration))].forEach(v=>fDuration.add(new Option(v,v)));
-  [...new Set(d.map(o=>new Date(o.date).getMonth()+1))].forEach(v=>fMonth.add(new Option(v,v)));
-}
-
-function render(data){
+function renderOffers(data){
   offers.innerHTML="";
-  if(!data.length){offers.innerHTML="❌ لا توجد عروض مناسبة";return;}
+  const byAirport={};
+
   data.forEach(o=>{
-    offers.innerHTML+=`
-      <div class="offer-card">
-        <div class="offer-title">🕋 ${o.offer}</div>
-        <div class="offer-info">
-          <span>📅 ${formatTripDate(o.date)}</span>
-          <span>⏳ ${o.duration} يوم</span>
-          <span>🛫 ${o.airport}</span>
-          <span>📍 ${o.state}</span>
-          <span>🏨 ${o.hotel}</span>
-        </div>
-        <div class="offer-price">💰 ${o.group||"-"} دج</div>
-      </div>`;
+    byAirport[o.airport]=byAirport[o.airport]||[];
+    byAirport[o.airport].push(o);
   });
+
+  for(const airport in byAirport){
+    const sec=document.createElement("div");
+    sec.className="airport-section";
+    sec.innerHTML=`<div class="airport-title">🛫 ${airport}</div>`;
+    const slider=document.createElement("div");
+    slider.className="slider";
+
+    byAirport[airport].forEach(o=>{
+      slider.innerHTML+=`
+        <div class="offer-card">
+          <div class="offer-title">${o.offer}</div>
+          <div class="offer-agency">
+            <img src="${o.logo||''}">
+            <strong>${o.agency}</strong>
+          </div>
+          <div class="offer-info">
+            <span>📅 ${formatDate(o.date)}</span>
+            <span>⏳ ${o.duration} يوم</span>
+            <span>📍 ${o.state}</span>
+            <span>🏨 ${o.hotel}</span>
+          </div>
+          <div class="offer-price">💰 ${o.group||"-"} دج</div>
+        </div>`;
+    });
+
+    sec.appendChild(slider);
+    offers.appendChild(sec);
+  }
 }
 
-/* متابعة الطلب + مطابقة العروض */
+/* متابعة الطلب */
 function searchOrder(){
   const phone=trackPhone.value.trim();
   if(!phone)return alert("أدخل رقم الهاتف");
-  trackResult.innerHTML="⏳ جاري البحث...";
+
   fetch(SEARCH_API+"?phone="+phone)
   .then(r=>r.json())
   .then(d=>{
-    if(!d.found){
-      trackResult.innerHTML="❌ لا يوجد طلب";
-      return;
-    }
+    if(!d.found)return alert("لا يوجد طلب");
+
+    trackModal.style.display="none";
+
     pilgrimName.innerText="مرحبا 👋 "+d.name;
     pilgrimName.style.display="block";
 
     pilgrimDetails.innerHTML=`
-      <strong>تفاصيل المعتمر:</strong><br>
       🛫 المطار: ${d.airport}<br>
-      📅 الشهر: ${d.month}<br>
-      ⏳ المدة: ${d.duration} يوم
+      📍 الإقامة: ${d.state}<br>
+      ⏳ المدة: ${d.duration} يوم<br>
+      📅 الشهر: ${d.month}
     `;
     pilgrimDetails.style.display="block";
 
-    closeTrack();
-
-    render(allData.filter(o=>{
+    renderOffers(allOffers.filter(o=>{
       if(d.airport && o.airport!==d.airport)return false;
-      if(d.month && new Date(o.date).getMonth()+1!=d.month)return false;
+      if(d.state && o.state!==d.state)return false;
       if(d.duration && !o.duration.includes(d.duration))return false;
+      if(d.month && new Date(o.date).getMonth()+1!=d.month)return false;
       return true;
     }));
   });
 }
-
-/* الفلاتر اليدوية */
-[fAgency,fState,fMonth,fDuration].forEach(el=>el.onchange=()=>{
-  render(allData.filter(o=>{
-    if(fAgency.value && o.agency!==fAgency.value)return false;
-    if(fState.value && o.state!==fState.value)return false;
-    if(fMonth.value && new Date(o.date).getMonth()+1!=fMonth.value)return false;
-    if(fDuration.value && !o.duration.includes(fDuration.value))return false;
-    return true;
-  }));
-});
 </script>
 
 </body>
