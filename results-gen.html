@@ -194,11 +194,17 @@ select{padding:8px;border-radius:8px}
 </div>
 
 <!-- نافذة التفاصيل -->
-<div id="detailsModal">
-<div class="modal-box">
-<h3>🕋 تفاصيل العرض</h3>
-<<div id="detailsModal" onclick="closeDetails()">
-  <div class="modal-box" onclick="event.stopPropagation()"button>
+<div id="detailsModal" onclick="closeDetails()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button onclick="closeDetails()"
+      style="position:absolute;top:10px;left:10px;
+      background:#8b0000;color:#fff;border:none;
+      border-radius:50%;width:32px;height:32px;
+      font-size:18px;cursor:pointer">×</button>
+
+    <h3>🕋 تفاصيل العرض</h3>
+    <div id="detailsContent"></div>
+  </div>
 </div>
 
 <!-- نافذة التسجيل -->
