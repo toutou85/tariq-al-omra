@@ -72,57 +72,24 @@ body{
   .filters{grid-template-columns:1fr 1fr}
 }
 
-/* أقسام المطارات */
-.airport-section{margin-bottom:35px}
-.airport-title{
-  font-size:20px;
-  margin-bottom:10px;
-  color:#8b0000;font-weight:800
-}
-
-/* السلايدر */
-.slider{
-  display:flex;gap:15px;
-  overflow-x:auto;padding-bottom:10px
-}
-
-/* البطاقة */
+/* البطاقات */
 .offer-card{
-  min-width:280px;
   background:#fff;border-radius:18px;
-  padding:16px;
+  padding:16px;margin-bottom:15px;
   box-shadow:0 6px 20px rgba(0,0,0,.08)
 }
-.offer-header{
-  display:flex;align-items:center;gap:10px
-}
-.offer-logo{
-  width:45px;height:45px;object-fit:contain
-}
-.offer-agency{font-weight:700}
-.offer-state{font-size:13px;color:#555}
-
-.offer-title{
-  font-size:17px;font-weight:800;
-  color:#8b0000;margin:8px 0
-}
-
-.offer-info{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:6px;font-size:14px
-}
-
+.offer-header{display:flex;align-items:center;gap:10px}
+.offer-logo{width:45px;height:45px;object-fit:contain}
+.offer-title{font-size:17px;font-weight:800;color:#8b0000;margin:8px 0}
+.offer-info{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:14px}
 .offer-price{
-  margin-top:10px;
-  background:#f8f4ef;
+  margin-top:10px;background:#f8f4ef;
   padding:10px;border-radius:12px;
   font-weight:800;text-align:center;color:#8b0000
 }
-
 .offer-card button{
-  width:100%;margin-top:6px;
-  padding:9px;border:none;
-  border-radius:8px;
+  width:100%;margin-top:8px;
+  padding:10px;border:none;border-radius:8px;
   background:#8b0000;color:#fff;cursor:pointer
 }
 
@@ -133,11 +100,12 @@ body{
 }
 .modal-box{
   background:#fff;max-width:400px;width:90%;
-  margin:6% auto;padding:16px;
-  border-radius:18px;max-height:85vh;overflow:auto
+  margin:8% auto;padding:16px;
+  border-radius:18px
 }
-.modal-box img{
-  width:80px;display:block;margin:10px auto
+.modal-box input{
+  width:100%;padding:10px;margin-top:8px;
+  border-radius:8px;border:1px solid #ccc
 }
 </style>
 </head>
@@ -152,7 +120,7 @@ body{
 <div id="overlay"></div>
 
 <nav id="sideMenu">
-  <a href="track.html">📋 متابعة طلبي</a>
+  <a href="#" onclick="openTrack()">📋 متابعة طلبي</a>
   <a href="offers.html">🕋 العروض</a>
 </nav>
 
@@ -165,44 +133,67 @@ body{
   <select id="fDuration"><option value="">⏳ المدة</option></select>
 </div>
 
-<div id="offers"></div>
+<div id="offers">⏳ جاري تحميل العروض...</div>
 </div>
 
-<!-- نافذة التفاصيل -->
-<div class="modal" id="offerModal">
+<!-- نافذة متابعة الطلب -->
+<div class="modal" id="trackModal">
   <div class="modal-box">
-    <img id="m_logo">
-    <h3 id="m_offer"></h3>
-    <p id="m_agency"></p>
-    <p id="m_state"></p>
-    <p id="m_city"></p>
-    <p id="m_flight"></p>
-    <p id="m_date"></p>
-    <p id="m_duration"></p>
-    <p id="m_airport"></p>
-    <p id="m_hotel"></p>
-    <p id="m_prices"></p>
-    <button onclick="goRegister()">📲 تسجيل</button>
-    <button onclick="closeOffer()" style="background:#777">إغلاق</button>
+    <h3>📋 متابعة الطلب</h3>
+    <input id="trackPhone" placeholder="رقم الهاتف">
+    <button onclick="searchOrder()">🔍 بحث</button>
+    <div id="trackResult"></div>
+    <button onclick="closeTrack()" style="background:#777">إغلاق</button>
+  </div>
+</div>
+
+<!-- نافذة التسجيل -->
+<div class="modal" id="regModal">
+  <div class="modal-box">
+    <h3 id="r_offer"></h3>
+    <input id="c_name" placeholder="الاسم الكامل">
+    <input id="c_phone" placeholder="رقم الهاتف">
+    <input id="c_email" placeholder="البريد الإلكتروني (اختياري)">
+    <button onclick="sendRegistration()">📨 إرسال التسجيل</button>
+    <button onclick="closeReg()" style="background:#777">إغلاق</button>
   </div>
 </div>
 
 <script>
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
-
-function getTripDate(o){
-  return o.tripDate || o.trip_date || o.dateTrip || o.date;
-}
+const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
+const EMAIL_API="https://script.google.com/macros/s/AKfycbzcxJ2mvd-Nnr5mdzPItK6_3pWnX3kR_EIQuKZanjW93RGIh06d4PDqcdWwMV0AyiVB/exec";
 
 /* القائمة */
 menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
 overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
 
-function goRegister(){
-  window.location.href="register.html";
+function openTrack(){trackModal.style.display="block";sideMenu.style.right="-260px";overlay.style.display="none"}
+function closeTrack(){trackModal.style.display="none"}
+
+function normalizePhone(p){
+  p=p.replace(/\D/g,"");
+  if(p.startsWith("213"))p=p.slice(3);
+  if(p.startsWith("0"))p=p.slice(1);
+  return p;
 }
 
-let allData=[];
+function searchOrder(){
+  const p=normalizePhone(trackPhone.value);
+  if(!p)return alert("أدخل رقم الهاتف");
+  trackResult.innerHTML="⏳ جاري البحث...";
+  fetch(SEARCH_API+"?phone="+p)
+  .then(r=>r.json())
+  .then(d=>{
+    trackResult.innerHTML=d.found
+      ?`<p>👤 ${d.name}<br>📌 الحالة: <strong>${d.status}</strong></p>`
+      :`<p>❌ لا يوجد طلب</p>`;
+  });
+}
+
+/* العروض */
+let allData=[],selectedOffer=null;
+
 fetch(OFFERS_API).then(r=>r.json()).then(d=>{
   allData=d;
   fillFilters(d);
@@ -211,108 +202,70 @@ fetch(OFFERS_API).then(r=>r.json()).then(d=>{
 
 function fillFilters(d){
   [...new Set(d.map(o=>o.agency))].forEach(v=>fAgency.add(new Option(v,v)));
-  [...new Set(d.map(o=>o.state).filter(Boolean))]
-    .forEach(v=>fState.add(new Option(v,v)));
+  [...new Set(d.map(o=>o.state).filter(Boolean))].forEach(v=>fState.add(new Option(v,v)));
   [...new Set(d.map(o=>o.duration))].forEach(v=>fDuration.add(new Option(v,v)));
-  [...new Set(d.map(o=>new Date(getTripDate(o)).getMonth()+1))]
-    .filter(v=>!isNaN(v))
+  [...new Set(d.map(o=>new Date(o.date).getMonth()+1))].filter(v=>!isNaN(v))
     .forEach(v=>fMonth.add(new Option(v,v)));
 }
 
 function render(data){
   offers.innerHTML="";
-  const byAirport={};
-
   data.forEach(o=>{
-    byAirport[o.airport]=byAirport[o.airport]||[];
-    byAirport[o.airport].push(o);
+    const d=document.createElement("div");
+    d.className="offer-card";
+    d.innerHTML=`
+      <div class="offer-header">
+        <img src="${o.logo||''}" class="offer-logo">
+        <strong>${o.agency}</strong>
+      </div>
+      <div class="offer-title">🕋 ${o.offer}</div>
+      <div class="offer-info">
+        <span>📅 ${o.date}</span>
+        <span>⏳ ${o.duration}</span>
+        <span>📍 ${o.state||"—"}</span>
+        <span>🛫 ${o.airport}</span>
+      </div>
+      <div class="offer-price">💰 ${o.group||"-"} دج</div>
+      <button onclick='openReg(${JSON.stringify(o)})'>📲 تسجيل</button>
+    `;
+    offers.appendChild(d);
   });
-
-  for(const a in byAirport){
-    const sec=document.createElement("div");
-    sec.className="airport-section";
-    sec.innerHTML=`<div class="airport-title">🛫 ${a}</div>`;
-    const slider=document.createElement("div");
-    slider.className="slider";
-
-    byAirport[a].forEach(o=>{
-      const tripDate=getTripDate(o);
-      const c=document.createElement("div");
-      c.className="offer-card";
-      c.innerHTML=`
-        <div class="offer-header">
-          <img src="${o.logo||''}" class="offer-logo">
-          <div>
-            <div class="offer-agency">${o.agency}</div>
-            <div class="offer-state">📍 ${o.state||"—"}</div>
-          </div>
-        </div>
-
-        <div class="offer-title">🕋 ${o.offer}</div>
-
-        <div class="offer-info">
-          <span>📅 ${formatTripDate(tripDate)}</span>
-          <span>⏳ ${o.duration||"—"}</span>
-          <span>🛫 ${o.airport||"—"}</span>
-          <span>🏨 ${o.hotel||"—"}</span>
-        </div>
-
-        <div class="offer-price">💰 غرفة جماعية: ${o.group||"-"} دج</div>
-
-        <button onclick='openOffer(${JSON.stringify(o)})'>تفاصيل العرض</button>
-        <button onclick="goRegister()">تسجيل</button>
-      `;
-      slider.appendChild(c);
-    });
-
-    sec.appendChild(slider);
-    offers.appendChild(sec);
-  }
 }
 
 [fAgency,fState,fDuration,fMonth].forEach(el=>el.onchange=()=>{
   render(allData.filter(o=>{
-    const tripDate=getTripDate(o);
     if(fAgency.value && o.agency!==fAgency.value)return false;
     if(fState.value && o.state!==fState.value)return false;
     if(fDuration.value && !o.duration?.includes(fDuration.value))return false;
-    if(fMonth.value && new Date(tripDate).getMonth()+1!=fMonth.value)return false;
+    if(fMonth.value && new Date(o.date).getMonth()+1!=fMonth.value)return false;
     return true;
   }));
 });
 
-function openOffer(o){
-  const tripDate=getTripDate(o);
-  m_logo.src=o.logo||"";
-  m_offer.innerText=o.offer||"—";
-  m_agency.innerText="🏢 الوكالة: "+(o.agency||"—");
-  m_state.innerText="📍 الولاية: "+(o.state||"—");
-  m_city.innerText="🏘️ البلدية: "+(o.city||"—");
-  m_flight.innerText="✈️ نوع الرحلة: "+(o.flight||"—");
-  m_date.innerText="📅 تاريخ الرحلة: "+formatTripDate(tripDate);
-  m_duration.innerText="⏳ المدة: "+(o.duration||"—");
-  m_airport.innerText="🛫 مطار الإقلاع: "+(o.airport||"—");
-  m_hotel.innerText="🏨 الفندق: "+(o.hotel||"—");
-
-  m_prices.innerHTML=`
-    جماعية: ${o.group||"-"}<br>
-    خماسية: ${o.five||"-"}<br>
-    رباعية: ${o.four||"-"}<br>
-    ثلاثية: ${o.three||"-"}<br>
-    ثنائية: ${o.two||"-"}
-  `;
-  offerModal.style.display="block";
+/* التسجيل */
+function openReg(o){
+  selectedOffer=o;
+  r_offer.innerText=o.offer;
+  regModal.style.display="block";
 }
+function closeReg(){regModal.style.display="none"}
 
-function closeOffer(){
-  offerModal.style.display="none";
-}
-
-function formatTripDate(value){
-  if(!value) return "—";
-  const d=new Date(value);
-  if(isNaN(d)) return value;
-  return d.toLocaleDateString("ar-DZ",{year:"numeric",month:"2-digit",day:"2-digit"});
+function sendRegistration(){
+  if(!c_name.value||!c_phone.value)return alert("الاسم والهاتف إجباريان");
+  fetch(EMAIL_API,{
+    method:"POST",
+    body:JSON.stringify({
+      customer:{
+        name:c_name.value,
+        phone:c_phone.value,
+        email:c_email.value
+      },
+      offer:selectedOffer
+    })
+  }).then(()=>{
+    alert("✅ تم إرسال التسجيل");
+    closeReg();
+  });
 }
 </script>
 
