@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>متابعة طلب العمرة + العروض</title>
+<title>عروض العمرة</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -11,72 +11,7 @@
 body{
   font-family:Tajawal,Arial;
   margin:0;
-  background:url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg") center/cover fixed no-repeat;
-}
-
-/* زر القائمة */
-#menuBtn{width:30px;margin:15px;cursor:pointer}
-#menuBtn span{display:block;height:3px;background:#000;margin:6px 0;border-radius:2px}
-
-/* القائمة الجانبية */
-#sideMenu{
-  position:fixed;top:0;right:-260px;width:260px;height:100%;
-  background:#8b0000;padding-top:60px;transition:.3s;z-index:10000
-}
-#sideMenu a{display:block;padding:15px;color:#fff;text-decoration:none}
-#sideMenu a:hover{background:rgba(255,255,255,.2)}
-
-#overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.5);z-index:9000
-}
-
-.container{
-  max-width:650px;
-  background:rgba(255,255,255,.85);
-  margin:20px auto;
-  padding:20px;
-  border-radius:16px;
-}
-
-h2{text-align:center;color:#8b0000}
-
-button,input,select{
-  width:100%;padding:10px;margin-top:8px;
-  border-radius:8px;border:1px solid #ccc
-}
-button{background:#8b0000;color:#fff;cursor:pointer}
-
-.result{background:#f9f9f9;padding:15px;border-radius:10px;margin-top:15px}
-
-/* بطاقات */
-.offer-card{
-  background:#fff;border-radius:16px;padding:16px;margin-top:18px;
-  border:1px solid #eee;box-shadow:0 6px 20px rgba(0,0,0,.05);
-  transition:.3s
-}
-.offer-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.12)}
-
-.offer-header{display:flex;align-items:center;margin-bottom:8px}
-.offer-agency{display:flex;align-items:center;gap:10px;font-weight:700}
-.offer-logo{width:42px;height:42px;object-fit:contain}
-
-.offer-title{font-size:18px;font-weight:800;color:#8b0000;margin:8px 0}
-.offer-info{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:14px}
-.offer-price{margin-top:10px;background:#f8f4ef;padding:10px;border-radius:12px;font-weight:800;text-align:center;color:#8b0000}
-
-/* الفلاتر */
-#filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-
-/* نافذة */
-#modal{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.6);z-index:9999
-}
-#modalBox{
-  background:#fff;max-width:360px;width:90%;
-  margin:8% auto;padding:16px;border-radius:14px;
-  max-height:75vh;overflow:auto
+  background:#f4f4f4;
 }
 
 /* واتساب */
@@ -85,62 +20,93 @@ button{background:#8b0000;color:#fff;cursor:pointer}
   width:55px;height:55px;background:#25D366;
   color:#fff;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:30px;z-index:11000
+  font-size:30px;z-index:9999
+}
+
+/* القائمة */
+#menuBtn{width:30px;margin:15px;cursor:pointer}
+#menuBtn span{display:block;height:3px;background:#000;margin:6px 0}
+
+#sideMenu{
+  position:fixed;top:0;right:-260px;width:260px;height:100%;
+  background:#8b0000;color:#fff;padding-top:60px;transition:.3s;z-index:9998
+}
+#sideMenu a{display:block;padding:15px;color:#fff;text-decoration:none}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9997}
+
+.container{max-width:1200px;margin:auto;padding:15px}
+
+/* فلاتر */
+.filters{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:10px;margin-bottom:15px
+}
+select{padding:10px;border-radius:8px}
+
+/* السلايدر */
+.airport-section{margin-bottom:30px}
+.airport-title{font-size:20px;margin:10px 0;color:#8b0000}
+.slider{
+  display:flex;gap:15px;overflow-x:auto;padding-bottom:10px
+}
+.slider::-webkit-scrollbar{height:6px}
+.slider::-webkit-scrollbar-thumb{background:#ccc;border-radius:6px}
+
+/* بطاقة */
+.offer-card{
+  min-width:260px;background:#fff;border-radius:16px;
+  padding:15px;box-shadow:0 5px 15px rgba(0,0,0,.1)
+}
+.offer-logo{width:50px;height:50px;object-fit:contain}
+.offer-title{font-weight:800;margin:8px 0}
+.offer-price{color:#8b0000;font-weight:800}
+.offer-card button{
+  width:100%;margin-top:6px;padding:8px;border:none;
+  border-radius:8px;background:#8b0000;color:#fff;cursor:pointer
+}
+
+/* نافذة */
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000}
+#modalBox{
+  background:#fff;max-width:400px;width:90%;
+  margin:8% auto;padding:16px;border-radius:16px;
+  max-height:80vh;overflow:auto
 }
 </style>
 </head>
 
 <body>
 
-<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
-  <i class="fab fa-whatsapp"></i>
+<a class="whatsapp-top" href="https://wa.me/213674141379" target="_blank">
+<i class="fab fa-whatsapp"></i>
 </a>
 
 <div id="menuBtn"><span></span><span></span><span></span></div>
 <div id="overlay"></div>
 
 <nav id="sideMenu">
-  <a href="offers.html">🕋 عروض طريق العمرة</a>
-  <a href="recherche-oeffer.html">🔎 أبحث عن عرض مناسب</a>
+  <a href="#">الرئيسية</a>
+  <a href="#">العروض</a>
+  <a href="#">اتصل بنا</a>
 </nav>
 
 <div class="container">
 
-<h2>📋 متابعة طلب العمرة</h2>
-<input type="tel" id="phone" placeholder="0550123456">
-<button id="searchBtn">🔍 بحث</button>
-<div id="output"></div>
-
-<hr>
-
-<h2>🕋 عروض العمرة المتوفرة</h2>
-
-<div id="filters">
-  <select id="filterAgency"><option value="">🏢 كل الوكالات</option></select>
-  <select id="filterAirport"><option value="">🛫 كل المطارات</option></select>
-  <select id="filterMonth">
-    <option value="">📅 كل الأشهر</option>
-    <option value="1">جانفي</option>
-    <option value="2">فيفري</option>
-    <option value="3">مارس</option>
-    <option value="4">أفريل</option>
-  </select>
-  <select id="filterDuration">
-    <option value="">⏳ كل المدد</option>
-  </select>
+<!-- الفلاتر -->
+<div class="filters">
+  <select id="fDate"><option value="">📅 يوم الانطلاق</option></select>
+  <select id="fDuration"><option value="">⏳ المدة</option></select>
+  <select id="fAgency"><option value="">🏢 الوكالة</option></select>
+  <select id="fState"><option value="">📍 الولاية</option></select>
 </div>
 
-<button onclick="resetFilters()">🔄 إعادة التعيين</button>
-
-<div id="offers">⏳ جاري تحميل العروض...</div>
+<div id="offers"></div>
 </div>
 
-<!-- النافذة المنبثقة -->
+<!-- النافذة -->
 <div id="modal">
   <div id="modalBox">
-
-    <img id="m_logo" style="width:90px;margin:10px auto;display:none;object-fit:contain">
-
+    <img id="m_logo" style="width:80px;display:none;margin:auto">
     <h3 id="m_offer"></h3>
     <p id="m_agency"></p>
     <p id="m_state"></p>
@@ -152,161 +118,98 @@ button{background:#8b0000;color:#fff;cursor:pointer}
     <p id="m_hotel"></p>
     <p id="m_prices"></p>
 
-    <input id="c_name" placeholder="الاسم الكامل">
-    <input id="c_phone" placeholder="رقم الهاتف">
-    <input id="c_email" placeholder="البريد الإلكتروني">
-
-    <button id="sendBtn">✅ سجل الآن</button>
+    <button style="background:#25D366">📲 تسجيل</button>
     <button onclick="closeModal()" style="background:#777">إغلاق</button>
   </div>
 </div>
 
 <script>
-const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
-const OFFERS_API="https://script.google.com/macros/s/AKfycbxoNatDZn3AGEkdf6uRtMUkWTQTfjexX5MTUmxc0_hCkGVjubVcWGzxcgYDgPS6Jix5SA/exec";
-const EMAIL_API="https://script.google.com/macros/s/AKfycbzcxJ2mvd-Nnr5mdzPItK6_3pWnX3kR_EIQuKZanjW93RGIh06d4PDqcdWwMV0AyiVB/exec";
+const API="https://script.google.com/macros/s/AKfycbzr3mLPIZA8exVtMx07aoWEq7bRm4aFvbpkvRYWGku-FGPCSeWl412HQ1IwBvJ2tLl0dw/exec";
 
-menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"};
-overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"};
+menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
+overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
 
-function normalizePhone(p){
-  p=p.replace(/\D/g,"");
-  if(p.startsWith("213"))p=p.slice(3);
-  if(p.startsWith("0"))p=p.slice(1);
-  return p;
-}
-function formatDate(d){
-  return new Date(d).toLocaleDateString("ar-DZ",{day:"2-digit",month:"long",year:"numeric"});
-}
-function cleanText(t){return (t||"").toString().trim();}
+let dataAll=[];
 
-searchBtn.onclick=()=>{
-  const p=normalizePhone(phone.value);
-  if(!p)return alert("أدخل رقم الهاتف");
-  output.innerHTML="⏳ جاري البحث...";
-  fetch(SEARCH_API+"?phone="+p)
-  .then(r=>r.json())
-  .then(d=>{
-    output.innerHTML=d.found
-      ? `<div class="result">👤 ${d.name}<br>📌 الحالة: <strong>${d.status}</strong></div>`
-      : `<div class="result">❌ لا يوجد طلب</div>`;
-  });
-};
-
-let offersData=[],selectedOffer=null;
-
-fetch(OFFERS_API)
-.then(r=>r.json())
-.then(data=>{
-  offersData=data;
-
-  const agencies=new Map();
-  const airports=new Set();
-  const durations=new Set();
-
-  data.forEach(o=>{
-    if(o.agency) agencies.set(o.agency,o.agency);
-    if(o.airport) airports.add(o.airport);
-    if(o.duration) durations.add(o.duration);
-  });
-
-  agencies.forEach(v=>filterAgency.add(new Option(v,v)));
-  airports.forEach(v=>filterAirport.add(new Option(v,v)));
-  durations.forEach(v=>filterDuration.add(new Option(v,v)));
-
-  renderOffers(data);
+fetch(API).then(r=>r.json()).then(d=>{
+  dataAll=d;
+  fillFilters(d);
+  render(d);
 });
 
-function renderOffers(data){
+function fillFilters(d){
+  [...new Set(d.map(x=>x.date))].forEach(v=>fDate.add(new Option(v,v)));
+  [...new Set(d.map(x=>x.duration))].forEach(v=>fDuration.add(new Option(v,v)));
+  [...new Set(d.map(x=>x.agency))].forEach(v=>fAgency.add(new Option(v,v)));
+  [...new Set(d.map(x=>x.state))].forEach(v=>fState.add(new Option(v,v)));
+}
+
+function render(d){
   offers.innerHTML="";
-  if(!data.length){offers.innerHTML="❌ لا توجد عروض";return;}
-  data.forEach(o=>{
-    const div=document.createElement("div");
-    div.className="offer-card";
-    div.innerHTML=`
-      <div class="offer-header">
-        <div class="offer-agency">
-          <img src="${o.logo||''}" class="offer-logo" onerror="this.style.display='none'">
-          <span>${o.agency}</span>
-        </div>
-      </div>
-      <div class="offer-title">🕋 ${o.offer}</div>
-      <div class="offer-info">
-        <span>📅 ${formatDate(o.date)}</span>
-        <span>⏳ ${o.duration||"—"}</span>
-        <span>🛫 ${o.airport||"—"}</span>
-        <span>🏨 ${o.hotel||"—"}</span>
-      </div>
-      <div class="offer-price">💰 غرفة جماعية: ${o.group||"غير متوفر"} دج</div>
-      <button onclick="openModal(offersData[${offersData.indexOf(o)}])">تفاصيل العرض</button>`;
-    offers.appendChild(div);
+  const byAirport={};
+  d.forEach(o=>{
+    byAirport[o.airport]=byAirport[o.airport]||[];
+    byAirport[o.airport].push(o);
   });
-}
 
-function resetFilters(){
-  filterAgency.value="";
-  filterAirport.value="";
-  filterMonth.value="";
-  filterDuration.value="";
-  renderOffers(offersData);
-}
+  for(const a in byAirport){
+    const sec=document.createElement("div");
+    sec.className="airport-section";
+    sec.innerHTML=`<div class="airport-title">🛫 ${a}</div>`;
+    const slider=document.createElement("div");
+    slider.className="slider";
 
-function openModal(o){
-  selectedOffer=o;
+    byAirport[a].forEach(o=>{
+      const c=document.createElement("div");
+      c.className="offer-card";
+      c.innerHTML=`
+        <img src="${o.logo||""}" class="offer-logo">
+        <div class="offer-title">${o.offer}</div>
+        <div>${o.agency}</div>
+        <div class="offer-price">${o.group||"-"} دج</div>
+        <button onclick='openModal(${JSON.stringify(o)})'>تفاصيل</button>
+        <button>تسجيل</button>
+      `;
+      slider.appendChild(c);
+    });
 
-  if(o.logo){
-    m_logo.src=o.logo;
-    m_logo.style.display="block";
-  }else{
-    m_logo.style.display="none";
+    sec.appendChild(slider);
+    offers.appendChild(sec);
   }
-
-  m_offer.innerText="🕋 "+o.offer;
-  m_agency.innerText="🏢 الوكالة: "+o.agency;
-  m_state.innerText="📍 الولاية: "+(o.state||"—");
-  m_city.innerText="🏘️ البلدية: "+(o.city||"—");
-  m_flight.innerText="✈️ نوع الرحلة: "+(o.flight||"—");
-  m_date.innerText="📅 تاريخ الرحلة: "+formatDate(o.date);
-  m_duration.innerText="⏳ المدة: "+(o.duration||"—");
-  m_airport.innerText="🛫 مطار الإقلاع: "+(o.airport||"—");
-  m_hotel.innerText="🏨 الفندق: "+(o.hotel||"—");
-
-  m_prices.innerHTML=
-    `💰 غرفة جماعية: ${o.group||"-"}<br>
-     💰 غرفة خماسية: ${o.five||"-"}<br>
-     💰 غرفة رباعية: ${o.four||"-"}<br>
-     💰 غرفة ثلاثية: ${o.three||"-"}<br>
-     💰 غرفة ثنائية: ${o.two||"-"}`;
-
-  modal.style.display="block";
 }
-function closeModal(){modal.style.display="none"}
-
-sendBtn.onclick=()=>{
-  if(!c_name.value||!c_phone.value)return alert("الاسم والهاتف إجباريان");
-  fetch(EMAIL_API,{
-    method:"POST",
-    body:JSON.stringify({
-      customer:{name:c_name.value,phone:c_phone.value,email:c_email.value},
-      offer:selectedOffer
-    })
-  }).then(()=>{alert("✅ تم الإرسال");closeModal()});
-};
 
 function applyFilters(){
-  const a=filterAgency.value, ap=filterAirport.value, m=filterMonth.value, d=filterDuration.value;
-  renderOffers(offersData.filter(o=>{
-    if(a && cleanText(o.agency)!==a)return false;
-    if(ap && cleanText(o.airport)!==ap)return false;
-    if(m && new Date(o.date).getMonth()+1!=m)return false;
-    if(d && !o.duration?.includes(d))return false;
+  render(dataAll.filter(o=>{
+    if(fDate.value && o.date!==fDate.value)return false;
+    if(fDuration.value && o.duration!==fDuration.value)return false;
+    if(fAgency.value && o.agency!==fAgency.value)return false;
+    if(fState.value && o.state!==fState.value)return false;
     return true;
   }));
 }
-filterAgency.onchange=applyFilters;
-filterAirport.onchange=applyFilters;
-filterMonth.onchange=applyFilters;
-filterDuration.onchange=applyFilters;
+
+[fDate,fDuration,fAgency,fState].forEach(e=>e.onchange=applyFilters);
+
+function openModal(o){
+  m_logo.src=o.logo||"";m_logo.style.display=o.logo?"block":"none";
+  m_offer.innerText=o.offer;
+  m_agency.innerText="🏢 "+o.agency;
+  m_state.innerText="📍 "+o.state;
+  m_city.innerText="🏘️ "+o.city;
+  m_flight.innerText="✈️ "+o.flight;
+  m_date.innerText="📅 "+o.date;
+  m_duration.innerText="⏳ "+o.duration;
+  m_airport.innerText="🛫 "+o.airport;
+  m_hotel.innerText="🏨 "+o.hotel;
+  m_prices.innerHTML=`
+  جماعية: ${o.group}<br>
+  خماسية: ${o.five}<br>
+  رباعية: ${o.four}<br>
+  ثلاثية: ${o.three}<br>
+  ثنائية: ${o.two}`;
+  modal.style.display="block";
+}
+function closeModal(){modal.style.display="none"}
 </script>
 
 </body>
