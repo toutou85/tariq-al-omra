@@ -117,6 +117,11 @@ select{
   padding-bottom:10px;
   scroll-snap-type:x mandatory
 }
+.airport-row::-webkit-scrollbar{height:6px}
+.airport-row::-webkit-scrollbar-thumb{
+  background:#ccc;
+  border-radius:10px
+}
 
 /* ===== بطاقة العرض ===== */
 .card{
@@ -129,6 +134,30 @@ select{
   scroll-snap-align:start
 }
 .card:hover{transform:translateY(-5px)}
+
+.card-header{
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+.card-header img{
+  width:48px;
+  height:48px;
+  object-fit:contain
+}
+.card-header strong{font-size:15px}
+
+.offer-name{
+  margin-top:8px;
+  font-weight:900;
+  color:#8b0000
+}
+
+.meta{
+  font-size:13px;
+  margin-top:6px;
+  color:#444
+}
 
 .price{
   margin-top:10px;
@@ -179,10 +208,12 @@ select{
 </header>
 
 <nav id="sideMenu">
-  <a href="results-gen.html">🕋 العروض العامة</a>
+
+<a href="results-gen.html">🕋 العروض العامة</a>
   <a href="recherche-oeffer.html">📩 طلب عرض عمرة</a>
   <a href="recherche-n.html">👤 صفحتي الخاصة</a>
 </nav>
+
 <div id="overlay" onclick="closeMenu()"></div>
 
 <div class="container">
@@ -201,6 +232,7 @@ select{
 <div id="offers">⏳ جارٍ تحميل العروض...</div>
 </div>
 
+<!-- نافذة التفاصيل -->
 <div id="modal">
   <div id="modalBox">
     <h3 id="mTitle"></h3>
@@ -211,10 +243,159 @@ select{
 </div>
 
 <script>
+const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
+const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
+
+const phone = localStorage.getItem("umrah_phone");
+let userData=null, offersData=[], currentTab="match", selectedOffer=null;
+
+function formatDate(d){
+  if(!d) return "-";
+  return new Date(d).toLocaleDateString("ar-DZ",{
+    day:"2-digit",month:"long",year:"numeric"
+  });
+}
+
+/* جلب بيانات المستخدم */
+fetch(SEARCH_API+"?phone="+phone)
+.then(r=>r.json())
+.then(d=>userData=d);
+
+/* جلب العروض */
+fetch(OFFERS_API)
+.then(r=>r.json())
+.then(d=>{
+  offersData=d;
+
+  const agencies=new Set(), airports=new Set(), dates=new Set();
+  d.forEach(o=>{
+    if(o.agency) agencies.add(o.agency);
+    if(o.airport) airports.add(o.airport);
+    if(o.date) dates.add(formatDate(o.date));
+  });
+
+  agencies.forEach(v=>fAgency.add(new Option(v,v)));
+  airports.forEach(v=>fAirport.add(new Option(v,v)));
+  dates.forEach(v=>fDate.add(new Option(v,v)));
+
+  render();
+});
+
+function score(o){
+  let s=0;
+  if(userData?.airport && o.airport?.includes(userData.airport)) s+=3;
+  if(userData?.hotel && o.hotel?.includes(userData.hotel)) s+=2;
+  return s;
+}
+
+function render(){
+  let list=[...offersData];
+
+  if(currentTab==="match"){
+    list.sort((a,b)=>score(b)-score(a));
+    filters.style.display="none";
+  }else{
+    filters.style.display="grid";
+    list=list.filter(o=>{
+      if(fAgency.value && o.agency!==fAgency.value) return false;
+      if(fAirport.value && o.airport!==fAirport.value) return false;
+      if(fDate.value && formatDate(o.date)!==fDate.value) return false;
+      return true;
+    });
+  }
+
+  offers.innerHTML="";
+  if(!list.length){
+    offers.innerHTML="❌ لا توجد عروض";
+    return;
+  }
+
+  const grouped={};
+  list.forEach(o=>{
+    const ap=o.airport||"غير محدد";
+    if(!grouped[ap]) grouped[ap]=[];
+    grouped[ap].push(o);
+  });
+
+  Object.keys(grouped).forEach(ap=>{
+    const group=document.createElement("div");
+    group.className="airport-group";
+    group.innerHTML=`<div class="airport-title">✈️ ${ap}</div>`;
+
+    const row=document.createElement("div");
+    row.className="airport-row";
+
+    grouped[ap].forEach(o=>{
+      const c=document.createElement("div");
+      c.className="card";
+      c.innerHTML=`
+       
+  <!-- رأس البطاقة -->
+  <div class="card-header">
+    <img src="${o.logo || ''}" onerror="this.style.display='none'">
+      <small>${o.agency} – ${o.state} 📍</small>
+    <div>
+      <strong>${o.offer}</strong><br>
+    </div>
+  </div>
+
+  <!-- معلومات العرض -->
+  <div class="card-info">
+    <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>
+    <div>🏨 الأقامة في فندق ${o.hotel || "-"}</div>
+    <div>⏱️ مدة الرحلة: ${o.duration || "-"}</div>
+    <div>🛫 مسار الرحلة: ${o.flight || "-"}</div>
+  </div>
+
+  <!-- السعر -->
+  <div class="price">💰 ${o.group} دج</div>
+
+
+        <button onclick='details(${JSON.stringify(o)})'>تفاصيل العرض</button>
+      `;
+      row.appendChild(c);
+    });
+
+    group.appendChild(row);
+    offers.appendChild(group);
+  });
+}
+
+function details(o){
+  selectedOffer=o;
+  mTitle.innerText=o.offer||"تفاصيل العرض";
+  mDetails.innerHTML=`
+    🏢 ${o.agency}<br>
+    📍 ${o.state||"-"}<br>
+    📅 ${formatDate(o.date)}<br>
+    ✈️ ${o.airport||"-"}<br>
+    🏨 ${o.hotel||"-"}<br>
+    💰 جماعية: ${o.group||"-"}<br>
+    💰 خماسية: ${o.five||"-"}<br>
+    💰 رباعية: ${o.four||"-"}<br>
+    💰 ثلاثية: ${o.three||"-"}<br>
+    💰 ثنائية: ${o.two||"-"}
+  `;
+  modal.style.display="flex";
+}
+function closeModal(){modal.style.display="none"}
 function register(){
   localStorage.setItem("selected_offer",JSON.stringify(selectedOffer));
   location.href="results-fenal.html";
 }
+
+function switchTab(t){
+  currentTab=t;
+  tabMatch.classList.toggle("active",t==="match");
+  tabAll.classList.toggle("active",t==="all");
+  render();
+}
+fAgency.onchange=render;
+fAirport.onchange=render;
+fDate.onchange=render;
+
+function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}
+function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 </script>
 
 </body>
