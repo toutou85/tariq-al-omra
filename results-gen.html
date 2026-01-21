@@ -3,121 +3,250 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تم تأكيد طلب العمرة</title>
+<title>العروض العامة للعمرة</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+/* ===== الأساس ===== */
 body{
   font-family:Tajawal,Arial;
   margin:0;
-  min-height:100vh;
   background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
     url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
     center/cover fixed no-repeat;
+}
+
+/* ===== الهيدر ===== */
+header{
+  height:60px;
+  background:#8b0000;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  padding:0 15px;
+}
+.menu-btn{font-size:26px;cursor:pointer}
+header h1{flex:1;text-align:center;font-size:18px;margin:0}
+
+/* ===== زر واتساب ===== */
+.whatsapp-top{
+  position:fixed;
+  top:10px;
+  left:12px;
+  width:48px;
+  height:48px;
+  background:#25D366;
+  color:#fff;
+  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
+  font-size:28px;
+  z-index:13000;
+  box-shadow:0 6px 20px rgba(0,0,0,.3);
 }
 
-.box{
-  background:#fff;
-  width:92%;
-  max-width:520px;
-  border-radius:22px;
-  padding:25px;
-  box-shadow:0 12px 35px rgba(0,0,0,.35);
-  text-align:center;
+/* ===== القائمة ===== */
+#sideMenu{
+  position:fixed;
+  top:0;right:-260px;
+  width:260px;height:100%;
+  background:#8b0000;
+  padding-top:70px;
+  transition:.3s;
+  z-index:10000
+}
+#sideMenu a{
+  display:block;
+  padding:14px 18px;
+  color:#fff;
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.15)
+}
+#sideMenu a:hover{background:rgba(255,255,255,.15)}
+#overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:9000
 }
 
-h2{
+/* ===== المحتوى ===== */
+.container{
+  max-width:1200px;
+  margin:25px auto;
+  background:rgba(255,255,255,.95);
+  padding:20px;
+  border-radius:20px
+}
+
+/* ===== الفلاتر ===== */
+.filters{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:10px;
+  margin-bottom:20px
+}
+select{
+  padding:8px;
+  border-radius:8px;
+  border:1px solid #ccc
+}
+
+/* ===== مجموعات المطارات ===== */
+.airport-group{margin-bottom:30px}
+.airport-title{
+  font-weight:900;
   color:#8b0000;
-  margin-top:0;
-  font-size:22px;
+  margin-bottom:10px
+}
+.airport-row{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  padding-bottom:10px;
+  scroll-snap-type:x mandatory
 }
 
-.success{
-  font-size:50px;
-  margin:10px 0;
+/* ===== البطاقة ===== */
+.card{
+  min-width:300px;
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
 }
-
-.info{
-  text-align:right;
-  font-size:14px;
-  line-height:1.9;
-  margin-top:15px;
-  color:#333;
-}
-
-.info b{color:#8b0000}
-
-.note{
-  margin-top:15px;
-  background:#f7f3ee;
-  padding:12px;
-  border-radius:12px;
-  font-size:13px;
-  color:#444;
-}
-
-button{
-  margin-top:18px;
+.card button{
   width:100%;
-  padding:12px;
+  margin-top:10px;
+  padding:10px;
   border:none;
-  border-radius:14px;
+  border-radius:10px;
   background:#8b0000;
   color:#fff;
-  font-size:15px;
-  cursor:pointer;
+  cursor:pointer
+}
+
+/* ===== نافذة الطلب ===== */
+#modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:20000;
+  align-items:center;
+  justify-content:center;
+}
+.modal-box{
+  background:#fff;
+  width:90%;
+  max-width:400px;
+  padding:20px;
+  border-radius:18px;
+  text-align:center;
+}
+.modal-box input{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-  <div class="success">✅</div>
-  <h2>تم تسجيل طلبك بنجاح</h2>
+<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
+  <i class="fab fa-whatsapp"></i>
+</a>
 
-  <div id="details" class="info">
-    ⏳ جارٍ تحميل البيانات...
+<header>
+  <div class="menu-btn" onclick="openMenu()">☰</div>
+  <h1>🕋 العروض العامة</h1>
+</header>
+
+<nav id="sideMenu">
+  <a href="test-adidas5.html">🕋 العروض العامة</a>
+  <a href="test-adidas1.html">📩 طلب عرض عمرة</a>
+  <a href="test-adidas2.html">👤 صفحتي الخاصة</a>
+</nav>
+<div id="overlay" onclick="closeMenu()"></div>
+
+<div class="container">
+  <div class="filters">
+    <select id="fAgency"><option value="">🏢 كل الوكالات</option></select>
+    <select id="fState"><option value="">📍 كل الولايات</option></select>
+    <select id="fAirport"><option value="">✈️ كل المطارات</option></select>
+    <select id="fDate"><option value="">📅 كل التواريخ</option></select>
   </div>
 
-  <div class="note">
-    📩 سيتم التواصل معك قريبًا من طرف الوكالة  
-    <br>
-    ❗ يرجى الاحتفاظ برقم هاتفك مفتوحًا
-  </div>
+  <div id="offers">⏳ جارٍ تحميل العروض...</div>
+</div>
 
-  <button onclick="goHome()">🏠 العودة للرئيسية</button>
+<!-- نافذة الطلب -->
+<div id="modal">
+  <div class="modal-box">
+    <h3>📩 طلب عرض عمرة</h3>
+    <input id="mFirst" placeholder="الاسم">
+    <input id="mLast" placeholder="اللقب">
+    <input id="mPhone" placeholder="رقم الهاتف">
+    <button onclick="sendRequest()">متابعة</button>
+  </div>
 </div>
 
 <script>
-const data = JSON.parse(sessionStorage.getItem("umrahRequest"));
+const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
 
-const box = document.getElementById("details");
+let selectedOffer=null, offersData=[];
 
-if(!data){
-  box.innerHTML = "❌ لا توجد بيانات لعرضها";
-}else{
-  box.innerHTML = `
-    <b>👤 الاسم:</b> ${data.first} ${data.last}<br>
-    <b>📞 الهاتف:</b> ${data.phone}<br>
-    <b>🏢 الوكالة:</b> ${data.agency || "-"}<br>
-    <b>📍 الولاية:</b> ${data.state || "-"}<br>
-    <b>✈️ المطار:</b> ${data.airport || "-"}<br>
-    <b>📅 تاريخ الرحلة:</b> ${data.date || "-"}<br>
-    <b>🕋 العرض:</b> ${data.offer || "-"}<br>
-    <b>💰 السعر:</b> ${data.price || "-"} دج
-  `;
+function formatDate(d){
+  return new Date(d).toLocaleDateString("ar-DZ",{day:"2-digit",month:"long",year:"numeric"});
 }
 
-// تنظيف البيانات بعد العرض
-sessionStorage.removeItem("umrahRequest");
+fetch(OFFERS_API).then(r=>r.json()).then(d=>{
+  offersData=d;
+  render();
+});
 
-function goHome(){
-  location.href="index.html";
+function render(){
+  offers.innerHTML="";
+  offersData.forEach(o=>{
+    const c=document.createElement("div");
+    c.className="card";
+    c.innerHTML=`
+      <strong>${o.offer}</strong><br>
+      ${o.agency} - ${o.state}<br>
+      <button onclick='openModal(${JSON.stringify(o)})'>📩 طلب هذا العرض</button>
+    `;
+    offers.appendChild(c);
+  });
 }
+
+function openModal(o){
+  selectedOffer=o;
+  modal.style.display="flex";
+}
+
+function sendRequest(){
+  if(!mFirst.value||!mLast.value||!mPhone.value){
+    alert("يرجى ملء جميع الحقول");
+    return;
+  }
+  sessionStorage.setItem("umrahRequest",JSON.stringify({
+    first:mFirst.value,
+    last:mLast.value,
+    phone:mPhone.value,
+    offer:selectedOffer
+  }));
+  location.href="results-fenal.html";
+}
+
+function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}
+function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 </script>
 
 </body>
