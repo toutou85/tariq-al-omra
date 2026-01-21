@@ -197,8 +197,8 @@ select{padding:8px;border-radius:8px}
 <div id="detailsModal">
 <div class="modal-box">
 <h3>🕋 تفاصيل العرض</h3>
-<div id="detailsContent"></div>
-<button onclick="closeDetails()">إغلاق</button>
+<<div id="detailsModal" onclick="closeDetails()">
+  <div class="modal-box" onclick="event.stopPropagation()"button>
 </div>
 </div>
 
@@ -312,8 +312,6 @@ fState.onchange=render;
 fDate.onchange=render;
 
 function openDetails(o){
-
-
 detailsContent.innerHTML = `
   <p>🕋 <strong>اسم العرض:</strong> ${o.offer || "-"}</p>
 
@@ -322,20 +320,14 @@ detailsContent.innerHTML = `
   <p>🏢 <strong>الوكالة:</strong> ${o.agency || "-"}</p>
   <p>📍 <strong>الولاية:</strong> ${o.state || "-"}</p>
   <p>🏙️ <strong>المدينة:</strong> ${o.city || "-"}</p>
-
   <hr>
-
   <p>📅 <strong>تاريخ الرحلة:</strong> ${formatDate(o.date)}</p>
   <p>⏱️ <strong>مدة الرحلة:</strong> ${o.duration || "-"}</p>
   <p>✈️ <strong>نوع الرحلة:</strong> ${o.flight || "-"}</p>
   <p>🛫 <strong>مطار الإقلاع:</strong> ${o.airport || "-"}</p>
-
   <hr>
-
   <p>🏨 <strong>الفندق:</strong> ${o.hotel || "-"}</p>
-
   <hr>
-
   <p>💰 <strong>الأسعار:</strong></p>
   <p>👥 جماعية: ${o.group || "-"} دج</p>
   <p>🛏️ خماسية: ${o.five || "-"} دج</p>
