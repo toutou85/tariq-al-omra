@@ -91,7 +91,7 @@ button{background:#8b0000;color:#fff;cursor:pointer}
 <div id="offers">⏳ جاري تحميل العروض...</div>
 </div>
 
-<!-- النافذة -->
+<!-- النافذة المنبثقة -->
 <div id="modal">
 <div id="modalBox">
 
@@ -125,10 +125,10 @@ fetch(OFFERS_API)
   offersData=data;
   renderOffers(data);
 
-  [...new Set(data.map(o=>o["اسم الوكالة"]))].forEach(v=>{
+  [...new Set(data.map(o=>o.agency || o["اسم الوكالة"]))].forEach(v=>{
     if(v) filterAgency.add(new Option(v,v));
   });
-  [...new Set(data.map(o=>o["مطار الإقلاع"]))].forEach(v=>{
+  [...new Set(data.map(o=>o.airport || o["مطار الإقلاع"]))].forEach(v=>{
     if(v) filterAirport.add(new Option(v,v));
   });
 });
@@ -140,15 +140,15 @@ function renderOffers(data){
     d.className="offer-card";
     d.innerHTML=`
       <div class="offer-header">
-        <img src="${o["شعار الوكالة"]||""}" class="offer-logo">
-        <strong>${o["اسم الوكالة"]}</strong>
+        <img src="${o.logo || o["شعار الوكالة"] || ""}" class="offer-logo">
+        <strong>${o.agency || o["اسم الوكالة"] || ""}</strong>
       </div>
-      <div class="offer-title">${o["اسم العرض"]}</div>
+      <div class="offer-title">${o.offer || o["اسم العرض"] || ""}</div>
       <div class="offer-info">
-        <span>📅 ${o["تاريخ الرحلة"]}</span>
-        <span>🛫 ${o["مطار الإقلاع"]}</span>
+        <span>📅 ${o.date || o["تاريخ الرحلة"] || ""}</span>
+        <span>🛫 ${o.airport || o["مطار الإقلاع"] || ""}</span>
       </div>
-      <div class="offer-price">💰 ${o["غرفة جماعية"]||"—"} دج</div>
+      <div class="offer-price">💰 ${o.group || o["غرفة جماعية"] || "—"} دج</div>
       <button onclick='openModal(${JSON.stringify(o)})'>تفاصيل العرض</button>
     `;
     offers.appendChild(d);
@@ -156,24 +156,25 @@ function renderOffers(data){
 }
 
 function openModal(o){
-  m_logo.src=o["شعار الوكالة"]||"";
-  m_logo.style.display=o["شعار الوكالة"]?"block":"none";
+  const logo = o.logo || o["شعار الوكالة"] || "";
+  m_logo.src = logo;
+  m_logo.style.display = logo ? "block" : "none";
 
-  m_offer.innerText="🕋 "+o["اسم العرض"];
-  m_agency.innerText="🏢 الوكالة: "+o["اسم الوكالة"];
-  m_wilaya.innerText="📍 الولاية: "+o["الولاية"];
-  m_commune.innerText="🏘️ البلدية: "+o["البلدية"];
-  m_type.innerText="✈️ نوع الرحلة: "+o["نوع الرحلة"];
-  m_date.innerText="📅 تاريخ الرحلة: "+o["تاريخ الرحلة"];
-  m_airport.innerText="🛫 مطار الإقلاع: "+o["مطار الإقلاع"];
-  m_hotel.innerText="🏨 الفندق: "+o["اسم الفندق"];
+  m_offer.innerText = "🕋 " + (o.offer || o["اسم العرض"] || "—");
+  m_agency.innerText = "🏢 الوكالة: " + (o.agency || o["اسم الوكالة"] || "—");
+  m_wilaya.innerText = "📍 الولاية: " + (o.wilaya || o["الولاية"] || "—");
+  m_commune.innerText = "🏘️ البلدية: " + (o.commune || o["البلدية"] || "—");
+  m_type.innerText = "✈️ نوع الرحلة: " + (o.type || o["نوع الرحلة"] || "—");
+  m_date.innerText = "📅 تاريخ الرحلة: " + (o.date || o["تاريخ الرحلة"] || "—");
+  m_airport.innerText = "🛫 مطار الإقلاع: " + (o.airport || o["مطار الإقلاع"] || "—");
+  m_hotel.innerText = "🏨 الفندق: " + (o.hotel || o["اسم الفندق"] || "—");
 
   m_prices.innerHTML=`
-  جماعية: ${o["غرفة جماعية"]||"-"}<br>
-  خماسية: ${o["غرفة خماسية"]||"-"}<br>
-  رباعية: ${o["غرفة رباعية"]||"-"}<br>
-  ثلاثية: ${o["غرفة ثلاثية"]||"-"}<br>
-  ثنائية: ${o["غرفة ثنائية"]||"-"}
+    جماعية: ${o.group || o["غرفة جماعية"] || "-"}<br>
+    خماسية: ${o.five || o["غرفة خماسية"] || "-"}<br>
+    رباعية: ${o.four || o["غرفة رباعية"] || "-"}<br>
+    ثلاثية: ${o.three || o["غرفة ثلاثية"] || "-"}<br>
+    ثنائية: ${o.two || o["غرفة ثنائية"] || "-"}
   `;
 
   modal.style.display="block";
@@ -181,10 +182,10 @@ function openModal(o){
 
 function closeModal(){modal.style.display="none"}
 
-filterAgency.onchange=filterAirport.onchange=()=>{
+filterAgency.onchange = filterAirport.onchange = ()=>{
   renderOffers(offersData.filter(o=>{
-    if(filterAgency.value && o["اسم الوكالة"]!==filterAgency.value) return false;
-    if(filterAirport.value && o["مطار الإقلاع"]!==filterAirport.value) return false;
+    if(filterAgency.value && (o.agency || o["اسم الوكالة"]) !== filterAgency.value) return false;
+    if(filterAirport.value && (o.airport || o["مطار الإقلاع"]) !== filterAirport.value) return false;
     return true;
   }));
 };
