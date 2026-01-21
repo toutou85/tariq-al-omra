@@ -307,14 +307,37 @@ fState.onchange=render;
 fDate.onchange=render;
 
 function openDetails(o){
-  detailsContent.innerHTML=`
-    <p>🕋 العرض: ${o.offer}</p>
-    <p>🏢 الوكالة: ${o.agency}</p>
-    <p>📍 الولاية: ${o.state}</p>
-    <p>✈️ المطار: ${o.airport}</p>
-    <p>📅 التاريخ: ${formatDate(o.date)}</p>
-    <p>🏨 الفندق: ${o.hotel}</p>
-    <p>💰 السعر: ${o.group} دج</p>
+
+
+detailsContent.innerHTML = `
+  <p>🕋 <strong>اسم العرض:</strong> ${o.offer || "-"}</p>
+
+  <hr>
+
+  <p>🏢 <strong>الوكالة:</strong> ${o.agency || "-"}</p>
+  <p>📍 <strong>الولاية:</strong> ${o.state || "-"}</p>
+  <p>🏙️ <strong>المدينة:</strong> ${o.city || "-"}</p>
+
+  <hr>
+
+  <p>📅 <strong>تاريخ الرحلة:</strong> ${formatDate(o.date)}</p>
+  <p>⏱️ <strong>مدة الرحلة:</strong> ${o.duration || "-"}</p>
+  <p>✈️ <strong>نوع الرحلة:</strong> ${o.flight || "-"}</p>
+  <p>🛫 <strong>مطار الإقلاع:</strong> ${o.airport || "-"}</p>
+
+  <hr>
+
+  <p>🏨 <strong>الفندق:</strong> ${o.hotel || "-"}</p>
+
+  <hr>
+
+  <p>💰 <strong>الأسعار:</strong></p>
+  <p>👥 جماعية: ${o.group || "-"} دج</p>
+  <p>🛏️ خماسية: ${o.five || "-"} دج</p>
+  <p>🛏️ رباعية: ${o.four || "-"} دج</p>
+  <p>🛏️ ثلاثية: ${o.three || "-"} دج</p>
+  <p>🛏️ ثنائية: ${o.two || "-"} دج</p>
+
   `;
   detailsModal.style.display="flex";
 }
