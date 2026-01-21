@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* ===== الأساس ===== */
 body{
   font-family:Tajawal,Arial;
   margin:0;
@@ -20,12 +19,8 @@ body{
 
 /* ===== الهيدر ===== */
 header{
-  height:60px;
-  background:#8b0000;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  padding:0 15px;
+  height:60px;background:#8b0000;color:#fff;
+  display:flex;align-items:center;padding:0 15px
 }
 .menu-btn{font-size:26px;cursor:pointer}
 header h1{flex:1;text-align:center;font-size:18px;margin:0}
@@ -33,15 +28,12 @@ header h1{flex:1;text-align:center;font-size:18px;margin:0}
 /* ===== القائمة ===== */
 #sideMenu{
   position:fixed;top:0;right:-260px;
-  width:260px;height:100%;
-  background:#8b0000;
-  padding-top:70px;
-  transition:.3s;z-index:10000
+  width:260px;height:100%;background:#8b0000;
+  padding-top:70px;transition:.3s;z-index:10000
 }
 #sideMenu a{
-  display:block;padding:14px 18px;
-  color:#fff;text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.15)
+  display:block;padding:14px 18px;color:#fff;
+  text-decoration:none;border-bottom:1px solid rgba(255,255,255,.15)
 }
 #sideMenu a:hover{background:rgba(255,255,255,.15)}
 #overlay{
@@ -51,115 +43,75 @@ header h1{flex:1;text-align:center;font-size:18px;margin:0}
 
 /* ===== المحتوى ===== */
 .container{
-  max-width:1100px;
-  margin:25px auto;
+  max-width:1100px;margin:25px auto;
   background:rgba(255,255,255,.93);
-  padding:20px;
-  border-radius:18px;
+  padding:20px;border-radius:18px
 }
 
-.tabs{
-  display:flex;
-  gap:10px;
-  margin-bottom:15px;
-}
+/* ===== التبويبات ===== */
+.tabs{display:flex;gap:10px;margin-bottom:15px}
 .tabs button{
-  flex:1;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  font-weight:700;
-  cursor:pointer;
-  background:#eee;
+  flex:1;padding:12px;border:none;border-radius:10px;
+  font-weight:700;cursor:pointer;background:#eee
 }
-.tabs button.active{
-  background:#8b0000;
-  color:#fff;
-}
+.tabs button.active{background:#8b0000;color:#fff}
 
-/* ===== الفلاتر العامة ===== */
+/* ===== الفلاتر ===== */
 .filters{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:10px;
-  margin-bottom:15px;
+  gap:10px;margin-bottom:15px
 }
-select{
-  padding:8px;
-  border-radius:8px;
-  border:1px solid #ccc;
+select{padding:8px;border-radius:8px;border:1px solid #ccc}
+
+/* ===== مجموعات المطارات ===== */
+.airport-group{margin-bottom:25px}
+.airport-title{
+  font-weight:800;color:#8b0000;margin-bottom:10px
+}
+.airport-row{
+  display:flex;gap:16px;overflow-x:auto;
+  padding-bottom:10px;scroll-snap-type:x mandatory
+}
+.airport-row::-webkit-scrollbar{height:6px}
+.airport-row::-webkit-scrollbar-thumb{
+  background:#ccc;border-radius:10px
+}
+.airport-row .card{
+  min-width:300px;scroll-snap-align:start
 }
 
-/* ===== بطاقات العروض ===== */
-.offers{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:18px;
-}
-
+/* ===== بطاقة العرض ===== */
 .card{
-  background:#fff;
-  border-radius:16px;
-  padding:16px;
+  background:#fff;border-radius:16px;padding:16px;
   box-shadow:0 8px 25px rgba(0,0,0,.08);
-  transition:.3s;
+  transition:.3s
 }
 .card:hover{transform:translateY(-5px)}
-
-.card-header{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.card-header img{
-  width:48px;height:48px;
-  object-fit:contain;
-}
+.card-header{display:flex;align-items:center;gap:10px}
+.card-header img{width:48px;height:48px;object-fit:contain}
 .card-header strong{font-size:15px}
-
-.card .meta{
-  font-size:13px;
-  margin-top:6px;
-  color:#444;
-}
-
+.meta{font-size:13px;margin-top:6px;color:#444}
 .price{
-  margin-top:10px;
-  background:#f8f4ef;
-  padding:10px;
-  border-radius:10px;
-  text-align:center;
-  font-weight:800;
-  color:#8b0000;
+  margin-top:10px;background:#f8f4ef;padding:10px;
+  border-radius:10px;text-align:center;
+  font-weight:800;color:#8b0000
 }
-
 .card button{
-  width:100%;
-  margin-top:10px;
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  background:#8b0000;
-  color:#fff;
-  cursor:pointer;
+  width:100%;margin-top:10px;padding:10px;
+  border:none;border-radius:10px;
+  background:#8b0000;color:#fff;cursor:pointer
 }
 
 /* ===== نافذة التفاصيل ===== */
 #modal{
-  display:none;
-  position:fixed;
-  inset:0;
+  display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.6);
-  z-index:12000;
-  align-items:center;
-  justify-content:center;
+  z-index:12000;align-items:center;justify-content:center
 }
 #modalBox{
-  background:#fff;
-  max-width:420px;
-  width:92%;
-  padding:20px;
-  border-radius:16px;
+  background:#fff;max-width:420px;width:92%;
+  padding:20px;border-radius:16px
 }
 </style>
 </head>
@@ -188,9 +140,10 @@ select{
 <div class="filters" id="filters" style="display:none">
   <select id="fAgency"><option value="">الوكالة</option></select>
   <select id="fAirport"><option value="">المطار</option></select>
+  <select id="fDate"><option value="">تاريخ الرحلة</option></select>
 </div>
 
-<div class="offers" id="offers">⏳ جارٍ تحميل العروض...</div>
+<div id="offers">⏳ جارٍ تحميل العروض...</div>
 </div>
 
 <!-- نافذة التفاصيل -->
@@ -210,46 +163,93 @@ const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiL
 const phone=localStorage.getItem("umrah_phone");
 let userData=null,offersData=[],currentTab="match",selectedOffer=null;
 
+function formatDate(d){
+  if(!d) return "-";
+  return new Date(d).toLocaleDateString("ar-DZ",{
+    day:"2-digit",month:"long",year:"numeric"
+  });
+}
+
 fetch(SEARCH_API+"?phone="+phone).then(r=>r.json()).then(d=>userData=d);
+
 fetch(OFFERS_API).then(r=>r.json()).then(d=>{
   offersData=d;
+
+  const agencies=new Set(),airports=new Set(),dates=new Set();
+  d.forEach(o=>{
+    if(o.agency) agencies.add(o.agency);
+    if(o.airport) airports.add(o.airport);
+    if(o.date) dates.add(formatDate(o.date));
+  });
+
+  agencies.forEach(v=>fAgency.add(new Option(v,v)));
+  airports.forEach(v=>fAirport.add(new Option(v,v)));
+  dates.forEach(v=>fDate.add(new Option(v,v)));
+
   render();
 });
 
 function score(o){
   let s=0;
-  if(userData?.airport && o.airport?.includes(userData.airport))s+=3;
-  if(userData?.hotel && o.hotel?.includes(userData.hotel))s+=2;
+  if(userData?.airport && o.airport?.includes(userData.airport)) s+=3;
+  if(userData?.hotel && o.hotel?.includes(userData.hotel)) s+=2;
   return s;
 }
 
 function render(){
   let list=[...offersData];
+
   if(currentTab==="match"){
     list.sort((a,b)=>score(b)-score(a));
     filters.style.display="none";
   }else{
     filters.style.display="grid";
+    list=list.filter(o=>{
+      if(fAgency.value && o.agency!==fAgency.value) return false;
+      if(fAirport.value && o.airport!==fAirport.value) return false;
+      if(fDate.value && formatDate(o.date)!==fDate.value) return false;
+      return true;
+    });
   }
 
   offers.innerHTML="";
+  if(!list.length){offers.innerHTML="❌ لا توجد عروض";return;}
+
+  const grouped={};
   list.forEach(o=>{
-    const div=document.createElement("div");
-    div.className="card";
-    div.innerHTML=`
-      <div class="card-header">
-        <img src="${o.logo||''}" onerror="this.style.display='none'">
-        <div>
-          <strong>${o.agency||"-"}</strong><br>
-          <small>${o.state||""}</small>
+    const ap=o.airport||"غير محدد";
+    if(!grouped[ap]) grouped[ap]=[];
+    grouped[ap].push(o);
+  });
+
+  Object.keys(grouped).forEach(ap=>{
+    const g=document.createElement("div");
+    g.className="airport-group";
+    g.innerHTML=`<div class="airport-title">✈️ ${ap}</div>`;
+    const row=document.createElement("div");
+    row.className="airport-row";
+
+    grouped[ap].forEach(o=>{
+      const c=document.createElement("div");
+      c.className="card";
+      c.innerHTML=`
+        <div class="card-header">
+          <img src="${o.logo||''}" onerror="this.style.display='none'">
+          <div>
+            <strong>${o.agency||"-"}</strong><br>
+            <small>${o.state||""}</small>
+          </div>
         </div>
-      </div>
-      <div class="meta">📅 ${o.date||"-"}</div>
-      <div class="meta">✈️ ${o.airport||"-"} | 🏨 ${o.hotel||"-"}</div>
-      <div class="price">💰 جماعية: ${o.group||"-"} دج</div>
-      <button onclick='details(${JSON.stringify(o)})'>تفاصيل العرض</button>
-    `;
-    offers.appendChild(div);
+        <div class="meta">📅 ${formatDate(o.date)}</div>
+        <div class="meta">✈️ ${o.airport||"-"} | 🏨 ${o.hotel||"-"}</div>
+        <div class="price">💰 جماعية: ${o.group||"-"} دج</div>
+        <button onclick='details(${JSON.stringify(o)})'>تفاصيل العرض</button>
+      `;
+      row.appendChild(c);
+    });
+
+    g.appendChild(row);
+    offers.appendChild(g);
   });
 }
 
@@ -259,7 +259,7 @@ function details(o){
   mDetails.innerHTML=`
     🏢 ${o.agency}<br>
     📍 ${o.state||"-"}<br>
-    📅 ${o.date||"-"}<br>
+    📅 ${formatDate(o.date)}<br>
     ✈️ ${o.airport||"-"}<br>
     🏨 ${o.hotel||"-"}<br>
     💰 جماعية: ${o.group||"-"}<br>
@@ -275,13 +275,15 @@ function register(){
   localStorage.setItem("selected_offer",JSON.stringify(selectedOffer));
   location.href="test-adidas4.html";
 }
-
 function switchTab(t){
   currentTab=t;
   tabMatch.classList.toggle("active",t==="match");
   tabAll.classList.toggle("active",t==="all");
   render();
 }
+fAgency.onchange=render;
+fAirport.onchange=render;
+fDate.onchange=render;
 
 function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}
 function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
