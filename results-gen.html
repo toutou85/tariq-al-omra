@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -9,7 +8,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* ===== الأساس ===== */
 body{
   font-family:Tajawal,Arial;
   margin:0;
@@ -19,7 +17,6 @@ body{
     center/cover fixed no-repeat;
 }
 
-/* ===== الهيدر ===== */
 header{
   height:60px;
   background:#8b0000;
@@ -31,7 +28,6 @@ header{
 .menu-btn{font-size:26px;cursor:pointer}
 header h1{flex:1;text-align:center;font-size:18px;margin:0}
 
-/* ===== زر واتساب ===== */
 .whatsapp-top{
   position:fixed;
   top:10px;
@@ -46,10 +42,8 @@ header h1{flex:1;text-align:center;font-size:18px;margin:0}
   justify-content:center;
   font-size:28px;
   z-index:13000;
-  box-shadow:0 6px 20px rgba(0,0,0,.3);
 }
 
-/* ===== القائمة ===== */
 #sideMenu{
   position:fixed;
   top:0;right:-260px;
@@ -64,9 +58,7 @@ header h1{flex:1;text-align:center;font-size:18px;margin:0}
   padding:14px 18px;
   color:#fff;
   text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.15)
 }
-#sideMenu a:hover{background:rgba(255,255,255,.15)}
 #overlay{
   display:none;
   position:fixed;
@@ -75,7 +67,6 @@ header h1{flex:1;text-align:center;font-size:18px;margin:0}
   z-index:9000
 }
 
-/* ===== المحتوى ===== */
 .container{
   max-width:1200px;
   margin:25px auto;
@@ -84,62 +75,32 @@ header h1{flex:1;text-align:center;font-size:18px;margin:0}
   border-radius:20px
 }
 
-/* ===== الفلاتر ===== */
 .filters{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
   gap:10px;
   margin-bottom:20px
 }
-select{
-  padding:8px;
-  border-radius:8px;
-  border:1px solid #ccc
-}
+select{padding:8px;border-radius:8px}
 
-/* ===== مجموعات المطارات ===== */
 .airport-group{margin-bottom:30px}
-.airport-title{
-  font-weight:900;
-  color:#8b0000;
-  margin-bottom:10px
-}
+.airport-title{font-weight:900;color:#8b0000;margin-bottom:10px}
 .airport-row{
   display:flex;
   gap:16px;
   overflow-x:auto;
-  padding-bottom:10px;
-  scroll-snap-type:x mandatory
 }
 
-/* ===== البطاقة ===== */
 .card{
   min-width:300px;
   background:#fff;
   border-radius:18px;
   padding:16px;
   box-shadow:0 8px 25px rgba(0,0,0,.08);
-  scroll-snap-align:start;
 }
-.card-header{
-  display:flex;
-  align-items:center;
-  gap:10px
-}
-.card-header img{
-  width:48px;
-  height:48px;
-  object-fit:contain
-}
-.offer-name{
-  margin-top:8px;
-  font-weight:900;
-  color:#8b0000
-}
-.meta{
-  font-size:13px;
-  margin-top:6px;
-}
+.card-header{display:flex;gap:10px}
+.card-header img{width:48px;height:48px}
+
 .price{
   margin-top:10px;
   background:#f8f4ef;
@@ -149,9 +110,10 @@ select{
   font-weight:800;
   color:#8b0000
 }
+
 .card button{
   width:100%;
-  margin-top:10px;
+  margin-top:8px;
   padding:10px;
   border:none;
   border-radius:10px;
@@ -160,8 +122,7 @@ select{
   cursor:pointer
 }
 
-/* ===== نافذة الطلب ===== */
-#modal{
+#modal,#detailsModal{
   display:none;
   position:fixed;
   inset:0;
@@ -170,181 +131,137 @@ select{
   align-items:center;
   justify-content:center;
 }
+
 .modal-box{
   background:#fff;
   width:90%;
-  max-width:400px;
+  max-width:420px;
   padding:20px;
   border-radius:18px;
-  text-align:center;
+  text-align:right;
 }
-.modal-box input{
-  width:100%;
-  padding:10px;
-  margin:6px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
+.modal-box h3{color:#8b0000}
+.modal-box p{margin:6px 0}
 </style>
 </head>
 
 <body>
 
 <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
-  <i class="fab fa-whatsapp"></i>
+<i class="fab fa-whatsapp"></i>
 </a>
 
 <header>
-  <div class="menu-btn" onclick="openMenu()">☰</div>
-  <h1>🕋 العروض العامة</h1>
+<div class="menu-btn" onclick="openMenu()">☰</div>
+<h1>🕋 العروض العامة</h1>
 </header>
 
 <nav id="sideMenu">
-  <a href="results-gen.html">🕋 العروض العامة</a>
-  <a href="recherche-form.html">📩 طلب عرض عمرة</a>
-  <a href="recherche-n.html">👤 صفحتي الخاصة</a>
+<a href="results-gen.html">🕋 العروض العامة</a>
+<a href="recherche-form.html">📩 طلب عرض عمرة</a>
+<a href="recherche-n.html">👤 صفحتي الخاصة</a>
 </nav>
 <div id="overlay" onclick="closeMenu()"></div>
 
 <div class="container">
-
 <div class="filters">
-  <select id="fAgency"><option value="">🏢 كل الوكالات</option></select>
-  <select id="fState"><option value="">📍 كل الولايات</option></select>
-  <select id="fAirport"><option value="">✈️ كل المطارات</option></select>
-  <select id="fDate"><option value="">📅 كل التواريخ</option></select>
+<select id="fAgency"><option value="">🏢 كل الوكالات</option></select>
+<select id="fState"><option value="">📍 كل الولايات</option></select>
+<select id="fAirport"><option value="">✈️ كل المطارات</option></select>
+<select id="fDate"><option value="">📅 كل التواريخ</option></select>
 </div>
 
 <div id="offers">⏳ جارٍ تحميل العروض...</div>
 </div>
 
-<!-- نافذة الطلب -->
-<div id="modal">
-  <div class="modal-box">
-    <h3>📩 طلب عرض عمرة</h3>
-    <input id="mFirst" placeholder="الاسم">
-    <input id="mLast" placeholder="اللقب">
-    <input id="mPhone" placeholder="رقم الهاتف">
-    <button onclick="sendRequest()">متابعة</button>
-  </div>
+<!-- نافذة تفاصيل العرض -->
+<div id="detailsModal">
+<div class="modal-box">
+<h3>🕋 تفاصيل العرض</h3>
+<div id="detailsContent"></div>
+<button onclick="closeDetails()">إغلاق</button>
+</div>
 </div>
 
 <script>
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
-
-let offersData=[], selectedOffer=null;
+let offersData=[];
 
 function formatDate(d){
-  if(!d) return "-";
-  return new Date(d).toLocaleDateString("ar-DZ",{day:"2-digit",month:"long",year:"numeric"});
+  return d?new Date(d).toLocaleDateString("ar-DZ"):"-";
 }
 
 fetch(OFFERS_API).then(r=>r.json()).then(d=>{
   offersData=d;
-
-  const agencies=new Set(),states=new Set(),airports=new Set(),dates=new Set();
-  d.forEach(o=>{
-    if(o.agency) agencies.add(o.agency);
-    if(o.state) states.add(o.state);
-    if(o.airport) airports.add(o.airport);
-    if(o.date) dates.add(formatDate(o.date));
-  });
-
-  agencies.forEach(v=>fAgency.add(new Option(v,v)));
-  states.forEach(v=>fState.add(new Option(v,v)));
-  airports.forEach(v=>fAirport.add(new Option(v,v)));
-  dates.forEach(v=>fDate.add(new Option(v,v)));
-
   render();
 });
 
 function render(){
-  let list=[...offersData];
-
-  if(fAgency.value) list=list.filter(o=>o.agency===fAgency.value);
-  if(fState.value) list=list.filter(o=>o.state===fState.value);
-  if(fAirport.value) list=list.filter(o=>o.airport===fAirport.value);
-  if(fDate.value) list=list.filter(o=>formatDate(o.date)===fDate.value);
-
   offers.innerHTML="";
-  if(!list.length){
-    offers.innerHTML="❌ لا توجد عروض";
-    return;
-  }
-
   const grouped={};
-  list.forEach(o=>{
+
+  offersData.forEach(o=>{
     const ap=o.airport||"غير محدد";
     if(!grouped[ap]) grouped[ap]=[];
     grouped[ap].push(o);
   });
 
   Object.keys(grouped).forEach(ap=>{
-    const group=document.createElement("div");
-    group.className="airport-group";
-    group.innerHTML=`<div class="airport-title">✈️ ${ap}</div>`;
-
-    const row=document.createElement("div");
-    row.className="airport-row";
+    const g=document.createElement("div");
+    g.className="airport-group";
+    g.innerHTML=`<div class="airport-title">✈️ ${ap}</div>`;
+    const r=document.createElement("div");
+    r.className="airport-row";
 
     grouped[ap].forEach(o=>{
       const c=document.createElement("div");
       c.className="card";
       c.innerHTML=`
-        <div class="card-header">
-          <img src="${o.logo||''}" onerror="this.style.display='none'">
-          <div>
-            <strong>${o.agency||"-"}</strong><br>
-            <small>${o.state||""}</small>
-          </div>
-        </div>
+        <strong>${o.agency}</strong><br>
+        <small>${o.state}</small>
+        <div>📅 ${formatDate(o.date)}</div>
+        <div>🏨 ${o.hotel}</div>
+        <div class="price">💰 ${o.group} دج</div>
 
-        <div class="offer-name">🕋 ${o.offer||"عرض عمرة"}</div>
-        <div class="meta">📅 ${formatDate(o.date)}</div>
-        <div class="meta">✈️ ${o.airport||"-"} | 🏨 ${o.hotel||"-"}</div>
-        <div class="price">💰 جماعية: ${o.group||"-"} دج</div>
-
-        <button onclick='openModal(${JSON.stringify(o)})'>
-          📩 طلب هذا العرض
-        </button>
+        <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ تفاصيل العرض</button>
+        <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة العرض</button>
       `;
-      row.appendChild(c);
+      r.appendChild(c);
     });
 
-    group.appendChild(row);
-    offers.appendChild(group);
+    g.appendChild(r);
+    offers.appendChild(g);
   });
 }
 
-fAgency.onchange=render;
-fState.onchange=render;
-fAirport.onchange=render;
-fDate.onchange=render;
-
-function openModal(o){
-  selectedOffer=o;
-  modal.style.display="flex";
+function openDetails(o){
+  detailsContent.innerHTML=`
+    <p>🏢 الوكالة: ${o.agency}</p>
+    <p>📍 الولاية: ${o.state}</p>
+    <p>✈️ المطار: ${o.airport}</p>
+    <p>📅 التاريخ: ${formatDate(o.date)}</p>
+    <p>🏨 الفندق: ${o.hotel}</p>
+    <p>💰 السعر: ${o.group} دج</p>
+  `;
+  detailsModal.style.display="flex";
 }
 
-function sendRequest(){
-  if(!mFirst.value||!mLast.value||!mPhone.value){
-    alert("يرجى ملء جميع الحقول");
-    return;
+function closeDetails(){
+  detailsModal.style.display="none";
+}
+
+function shareOffer(o){
+  const text=`🕋 عرض عمرة
+🏢 ${o.agency}
+✈️ ${o.airport}
+📅 ${formatDate(o.date)}
+💰 ${o.group} دج`;
+
+  if(navigator.share){
+    navigator.share({text});
+  }else{
+    window.open("https://wa.me/?text="+encodeURIComponent(text));
   }
-
-  sessionStorage.setItem("umrahRequest",JSON.stringify({
-    first:mFirst.value,
-    last:mLast.value,
-    phone:mPhone.value,
-    agency:selectedOffer.agency,
-    state:selectedOffer.state,
-    airport:selectedOffer.airport,
-    date:selectedOffer.date,
-    hotel:selectedOffer.hotel,
-    price:selectedOffer.group
-  }));
-
-  location.href="results-fenal.html";
 }
 
 function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}
