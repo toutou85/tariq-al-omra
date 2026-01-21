@@ -266,19 +266,28 @@ function render(){
       const c=document.createElement("div");
       c.className="card";
       c.innerHTML=`
-        <div class="card-header">
-          <img src="${o.logo||''}" onerror="this.style.display='none'">
-          <div>
-            <strong>${o.offer}</strong><br>
-            <small>${o.agency} – ${o.state}</small>
-          </div>
-        </div>
+        
+  <!-- رأس البطاقة -->
+  <div class="card-header">
+    <img src="${o.logo || ''}" onerror="this.style.display='none'">
+    <div>
+      <strong>${o.offer}</strong><br>
+      <small>${o.agency} – ${o.state}</small>
+    </div>
+  </div>
 
-            <small>📍${o.state||""}</small>
-        <div>📅 ${formatDate(o.date)}</div>
-        <div>🏨 ${o.hotel}</div>
-        <div class="price">💰 ${o.group} دج</div>
+  <!-- معلومات العرض -->
+  <div class="card-info">
+    <div>📅 ${formatDate(o.date)}</div>
+    <div>🏨 ${o.hotel || "-"}</div>
+    <div>⏱️ مدة الرحلة: ${o.duration || "-"}</div>
+    <div>🛫 مسار الرحلة: ${o.route || "-"}</div>
+  </div>
 
+  <!-- السعر -->
+  <div class="price">💰 ${o.group} دج</div>
+
+  <!-- الأزرار -->
         <div class="card-actions">
           <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>
           <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة</button>
