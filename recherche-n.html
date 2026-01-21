@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صفحتي الخاصة</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+  font-family:Tajawal,Arial;
+  margin:0;
+  background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
+    center/cover fixed no-repeat;
+}
+header{
+  height:60px;
+  background:#8b0000;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  padding:0 15px;
+}
+.menu-btn{font-size:26px;cursor:pointer}
+header h1{flex:1;text-align:center;font-size:18px;margin:0}
+
+#sideMenu{
+  position:fixed;
+  top:0;right:-260px;
+  width:260px;height:100%;
+  background:#8b0000;
+  padding-top:70px;
+  transition:.3s;
+  z-index:10000;
+}
+#sideMenu a{
+  display:block;
+  padding:14px 18px;
+  color:#fff;
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.15);
+}
+#sideMenu a:hover{background:rgba(255,255,255,.15)}
+
+#overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:9000;
+}
+
+.container{
+  max-width:520px;
+  background:rgba(255,255,255,.93);
+  margin:30px auto;
+  padding:25px;
+  border-radius:18px;
+  text-align:center;
+}
+h2{color:#8b0000;margin-top:0}
+
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:15px;
+}
+button{
+  background:#8b0000;
+  color:#fff;
+  cursor:pointer;
+}
+
+.welcome{
+  margin-top:20px;
+  background:#f8f4ef;
+  padding:18px;
+  border-radius:14px;
+}
+.welcome strong{color:#8b0000}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:15px;
+}
+.actions button{background:#444}
+.actions button.primary{background:#8b0000}
+
+#popup{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:12000;
+  align-items:center;
+  justify-content:center;
+}
+#popupBox{
+  background:#fff;
+  padding:25px;
+  border-radius:14px;
+  text-align:center;
+  max-width:320px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="menu-btn" onclick="openMenu()">☰</div>
+  <h1>👤 صفحتي الخاصة</h1>
+</header>
+
+<nav id="sideMenu">
+  <a href="results-gen.html">🕋 العروض العامة</a>
+  <a href="recherche-oeffer.html">📩 طلب عرض عمرة</a>
+  <a href="recherche-n.html">👤 صفحتي الخاصة</a>
+</nav>
+<div id="overlay" onclick="closeMenu()"></div>
+
+<div class="container">
+<h2>الدخول إلى صفحتك</h2>
+
+<input type="tel" id="phone" placeholder="أدخل رقم الهاتف">
+<button onclick="check()">🔍 متابعة</button>
+
+<div id="result"></div>
+</div>
+
+<div id="popup">
+  <div id="popupBox">
+    <h3>⏳ يرجى الانتظار</h3>
+    <p>استغفر الله العظيم 🤍</p>
+  </div>
+</div>
+
+<script>
+const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
+
+const phoneInput=document.getElementById("phone");
+const result=document.getElementById("result");
+const popup=document.getElementById("popup");
+
+const urlPhone=new URLSearchParams(location.search).get("phone");
+if(urlPhone) phoneInput.value=urlPhone;
+
+function normalize(p){
+  p=p.replace(/\D/g,"");
+  if(p.startsWith("213"))p=p.slice(3);
+  if(p.startsWith("0"))p=p.slice(1);
+  return p;
+}
+
+function check(){
+  const p=normalize(phoneInput.value);
+  if(!p) return alert("أدخل رقم الهاتف");
+
+  popup.style.display="flex";
+  fetch(SEARCH_API+"?phone="+p)
+  .then(r=>r.json())
+  .then(d=>{
+    popup.style.display="none";
+    if(!d.found){
+      result.innerHTML="❌ لا يوجد طلب بهذا الرقم";
+      return;
+    }
+
+    localStorage.setItem("umrah_phone",p);
+
+    result.innerHTML=`
+      <div class="welcome">
+        مرحبًا بك يا <strong>${d.name}</strong> 🌙<br>
+        نسأل الله أن ييسر لك العمرة
+        <div class="actions">
+          <button class="primary" onclick="go('my')">⭐ العروض المناسبة</button>
+          <button onclick="go('all')">📋 كل العروض</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function go(type){
+  location.href="results.html?view="+type;
+}
+
+function openMenu(){
+  sideMenu.style.right="0";
+  overlay.style.display="block";
+}
+function closeMenu(){
+  sideMenu.style.right="-260px";
+  overlay.style.display="none";
+}
+</script>
+
+</body>
+</html>
