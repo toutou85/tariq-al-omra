@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>متابعة طلب العمرة</title>
+<title>عروض العمرة</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -11,18 +11,19 @@
 body{
   font-family:Tajawal,Arial;
   margin:0;
-  background:#f3f3f3;
+  background:url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
+    center/cover fixed no-repeat;
 }
 
 /* ===== الفلاتر ===== */
 .filters{
-  background:#fff;
-  padding:15px;
-  margin:90px auto 10px;
   max-width:1200px;
-  border-radius:16px;
+  margin:90px auto 10px;
+  background:rgba(255,255,255,.95);
+  padding:15px;
+  border-radius:18px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
   gap:10px;
 }
 .filters select{
@@ -32,73 +33,48 @@ body{
   font-size:14px;
 }
 
-/* ===== المحتوى ===== */
+/* ===== بقية ستايلك كما هو ===== */
 .container{
   max-width:1200px;
   margin:10px auto 20px;
-  background:#fff;
-  padding:20px;
-  border-radius:18px;
+  background:rgba(255,255,255,.92);
+  padding:20px;border-radius:18px;
 }
 
-#pilgrimName{
-  display:none;
-  text-align:center;
-  font-size:22px;
-  font-weight:800;
-  color:#8b0000;
-  margin-bottom:10px;
-}
-#pilgrimDetails{
-  display:none;
-  background:#f8f4ef;
-  padding:15px;
-  border-radius:12px;
-  margin-bottom:25px;
-}
-
-/* ===== العروض ===== */
 .airport-section{margin-bottom:40px}
 .airport-title{
-  font-size:20px;
-  color:#8b0000;
-  font-weight:800;
-  margin-bottom:10px;
+  font-size:20px;color:#8b0000;
+  font-weight:800;margin-bottom:10px
 }
 .slider{
-  display:flex;
-  gap:15px;
-  overflow-x:auto;
+  display:flex;gap:15px;
+  overflow-x:auto;padding-bottom:10px
 }
 .offer-card{
-  min-width:280px;
-  background:#fff;
-  border-radius:16px;
-  padding:14px;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  min-width:300px;
+  background:#fff;border-radius:18px;
+  padding:16px;
+  box-shadow:0 6px 20px rgba(0,0,0,.08)
 }
 .offer-title{
-  font-weight:800;
-  color:#8b0000;
+  font-size:17px;font-weight:800;
+  color:#8b0000;margin-bottom:6px
 }
 .offer-info{
-  font-size:14px;
-  margin-top:6px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:6px;font-size:14px
 }
 .offer-price{
-  margin-top:10px;
-  background:#f8f4ef;
-  padding:8px;
-  border-radius:10px;
-  text-align:center;
-  font-weight:700;
+  margin-top:10px;background:#f8f4ef;
+  padding:10px;border-radius:12px;
+  font-weight:800;text-align:center;color:#8b0000
 }
 </style>
 </head>
 
 <body>
 
-<!-- ===== الفلاتر ===== -->
+<!-- ===== الفلاتر (مضافة فقط) ===== -->
 <div class="filters">
   <select id="fAgency"><option value="">🏢 كل الوكالات</option></select>
   <select id="fDuration"><option value="">⏳ كل المدد</option></select>
@@ -107,8 +83,6 @@ body{
 </div>
 
 <div class="container">
-  <div id="pilgrimName"></div>
-  <div id="pilgrimDetails"></div>
   <div id="offers">⏳ جاري تحميل العروض...</div>
 </div>
 
@@ -126,20 +100,25 @@ fetch(OFFERS_API)
   renderOffers(d);
 });
 
-/* ===== تعبئة الفلاتر ===== */
+/* ===== تعبئة الفلاتر بدون كسر ===== */
 function fillFilters(data){
-  const agency=[...new Set(data.map(o=>o.agency))];
-  const duration=[...new Set(data.map(o=>o.duration))];
-  const state=[...new Set(data.map(o=>o.state))];
-  const date=[...new Set(data.map(o=>o.date))];
+  const uniq=(arr)=>[...new Set(arr.filter(Boolean))];
 
-  agency.forEach(v=>fAgency.innerHTML+=`<option>${v}</option>`);
-  duration.forEach(v=>fDuration.innerHTML+=`<option>${v}</option>`);
-  state.forEach(v=>fState.innerHTML+=`<option>${v}</option>`);
-  date.forEach(v=>fDate.innerHTML+=`<option>${formatDate(v)}</option>`);
+  uniq(data.map(o=>o.agency)).forEach(v=>{
+    fAgency.innerHTML+=`<option>${v}</option>`;
+  });
+  uniq(data.map(o=>o.duration)).forEach(v=>{
+    fDuration.innerHTML+=`<option>${v}</option>`;
+  });
+  uniq(data.map(o=>o.state)).forEach(v=>{
+    fState.innerHTML+=`<option>${v}</option>`;
+  });
+  uniq(data.map(o=>o.date)).forEach(v=>{
+    fDate.innerHTML+=`<option>${formatDate(v)}</option>`;
+  });
 }
 
-/* ===== تفعيل الفلاتر ===== */
+/* ===== تشغيل الفلاتر ===== */
 [fAgency,fDuration,fState,fDate].forEach(el=>{
   el.onchange=applyFilters;
 });
@@ -161,7 +140,7 @@ function applyFilters(){
   renderOffers(filtered);
 }
 
-/* ===== عرض العروض ===== */
+/* ===== نفس renderOffers الأصلي ===== */
 function renderOffers(data){
   offers.innerHTML="";
   if(!data.length){
@@ -187,14 +166,13 @@ function renderOffers(data){
         <div class="offer-card">
           <div class="offer-title">${o.offer}</div>
           <div class="offer-info">
-            📍 ${o.state}<br>
-            ⏳ ${o.duration} يوم<br>
-            📅 ${formatDate(o.date)}<br>
-            🏨 ${o.hotel}
+            <span>📅 ${formatDate(o.date)}</span>
+            <span>⏳ ${o.duration} يوم</span>
+            <span>📍 ${o.state}</span>
+            <span>🏨 ${o.hotel}</span>
           </div>
           <div class="offer-price">💰 ${o.group||"-"} دج</div>
-        </div>
-      `;
+        </div>`;
     });
 
     sec.appendChild(slider);
@@ -202,10 +180,9 @@ function renderOffers(data){
   }
 }
 
-/* ===== تنسيق التاريخ ===== */
 function formatDate(v){
   const d=new Date(v);
-  if(isNaN(d)) return v;
+  if(isNaN(d))return v;
   return d.toLocaleDateString("ar-DZ",{day:"2-digit",month:"long",year:"numeric"});
 }
 </script>
