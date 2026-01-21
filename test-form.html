@@ -17,9 +17,8 @@ body{
 /* واتساب */
 .whatsapp-top{
   position:fixed;top:15px;left:15px;
-  width:55px;height:55px;
-  background:#25D366;color:#fff;
-  border-radius:50%;
+  width:55px;height:55px;background:#25D366;
+  color:#fff;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   font-size:30px;z-index:20000
 }
@@ -34,7 +33,7 @@ body{
   margin:6px 0;border-radius:2px
 }
 
-/* القائمة الجانبية */
+/* القائمة */
 #sideMenu{
   position:fixed;top:0;right:-260px;
   width:260px;height:100%;
@@ -85,10 +84,6 @@ body{
 .slider{
   display:flex;gap:15px;
   overflow-x:auto;padding-bottom:10px
-}
-.slider::-webkit-scrollbar{height:6px}
-.slider::-webkit-scrollbar-thumb{
-  background:#ccc;border-radius:10px
 }
 
 /* البطاقة */
@@ -149,52 +144,31 @@ body{
 
 <body>
 
-<!-- واتساب -->
 <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
 <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- القائمة -->
 <div id="menuBtn"><span></span><span></span><span></span></div>
 <div id="overlay"></div>
 
 <nav id="sideMenu">
   <a href="#" onclick="openTrack()">📋 متابعة طلبي</a>
   <a href="offers.html">🕋 العروض</a>
-  <a href="recherche-oeffer.html">🔎 البحث عن عرض</a>
 </nav>
 
 <div class="container">
 
-<!-- الفلاتر -->
 <div class="filters">
   <select id="fAgency"><option value="">🏢 الوكالة</option></select>
   <select id="fAirport"><option value="">🛫 المطار</option></select>
-  <select id="fMonth">
-    <option value="">📅 الشهر</option>
-    <option value="1">جانفي</option>
-    <option value="2">فيفري</option>
-    <option value="3">مارس</option>
-    <option value="4">أفريل</option>
-  </select>
+  <select id="fMonth"><option value="">📅 الشهر</option></select>
   <select id="fDuration"><option value="">⏳ المدة</option></select>
 </div>
 
 <div id="offers"></div>
 </div>
 
-<!-- نافذة متابعة الطلب -->
-<div class="modal" id="trackModal">
-  <div class="modal-box">
-    <h3>📋 متابعة الطلب</h3>
-    <input id="trackPhone" placeholder="رقم الهاتف" style="width:100%;padding:10px">
-    <button onclick="searchOrder()">🔍 بحث</button>
-    <div id="trackResult"></div>
-    <button onclick="closeTrack()" style="background:#777">إغلاق</button>
-  </div>
-</div>
-
-<!-- نافذة تفاصيل العرض -->
+<!-- نافذة التفاصيل -->
 <div class="modal" id="offerModal">
   <div class="modal-box">
     <img id="m_logo">
@@ -215,13 +189,16 @@ body{
 
 <script>
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
-const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
+
+/* قاعدة صارمة لتاريخ الرحلة */
+function getTripDate(o){
+  return o.tripDate || o.trip_date || o.dateTrip || o.date;
+}
 
 /* القائمة */
 menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
 overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
 
-/* جلب العروض */
 let allData=[];
 fetch(OFFERS_API).then(r=>r.json()).then(d=>{
   allData=d;
@@ -233,9 +210,11 @@ function fillFilters(d){
   [...new Set(d.map(o=>o.agency))].forEach(v=>fAgency.add(new Option(v,v)));
   [...new Set(d.map(o=>o.airport))].forEach(v=>fAirport.add(new Option(v,v)));
   [...new Set(d.map(o=>o.duration))].forEach(v=>fDuration.add(new Option(v,v)));
+  [...new Set(d.map(o=>new Date(getTripDate(o)).getMonth()+1))]
+    .filter(v=>!isNaN(v))
+    .forEach(v=>fMonth.add(new Option(v,v)));
 }
 
-/* عرض حسب المطار */
 function render(data){
   offers.innerHTML="";
   const byAirport={};
@@ -253,6 +232,7 @@ function render(data){
     slider.className="slider";
 
     byAirport[a].forEach(o=>{
+      const tripDate=getTripDate(o);
       const c=document.createElement("div");
       c.className="offer-card";
       c.innerHTML=`
@@ -267,7 +247,7 @@ function render(data){
         <div class="offer-title">🕋 ${o.offer}</div>
 
         <div class="offer-info">
-          <span>📅 ${o.date}</span>
+          <span>📅 ${tripDate}</span>
           <span>⏳ ${o.duration||"—"}</span>
           <span>🛫 ${o.airport||"—"}</span>
           <span>🏨 ${o.hotel||"—"}</span>
@@ -286,26 +266,26 @@ function render(data){
   }
 }
 
-/* الفلاتر */
 [fAgency,fAirport,fDuration,fMonth].forEach(el=>el.onchange=()=>{
   render(allData.filter(o=>{
+    const tripDate=getTripDate(o);
     if(fAgency.value && o.agency!==fAgency.value)return false;
     if(fAirport.value && o.airport!==fAirport.value)return false;
     if(fDuration.value && !o.duration?.includes(fDuration.value))return false;
-    if(fMonth.value && new Date(o.date).getMonth()+1!=fMonth.value)return false;
+    if(fMonth.value && new Date(tripDate).getMonth()+1!=fMonth.value)return false;
     return true;
   }));
 });
 
-/* نافذة التفاصيل */
 function openOffer(o){
+  const tripDate=getTripDate(o);
   m_logo.src=o.logo||"";
   m_offer.innerText=o.offer;
   m_agency.innerText="🏢 الوكالة: "+o.agency;
   m_state.innerText="📍 الولاية: "+o.state;
   m_city.innerText="🏘️ البلدية: "+o.city;
   m_flight.innerText="✈️ نوع الرحلة: "+o.flight;
-  m_date.innerText="📅 تاريخ الرحلة: "+o.date;
+  m_date.innerText="📅 تاريخ الرحلة: "+tripDate;
   m_duration.innerText="⏳ المدة: "+o.duration;
   m_airport.innerText="🛫 مطار الإقلاع: "+o.airport;
   m_hotel.innerText="🏨 الفندق: "+o.hotel;
@@ -319,22 +299,6 @@ function openOffer(o){
   offerModal.style.display="block";
 }
 function closeOffer(){offerModal.style.display="none"}
-
-/* متابعة الطلب */
-function openTrack(){trackModal.style.display="block"}
-function closeTrack(){trackModal.style.display="none"}
-
-function searchOrder(){
-  const p=trackPhone.value.replace(/\D/g,"");
-  trackResult.innerHTML="⏳ جاري البحث...";
-  fetch(SEARCH_API+"?phone="+p)
-  .then(r=>r.json())
-  .then(d=>{
-    trackResult.innerHTML=d.found
-      ? `👤 ${d.name}<br>📌 الحالة: <strong>${d.status}</strong>`
-      : "❌ لا يوجد طلب";
-  });
-}
 </script>
 
 </body>
