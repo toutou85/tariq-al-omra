@@ -14,246 +14,296 @@ body{
   background:#f3f3f3;
 }
 
-/* ===== زر واتساب ===== */
+/* واتساب */
 .whatsapp{
   position:fixed;
-  top:15px;left:15px;
-  width:55px;height:55px;
-  background:#25D366;color:#fff;
+  top:15px;
+  left:15px;
+  width:55px;
+  height:55px;
+  background:#25D366;
+  color:#fff;
   border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;z-index:5000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  z-index:9999;
 }
 
-/* ===== القائمة ===== */
+/* زر القائمة */
 #menuBtn{
-  position:fixed;top:15px;right:15px;
-  width:30px;cursor:pointer;z-index:5001
+  position:fixed;
+  top:15px;
+  right:15px;
+  width:30px;
+  cursor:pointer;
+  z-index:9999;
 }
 #menuBtn span{
-  display:block;height:3px;background:#000;
-  margin:6px 0;border-radius:2px
+  display:block;
+  height:3px;
+  background:#000;
+  margin:6px 0;
+  border-radius:2px;
 }
-#overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.5);z-index:5000
-}
+
+/* القائمة الجانبية */
 #sideMenu{
-  position:fixed;top:0;right:-260px;
-  width:260px;height:100%;
-  background:#8b0000;color:#fff;
-  padding-top:60px;transition:.3s;z-index:5002
+  position:fixed;
+  top:0;
+  right:-260px;
+  width:260px;
+  height:100%;
+  background:#8b0000;
+  color:#fff;
+  padding-top:60px;
+  transition:.3s;
+  z-index:9998;
 }
 #sideMenu a{
-  display:block;padding:15px;color:#fff;
-  text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2)
-}
-
-/* ===== الفلاتر ===== */
-.filters{
-  max-width:1200px;
-  margin:90px auto 10px;
-  background:#fff;
+  display:block;
   padding:15px;
-  border-radius:16px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:10px;
+  color:#fff;
+  text-decoration:none;
+}
+#sideMenu a:hover{
+  background:rgba(255,255,255,.2);
 }
 
-/* ===== المحتوى ===== */
+#overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  z-index:9997;
+}
+
+/* المحتوى */
 .container{
-  max-width:1200px;
-  margin:10px auto 20px;
+  max-width:1100px;
+  margin:90px auto 20px;
   background:#fff;
   padding:20px;
-  border-radius:18px;
-}
-.airport-title{
-  font-size:20px;font-weight:800;
-  color:#8b0000;margin:20px 0 10px
-}
-.slider{
-  display:flex;gap:15px;overflow-x:auto
-}
-.offer-card{
-  min-width:280px;
-  background:#fff;border-radius:16px;
-  padding:14px;
-  box-shadow:0 6px 18px rgba(0,0,0,.08)
-}
-.offer-title{font-weight:800;color:#8b0000}
-.offer-price{
-  margin-top:8px;background:#f8f4ef;
-  padding:8px;border-radius:10px;
-  text-align:center;font-weight:700
-}
-.offer-card button{
-  width:100%;margin-top:6px;
-  padding:8px;border:none;border-radius:8px;
-  background:#8b0000;color:#fff
+  border-radius:16px;
 }
 
-/* ===== النوافذ ===== */
+/* العروض */
+.airport-title{
+  font-size:20px;
+  font-weight:800;
+  color:#8b0000;
+  margin:20px 0 10px;
+}
+.slider{
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+}
+.offer{
+  min-width:260px;
+  background:#fff;
+  border-radius:14px;
+  padding:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+.offer h4{
+  margin:0 0 5px;
+  color:#8b0000;
+}
+.offer small{
+  display:block;
+  color:#555;
+}
+.offer button{
+  width:100%;
+  margin-top:6px;
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  background:#8b0000;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* النوافذ */
 .modal{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.6);z-index:6000
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:10000;
 }
 .modal-box{
-  background:#fff;max-width:420px;width:90%;
-  margin:8% auto;padding:16px;
-  border-radius:18px
+  background:#fff;
+  max-width:420px;
+  width:90%;
+  margin:10% auto;
+  padding:20px;
+  border-radius:16px;
+}
+.modal-box input{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- زر واتساب -->
 <a class="whatsapp" href="https://wa.me/213674141379" target="_blank">
   <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- زر القائمة -->
-<div id="menuBtn"><span></span><span></span><span></span></div>
+<div id="menuBtn">
+  <span></span><span></span><span></span>
+</div>
 <div id="overlay"></div>
 
-<!-- القائمة الجانبية -->
 <nav id="sideMenu">
   <a href="#" onclick="openTrack()">📋 متابعة طلبي</a>
 </nav>
 
-<!-- الفلاتر -->
-<div class="filters">
-  <select id="fAgency"><option value="">🏢 كل الوكالات</option></select>
-  <select id="fDuration"><option value="">⏳ كل المدد</option></select>
-  <select id="fState"><option value="">📍 كل الولايات</option></select>
-  <select id="fDate"><option value="">📅 كل التواريخ</option></select>
-</div>
-
-<!-- العروض -->
 <div class="container">
-  <div id="offers">⏳ تحميل العروض...</div>
+  <div id="offers">⏳ جاري تحميل العروض...</div>
 </div>
 
-<!-- نافذة متابعة الطلب -->
 <div class="modal" id="trackModal">
   <div class="modal-box">
     <h3>📋 متابعة الطلب</h3>
     <input id="trackPhone" placeholder="رقم الهاتف">
     <button onclick="searchOrder()">بحث</button>
-    <div id="clientInfo"></div>
+    <div id="clientInfo" style="margin-top:10px"></div>
   </div>
 </div>
 
-<!-- نافذة تفاصيل العرض -->
 <div class="modal" id="offerModal">
   <div class="modal-box">
-    <h3 id="m_offer"></h3>
-    <p id="m_info"></p>
+    <h3 id="offerTitle"></h3>
+    <p id="offerInfo"></p>
     <button onclick="registerOffer()">📲 تسجيل</button>
-    <button onclick="offerModal.style.display='none'">إغلاق</button>
+    <button onclick="closeOffer()" style="background:#777;margin-top:6px">إغلاق</button>
   </div>
 </div>
 
 <script>
-/* ===== الروابط ===== */
-const OFFERS_API="PUT_OFFERS_API";
-const TRACK_API="PUT_TRACK_API";
-const REGISTER_API="PUT_REGISTER_API";
+const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
+const TRACK_API="https://script.google.com/macros/s/AKfycbwGU0PmJWNazDVIG83ykcgON-C4YdXk7OIsJpSljljotCZLM6wmbZN1VsX-WKIDLcWVAA/exec";
+const REGISTER_API="https://script.google.com/macros/s/AKfycbwGU0PmJWNazDVIG83ykcgON-C4YdXk7OIsJpSljljotCZLM6wmbZN1VsX-WKIDLcWVAA/exec";
 
-/* ===== القائمة ===== */
-menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
-overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
+const menuBtn=document.getElementById("menuBtn");
+const sideMenu=document.getElementById("sideMenu");
+const overlay=document.getElementById("overlay");
+const offersDiv=document.getElementById("offers");
 
-/* ===== المتغيرات ===== */
-let allOffers=[],selectedOffer=null,currentClient=null;
+const trackModal=document.getElementById("trackModal");
+const trackPhone=document.getElementById("trackPhone");
+const clientInfo=document.getElementById("clientInfo");
 
-/* ===== تحميل العروض ===== */
-fetch(OFFERS_API).then(r=>r.json()).then(d=>{
-  allOffers=d;
-  fillFilters(d);
-  renderOffers(d);
-});
+const offerModal=document.getElementById("offerModal");
+const offerTitle=document.getElementById("offerTitle");
+const offerInfo=document.getElementById("offerInfo");
 
-/* ===== الفلاتر ===== */
-function fillFilters(d){
-  const u=a=>[...new Set(a.filter(Boolean))];
-  u(d.map(o=>o.agency)).forEach(v=>fAgency.innerHTML+=`<option>${v}</option>`);
-  u(d.map(o=>o.duration)).forEach(v=>fDuration.innerHTML+=`<option>${v}</option>`);
-  u(d.map(o=>o.state)).forEach(v=>fState.innerHTML+=`<option>${v}</option>`);
-  u(d.map(o=>o.date)).forEach(v=>fDate.innerHTML+=`<option>${v}</option>`);
-}
-[fAgency,fDuration,fState,fDate].forEach(e=>e.onchange=applyFilters);
+let allOffers=[];
+let selectedOffer=null;
+let currentClient=null;
 
-function applyFilters(){
-  renderOffers(allOffers.filter(o=>{
-    if(fAgency.value && o.agency!==fAgency.value)return false;
-    if(fDuration.value && o.duration!==fDuration.value)return false;
-    if(fState.value && o.state!==fState.value)return false;
-    if(fDate.value && o.date!==fDate.value)return false;
-    return true;
-  }));
-}
+menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"};
+overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"};
 
-/* ===== عرض العروض ===== */
+fetch(OFFERS_API)
+.then(r=>r.json())
+.then(data=>{
+  allOffers=data;
+  renderOffers(data);
+})
+.catch(()=>offersDiv.innerText="❌ فشل تحميل العروض");
+
 function renderOffers(data){
-  offers.innerHTML="";
+  offersDiv.innerHTML="";
   const byAirport={};
+
   data.forEach(o=>{
-    byAirport[o.airport]=byAirport[o.airport]||[];
+    if(!byAirport[o.airport]) byAirport[o.airport]=[];
     byAirport[o.airport].push(o);
   });
+
   for(const a in byAirport){
-    offers.innerHTML+=`<div class="airport-title">🛫 ${a}</div>`;
-    const s=document.createElement("div");s.className="slider";
+    const title=document.createElement("div");
+    title.className="airport-title";
+    title.innerText="🛫 "+a;
+    offersDiv.appendChild(title);
+
+    const slider=document.createElement("div");
+    slider.className="slider";
+
     byAirport[a].forEach(o=>{
-      s.innerHTML+=`
-      <div class="offer-card">
-        <div class="offer-title">${o.offer}</div>
-        <div>${o.state} | ${o.duration} يوم</div>
-        <div class="offer-price">${o.group||"-"} دج</div>
-        <button onclick='openOffer(${JSON.stringify(o)})'>تفاصيل</button>
-      </div>`;
+      const card=document.createElement("div");
+      card.className="offer";
+      card.innerHTML=`
+        <h4>${o.offer}</h4>
+        <small>${o.agency}</small>
+        <small>${o.state} | ${o.duration} يوم</small>
+        <button onclick='openOffer(${JSON.stringify(o)})'>تفاصيل العرض</button>
+      `;
+      slider.appendChild(card);
     });
-    offers.appendChild(s);
+
+    offersDiv.appendChild(slider);
   }
 }
 
-/* ===== تفاصيل العرض ===== */
 function openOffer(o){
   selectedOffer=o;
-  m_offer.innerText=o.offer;
-  m_info.innerText=`${o.agency} | ${o.airport} | ${o.duration} يوم`;
+  offerTitle.innerText=o.offer;
+  offerInfo.innerText=o.agency+" | "+o.airport+" | "+o.duration+" يوم";
   offerModal.style.display="block";
 }
 
-/* ===== متابعة الطلب ===== */
+function closeOffer(){
+  offerModal.style.display="none";
+}
+
 function openTrack(){
   trackModal.style.display="block";
   sideMenu.style.right="-260px";
   overlay.style.display="none";
 }
+
 function searchOrder(){
-  fetch(TRACK_API+"?phone="+trackPhone.value)
-  .then(r=>r.json()).then(d=>{
-    if(!d.found)return clientInfo.innerText="❌ لا يوجد طلب";
-    currentClient={name:d.name,phone:trackPhone.value};
-    clientInfo.innerHTML=`👤 ${d.name}<br>📌 ${d.status}`;
+  const phone=trackPhone.value.trim();
+  if(!phone)return alert("أدخل رقم الهاتف");
+
+  fetch(TRACK_API+"?phone="+encodeURIComponent(phone))
+  .then(r=>r.json())
+  .then(d=>{
+    if(!d.found){
+      clientInfo.innerText="❌ لا يوجد طلب بهذا الرقم";
+      return;
+    }
+    currentClient={name:d.name,phone:phone};
+    clientInfo.innerHTML=`👤 ${d.name}<br>📌 الحالة: ${d.status}`;
     trackModal.style.display="none";
   });
 }
 
-/* ===== التسجيل ===== */
 function registerOffer(){
-  if(!currentClient||!selectedOffer)return alert("تابع الطلب واختر عرضاً");
+  if(!currentClient || !selectedOffer){
+    alert("تابع الطلب واختر عرضاً أولاً");
+    return;
+  }
+
   const f=new FormData();
-  f.append("client",currentClient.name);
-  f.append("phone",currentClient.phone);
+  f.append("client_name",currentClient.name);
+  f.append("client_phone",currentClient.phone);
   f.append("offer",selectedOffer.offer);
   f.append("agency",selectedOffer.agency);
+  f.append("airport",selectedOffer.airport);
+  f.append("duration",selectedOffer.duration);
+
   fetch(REGISTER_API,{method:"POST",body:f,mode:"no-cors"})
-  .then(()=>alert("✅ تم إرسال طلب التسجيل"));
+  .then(()=>alert("✅ تم إرسال طلب التسجيل بنجاح"));
 }
 </script>
 
