@@ -3,294 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>العروض العامة للعمرة</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>تم تأكيد طلب العمرة</title>
 
 <style>
 body{
   font-family:Tajawal,Arial;
   margin:0;
+  min-height:100vh;
   background:
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),
     url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
     center/cover fixed no-repeat;
-}
-header{
-  height:60px;
-  background:#8b0000;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  padding:0 15px;
-}
-.menu-btn{font-size:26px;cursor:pointer}
-header h1{flex:1;text-align:center;font-size:18px;margin:0}
-
-.whatsapp-top{
-  position:fixed;
-  top:10px;
-  left:12px;
-  width:48px;
-  height:48px;
-  background:#25D366;
-  color:#fff;
-  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:28px;
-  z-index:13000;
-  box-shadow:0 6px 20px rgba(0,0,0,.3);
 }
 
-#sideMenu{
-  position:fixed;
-  top:0;right:-260px;
-  width:260px;height:100%;
-  background:#8b0000;
-  padding-top:70px;
-  transition:.3s;
-  z-index:10000
-}
-#sideMenu a{
-  display:block;
-  padding:14px 18px;
-  color:#fff;
-  text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.15)
-}
-#sideMenu a:hover{background:rgba(255,255,255,.15)}
-#overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:9000
-}
-
-.container{
-  max-width:1200px;
-  margin:25px auto;
-  background:rgba(255,255,255,.95);
-  padding:20px;
-  border-radius:20px
-}
-
-.filters{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:10px;
-  margin-bottom:20px
-}
-select{
-  padding:8px;
-  border-radius:8px;
-  border:1px solid #ccc
-}
-
-.airport-group{margin-bottom:30px}
-.airport-title{
-  font-weight:900;
-  color:#8b0000;
-  margin-bottom:10px
-}
-.airport-row{
-  display:flex;
-  gap:16px;
-  overflow-x:auto;
-  padding-bottom:10px;
-  scroll-snap-type:x mandatory
-}
-
-.card{
-  min-width:300px;
+.box{
   background:#fff;
-  border-radius:18px;
-  padding:16px;
-  box-shadow:0 8px 25px rgba(0,0,0,.08);
-  scroll-snap-align:start;
-  transition:.3s
-}
-.card:hover{transform:translateY(-6px)}
-
-.card-header{
-  display:flex;
-  align-items:center;
-  gap:10px
-}
-.card-header img{
-  width:48px;
-  height:48px;
-  object-fit:contain
-}
-.card-header strong{font-size:15px}
-
-.offer-name{
-  margin-top:8px;
-  font-weight:900;
-  color:#8b0000
-}
-
-.meta{
-  font-size:13px;
-  margin-top:6px;
-  color:#444
-}
-
-.price{
-  margin-top:10px;
-  background:#f8f4ef;
-  padding:10px;
-  border-radius:10px;
+  width:92%;
+  max-width:520px;
+  border-radius:22px;
+  padding:25px;
+  box-shadow:0 12px 35px rgba(0,0,0,.35);
   text-align:center;
-  font-weight:800;
-  color:#8b0000
 }
 
-.card button{
+h2{
+  color:#8b0000;
+  margin-top:0;
+  font-size:22px;
+}
+
+.success{
+  font-size:50px;
+  margin:10px 0;
+}
+
+.info{
+  text-align:right;
+  font-size:14px;
+  line-height:1.9;
+  margin-top:15px;
+  color:#333;
+}
+
+.info b{color:#8b0000}
+
+.note{
+  margin-top:15px;
+  background:#f7f3ee;
+  padding:12px;
+  border-radius:12px;
+  font-size:13px;
+  color:#444;
+}
+
+button{
+  margin-top:18px;
   width:100%;
-  margin-top:10px;
-  padding:10px;
+  padding:12px;
   border:none;
-  border-radius:10px;
+  border-radius:14px;
   background:#8b0000;
   color:#fff;
-  cursor:pointer
+  font-size:15px;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
-  <i class="fab fa-whatsapp"></i>
-</a>
+<div class="box">
+  <div class="success">✅</div>
+  <h2>تم تسجيل طلبك بنجاح</h2>
 
-<header>
-  <div class="menu-btn" onclick="openMenu()">☰</div>
-  <h1>🕋 العروض العامة</h1>
-</header>
+  <div id="details" class="info">
+    ⏳ جارٍ تحميل البيانات...
+  </div>
 
-<nav id="sideMenu">
-  <a href="results-gen.html">🕋 العروض العامة</a>
-  <a href="recherche-oeffer.html">📩 طلب عرض عمرة</a>
-  <a href="recherche-n.html">👤 صفحتي الخاصة</a>
-</nav>
-<div id="overlay" onclick="closeMenu()"></div>
+  <div class="note">
+    📩 سيتم التواصل معك قريبًا من طرف الوكالة  
+    <br>
+    ❗ يرجى الاحتفاظ برقم هاتفك مفتوحًا
+  </div>
 
-<div class="container">
-
-<div class="filters">
-  <select id="fAgency"><option value="">🏢 كل الوكالات</option></select>
-  <select id="fState"><option value="">📍 كل الولايات</option></select>
-  <select id="fAirport"><option value="">✈️ كل المطارات</option></select>
-  <select id="fDate"><option value="">📅 كل التواريخ</option></select>
-</div>
-
-<div id="offers">⏳ جارٍ تحميل العروض...</div>
+  <button onclick="goHome()">🏠 العودة للرئيسية</button>
 </div>
 
 <script>
-const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
+const data = JSON.parse(sessionStorage.getItem("umrahRequest"));
 
-function formatDate(d){
-  if(!d) return "-";
-  return new Date(d).toLocaleDateString("ar-DZ",{
-    day:"2-digit",month:"long",year:"numeric"
-  });
+const box = document.getElementById("details");
+
+if(!data){
+  box.innerHTML = "❌ لا توجد بيانات لعرضها";
+}else{
+  box.innerHTML = `
+    <b>👤 الاسم:</b> ${data.first} ${data.last}<br>
+    <b>📞 الهاتف:</b> ${data.phone}<br>
+    <b>🏢 الوكالة:</b> ${data.agency || "-"}<br>
+    <b>📍 الولاية:</b> ${data.state || "-"}<br>
+    <b>✈️ المطار:</b> ${data.airport || "-"}<br>
+    <b>📅 تاريخ الرحلة:</b> ${data.date || "-"}<br>
+    <b>🕋 العرض:</b> ${data.offer || "-"}<br>
+    <b>💰 السعر:</b> ${data.price || "-"} دج
+  `;
 }
 
-let offersData=[];
+// تنظيف البيانات بعد العرض
+sessionStorage.removeItem("umrahRequest");
 
-fetch(OFFERS_API).then(r=>r.json()).then(d=>{
-  offersData=d;
-
-  const agencies=new Set(),states=new Set(),airports=new Set(),dates=new Set();
-  d.forEach(o=>{
-    if(o.agency) agencies.add(o.agency);
-    if(o.state) states.add(o.state);
-    if(o.airport) airports.add(o.airport);
-    if(o.date) dates.add(formatDate(o.date));
-  });
-
-  agencies.forEach(v=>fAgency.add(new Option(v,v)));
-  states.forEach(v=>fState.add(new Option(v,v)));
-  airports.forEach(v=>fAirport.add(new Option(v,v)));
-  dates.forEach(v=>fDate.add(new Option(v,v)));
-
-  render();
-});
-
-function render(){
-  let list=[...offersData];
-
-  if(fAgency.value) list=list.filter(o=>o.agency===fAgency.value);
-  if(fState.value) list=list.filter(o=>o.state===fState.value);
-  if(fAirport.value) list=list.filter(o=>o.airport===fAirport.value);
-  if(fDate.value) list=list.filter(o=>formatDate(o.date)===fDate.value);
-
-  offers.innerHTML="";
-  if(!list.length){
-    offers.innerHTML="❌ لا توجد عروض";
-    return;
-  }
-
-  const grouped={};
-  list.forEach(o=>{
-    const ap=o.airport||"غير محدد";
-    if(!grouped[ap]) grouped[ap]=[];
-    grouped[ap].push(o);
-  });
-
-  Object.keys(grouped).forEach(ap=>{
-    const group=document.createElement("div");
-    group.className="airport-group";
-    group.innerHTML=`<div class="airport-title">✈️ ${ap}</div>`;
-
-    const row=document.createElement("div");
-    row.className="airport-row";
-
-    grouped[ap].forEach(o=>{
-      const c=document.createElement("div");
-      c.className="card";
-      c.innerHTML=`
-        <div class="card-header">
-          <img src="${o.logo||''}" onerror="this.style.display='none'">
-          <div>
-            <strong>${o.agency||"-"}</strong><br>
-            <small>${o.state||""}</small>
-          </div>
-        </div>
-
-        <div class="offer-name">🕋 ${o.offer||"عرض عمرة"}</div>
-
-        <div class="meta">📅 ${formatDate(o.date)}</div>
-        <div class="meta">✈️ ${o.airport||"-"} | 🏨 ${o.hotel||"-"}</div>
-
-        <div class="price">💰 جماعية: ${o.group||"-"} دج</div>
-
-        <button onclick="goRequest()">📩 طلب هذا العرض</button>
-      `;
-      row.appendChild(c);
-    });
-
-    group.appendChild(row);
-    offers.appendChild(group);
-  });
+function goHome(){
+  location.href="index.html";
 }
-
-fAgency.onchange=render;
-fState.onchange=render;
-fAirport.onchange=render;
-fDate.onchange=render;
-
-function goRequest(){
-  location.href="recherche-oeffer.html";
-}
-
-function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}
-function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 </script>
 
 </body>
