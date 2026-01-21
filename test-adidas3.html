@@ -3,81 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>العروض المناسبة لك</title>
+<title>عروض العمرة</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+/* ===== الأساس ===== */
 body{
   font-family:Tajawal,Arial;
-  background:#f5f5f5;
   margin:0;
+  background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
+    center/cover fixed no-repeat;
 }
-.container{
-  max-width:700px;
-  margin:20px auto;
-  background:#fff;
-  padding:20px;
-  border-radius:14px;
-}
-h2{text-align:center;color:#8b0000}
-.offer{
-  border:1px solid #eee;
-  border-radius:14px;
-  padding:15px;
-  margin-top:15px;
-  box-shadow:0 6px 20px rgba(0,0,0,.05);
-}
-.offer h3{color:#8b0000;margin:5px 0}
-.offer .meta{font-size:14px;color:#555;margin-top:6px}
-.offer button{
-  width:100%;
-  margin-top:12px;
-  padding:10px;
-  border:none;
-  border-radius:8px;
+
+/* ===== الهيدر ===== */
+header{
+  height:60px;
   background:#8b0000;
   color:#fff;
-  font-size:15px;
-  cursor:pointer;
+  display:flex;
+  align-items:center;
+  padding:0 15px;
 }
-.match{
-  background:#f8f4ef;
-  padding:6px 10px;
+.menu-btn{font-size:26px;cursor:pointer}
+header h1{flex:1;text-align:center;font-size:18px;margin:0}
+
+/* ===== القائمة ===== */
+#sideMenu{
+  position:fixed;top:0;right:-260px;
+  width:260px;height:100%;
+  background:#8b0000;
+  padding-top:70px;
+  transition:.3s;z-index:10000
+}
+#sideMenu a{
+  display:block;padding:14px 18px;
+  color:#fff;text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.15)
+}
+#sideMenu a:hover{background:rgba(255,255,255,.15)}
+#overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.6);z-index:9000
+}
+
+/* ===== المحتوى ===== */
+.container{
+  max-width:1100px;
+  margin:25px auto;
+  background:rgba(255,255,255,.93);
+  padding:20px;
+  border-radius:18px;
+}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+.tabs button{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  background:#eee;
+}
+.tabs button.active{
+  background:#8b0000;
+  color:#fff;
+}
+
+/* ===== الفلاتر العامة ===== */
+.filters{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:10px;
+  margin-bottom:15px;
+}
+select{
+  padding:8px;
   border-radius:8px;
+  border:1px solid #ccc;
+}
+
+/* ===== بطاقات العروض ===== */
+.offers{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:18px;
+}
+
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:16px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+  transition:.3s;
+}
+.card:hover{transform:translateY(-5px)}
+
+.card-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.card-header img{
+  width:48px;height:48px;
+  object-fit:contain;
+}
+.card-header strong{font-size:15px}
+
+.card .meta{
   font-size:13px;
   margin-top:6px;
   color:#444;
 }
-#popup{
+
+.price{
+  margin-top:10px;
+  background:#f8f4ef;
+  padding:10px;
+  border-radius:10px;
+  text-align:center;
+  font-weight:800;
+  color:#8b0000;
+}
+
+.card button{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#8b0000;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* ===== نافذة التفاصيل ===== */
+#modal{
   display:none;
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.6);
-  z-index:9999;
+  z-index:12000;
   align-items:center;
   justify-content:center;
 }
-#popupBox{
+#modalBox{
   background:#fff;
-  padding:25px;
-  border-radius:12px;
-  text-align:center;
-  max-width:320px;
+  max-width:420px;
+  width:92%;
+  padding:20px;
+  border-radius:16px;
 }
 </style>
 </head>
 
 <body>
 
+<header>
+  <div class="menu-btn" onclick="openMenu()">☰</div>
+  <h1>🕋 عروض العمرة</h1>
+</header>
+
+<nav id="sideMenu">
+  <a href="index.html">🕋 العروض العامة</a>
+  <a href="test-adidas1.html">📩 طلب عرض عمرة</a>
+  <a href="test-adidas2.html">👤 صفحتي الخاصة</a>
+</nav>
+<div id="overlay" onclick="closeMenu()"></div>
+
 <div class="container">
-<h2>🕋 العروض المناسبة لك</h2>
-<div id="offers">⏳ جارٍ تحميل العروض...</div>
+
+<div class="tabs">
+  <button id="tabMatch" class="active" onclick="switchTab('match')">⭐ العروض المناسبة</button>
+  <button id="tabAll" onclick="switchTab('all')">📋 كل العروض</button>
 </div>
 
-<!-- نافذة الذكر -->
-<div id="popup">
-  <div id="popupBox">
-    <h3>⏳ يرجى الانتظار</h3>
-    <p>استغفر الله العظيم 🤍</p>
+<div class="filters" id="filters" style="display:none">
+  <select id="fAgency"><option value="">الوكالة</option></select>
+  <select id="fAirport"><option value="">المطار</option></select>
+</div>
+
+<div class="offers" id="offers">⏳ جارٍ تحميل العروض...</div>
+</div>
+
+<!-- نافذة التفاصيل -->
+<div id="modal">
+  <div id="modalBox">
+    <h3 id="mTitle"></h3>
+    <p id="mDetails"></p>
+    <button onclick="register()">📩 التسجيل في العرض</button>
+    <button onclick="closeModal()" style="background:#777">إغلاق</button>
   </div>
 </div>
 
@@ -85,72 +207,84 @@ h2{text-align:center;color:#8b0000}
 const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
 
-const phone = localStorage.getItem("umrah_phone");
-const offersBox = document.getElementById("offers");
-const popup = document.getElementById("popup");
+const phone=localStorage.getItem("umrah_phone");
+let userData=null,offersData=[],currentTab="match",selectedOffer=null;
 
-if(!phone){
-  location.href="test-adidas2.html";
-}
-
-popup.style.display="flex";
-
-Promise.all([
-  fetch(SEARCH_API+"?phone="+phone).then(r=>r.json()),
-  fetch(OFFERS_API).then(r=>r.json())
-]).then(([user,offers])=>{
-  popup.style.display="none";
-  if(!user.found){
-    offersBox.innerHTML="❌ لا توجد بيانات";
-    return;
-  }
-  render(matchOffers(user,offers));
+fetch(SEARCH_API+"?phone="+phone).then(r=>r.json()).then(d=>userData=d);
+fetch(OFFERS_API).then(r=>r.json()).then(d=>{
+  offersData=d;
+  render();
 });
 
-function matchOffers(user,offers){
-  return offers.map(o=>{
-    let score=0;
-    let reasons=[];
-
-    if(o.airport && user.airport && o.airport.includes(user.airport)){
-      score+=3; reasons.push("✈️ مطار مناسب");
-    }
-    if(o.hotel && user.hotel && o.hotel.includes(user.hotel)){
-      score+=2; reasons.push("🏨 فندق مناسب");
-    }
-    if(o.duration && user.duration && o.duration.includes(user.duration)){
-      score+=1; reasons.push("⏳ مدة قريبة");
-    }
-
-    return {...o,score,reasons};
-  }).sort((a,b)=>b.score-a.score);
+function score(o){
+  let s=0;
+  if(userData?.airport && o.airport?.includes(userData.airport))s+=3;
+  if(userData?.hotel && o.hotel?.includes(userData.hotel))s+=2;
+  return s;
 }
 
-function render(list){
-  offersBox.innerHTML="";
-  if(!list.length){
-    offersBox.innerHTML="❌ لا توجد عروض";
-    return;
+function render(){
+  let list=[...offersData];
+  if(currentTab==="match"){
+    list.sort((a,b)=>score(b)-score(a));
+    filters.style.display="none";
+  }else{
+    filters.style.display="grid";
   }
+
+  offers.innerHTML="";
   list.forEach(o=>{
     const div=document.createElement("div");
-    div.className="offer";
+    div.className="card";
     div.innerHTML=`
-      <h3>${o.offer||"عرض عمرة"}</h3>
-      <div class="meta">🏢 ${o.agency||"-"}</div>
+      <div class="card-header">
+        <img src="${o.logo||''}" onerror="this.style.display='none'">
+        <div>
+          <strong>${o.agency||"-"}</strong><br>
+          <small>${o.state||""}</small>
+        </div>
+      </div>
+      <div class="meta">📅 ${o.date||"-"}</div>
       <div class="meta">✈️ ${o.airport||"-"} | 🏨 ${o.hotel||"-"}</div>
-      <div class="meta">⏳ ${o.duration||"-"} | 📅 ${o.date||"-"}</div>
-      ${o.reasons.length?`<div class="match">${o.reasons.join(" • ")}</div>`:""}
-      <button onclick='selectOffer(${JSON.stringify(o)})'>سجل في هذا العرض</button>
+      <div class="price">💰 جماعية: ${o.group||"-"} دج</div>
+      <button onclick='details(${JSON.stringify(o)})'>تفاصيل العرض</button>
     `;
-    offersBox.appendChild(div);
+    offers.appendChild(div);
   });
 }
 
-function selectOffer(o){
-  localStorage.setItem("selected_offer",JSON.stringify(o));
+function details(o){
+  selectedOffer=o;
+  mTitle.innerText=o.offer||"تفاصيل العرض";
+  mDetails.innerHTML=`
+    🏢 ${o.agency}<br>
+    📍 ${o.state||"-"}<br>
+    📅 ${o.date||"-"}<br>
+    ✈️ ${o.airport||"-"}<br>
+    🏨 ${o.hotel||"-"}<br>
+    💰 جماعية: ${o.group||"-"}<br>
+    💰 خماسية: ${o.five||"-"}<br>
+    💰 رباعية: ${o.four||"-"}<br>
+    💰 ثلاثية: ${o.three||"-"}<br>
+    💰 ثنائية: ${o.two||"-"}
+  `;
+  modal.style.display="flex";
+}
+function closeModal(){modal.style.display="none"}
+function register(){
+  localStorage.setItem("selected_offer",JSON.stringify(selectedOffer));
   location.href="test-adidas4.html";
 }
+
+function switchTab(t){
+  currentTab=t;
+  tabMatch.classList.toggle("active",t==="match");
+  tabAll.classList.toggle("active",t==="all");
+  render();
+}
+
+function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}
+function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 </script>
 
 </body>
