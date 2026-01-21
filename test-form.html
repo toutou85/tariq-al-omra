@@ -80,19 +80,38 @@ body{
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
 const TRACK_API="https://script.google.com/macros/s/AKfycby_IBGmSV8Z9YboH15QsB4lSWL1FyC6lrVLtUId1xbuIdT5zp1Zz2zbqtrdNxZLTwQgfg/exec";
 
-menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
-overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
+/* ===== القائمة والنوافذ ===== */
+menuBtn.onclick=()=>{
+  sideMenu.style.right="0";
+  overlay.style.display="block";
+};
+
+overlay.onclick=closeAll;
+
 document.querySelectorAll(".modal").forEach(m=>{
-  m.onclick=e=>{if(e.target===m)m.style.display="none"}
+  m.onclick=e=>{
+    if(e.target===m) closeAll();
+  };
 });
+
+function closeAll(){
+  overlay.style.display="none";
+  sideMenu.style.right="-260px";
+  document.querySelectorAll(".modal").forEach(m=>m.style.display="none");
+}
 
 function openTrack(){
   trackModal.style.display="block";
+  overlay.style.display="block";
   sideMenu.style.right="-260px";
+}
+
+function closeModal(id){
+  document.getElementById(id).style.display="none";
   overlay.style.display="none";
 }
-function closeModal(id){document.getElementById(id).style.display="none"}
 
+/* ===== أدوات ===== */
 function formatDate(v){
   const d=new Date(v);
   return isNaN(d)?v:d.toLocaleDateString("ar-DZ",{day:"2-digit",month:"long",year:"numeric"});
@@ -101,38 +120,20 @@ function formatDate(v){
 let allOffers=[];
 let currentOffers=[];
 
-/* ================== جلب العروض ================== */
-fetch(OFFERS_API).then(r=>r.json()).then(d=>{
+/* ===== جلب العروض ===== */
+fetch(OFFERS_API)
+.then(r=>r.json())
+.then(d=>{
   allOffers=d;
   currentOffers=d;
-  buildFilters(d);
   renderOffers(d);
 });
 
-/* ================== الفلاتر ================== */
-function buildFilters(data){
-  const uniq=(k)=>[...new Set(data.map(o=>o[k]).filter(Boolean))];
-  uniq("agency").forEach(v=>fAgency.innerHTML+=`<option>${v}</option>`);
-  uniq("state").forEach(v=>fState.innerHTML+=`<option>${v}</option>`);
-  uniq("duration").forEach(v=>fDuration.innerHTML+=`<option>${v}</option>`);
-  uniq("date").forEach(v=>fDate.innerHTML+=`<option value="${v}">${formatDate(v)}</option>`);
-
-  document.querySelectorAll(".filters select").forEach(s=>s.onchange=applyFilters);
-}
-
-function applyFilters(){
-  let d=[...currentOffers];
-  if(fAgency.value) d=d.filter(o=>o.agency===fAgency.value);
-  if(fState.value) d=d.filter(o=>o.state===fState.value);
-  if(fDuration.value) d=d.filter(o=>String(o.duration)===fDuration.value);
-  if(fDate.value) d=d.filter(o=>o.date===fDate.value);
-  renderOffers(d);
-}
-
-/* ================== عرض العروض ================== */
+/* ===== عرض العروض ===== */
 function renderOffers(data){
   offers.innerHTML="";
   const byAirport={};
+
   data.forEach(o=>{
     byAirport[o.airport]=byAirport[o.airport]||[];
     byAirport[o.airport].push(o);
@@ -142,6 +143,7 @@ function renderOffers(data){
     const sec=document.createElement("div");
     sec.className="airport-section";
     sec.innerHTML=`<div class="airport-title">🛫 ${a}</div>`;
+
     const slider=document.createElement("div");
     slider.className="slider";
 
@@ -170,39 +172,60 @@ function renderOffers(data){
   }
 }
 
-/* ================== تفاصيل العرض ================== */
+/* ===== تفاصيل العرض (كاملة) ===== */
 function showDetails(o){
-  detailsContent.innerHTML=`
-    <strong>${o.offer}</strong><br><br>
-    🏢 الوكالة: ${o.agency}<br>
-    📍 الولاية: ${o.state}<br>
-    🛫 المطار: ${o.airport}<br>
-    📅 الانطلاق: ${formatDate(o.date)}<br>
-    ⏳ المدة: ${o.duration} يوم<br>
-    🏨 الفندق: ${o.hotel}<br>
-    💰 السعر: ${o.group} دج
-  `;
+  let html=`<strong>${o.offer}</strong><hr style="margin:10px 0">`;
+
+  const labels={
+    agency:"🏢 الوكالة",
+    state:"📍 الولاية",
+    airport:"🛫 المطار",
+    date:"📅 تاريخ الانطلاق",
+    duration:"⏳ المدة",
+    hotel:"🏨 الفندق",
+    group:"💰 السعر"
+  };
+
+  for(const k in o){
+    if(!o[k]) continue;
+    if(k==="date"){
+      html+=`${labels[k]||k}: ${formatDate(o[k])}<br>`;
+    }else if(labels[k]){
+      html+=`${labels[k]}: ${o[k]}<br>`;
+    }
+  }
+
+  detailsContent.innerHTML=html;
   detailsModal.style.display="block";
+  overlay.style.display="block";
 }
 
-/* ================== التسجيل ================== */
+/* ===== التسجيل ===== */
 function registerOffer(o){
   registerContent.innerHTML=`
     <strong>${o.offer}</strong><br><br>
-    سيتم تحويلك لإتمام التسجيل<br><br>
-    <a href="form.html?offer=${encodeURIComponent(o.offer)}
-    &agency=${encodeURIComponent(o.agency)}
-    &airport=${encodeURIComponent(o.airport)}
-    &date=${encodeURIComponent(o.date)}
-    &duration=${encodeURIComponent(o.duration)}
-    &price=${encodeURIComponent(o.group)}">
-    👉 إتمام التسجيل
+    🏢 ${o.agency}<br>
+    🛫 ${o.airport}<br>
+    📅 ${formatDate(o.date)}<br>
+    ⏳ ${o.duration} يوم<br>
+    💰 ${o.group} دج<br><br>
+
+    <a href="form.html
+      ?offer=${encodeURIComponent(o.offer)}
+      &agency=${encodeURIComponent(o.agency)}
+      &airport=${encodeURIComponent(o.airport)}
+      &state=${encodeURIComponent(o.state)}
+      &date=${encodeURIComponent(o.date)}
+      &duration=${encodeURIComponent(o.duration)}
+      &price=${encodeURIComponent(o.group)}">
+      👉 إتمام التسجيل
     </a>
   `;
   registerModal.style.display="block";
+  overlay.style.display="block";
 }
 
-/* ================== البحث حسب الزبون ================== */
+/* ===== البحث حسب الزبون ===== */
 function searchOrder(){
   const phone=trackPhone.value.trim();
   if(!phone){alert("أدخل رقم الهاتف");return;}
@@ -212,7 +235,11 @@ function searchOrder(){
   .then(d=>{
     if(!d.found){alert("لا يوجد طلب");return;}
 
-    trackModal.style.display="none";
+    /* إغلاق النافذة نهائيًا */
+    closeAll();
+
+    /* إخفاء الفلاتر */
+    document.querySelector(".filters").style.display="none";
 
     pilgrimName.innerText="مرحبا 👋 "+d.name;
     pilgrimName.style.display="block";
