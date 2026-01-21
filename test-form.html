@@ -247,7 +247,7 @@ function render(data){
         <div class="offer-title">🕋 ${o.offer}</div>
 
         <div class="offer-info">
-          <span>📅 ${tripDate}</span>
+          <span>📅 ${formatTripDate(tripDate)}</span>
           <span>⏳ ${o.duration||"—"}</span>
           <span>🛫 ${o.airport||"—"}</span>
           <span>🏨 ${o.hotel||"—"}</span>
@@ -299,6 +299,31 @@ function openOffer(o){
   offerModal.style.display="block";
 }
 function closeOffer(){offerModal.style.display="none"}
+function formatTripDate(value){
+  if(!value) return "—";
+
+  // إذا كان نص ISO
+  if(typeof value === "string" && value.includes("T")){
+    const d = new Date(value);
+    return d.toLocaleDateString("ar-DZ", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    });
+  }
+
+  // إذا كان Date Object
+  if(value instanceof Date){
+    return value.toLocaleDateString("ar-DZ", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    });
+  }
+
+  // إذا كان نص عادي
+  return value;
+}
 </script>
 
 </body>
