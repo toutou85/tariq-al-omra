@@ -8,86 +8,104 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body{
-  font-family:Tajawal,Arial;
-  margin:0;
-  background:#f4f4f4;
+:root{
+  --main:#8b0000;
+  --bg:#f4f4f4;
 }
 
-/* زر واتساب */
-.whatsapp-top{
-  position:fixed;top:15px;left:15px;
-  width:55px;height:55px;background:#25D366;
-  color:#fff;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;z-index:10000
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Tajawal,Arial;
+  background:var(--bg);
+}
+
+/* واتساب */
+.whatsapp{
+  position:fixed;
+  left:15px;top:15px;
+  width:55px;height:55px;
+  background:#25D366;
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  z-index:2000
 }
 
 /* زر القائمة */
-#menuBtn{
+.menu-btn{
   position:fixed;
-  top:20px;
-  right:15px;
+  right:15px;top:20px;
   width:30px;
   cursor:pointer;
-  z-index:10001;
+  z-index:2001
 }
-#menuBtn span{
+.menu-btn span{
   display:block;
   height:3px;
   background:#000;
   margin:6px 0;
-  border-radius:2px;
 }
 
 /* القائمة الجانبية */
-#sideMenu{
+.side-menu{
   position:fixed;
-  top:0;
-  right:-270px;
-  width:270px;
-  height:100%;
-  background:#8b0000;
+  top:0;right:-260px;
+  width:260px;height:100%;
+  background:var(--main);
   color:#fff;
   padding-top:70px;
-  transition:0.3s ease;
-  z-index:10002;
+  transition:.3s;
+  z-index:2002
 }
-#sideMenu a{
+.side-menu a{
   display:block;
   padding:15px;
   color:#fff;
   text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.2);
+  border-bottom:1px solid rgba(255,255,255,.2)
 }
-#sideMenu a:hover{
-  background:rgba(255,255,255,.15);
-}
+.side-menu a:hover{background:rgba(255,255,255,.15)}
 
-/* الخلفية */
-#overlay{
+.overlay{
   display:none;
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.5);
-  z-index:10000;
+  z-index:2000
 }
 
 /* المحتوى */
-.container{max-width:1200px;margin:auto;padding:15px}
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:90px 15px 20px
+}
 
-/* فلاتر */
+/* الفلاتر */
 .filters{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:10px;
-  margin:70px 0 15px;
+  margin-bottom:20px
 }
-select{padding:10px;border-radius:8px}
+.filters select{
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ccc
+}
 
-/* السلايدر */
+/* أقسام المطارات */
 .airport-section{margin-bottom:30px}
-.airport-title{font-size:20px;margin:10px 0;color:#8b0000}
+.airport-title{
+  font-size:20px;
+  margin-bottom:10px;
+  color:var(--main)
+}
 .slider{
   display:flex;
   gap:15px;
@@ -95,41 +113,45 @@ select{padding:10px;border-radius:8px}
   padding-bottom:10px
 }
 
-/* بطاقة */
-.offer-card{
+/* بطاقة العرض */
+.offer{
   min-width:260px;
   background:#fff;
   border-radius:16px;
   padding:15px;
   box-shadow:0 5px 15px rgba(0,0,0,.1)
 }
-.offer-logo{width:50px;height:50px;object-fit:contain}
-.offer-title{font-weight:800;margin:8px 0}
-.offer-price{color:#8b0000;font-weight:800}
-.offer-card button{
+.offer img{
+  width:50px;height:50px;
+  object-fit:contain
+}
+.offer h4{margin:8px 0}
+.price{color:var(--main);font-weight:800}
+
+.offer button{
   width:100%;
   margin-top:6px;
   padding:8px;
   border:none;
   border-radius:8px;
-  background:#8b0000;
+  background:var(--main);
   color:#fff;
   cursor:pointer
 }
 
-/* نافذة */
-#modal{
+/* النافذة */
+.modal{
   display:none;
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.6);
-  z-index:10003
+  z-index:3000
 }
-#modalBox{
+.modal-box{
   background:#fff;
-  max-width:400px;
+  max-width:420px;
   width:90%;
-  margin:8% auto;
+  margin:6% auto;
   padding:16px;
   border-radius:16px;
   max-height:80vh;
@@ -141,25 +163,24 @@ select{padding:10px;border-radius:8px}
 <body>
 
 <!-- واتساب -->
-<a class="whatsapp-top" href="https://wa.me/213674141379" target="_blank">
+<a href="https://wa.me/213674141379" target="_blank" class="whatsapp">
 <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- زر القائمة -->
-<div id="menuBtn" onclick="openMenu()">
+<!-- القائمة -->
+<div class="menu-btn" onclick="openMenu()">
   <span></span><span></span><span></span>
 </div>
-
-<div id="overlay" onclick="closeMenu()"></div>
-
-<nav id="sideMenu">
-  <a href="#" onclick="closeMenu()">🏠 الرئيسية</a>
-  <a href="#" onclick="closeMenu()">🕋 العروض</a>
-  <a href="#" onclick="closeMenu()">☎️ اتصل بنا</a>
+<div class="overlay" onclick="closeMenu()"></div>
+<nav class="side-menu" id="sideMenu">
+  <a href="#" onclick="closeMenu()">الرئيسية</a>
+  <a href="#" onclick="closeMenu()">العروض</a>
+  <a href="#" onclick="closeMenu()">اتصل بنا</a>
 </nav>
 
 <div class="container">
 
+<!-- الفلاتر -->
 <div class="filters">
   <select id="fDate"><option value="">📅 يوم الانطلاق</option></select>
   <select id="fDuration"><option value="">⏳ المدة</option></select>
@@ -170,9 +191,9 @@ select{padding:10px;border-radius:8px}
 <div id="offers"></div>
 </div>
 
-<!-- نافذة التفاصيل -->
-<div id="modal">
-  <div id="modalBox">
+<!-- النافذة -->
+<div class="modal" id="modal">
+  <div class="modal-box">
     <img id="m_logo" style="width:80px;display:none;margin:auto">
     <h3 id="m_offer"></h3>
     <p id="m_agency"></p>
@@ -190,13 +211,96 @@ select{padding:10px;border-radius:8px}
 </div>
 
 <script>
+const API="https://script.google.com/macros/s/AKfycbzr3mLPIZA8exVtMx07aoWEq7bRm4aFvbpkvRYWGku-FGPCSeWl412HQ1IwBvJ2tLl0dw/exec";
+
+let allData=[];
+
+fetch(API).then(r=>r.json()).then(d=>{
+  allData=d;
+  fillFilters(d);
+  render(d);
+});
+
+function fillFilters(d){
+  [...new Set(d.map(x=>x.date))].forEach(v=>fDate.add(new Option(v,v)));
+  [...new Set(d.map(x=>x.duration))].forEach(v=>fDuration.add(new Option(v,v)));
+  [...new Set(d.map(x=>x.agency))].forEach(v=>fAgency.add(new Option(v,v)));
+  [...new Set(d.map(x=>x.state))].forEach(v=>fState.add(new Option(v,v)));
+}
+
+function render(d){
+  offers.innerHTML="";
+  const byAirport={};
+  d.forEach(o=>{
+    byAirport[o.airport]=byAirport[o.airport]||[];
+    byAirport[o.airport].push(o);
+  });
+
+  Object.keys(byAirport).forEach(a=>{
+    const sec=document.createElement("div");
+    sec.className="airport-section";
+    sec.innerHTML=`<div class="airport-title">🛫 ${a}</div>`;
+    const slider=document.createElement("div");
+    slider.className="slider";
+
+    byAirport[a].forEach(o=>{
+      const card=document.createElement("div");
+      card.className="offer";
+      card.innerHTML=`
+        <img src="${o.logo||""}">
+        <h4>${o.offer}</h4>
+        <div>${o.agency}</div>
+        <div class="price">${o.group||"-"} دج</div>
+        <button onclick='openModal(${JSON.stringify(o)})'>تفاصيل</button>
+        <button>تسجيل</button>
+      `;
+      slider.appendChild(card);
+    });
+
+    sec.appendChild(slider);
+    offers.appendChild(sec);
+  });
+}
+
+function applyFilters(){
+  render(allData.filter(o=>{
+    if(fDate.value && o.date!==fDate.value)return false;
+    if(fDuration.value && o.duration!==fDuration.value)return false;
+    if(fAgency.value && o.agency!==fAgency.value)return false;
+    if(fState.value && o.state!==fState.value)return false;
+    return true;
+  }));
+}
+[fDate,fDuration,fAgency,fState].forEach(e=>e.onchange=applyFilters);
+
+function openModal(o){
+  m_logo.src=o.logo||"";m_logo.style.display=o.logo?"block":"none";
+  m_offer.innerText=o.offer;
+  m_agency.innerText="🏢 "+o.agency;
+  m_state.innerText="📍 "+o.state;
+  m_city.innerText="🏘️ "+o.city;
+  m_flight.innerText="✈️ "+o.flight;
+  m_date.innerText="📅 "+o.date;
+  m_duration.innerText="⏳ "+o.duration;
+  m_airport.innerText="🛫 "+o.airport;
+  m_hotel.innerText="🏨 "+o.hotel;
+  m_prices.innerHTML=`
+    جماعية: ${o.group}<br>
+    خماسية: ${o.five}<br>
+    رباعية: ${o.four}<br>
+    ثلاثية: ${o.three}<br>
+    ثنائية: ${o.two}`;
+  modal.style.display="block";
+}
+function closeModal(){modal.style.display="none"}
+
 function openMenu(){
   sideMenu.style.right="0";
-  overlay.style.display="block";
+  document.querySelector(".overlay").style.display="block";
 }
 function closeMenu(){
-  sideMenu.style.right="-270px";
-  overlay.style.display="none";
+  sideMenu.style.right="-260px";
+  document.querySelector(".overlay").style.display="none";
 }
 </script>
 
