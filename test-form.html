@@ -13,6 +13,8 @@ body{
   margin:0;
   background:url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg") center/cover fixed no-repeat;
 }
+
+/* واتساب */
 .whatsapp-top{
   position:fixed;top:15px;left:15px;
   width:55px;height:55px;background:#25D366;
@@ -20,6 +22,8 @@ body{
   display:flex;align-items:center;justify-content:center;
   font-size:30px;z-index:20000
 }
+
+/* زر القائمة */
 #menuBtn{
   position:fixed;top:18px;right:15px;
   width:30px;cursor:pointer;z-index:20001
@@ -28,6 +32,8 @@ body{
   display:block;height:3px;background:#000;
   margin:6px 0;border-radius:2px
 }
+
+/* القائمة */
 #sideMenu{
   position:fixed;top:0;right:-260px;
   width:260px;height:100%;
@@ -39,16 +45,21 @@ body{
   text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2)
 }
 #sideMenu a:hover{background:rgba(255,255,255,.2)}
+
 #overlay{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.5);z-index:20000
 }
+
+/* الحاوية */
 .container{
   max-width:1200px;
   background:rgba(255,255,255,.88);
   margin:90px auto 20px;
   padding:20px;border-radius:18px;
 }
+
+/* الفلاتر */
 .filters{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -60,15 +71,22 @@ body{
 @media(max-width:768px){
   .filters{grid-template-columns:1fr 1fr}
 }
+
+/* أقسام المطارات */
 .airport-section{margin-bottom:35px}
 .airport-title{
-  font-size:20px;margin-bottom:10px;
+  font-size:20px;
+  margin-bottom:10px;
   color:#8b0000;font-weight:800
 }
+
+/* السلايدر */
 .slider{
   display:flex;gap:15px;
   overflow-x:auto;padding-bottom:10px
 }
+
+/* البطاقة */
 .offer-card{
   min-width:280px;
   background:#fff;border-radius:18px;
@@ -81,26 +99,34 @@ body{
 .offer-logo{
   width:45px;height:45px;object-fit:contain
 }
+.offer-agency{font-weight:700}
+.offer-state{font-size:13px;color:#555}
+
 .offer-title{
   font-size:17px;font-weight:800;
   color:#8b0000;margin:8px 0
 }
+
 .offer-info{
   display:grid;grid-template-columns:1fr 1fr;
   gap:6px;font-size:14px
 }
+
 .offer-price{
   margin-top:10px;
   background:#f8f4ef;
   padding:10px;border-radius:12px;
   font-weight:800;text-align:center;color:#8b0000
 }
+
 .offer-card button{
   width:100%;margin-top:6px;
   padding:9px;border:none;
   border-radius:8px;
   background:#8b0000;color:#fff;cursor:pointer
 }
+
+/* النوافذ */
 .modal{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.6);z-index:30000
@@ -109,6 +135,9 @@ body{
   background:#fff;max-width:400px;width:90%;
   margin:6% auto;padding:16px;
   border-radius:18px;max-height:85vh;overflow:auto
+}
+.modal-box img{
+  width:80px;display:block;margin:10px auto
 }
 </style>
 </head>
@@ -124,26 +153,32 @@ body{
 
 <nav id="sideMenu">
   <a href="#" onclick="openTrack()">📋 متابعة طلبي</a>
-  <a href="search.html">🔍 أبحث عن عرض مناسب</a>
   <a href="offers.html">🕋 العروض</a>
 </nav>
 
 <div class="container">
+
 <div class="filters">
   <select id="fAgency"><option value="">🏢 الوكالة</option></select>
   <select id="fAirport"><option value="">🛫 المطار</option></select>
   <select id="fMonth"><option value="">📅 الشهر</option></select>
   <select id="fDuration"><option value="">⏳ المدة</option></select>
 </div>
+
 <div id="offers"></div>
 </div>
 
-<!-- نافذة تفاصيل العرض -->
+<!-- نافذة التفاصيل -->
 <div class="modal" id="offerModal">
   <div class="modal-box">
+    <img id="m_logo">
     <h3 id="m_offer"></h3>
     <p id="m_agency"></p>
+    <p id="m_state"></p>
+    <p id="m_city"></p>
+    <p id="m_flight"></p>
     <p id="m_date"></p>
+    <p id="m_duration"></p>
     <p id="m_airport"></p>
     <p id="m_hotel"></p>
     <p id="m_prices"></p>
@@ -152,63 +187,135 @@ body{
   </div>
 </div>
 
-<!-- نافذة متابعة الطلب -->
-<div class="modal" id="trackModal">
-  <div class="modal-box">
-    <h3>📋 متابعة الطلب</h3>
-    <input id="trackPhone" placeholder="رقم الهاتف" style="width:100%;padding:10px">
-    <button onclick="searchOrder()">بحث</button>
-    <div id="trackResult"></div>
-    <button onclick="closeTrack()" style="background:#777">إغلاق</button>
-  </div>
-</div>
-
 <script>
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
+
+function getTripDate(o){
+  return o.tripDate || o.trip_date || o.dateTrip || o.date;
+}
+
+/* القائمة */
 menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
 overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
 
 function openTrack(){
-  trackModal.style.display="block";
-  sideMenu.style.right="-260px";
-  overlay.style.display="none";
+  window.location.href="track.html";
 }
-function closeTrack(){trackModal.style.display="none"}
-function goRegister(){alert("إرسال بيانات المعتمر + العرض إلى الإيميل")}
-function closeOffer(){offerModal.style.display="none"}
+
+function goRegister(){
+  window.location.href="register.html";
+}
 
 let allData=[];
-fetch(OFFERS_API).then(r=>r.json()).then(d=>{allData=d;render(d)});
+fetch(OFFERS_API).then(r=>r.json()).then(d=>{
+  allData=d;
+  fillFilters(d);
+  render(d);
+});
+
+function fillFilters(d){
+  [...new Set(d.map(o=>o.agency))].forEach(v=>fAgency.add(new Option(v,v)));
+  [...new Set(d.map(o=>o.airport))].forEach(v=>fAirport.add(new Option(v,v)));
+  [...new Set(d.map(o=>o.duration))].forEach(v=>fDuration.add(new Option(v,v)));
+  [...new Set(d.map(o=>new Date(getTripDate(o)).getMonth()+1))]
+    .filter(v=>!isNaN(v))
+    .forEach(v=>fMonth.add(new Option(v,v)));
+}
+
 function render(data){
   offers.innerHTML="";
+  const byAirport={};
+
   data.forEach(o=>{
-    const c=document.createElement("div");
-    c.className="offer-card";
-    c.innerHTML=`
-      <div class="offer-title">${o.offer}</div>
-      <div class="offer-info">
-        <span>${o.airport}</span>
-        <span>${o.duration}</span>
-      </div>
-      <div class="offer-price">${o.group} دج</div>
-      <button onclick='openOffer(${JSON.stringify(o)})'>تفاصيل</button>
-    `;
-    offers.appendChild(c);
+    byAirport[o.airport]=byAirport[o.airport]||[];
+    byAirport[o.airport].push(o);
   });
+
+  for(const a in byAirport){
+    const sec=document.createElement("div");
+    sec.className="airport-section";
+    sec.innerHTML=`<div class="airport-title">🛫 ${a}</div>`;
+    const slider=document.createElement("div");
+    slider.className="slider";
+
+    byAirport[a].forEach(o=>{
+      const tripDate=getTripDate(o);
+      const c=document.createElement("div");
+      c.className="offer-card";
+      c.innerHTML=`
+        <div class="offer-header">
+          <img src="${o.logo||''}" class="offer-logo">
+          <div>
+            <div class="offer-agency">${o.agency}</div>
+            <div class="offer-state">📍 ${o.state||"—"}</div>
+          </div>
+        </div>
+
+        <div class="offer-title">🕋 ${o.offer}</div>
+
+        <div class="offer-info">
+          <span>📅 ${formatTripDate(tripDate)}</span>
+          <span>⏳ ${o.duration||"—"}</span>
+          <span>🛫 ${o.airport||"—"}</span>
+          <span>🏨 ${o.hotel||"—"}</span>
+        </div>
+
+        <div class="offer-price">💰 غرفة جماعية: ${o.group||"-"} دج</div>
+
+        <button onclick='openOffer(${JSON.stringify(o)})'>تفاصيل العرض</button>
+        <button onclick="goRegister()">تسجيل</button>
+      `;
+      slider.appendChild(c);
+    });
+
+    sec.appendChild(slider);
+    offers.appendChild(sec);
+  }
 }
+
+[fAgency,fAirport,fDuration,fMonth].forEach(el=>el.onchange=()=>{
+  render(allData.filter(o=>{
+    const tripDate=getTripDate(o);
+    if(fAgency.value && o.agency!==fAgency.value)return false;
+    if(fAirport.value && o.airport!==fAirport.value)return false;
+    if(fDuration.value && !o.duration?.includes(fDuration.value))return false;
+    if(fMonth.value && new Date(tripDate).getMonth()+1!=fMonth.value)return false;
+    return true;
+  }));
+});
+
 function openOffer(o){
-  m_offer.innerText=o.offer;
-  m_agency.innerText=o.agency;
-  m_date.innerText=o.date;
-  m_airport.innerText=o.airport;
-  m_hotel.innerText=o.hotel;
-  m_prices.innerText=o.group;
+  const tripDate=getTripDate(o);
+  m_logo.src=o.logo||"";
+  m_offer.innerText=o.offer||"—";
+  m_agency.innerText="🏢 الوكالة: "+(o.agency||"—");
+  m_state.innerText="📍 الولاية: "+(o.state||"—");
+  m_city.innerText="🏘️ البلدية: "+(o.city||"—");
+  m_flight.innerText="✈️ نوع الرحلة: "+(o.flight||"—");
+  m_date.innerText="📅 تاريخ الرحلة: "+formatTripDate(tripDate);
+  m_duration.innerText="⏳ المدة: "+(o.duration||"—");
+  m_airport.innerText="🛫 مطار الإقلاع: "+(o.airport||"—");
+  m_hotel.innerText="🏨 الفندق: "+(o.hotel||"—");
+
+  m_prices.innerHTML=`
+    جماعية: ${o.group||"-"}<br>
+    خماسية: ${o.five||"-"}<br>
+    رباعية: ${o.four||"-"}<br>
+    ثلاثية: ${o.three||"-"}<br>
+    ثنائية: ${o.two||"-"}
+  `;
   offerModal.style.display="block";
 }
-function searchOrder(){
-  const phone=trackPhone.value.trim();
-  const r=allData.filter(o=>o.phone==phone);
-  trackResult.innerHTML=r.length?r.map(o=>o.offer).join("<br>"):"❌ لا يوجد";
+
+function closeOffer(){
+  offerModal.style.display="none";
+}
+
+function formatTripDate(value){
+  if(!value) return "—";
+  const d=new Date(value);
+  if(isNaN(d)) return value;
+  return d.toLocaleDateString("ar-DZ",{year:"numeric",month:"2-digit",day:"2-digit"});
 }
 </script>
 
