@@ -98,23 +98,6 @@ button.main{
   text-align:center;
   max-width:340px;
 }
-
-.whatsapp{
-  position:fixed;
-  bottom:18px;
-  left:18px;
-  width:58px;
-  height:58px;
-  background:#25D366;
-  color:#fff;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:32px;
-  z-index:13000;
-  box-shadow:0 6px 20px rgba(0,0,0,.3);
-}
 </style>
 </head>
 
@@ -134,17 +117,17 @@ button.main{
 
 <div class="container">
 
-<div class="section">
-  <h3>👤 بيانات المعتمر</h3>
-  <div id="userData">⏳ تحميل...</div>
-</div>
+  <div class="section">
+    <h3>👤 بيانات المعتمر</h3>
+    <div id="userData">⏳ تحميل...</div>
+  </div>
 
-<div class="section">
-  <h3>🕋 بيانات العرض</h3>
-  <div id="offerData">⏳ تحميل...</div>
-</div>
+  <div class="section">
+    <h3>🕋 بيانات العرض</h3>
+    <div id="offerData">⏳ تحميل...</div>
+  </div>
 
-<button class="main" onclick="send()">📩 تأكيد وإرسال الطلب</button>
+  <button class="main" onclick="send()">📩 تأكيد وإرسال الطلب</button>
 </div>
 
 <div id="popup">
@@ -154,59 +137,91 @@ button.main{
   </div>
 </div>
 
-<a href="https://wa.me/213674141379" target="_blank" class="whatsapp">
-  <i class="fab fa-whatsapp"></i>
-</a>
-
 <script>
+/* ===== APIs ===== */
 const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
 const EMAIL_API="https://script.google.com/macros/s/AKfycbzcxJ2mvd-Nnr5mdzPItK6_3pWnX3kR_EIQuKZanjW93RGIh06d4PDqcdWwMV0AyiVB/exec";
 
-const phone=localStorage.getItem("umrah_phone");
-const offer=JSON.parse(localStorage.getItem("selected_offer")||"null");
+/* ===== محاولة الاستقبال من المسارين ===== */
+let customer = null;
+let offer = null;
 
-if(!phone||!offer) location.href="results-gen.html";
+/* 1️⃣ المسار الجديد (sessionStorage) */
+const sessionData = JSON.parse(sessionStorage.getItem("umrahRequest") || "null");
+if(sessionData){
+  customer = {
+    name: sessionData.first + " " + sessionData.last,
+    phone: sessionData.phone
+  };
+  offer = {
+    agency: sessionData.agency,
+    state: sessionData.state,
+    airport: sessionData.airport,
+    date: sessionData.date,
+    hotel: sessionData.hotel || "-",
+    group: sessionData.price
+  };
+}
 
-const userBox=document.getElementById("userData");
-const offerBox=document.getElementById("offerData");
-const popup=document.getElementById("popup");
-const popTitle=document.getElementById("popTitle");
-const popText=document.getElementById("popText");
+/* 2️⃣ المسار القديم (localStorage) */
+if(!customer || !offer){
+  const phone = localStorage.getItem("umrah_phone");
+  const storedOffer = JSON.parse(localStorage.getItem("selected_offer") || "null");
 
-let user=null;
+  if(phone && storedOffer){
+    offer = storedOffer;
 
-fetch(SEARCH_API+"?phone="+phone)
-.then(r=>r.json())
-.then(d=>{
-  user=d;
-  userBox.innerHTML=`
-    <div class="row">الاسم: ${d.name}</div>
-    <div class="row">الهاتف: ${phone}</div>
-    <div class="row">المطار: ${d.airport||"-"}</div>
-    <div class="row">الفندق: ${d.hotel||"-"}</div>
-    <div class="row">المدة: ${d.duration||"-"}</div>
+    fetch(SEARCH_API+"?phone="+phone)
+      .then(r=>r.json())
+      .then(d=>{
+        customer = {
+          name: d.name,
+          phone: phone,
+          airport: d.airport,
+          hotel: d.hotel,
+          duration: d.duration
+        };
+        render();
+      });
+  }else{
+    location.href="results-gen.html";
+  }
+}else{
+  render();
+}
+
+/* ===== عرض البيانات ===== */
+function render(){
+  userData.innerHTML = `
+    <div class="row">الاسم: ${customer.name}</div>
+    <div class="row">الهاتف: ${customer.phone}</div>
   `;
-});
 
-offerBox.innerHTML=`
-  <div class="row">الوكالة: ${offer.agency||"-"}</div>
-  <div class="row">الولاية: ${offer.state||"-"}</div>
-  <div class="row">تاريخ الرحلة: ${offer.date||"-"}</div>
-  <div class="row">المطار: ${offer.airport||"-"}</div>
-  <div class="row">الفندق: ${offer.hotel||"-"}</div>
-  <div class="row">سعر الغرفة الجماعية: ${offer.group||"-"} دج</div>
-`;
+  offerData.innerHTML = `
+    <div class="row">الوكالة: ${offer.agency || "-"}</div>
+    <div class="row">الولاية: ${offer.state || "-"}</div>
+    <div class="row">المطار: ${offer.airport || "-"}</div>
+    <div class="row">تاريخ الرحلة: ${offer.date || "-"}</div>
+    <div class="row">الفندق: ${offer.hotel || "-"}</div>
+    <div class="row">سعر الغرفة الجماعية: ${offer.group || "-"} دج</div>
+  `;
+}
 
+/* ===== الإرسال ===== */
 function send(){
   popup.style.display="flex";
+
   fetch(EMAIL_API,{
     method:"POST",
-    body:JSON.stringify({customer:user,offer:offer})
+    body:JSON.stringify({customer,offer})
   }).then(()=>{
     popTitle.innerText="✅ تم إرسال طلبك بنجاح";
     popText.innerText="نسأل الله أن يكتب لك عمرة مقبولة 🌙";
+
     setTimeout(()=>{
-      localStorage.clear();
+      sessionStorage.removeItem("umrahRequest");
+      localStorage.removeItem("umrah_phone");
+      localStorage.removeItem("selected_offer");
       location.href="results-gen.html";
     },3000);
   });
