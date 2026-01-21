@@ -216,8 +216,22 @@ const TRACK_API="https://script.google.com/macros/s/AKfycby_IBGmSV8Z9YboH15QsB4l
 
 menuBtn.onclick=()=>{sideMenu.style.right="0";overlay.style.display="block"}
 overlay.onclick=()=>{sideMenu.style.right="-260px";overlay.style.display="none"}
-function openTrack(){trackModal.style.display="block";sideMenu.style.right="-260px";overlay.style.display="none"}
-function closeModal(id){document.getElementById(id).style.display="none"}
+
+function openTrack(){
+  trackModal.style.display="block";
+  sideMenu.style.right="-260px";
+  overlay.style.display="none"
+}
+function closeModal(id){
+  document.getElementById(id).style.display="none"
+}
+
+/* إغلاق النوافذ عند الضغط خارجها */
+document.querySelectorAll(".modal").forEach(m=>{
+  m.addEventListener("click",e=>{
+    if(e.target===m) m.style.display="none";
+  });
+});
 
 function formatDate(v){
   const d=new Date(v);
@@ -294,13 +308,13 @@ function registerOffer(o){
 }
 
 function searchOrder(){
-  const phone = trackPhone.value.trim();
-  if(!phone){ alert("أدخل رقم الهاتف"); return; }
+  const phone=trackPhone.value.trim();
+  if(!phone){alert("أدخل رقم الهاتف");return;}
 
   fetch(TRACK_API+"?phone="+encodeURIComponent(phone))
   .then(r=>r.json())
   .then(d=>{
-    if(!d.found){ alert("لا يوجد طلب"); return; }
+    if(!d.found){alert("لا يوجد طلب");return;}
 
     trackModal.style.display="none";
 
@@ -312,24 +326,27 @@ function searchOrder(){
       🛫 المطار: ${d.airport}<br>
       📍 الولاية: ${d.state}<br>
       ⏳ المدة: ${d.duration} يوم<br>
-      📅 تاريخ الانطلاق: ${d.travel_date || "-"}
+      📅 تاريخ الانطلاق: ${d.travel_date||"-"}
     `;
     pilgrimDetails.style.display="block";
 
-    const filtered = allOffers.filter(o=>{
-      if(d.airport && o.airport!==d.airport) return false;
-      if(d.state && o.state!==d.state) return false;
-      if(d.duration && !String(o.duration).includes(String(d.duration))) return false;
+    const filtered=allOffers.filter(o=>{
+      let score=0;
+
+      if(d.airport && o.airport===d.airport) score+=3;
+      if(d.state && o.state===d.state) score+=2;
+      if(d.duration && Math.abs(Number(o.duration)-Number(d.duration))<=2) score+=2;
+
       if(d.month){
         const m=new Date(o.date).getMonth()+1;
-        if(m!==Number(d.month)) return false;
+        if(m===Number(d.month) || m===Number(d.month)+1) score+=1;
       }
-      return true;
+      return score>=2;
     });
 
     if(filtered.length===0){
       offers.innerHTML=`<div style="text-align:center;padding:25px;font-weight:800;color:#8b0000">
-      ⚠️ لا توجد عروض مطابقة حاليًا حسب طلبك
+      ⚠️ لا توجد عروض قريبة حاليًا حسب طلبك
       </div>`;
     }else{
       renderOffers(filtered);
