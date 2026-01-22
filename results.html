@@ -49,10 +49,7 @@ header{
   z-index:1000;
 }
 .sidebar.active{ right:0; }
-.sidebar .close{
-  text-align:left;
-  cursor:pointer;
-}
+.sidebar .close{ text-align:left; cursor:pointer }
 .container{
   max-width:900px;
   margin:20px auto;
@@ -76,15 +73,8 @@ header{
   object-fit:contain;
   border-radius:8px;
 }
-.card-info{
-  margin-top:10px;
-  font-size:14px;
-}
-.price{
-  margin-top:10px;
-  font-weight:bold;
-  color:#8b0000;
-}
+.card-info{ margin-top:10px; font-size:14px }
+.price{ margin-top:10px; font-weight:bold; color:#8b0000 }
 .card-actions{
   display:flex;
   gap:8px;
@@ -153,9 +143,9 @@ const phone = localStorage.getItem("umrah_phone");
 const userBox = document.getElementById("userBox");
 const offersBox = document.getElementById("offers");
 
-let userData=null;
-let offersData=[];
-let selectedOffer=null;
+let userData = null;
+let offersData = [];
+let selectedOffer = null;
 
 /* ===== أدوات ===== */
 function toggleSidebar(){
@@ -178,26 +168,33 @@ function formatDate(d){
   return d ? new Date(d).toLocaleDateString("ar-DZ") : "-";
 }
 
-/* ===== جلب المعتمر ===== */
+/* ===== جلب معلومات المعتمر (✔️ مصححة) ===== */
 if(!phone){
   userBox.innerHTML="❌ رقم الهاتف غير موجود";
 }else{
-  fetch(SEARCH_API+"?phone="+phone)
+  fetch(SEARCH_API+"?phone="+encodeURIComponent(phone))
   .then(r=>r.json())
   .then(d=>{
-    if(d && d.found){
-      userData=d;
-      userBox.innerHTML=`
-        <b>${d.name} ${d.lastname}</b><br><br>
-        📞 ${d.phone}<br>
-        ✈️ ${d.airport}<br>
-        🏨 ${d.hotel}<br>
-        📅 ${d.travel_date}
+    if(d && d.name){   // ✅ لا نستعمل found
+      userData = d;
+
+      userBox.innerHTML = `
+        <b>${d.name} ${d.lastname || ""}</b><br><br>
+        📞 ${d.phone || phone}<br>
+        ✈️ ${d.airport || "-"}<br>
+        🏨 ${d.hotel || "-"}<br>
+        ⏱️ ${d.duration || "-"}<br>
+        🏠 ${d.residence || "-"}<br>
+        📅 ${d.travel_date || "-"}
       `;
+
       if(offersData.length) renderOffers();
     }else{
       userBox.innerHTML="❌ لم يتم العثور على بيانات";
     }
+  })
+  .catch(()=>{
+    userBox.innerHTML="❌ خطأ في جلب البيانات";
   });
 }
 
@@ -205,29 +202,30 @@ if(!phone){
 fetch(OFFERS_API)
 .then(r=>r.json())
 .then(d=>{
-  offersData=d||[];
+  offersData = d || [];
   if(userData) renderOffers();
 });
 
-/* ===== فلترة ===== */
+/* ===== فلترة العروض ===== */
 function isMatching(o){
   if(!userData) return false;
   return (
     (o.airport?.includes(userData.airport) || userData.airport?.includes(o.airport)) &&
-    diffDays(new Date(userData.travel_date), new Date(o.date))<=10
+    diffDays(new Date(userData.travel_date), new Date(o.date)) <= 10
   );
 }
 
 /* ===== عرض العروض ===== */
 function renderOffers(){
-  const list=offersData.filter(isMatching);
+  const list = offersData.filter(isMatching);
   if(!list.length){
     offersBox.innerHTML="❌ لا توجد عروض مناسبة";
     return;
   }
+
   offersBox.innerHTML="";
   list.forEach(o=>{
-    offersBox.innerHTML+=`
+    offersBox.innerHTML += `
       <div class="card">
         <div class="card-header">
           <img src="${o.logo||""}" onerror="this.style.display='none'">
@@ -243,26 +241,34 @@ function renderOffers(){
         </div>
         <div class="price">💰 ${o.group||"-"} دج</div>
         <div class="card-actions">
-          <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
+          <button onclick='registerOffer(${JSON.stringify(o)})'>📩 تسجيل</button>
         </div>
       </div>
     `;
   });
 }
 
-/* ===== تسجيل ===== */
-function openRegister(o){
-  selectedOffer=o;
+/* ===== تسجيل + إرسال ===== */
+function registerOffer(o){
+  if(!userData){
+    showToast("❌ معلومات المعتمر غير متوفرة",false);
+    return;
+  }
+
+  selectedOffer = o;
   showLoader(true);
 
   fetch(SEND_API,{
     method:"POST",
-    body:JSON.stringify({customer:userData,offer:o})
+    body: JSON.stringify({
+      customer: userData,
+      offer: o
+    })
   })
   .then(r=>r.text())
   .then(res=>{
     showLoader(false);
-    if(res.includes("OK")){
+    if(res && res.includes("OK")){
       showToast("✅ تم إرسال الطلب بنجاح");
     }else{
       showToast("❌ فشل الإرسال",false);
