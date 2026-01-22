@@ -16,7 +16,6 @@ body{
     url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
     center/cover fixed no-repeat;
 }
-
 header{
   height:60px;
   background:#8b0000;
@@ -27,31 +26,6 @@ header{
 }
 .menu-btn{font-size:26px;cursor:pointer}
 header h1{flex:1;text-align:center;font-size:18px;margin:0}
-
-#sideMenu{
-  position:fixed;
-  top:0;right:-260px;
-  width:260px;height:100%;
-  background:#8b0000;
-  padding-top:70px;
-  transition:.3s;
-  z-index:10000;
-}
-#sideMenu a{
-  display:block;
-  padding:14px 18px;
-  color:#fff;
-  text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.15);
-}
-
-#overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:9000;
-}
 
 .container{
   max-width:520px;
@@ -73,7 +47,6 @@ input,button{
 button{
   background:#8b0000;
   color:#fff;
-  cursor:pointer;
 }
 
 .welcome{
@@ -113,16 +86,8 @@ button{
 <body>
 
 <header>
-  <div class="menu-btn" onclick="openMenu()">☰</div>
   <h1>👤 صفحتي الخاصة</h1>
 </header>
-
-<nav id="sideMenu">
-  <a href="results-gen.html">🕋 العروض العامة</a>
-  <a href="recherche-oeffer.html">📩 طلب عرض عمرة</a>
-  <a href="recherche-n.html">👤 صفحتي الخاصة</a>
-</nav>
-<div id="overlay" onclick="closeMenu()"></div>
 
 <div class="container">
   <h2>الدخول إلى صفحتك</h2>
@@ -139,17 +104,16 @@ button{
 </div>
 
 <script>
-const API =
-"https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
+const API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
 
-const phoneInput = document.getElementById("phone");
-const result = document.getElementById("result");
-const popup = document.getElementById("popup");
+const phoneInput=document.getElementById("phone");
+const result=document.getElementById("result");
+const popup=document.getElementById("popup");
 
 function normalize(p){
-  p = p.replace(/\D/g,"");
-  if(p.startsWith("213")) p = p.slice(3);
-  if(p.startsWith("0")) p = p.slice(1);
+  p=p.replace(/\D/g,"");
+  if(p.startsWith("213"))p=p.slice(3);
+  if(p.startsWith("0"))p=p.slice(1);
   return p;
 }
 
@@ -159,42 +123,42 @@ function formatDate(d){
 }
 
 function check(){
-  const phone = normalize(phoneInput.value);
-  if(!phone){
-    alert("أدخل رقم الهاتف");
-    return;
-  }
+  const phone=normalize(phoneInput.value);
+  if(!phone) return alert("أدخل رقم الهاتف");
 
-  popup.style.display = "flex";
+  popup.style.display="flex";
 
-  fetch(API + "?phone=" + phone)
-  .then(res => res.json())
-  .then(d => {
+  fetch(API+"?phone="+phone)
+  .then(r=>r.json())
+  .then(d=>{
 
-    popup.style.display = "none";
-    console.log(d);
+    popup.style.display="none";
+    console.log("API DATA:",d);
 
-    if(!d || Object.keys(d).length === 0){
-      result.innerHTML = "❌ لا يوجد طلب بهذا الرقم";
+    // إذا كانت مصفوفة
+    const user = Array.isArray(d) ? d[0] : d;
+
+    if(!user){
+      result.innerHTML="❌ لا يوجد طلب بهذا الرقم";
       return;
     }
 
-    result.innerHTML = `
+    result.innerHTML=`
       <div class="welcome">
-        <p>🌙 مرحبًا بك <strong>${d.name || ""} ${d.lastname || ""}</strong></p>
-        <p>📞 الهاتف: ${d.phone || "-"}</p>
-        <p>✈️ المطار: ${d.airport || "-"}</p>
-        <p>🏨 الفندق: ${d.hotel || "-"}</p>
-        <p>⏳ المدة: ${d.duration || "-"}</p>
-        <p>🛏️ الغرفة: ${d.room || "-"}</p>
-        <p>🗺️ المسار: ${d.route || "-"}</p>
-        <p>🛫 نوع الرحلة: ${d.flight || "-"}</p>
-        <p>📍 الولاية: ${d.residence || "-"}</p>
-        <p>📅 تاريخ الانطلاق: ${formatDate(d.travel_date)}</p>
+        <p>🌙 مرحبًا بك <strong>${user.name || ""} ${user.lastname || ""}</strong></p>
+        <p>📞 الهاتف: ${user.phone || "-"}</p>
+        <p>✈️ المطار: ${user.airport || "-"}</p>
+        <p>🏨 الفندق: ${user.hotel || "-"}</p>
+        <p>⏳ المدة: ${user.duration || "-"}</p>
+        <p>🛏️ الغرفة: ${user.room || "-"}</p>
+        <p>🗺️ المسار: ${user.route || "-"}</p>
+        <p>🛫 نوع الرحلة: ${user.flight || "-"}</p>
+        <p>📍 الولاية: ${user.residence || "-"}</p>
+        <p>📅 تاريخ الانطلاق: ${formatDate(user.travel_date)}</p>
 
         <div class="actions">
-          <button class="primary" onclick="go('my')">⭐ العروض المناسبة</button>
-          <button onclick="go('all')">📋 كل العروض</button>
+          <button class="primary" onclick="location.href='results.html?view=my'">⭐ العروض المناسبة</button>
+          <button onclick="location.href='results.html?view=all'">📋 كل العروض</button>
         </div>
       </div>
     `;
@@ -204,20 +168,6 @@ function check(){
     result.innerHTML="❌ خطأ في الاتصال";
     console.error(err);
   });
-}
-
-function go(type){
-  location.href = "results.html?view=" + type;
-}
-
-function openMenu(){
-  sideMenu.style.right = "0";
-  overlay.style.display = "block";
-}
-
-function closeMenu(){
-  sideMenu.style.right = "-260px";
-  overlay.style.display = "none";
 }
 </script>
 
