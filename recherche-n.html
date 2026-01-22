@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>العروض المناسبة</title>
+<title>صفحتي الخاصة</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -11,42 +11,79 @@
 body{
   font-family:Tajawal,Arial;
   margin:0;
-  background:#f3f3f3;
+  background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
+    center/cover fixed no-repeat;
 }
-
 header{
+  height:60px;
   background:#8b0000;
   color:#fff;
-  padding:15px;
+  display:flex;
+  align-items:center;
+  padding:0 15px;
+}
+header h1{
+  flex:1;
   text-align:center;
+  font-size:18px;
+  margin:0;
 }
 
 .container{
-  max-width:900px;
-  margin:20px auto;
-  padding:15px;
+  max-width:520px;
+  background:rgba(255,255,255,.93);
+  margin:30px auto;
+  padding:25px;
+  border-radius:18px;
+  text-align:center;
 }
 
-.card{
-  background:#fff;
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
+button{
+  background:#8b0000;
+  color:#fff;
+  cursor:pointer;
+}
+
+.welcome{
+  margin-top:20px;
+  background:#f8f4ef;
+  padding:18px;
   border-radius:14px;
-  padding:15px;
-  margin-bottom:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,.08);
+  text-align:right;
 }
 
-.card h3{
-  margin:0 0 10px;
-  color:#8b0000;
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:15px;
 }
+.actions button{background:#444}
+.actions .primary{background:#8b0000}
 
-.badge{
-  display:inline-block;
-  background:#eee;
-  padding:6px 12px;
-  border-radius:8px;
-  margin:4px 0;
-  font-size:14px;
+#popup{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:12000;
+  align-items:center;
+  justify-content:center;
+}
+#popupBox{
+  background:#fff;
+  padding:25px;
+  border-radius:14px;
 }
 </style>
 </head>
@@ -54,98 +91,100 @@ header{
 <body>
 
 <header>
-  <h2>⭐ العروض المناسبة لك</h2>
+  <h1>👤 صفحتي الخاصة</h1>
 </header>
 
-<div class="container" id="offers">
-  ⏳ جاري تحميل العروض...
+<div class="container">
+  <h2>الدخول إلى صفحتك</h2>
+  <input type="tel" id="phone" placeholder="أدخل رقم الهاتف">
+  <button onclick="check()">🔍 متابعة</button>
+  <div id="result"></div>
+</div>
+
+<div id="popup">
+  <div id="popupBox">
+    <h3>⏳ يرجى الانتظار</h3>
+    <p>استغفر الله العظيم 🤍</p>
+  </div>
 </div>
 
 <script>
 const API =
-"https://script.google.com/macros/s/AKfycbzmRIn8tTuBluEVS7-AWhTic1aFI6AcmCT4BEeaQPsG8RmDosOEScvVpGIkYJO-L5aF5w/exec";
+"https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
 
-const phone = localStorage.getItem("umrah_phone");
-const box = document.getElementById("offers");
+const phoneInput = document.getElementById("phone");
+const result = document.getElementById("result");
+const popup = document.getElementById("popup");
 
-if(!phone){
-  box.innerHTML = "❌ لا توجد بيانات مستخدم";
-  throw "";
+function normalize(p){
+  p = p.replace(/\D/g,"");
+  if(p.startsWith("213")) p = p.slice(3);
+  if(p.startsWith("0")) p = p.slice(1);
+  return p;
 }
 
-/* حساب فرق الأيام */
-function diffDays(d1, d2){
-  const day = 1000 * 60 * 60 * 24;
-  return Math.abs((d1 - d2) / day);
+function formatDate(d){
+  if(!d) return "-";
+  return new Date(d).toLocaleDateString("ar-DZ");
 }
 
-/* جلب بيانات المعتمر */
-fetch(API + "?phone=" + phone)
-.then(r => r.json())
-.then(user => {
-
-  if(!user || !user.found){
-    box.innerHTML = "❌ لم يتم العثور على بياناتك";
+function check(){
+  const phone = normalize(phoneInput.value);
+  if(!phone){
+    alert("أدخل رقم الهاتف");
     return;
   }
 
-  const userAirport = user.airport || "";
-  const userDate = user.travel_date
-    ? new Date(user.travel_date)
-    : null;
+  popup.style.display = "flex";
 
-  /* جلب جميع العروض */
-  fetch(API + "?all=1")
+  fetch(API + "?phone=" + phone)
   .then(r => r.json())
-  .then(offers => {
+  .then(d => {
 
-    let html = "";
-    let count = 0;
+    popup.style.display = "none";
+    console.log("API DATA:", d);
 
-    offers.forEach(o => {
+    /* التحقق الصحيح */
+    if(!d || d.found !== true){
+      result.innerHTML = "❌ لا يوجد طلب بهذا الرقم";
+      return;
+    }
 
-      if(!o.airport || !o.travel_date) return;
+    /* حفظ الهاتف للصفحة التالية */
+    localStorage.setItem("umrah_phone", phone);
 
-      const offerDate = new Date(o.travel_date);
+    result.innerHTML = `
+      <div class="welcome">
+        <p>🌙 مرحبًا بك <strong>${d.name || ""} ${d.lastname || ""}</strong></p>
+        <p>📞 الهاتف: ${d.phone || "-"}</p>
+        <p>✈️ المطار: ${d.airport || "-"}</p>
+        <p>🏨 الفندق: ${d.hotel || "-"}</p>
+        <p>⏳ المدة: ${d.duration || "-"}</p>
+        <p>🛏️ الغرفة: ${d.room || "-"}</p>
+        <p>🗺️ المسار: ${d.route || "-"}</p>
+        <p>🛫 نوع الرحلة: ${d.flight || "-"}</p>
+        <p>📍 الولاية: ${d.residence || "-"}</p>
+        <p>📅 تاريخ الانطلاق: ${formatDate(d.travel_date)}</p>
 
-      /* مطابقة المطار (تقريبية) */
-      const sameAirport =
-        o.airport.includes(userAirport) ||
-        userAirport.includes(o.airport);
-
-      /* مطابقة التاريخ (±7 أيام) */
-      const closeDate =
-        userDate ? diffDays(userDate, offerDate) <= 7 : true;
-
-      if(sameAirport && closeDate){
-        count++;
-
-        html += `
-          <div class="card">
-            <h3>🕋 عرض عمرة</h3>
-            <div class="badge">✈️ المطار: ${o.airport}</div><br>
-            <div class="badge">📅 الإقلاع: ${new Date(o.travel_date).toLocaleDateString("ar-DZ")}</div><br>
-            <div class="badge">🏨 الفندق: ${o.hotel || "-"}</div><br>
-            <div class="badge">⏳ المدة: ${o.duration || "-"}</div><br>
-            <div class="badge">🛏️ الغرفة: ${o.room || "-"}</div>
-          </div>
-        `;
-      }
-    });
-
-    box.innerHTML = count
-      ? html
-      : "⚠️ لا توجد عروض مناسبة حسب بياناتك";
-
+        <div class="actions">
+          <button class="primary"
+            onclick="location.href='results-n.html'">
+            ⭐ العروض المناسبة
+          </button>
+          <button
+            onclick="location.href='results-gen.html'">
+            📋 كل العروض
+          </button>
+        </div>
+      </div>
+    `;
   })
-  .catch(()=>{
-    box.innerHTML="❌ خطأ في جلب العروض";
+  .catch(err=>{
+    popup.style.display="none";
+    result.innerHTML="❌ خطأ في الاتصال";
+    console.error(err);
   });
-
-})
-.catch(()=>{
-  box.innerHTML="❌ خطأ في جلب بيانات المستخدم";
-});
+}
 </script>
 
 </body>
