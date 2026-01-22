@@ -234,21 +234,61 @@ function openDetails(o){
 function closeDetails(){ detailsModal.style.display="none"; }
 
 /* ===== التسجيل + الإرسال ===== */
-function openRegister(o){
-  selectedOffer=o;
-  detailsContent.innerHTML=`
-    <b>👤 المعتمر:</b> ${userData.name} ${userData.lastname}<br>
-    📞 ${userData.phone}<br><hr>
-    <b>🕋 العرض:</b> ${o.offer}<br>
-    💰 ${o.group} دج
-  `;
-  detailsModal.style.display="flex";
-}
+function openRegister(btn, o){
 
-function sendConfirmed(){
+  if(btn.disabled) return;
+
+  if(!userData){
+    showToast("❌ معلومات المعتمر غير متوفرة", false);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.style.opacity = ".6";
   showLoader(true);
 
-  const note=`
+  const customer = {
+    name: userData.name + " " + userData.lastname,
+    phone: userData.phone,
+    airport: userData.airport,
+    residence: userData.residence,
+    travel_date: userData.travel_date
+  };
+
+  const offer = {
+    offer: o.offer,
+    agency: o.agency,
+    state: o.state,
+    airport: o.airport,
+    date: o.date,
+    hotel: o.hotel,
+    duration: o.duration,
+    flight: o.flight,
+    price: o.group
+  };
+
+  fetch(SEARCH_API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ customer, offer })
+  })
+  .then(r => r.text())
+  .then(res => {
+    console.log("SERVER:", res);
+    showLoader(false);
+
+    showToast("✅ تم إرسال طلبك بنجاح");
+  })
+  .catch(err => {
+    console.error(err);
+    showLoader(false);
+    showToast("❌ فشل الاتصال بالخادم", false);
+    btn.disabled = false;
+    btn.style.opacity = "1";
+  });
+}
 --- معلومات العرض ---
 ${selectedOffer.offer}
 ${selectedOffer.hotel}
