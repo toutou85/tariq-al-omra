@@ -161,6 +161,39 @@ select{padding:8px;border-radius:8px}
   font-size:14px;
   line-height:1.6;
 }
+
+
+
+
+
+.visitor-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(6px);
+  color:#222;
+  padding:12px 18px;
+  border-radius:14px;
+  font-family:Tajawal,Arial;
+  width:max-content;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.visitor-box i{
+  font-size:26px;
+  color:#1e90ff;
+}
+
+.visitor-box span{
+  font-size:22px;
+  font-weight:700;
+}
+
+.visitor-box small{
+  font-size:13px;
+  opacity:.85;
+}
 </style>
 </head>
 
@@ -383,6 +416,20 @@ function sendRegister(){
 
 function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}
 function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
+
+
+
+<script>
+fetch("https://script.google.com/macros/s/AKfycbybArJdjmjCNArz85u_sCkyk6TaRqwnY90VcAmIUI628C494xWvrg8yDQrD_Oe9irA/exec?action=view")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("visitors").textContent = data.count;
+  })
+  .catch(err => {
+    document.getElementById("visitors").textContent = "?";
+    console.error(err);
+  });
+</script>
 </script>
 
 </body>
