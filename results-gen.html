@@ -442,15 +442,17 @@ function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 
 
 
-fetch("https://script.google.com/macros/s/AKfycbybArJdjmjCNArz85u_sCkyk6TaRqwnY90VcAmIUI628C494xWvrg8yDQrD_Oe9irA/exec?action=view")
+
+fetch("https://script.google.com/macros/s/AKfycbyqkxyZDG1BxRRj8B8qvWEQ9h54tHJbEsEbobRC2nLNPkARLgBXbDMk-Aev82nMRPCQ/exec?action=view")
   .then(res => res.json())
   .then(data => {
     document.getElementById("visitors").textContent = data.count;
   })
   .catch(err => {
+    console.error("Error getting visit count:", err);
     document.getElementById("visitors").textContent = "?";
-    console.error(err);
   });
+
 
 </script>
 
