@@ -1,221 +1,518 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>العروض المناسبة</title>
+<!DOCTYPE html>  <html lang="ar" dir="rtl">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>تأكيد التسجيل</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">  <style>  
+body{  
+  font-family:Tajawal,Arial;  
+  margin:0;  
+  background:  
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),  
+    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")  
+    center/cover fixed no-repeat;  
+}  
+header{  
+  height:60px;  
+  background:#8b0000;  
+  color:#fff;  
+  display:flex;  
+  align-items:center;  
+  padding:0 15px;  
+}  
+.menu-btn{font-size:26px;cursor:pointer}  
+header h1{flex:1;text-align:center;font-size:18px;margin:0}  
+  
+#sideMenu{  
+  position:fixed;top:0;right:-260px;  
+  width:260px;height:100%;  
+  background:#8b0000;  
+  padding-top:70px;  
+  transition:.3s;z-index:10000  
+}  
+#sideMenu a{  
+  display:block;padding:14px 18px;  
+  color:#fff;text-decoration:none;  
+  border-bottom:1px solid rgba(255,255,255,.15)  
+}  
+#sideMenu a:hover{background:rgba(255,255,255,.15)}  
+#overlay{  
+  display:none;position:fixed;inset:0;  
+  background:rgba(0,0,0,.6);z-index:9000  
+}  
+  
+.container{  
+  max-width:800px;  
+  margin:25px auto;  
+  background:rgba(255,255,255,.95);  
+  padding:22px;  
+  border-radius:20px;  
+}  
+  
+.section{  
+  background:#f9f9f9;  
+  border-radius:16px;  
+  padding:18px;  
+  margin-top:15px;  
+}  
+.section h3{  
+  margin-top:0;  
+  color:#8b0000;  
+  font-size:17px;  
+}  
+.row{  
+  font-size:14px;  
+  margin-top:6px;  
+  color:#333;  
+}  
+  
+button.main{  
+  width:100%;  
+  padding:14px;  
+  margin-top:22px;  
+  border:none;  
+  border-radius:12px;  
+  background:#8b0000;  
+  color:#fff;  
+  font-size:17px;  
+  cursor:pointer;  
+}  
+  
+#popup{  
+  display:none;  
+  position:fixed;  
+  inset:0;  
+  background:rgba(0,0,0,.6);  
+  z-index:12000;  
+  align-items:center;  
+  justify-content:center;  
+}  
+#popupBox{  
+  background:#fff;  
+  padding:28px;  
+  border-radius:18px;  
+  text-align:center;  
+  max-width:340px;  
+}  
+</style>  </head>  <body>  <header>  
+  <div class="menu-btn" onclick="openMenu()">☰</div>  
+  <h1>🕋 تأكيد التسجيل</h1>  
+</header>  <nav id="sideMenu">  
+  <a href="results-gen.html">🕋 العروض العامة</a>  
+  <a href="recherche-oeffer.html">📩 طلب عرض عمرة</a>  
+  <a href="recherche-n.html">👤 صفحتي الخاصة</a>  
+</nav>  
+<div id="overlay" onclick="closeMenu()"></div>  <div class="container">    <div class="section">  
+    <h3>👤 بيانات المعتمر</h3>  
+    <div id="userData">⏳ تحميل...</div>  
+  </div>    <div class="section">  
+    <h3>🕋 بيانات العرض</h3>  
+    <div id="offerData">⏳ تحميل...</div>  
+  </div>  <button class="main" onclick="send()">📩 تأكيد وإرسال الطلب</button>
 
-<style>
-body{
-  font-family:Tajawal,Arial;
-  margin:0;
-  background:#f2f2f2;
-}
-header{
-  background:#8b0000;
-  color:#fff;
-  padding:12px;
-  text-align:center;
-  position:relative;
-}
-.menu-btn{
-  position:absolute;
-  right:15px;
-  top:10px;
-  background:none;
-  border:none;
-  color:#fff;
-  font-size:22px;
-  cursor:pointer;
-}
-.general-btn{
-  position:absolute;
-  left:15px;
-  top:14px;
-  color:#fff;
-  text-decoration:none;
-  font-size:14px;
-}
-.sidebar{
-  position:fixed;
-  top:0;
-  right:-280px;
-  width:260px;
-  height:100%;
-  background:#fff;
-  box-shadow:-4px 0 10px rgba(0,0,0,.15);
-  padding:15px;
-  transition:.3s;
-  z-index:1000;
-}
-.sidebar.active{ right:0; }
-.sidebar .close{ cursor:pointer; text-align:left }
-.container{
-  max-width:900px;
-  margin:20px auto;
-  padding:10px;
-}
-.card{
-  background:#fff;
-  padding:16px;
-  border-radius:16px;
-  margin-bottom:12px;
-  box-shadow:0 4px 10px rgba(0,0,0,.06);
-}
-.card-header{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-.card-header img{
-  width:45px;
-  height:45px;
-  object-fit:contain;
-  border-radius:8px;
-}
-.card-info{ margin-top:10px; font-size:14px }
-.price{ margin-top:10px; font-weight:bold; color:#8b0000 }
-.card-actions{
-  display:flex;
-  gap:8px;
-  margin-top:10px;
-}
-.card-actions button{
-  flex:1;
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  background:#8b0000;
-  color:#fff;
-  font-weight:bold;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-  🕋 العروض المناسبة
-  <a class="general-btn" href="results-gen.html">📋 العروض العامة</a>
-</header>
-
-<div id="sidebar" class="sidebar">
-  <div class="close" onclick="toggleSidebar()">❌</div>
-  <h3>👤 معلومات المعتمر</h3>
-  <div id="userBox">⏳ تحميل...</div>
-</div>
-
-<div class="container" id="offers">⏳ جارٍ تحميل العروض...</div>
-
-<script>
-const SEARCH_API="https://script.google.com/macros/s/AKfycbwaPdiqpKXpPc1_GIoVo5WV98ecIK-ay2QcQzVRqrVfezFuL-vGIziHuEJVG9TtrhAQCw/exec";
-const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
-const SEND_API="https://script.google.com/macros/s/AKfycbyibhkLaHPyFdBMGOmpT9m3fqpSLJ1lO4zjP1iMT37UOVoIhgGhH5khIe583KX2uvZo/exec";
-
-const phone = localStorage.getItem("umrah_phone");
-const userBox = document.getElementById("userBox");
-const offersBox = document.getElementById("offers");
-
-let userData=null;
-let offersData=[];
-let selectedOffer=null;
-
-function toggleSidebar(){
-  document.getElementById("sidebar").classList.toggle("active");
-}
-
-function diffDays(d1,d2){
-  return Math.abs((d1-d2)/(1000*60*60*24));
-}
-
-function formatDate(d){
-  return new Date(d).toLocaleDateString("ar-DZ");
-}
-
-/* ===== جلب المعتمر (كما كان يعمل) ===== */
-if(!phone){
-  userBox.innerHTML="❌ رقم الهاتف غير موجود";
-}else{
-  fetch(SEARCH_API+"?phone="+phone)
-  .then(r=>r.json())
-  .then(d=>{
-    if(d && d.found){
-      userData=d;
-      userBox.innerHTML=`
-        <b>${d.name} ${d.lastname}</b><br><br>
-        📞 ${d.phone}<br>
-        ✈️ ${d.airport}<br>
-        🏨 ${d.hotel}<br>
-        ⏱️ ${d.duration}<br>
-        🛏️ ${d.room}<br>
-        🏠 ${d.residence}<br>
-        📅 ${d.travel_date}
-      `;
-    }else{
-      userBox.innerHTML="❌ رقم الهاتف غير موجود";
-    }
-  });
-}
-
-/* ===== جلب العروض ===== */
-fetch(OFFERS_API)
-.then(r=>r.json())
-.then(d=>{
-  offersData=d;
-  renderOffers();
-});
-
-function isMatching(o){
-  if(!userData) return false;
-  return (
-    o.airport.includes(userData.airport) &&
-    diffDays(new Date(userData.travel_date), new Date(o.date))<=10
-  );
-}
-
-/* ===== عرض العروض ===== */
-function renderOffers(){
-  const list=offersData.filter(isMatching);
-  if(!list.length){
-    offersBox.innerHTML="❌ لا توجد عروض مناسبة";
-    return;
-  }
-  offersBox.innerHTML="";
-  list.forEach(o=>{
-    offersBox.innerHTML+=`
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <small>${o.agency} – ${o.state}</small><br>
-            <strong>${o.offer}</strong>
-          </div>
-        </div>
-        <div class="card-info">
-          📅 ${formatDate(o.date)}<br>
-          🏨 ${o.hotel}<br>
-          ⏱️ ${o.duration}
-        </div>
-        <div class="price">💰 ${o.group} دج</div>
-        <div class="card-actions">
-          <button onclick='send(${JSON.stringify(o)})'>📩 تسجيل</button>
-        </div>
-      </div>
-    `;
-  });
-}
-
-/* ===== الإرسال (كما كان يعمل) ===== */
-function send(o){
-  fetch(SEND_API,{
-    method:"POST",
-    body:JSON.stringify({
-      customer:userData,
-      offer:o
-    })
-  });
-}
-</script>
-
-</body>
-</html>
+</div>  <div id="popup">  
+  <div id="popupBox">  
+    <h3 id="popTitle">⏳ جارٍ إرسال الطلب</h3>  
+    <p id="popText">استغفر الله العظيم 🤍</p>  
+  </div>  
+</div>  <script>  
+/* ===== APIs ===== */  
+const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";  
+const EMAIL_API="https://script.google.com/macros/s/AKfycbzcxJ2mvd-Nnr5mdzPItK6_3pWnX3kR_EIQuKZanjW93RGIh06d4PDqcdWwMV0AyiVB/exec";  
+  
+/* ===== محاولة الاستقبال من المسارين ===== */  
+let customer = null;  
+let offer = null;  
+  
+/* 1️⃣ المسار الجديد (sessionStorage) */  
+const sessionData = JSON.parse(sessionStorage.getItem("umrahRequest") || "null");  
+if(sessionData){  
+  customer = {  
+    name: sessionData.first + " " + sessionData.last,  
+    phone: sessionData.phone  
+  };  
+  offer = {  
+    agency: sessionData.agency,  
+    state: sessionData.state,  
+    airport: sessionData.airport,  
+    date: sessionData.date,  
+    hotel: sessionData.hotel || "-",  
+    group: sessionData.price  
+  };  
+}  
+  
+/* 2️⃣ المسار القديم (localStorage) */  
+if(!customer || !offer){  
+  const phone = localStorage.getItem("umrah_phone");  
+  const storedOffer = JSON.parse(localStorage.getItem("selected_offer") || "null");  
+  
+  if(phone && storedOffer){  
+    offer = storedOffer;  
+  
+    fetch(SEARCH_API+"?phone="+phone)  
+      .then(r=>r.json())  
+      .then(d=>{  
+        customer = {  
+          name: d.name,  
+          phone: phone,  
+          airport: d.airport,  
+          hotel: d.hotel,  
+          duration: d.duration  
+        };  
+        render();  
+      });  
+  }else{  
+    location.href="results-gen.html";  
+  }  
+}else{  
+  render();  
+}  
+  
+/* ===== عرض البيانات ===== */  
+function render(){  
+  userData.innerHTML = `  
+    <div class="row">الاسم: ${customer.name}</div>  
+    <div class="row">الهاتف: ${customer.phone}</div>  
+  `;  
+  
+  offerData.innerHTML = `  
+    <div class="row">الوكالة: ${offer.agency || "-"}</div>  
+    <div class="row">الولاية: ${offer.state || "-"}</div>  
+    <div class="row">المطار: ${offer.airport || "-"}</div>  
+    <div class="row">تاريخ الرحلة: ${offer.date || "-"}</div>  
+    <div class="row">الفندق: ${offer.hotel || "-"}</div>  
+    <div class="row">سعر الغرفة الجماعية: ${offer.group || "-"} دج</div>  
+  `;  
+}  
+  
+/* ===== الإرسال ===== */  
+function send(){  
+  popup.style.display="flex";  
+  
+  fetch(EMAIL_API,{  
+    method:"POST",  
+    body:JSON.stringify({customer,offer})  
+  }).then(()=>{  
+    popTitle.innerText="✅ تم إرسال طلبك بنجاح";  
+    popText.innerText="نسأل الله أن يكتب لك عمرة مقبولة 🌙";  
+  
+    setTimeout(()=>{  
+      sessionStorage.removeItem("umrahRequest");  
+      localStorage.removeItem("umrah_phone");  
+      localStorage.removeItem("selected_offer");  
+      location.href="results-gen.html";  
+    },3000);  
+  });  
+}  
+  
+function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}  
+function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}  
+</script>  </body>  
+</html>  
+هدا الكود يرسل وصحيح  
+بنفس طريقة اصلح الاخر   
+<!DOCTYPE html>  
+<html lang="ar" dir="rtl">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>العروض المناسبة</title>  <style>  
+body{  
+  font-family:Tajawal,Arial;  
+  margin:0;  
+  background:#f2f2f2;  
+}  
+header{  
+  background:#8b0000;  
+  color:#fff;  
+  padding:12px;  
+  text-align:center;  
+  position:relative;  
+}  
+.menu-btn{  
+  position:absolute;  
+  right:15px;  
+  top:10px;  
+  background:none;  
+  border:none;  
+  color:#fff;  
+  font-size:22px;  
+  cursor:pointer;  
+}  
+.general-btn{  
+  position:absolute;  
+  left:15px;  
+  top:14px;  
+  color:#fff;  
+  text-decoration:none;  
+  font-size:14px;  
+}  
+.sidebar{  
+  position:fixed;  
+  top:0;  
+  right:-280px;  
+  width:260px;  
+  height:100%;  
+  background:#fff;  
+  box-shadow:-4px 0 10px rgba(0,0,0,.15);  
+  padding:15px;  
+  transition:.3s;  
+  z-index:1000;  
+}  
+.sidebar.active{ right:0; }  
+.sidebar .close{  
+  text-align:left;  
+  cursor:pointer;  
+}  
+.container{  
+  max-width:900px;  
+  margin:20px auto;  
+  padding:10px;  
+}  
+.card{  
+  background:#fff;  
+  padding:16px;  
+  border-radius:16px;  
+  margin-bottom:12px;  
+  box-shadow:0 4px 10px rgba(0,0,0,.06);  
+}  
+.card-header{  
+  display:flex;  
+  gap:10px;  
+  align-items:center;  
+}  
+.card-header img{  
+  width:45px;  
+  height:45px;  
+  object-fit:contain;  
+  border-radius:8px;  
+}  
+.card-info{  
+  margin-top:10px;  
+  font-size:14px;  
+}  
+.price{  
+  margin-top:10px;  
+  font-weight:bold;  
+  color:#8b0000;  
+}  
+.card-actions{  
+  display:flex;  
+  gap:8px;  
+  margin-top:10px;  
+}  
+.card-actions button{  
+  flex:1;  
+  padding:10px;  
+  border:none;  
+  border-radius:10px;  
+  background:#8b0000;  
+  color:#fff;  
+  font-weight:bold;  
+  cursor:pointer;  
+}  
+</style>  </head>  <body>  <header>  
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>  
+  🕋 العروض المناسبة  
+  <a class="general-btn" href="results-gen.html">📋 العروض العامة</a>  
+</header>  <div id="sidebar" class="sidebar">  
+  <div class="close" onclick="toggleSidebar()">❌</div>  
+  <h3>👤 معلومات المعتمر</h3>  
+  <div id="userBox">⏳ تحميل...</div>  
+</div>  <div class="container" id="offers">⏳ جارٍ تحميل العروض...</div>  <script>  
+const SEARCH_API = "https://script.google.com/macros/s/AKfycbwaPdiqpKXpPc1_GIoVo5WV98ecIK-ay2QcQzVRqrVfezFuL-vGIziHuEJVG9TtrhAQCw/exec";  
+const OFFERS_API = "https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";  
+const SEND_API   = "https://script.google.com/macros/s/AKfycbyibhkLaHPyFdBMGOmpT9m3fqpSLJ1lO4zjP1iMT37UOVoIhgGhH5khIe583KX2uvZo/exec";  
+  
+const phone = localStorage.getItem("umrah_phone");  
+const userBox = document.getElementById("userBox");  
+const offersBox = document.getElementById("offers");  
+  
+let userData=null;  
+let offersData=[];  
+let selectedOffer=null;  
+  
+function toggleSidebar(){  
+  document.getElementById("sidebar").classList.toggle("active");  
+}  
+  
+function diffDays(d1,d2){  
+  return Math.abs((d1-d2)/(1000*60*60*24));  
+}  
+  
+function formatDate(d){  
+  if(!d) return "-";  
+  return new Date(d).toLocaleDateString("ar-DZ");  
+}  
+  
+/* ===== جلب المعتمر ===== */  
+if(!phone){  
+  userBox.innerHTML="❌ رقم الهاتف غير موجود";  
+}else{  
+  fetch(SEARCH_API+"?phone="+encodeURIComponent(phone))  
+  .then(r=>r.json())  
+  .then(d=>{  
+    if(d && d.found){  
+      userData=d;  
+      userBox.innerHTML=`  
+        <b>${d.name} ${d.lastname}</b><br><br>  
+        📞 ${d.phone}<br>  
+        ✈️ ${d.airport}<br>  
+        🏨 ${d.hotel}<br>  
+        ⏱️ ${d.duration}<br>  
+        🛏️ ${d.room}<br>  
+        🗺️ ${d.route}<br>  
+        ✈️ ${d.flight}<br>  
+        🏠 ${d.residence}<br>  
+        📅 ${d.travel_date}<br>  
+        📌 ${d.status}<br>  
+        <hr>  
+        📝 ${d.note || "-"}  
+      `;  
+    }else{  
+      userBox.innerHTML="❌ لم يتم العثور على بيانات";  
+    }  
+  });  
+}  
+  
+/* ===== جلب العروض ===== */  
+fetch(OFFERS_API)  
+.then(r=>r.json())  
+.then(d=>{  
+  offersData=d || [];  
+  renderOffers();  
+});  
+  
+function isMatching(o){  
+  if(!userData) return false;  
+  return (  
+    (o.airport?.includes(userData.airport) || userData.airport?.includes(o.airport))  
+    && diffDays(new Date(userData.travel_date), new Date(o.date)) <= 10  
+  );  
+}  
+  
+/* ===== عرض العروض ===== */  
+function renderOffers(){  
+  const list = offersData.filter(isMatching);  
+  if(!list.length){  
+    offersBox.innerHTML="❌ لا توجد عروض مناسبة";  
+    return;  
+  }  
+  offersBox.innerHTML="";  
+  list.forEach(o=>{  
+    offersBox.innerHTML+=`  
+      <div class="card">  
+        <div class="card-header">  
+          <img src="${o.logo||""}" onerror="this.style.display='none'">  
+          <div>  
+            <small>${o.agency||"-"} – ${o.state||"-"} 📍</small><br>  
+            <strong>${o.offer||"-"}</strong>  
+          </div>  
+        </div>  
+        <div class="card-info">  
+          <div>📅 ${formatDate(o.date)}</div>  
+          <div>🏨 ${o.hotel||"-"}</div>  
+          <div>⏱️ ${o.duration||"-"}</div>  
+          <div>🛫 ${o.flight||"-"}</div>  
+        </div>  
+        <div class="price">💰 ${o.group||"-"} دج</div>  
+        <div class="card-actions">  
+          <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>  
+          <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>  
+        </div>  
+      </div>  
+    `;  
+  });  
+}  
+  
+/* ===== التفاصيل ===== */  
+function openDetails(o){  
+  selectedOffer=o;  
+  document.getElementById("detailsContent").innerHTML=`  
+    <p><b>🕋 العرض:</b> ${o.offer}</p>  
+    <p><b>🏢 الوكالة:</b> ${o.agency}</p>  
+    <p><b>✈️ المطار:</b> ${o.airport}</p>  
+    <p><b>📅 التاريخ:</b> ${formatDate(o.date)}</p>  
+    <p><b>🏨 الفندق:</b> ${o.hotel}</p>  
+    <p><b>💰 السعر:</b> ${o.group} دج</p>  
+  `;  
+  document.getElementById("detailsModal").style.display="flex";  
+}  
+function closeDetails(){  
+  document.getElementById("detailsModal").style.display="none";  
+}  
+function openRegister(o){  
+  if(!userData){  
+    showToast("❌ معلومات المعتمر غير متوفرة", false);  
+    return;  
+  }  
+  
+  selectedOffer = o;  
+  
+  document.getElementById("detailsContent").innerHTML = `  
+    <p><b>🕋 العرض:</b> ${o.offer}</p>  
+    <p><b>🏢 الوكالة:</b> ${o.agency}</p>  
+    <p><b>📍 الولاية:</b> ${o.state}</p>  
+    <p><b>✈️ المطار:</b> ${o.airport}</p>  
+    <p><b>📅 التاريخ:</b> ${formatDate(o.date)}</p>  
+    <p><b>🏨 الفندق:</b> ${o.hotel}</p>  
+    <p><b>⏱️ المدة:</b> ${o.duration}</p>  
+    <p><b>💰 السعر:</b> ${o.group} دج</p>  
+    <hr>  
+    <p>هل تريد تأكيد إرسال طلب التسجيل؟</p>  
+  `;  
+  
+  document.getElementById("detailsModal").style.display = "flex";  
+}  
+  
+  
+  
+  
+/* ===== الإرسال ===== */  
+function sendConfirmed(){  
+  if(!userData || !selectedOffer) return;  
+  
+  showLoader(true);  
+  
+  fetch(SEND_API,{  
+    method:"POST",  
+    headers:{ "Content-Type":"application/json" },  
+    body:JSON.stringify({  
+      customer:userData,  
+      offer:selectedOffer  
+    })  
+  })  
+  .then(r=>r.text())  
+  .then(()=>{  
+    showLoader(false);  
+    closeDetails();  
+    showToast("✅ تم إرسال الطلب بنجاح");  
+  })  
+  .catch(()=>{  
+    showLoader(false);  
+    showToast("❌ فشل الإرسال",false);  
+  });  
+}  
+  
+function showLoader(show){  
+  document.getElementById("loader").style.display = show ? "flex" : "none";  
+}  
+function showToast(msg,ok=true){  
+  const t=document.getElementById("toast");  
+  t.style.background=ok?"#2e7d32":"#c62828";  
+  t.innerText=msg;  
+  t.style.display="block";  
+  setTimeout(()=>t.style.display="none",3000);  
+}  
+</script>  <!-- Modal -->  <div id="detailsModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;align-items:center;justify-content:center;">  
+  <div style="background:#fff;width:90%;max-width:500px;padding:20px;border-radius:16px;">  
+    <div style="text-align:left;cursor:pointer" onclick="closeDetails()">❌</div>  
+    <div id="detailsContent"></div>  
+    <button onclick="sendConfirmed()" style="width:100%;margin-top:10px;padding:10px;background:#8b0000;color:#fff;border:none;border-radius:10px">  
+      تأكيد الإرسال  
+    </button>  
+  </div>  
+</div>  <div id="toast" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);color:#fff;padding:12px 18px;border-radius:10px;z-index:3001;font-weight:bold;"></div>  
+<div id="loader" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:3000;align-items:center;justify-content:center;color:#fff;font-size:18px;">  
+  ⏳ جارٍ الإرسال...  
+</div>  </body>  
+</html>  
