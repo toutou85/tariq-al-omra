@@ -1,123 +1,135 @@
-<!DOCTYPE html>  <html lang="ar" dir="rtl">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>العروض المناسبة</title>  <style>  
-body{  
-  font-family:Tajawal,Arial;  
-  margin:0;  
-  background:#f2f2f2;  
-}  
-header{  
-  background:#8b0000;  
-  color:#fff;  
-  padding:12px;  
-  text-align:center;  
-  position:relative;  
-}  
-.menu-btn{  
-  position:absolute;  
-  right:15px;  
-  top:10px;  
-  background:none;  
-  border:none;  
-  color:#fff;  
-  font-size:22px;  
-  cursor:pointer;  
-}  
-.general-btn{  
-  position:absolute;  
-  left:15px;  
-  top:14px;  
-  color:#fff;  
-  text-decoration:none;  
-  font-size:14px;  
-}  
-.sidebar{  
-  position:fixed;  
-  top:0;  
-  right:-280px;  
-  width:260px;  
-  height:100%;  
-  background:#fff;  
-  box-shadow:-4px 0 10px rgba(0,0,0,.15);  
-  padding:15px;  
-  transition:.3s;  
-  z-index:1000;  
-}  
-.sidebar.active{ right:0; }  
-.sidebar .close{  
-  text-align:left;  
-  cursor:pointer;  
-}  
-.container{  
-  max-width:900px;  
-  margin:20px auto;  
-  padding:10px;  
-}  
-.card{  
-  background:#fff;  
-  padding:16px;  
-  border-radius:16px;  
-  margin-bottom:12px;  
-  box-shadow:0 4px 10px rgba(0,0,0,.06);  
-}  
-.card-header{  
-  display:flex;  
-  gap:10px;  
-  align-items:center;  
-}  
-.card-header img{  
-  width:45px;  
-  height:45px;  
-  object-fit:contain;  
-  border-radius:8px;  
-}  
-.card-info{  
-  margin-top:10px;  
-  font-size:14px;  
-}  
-.price{  
-  margin-top:10px;  
-  font-weight:bold;  
-  color:#8b0000;  
-}  
-.card-actions{  
-  display:flex;  
-  gap:8px;  
-  margin-top:10px;  
-}  
-.card-actions button{  
-  flex:1;  
-  padding:10px;  
-  border:none;  
-  border-radius:10px;  
-  background:#8b0000;  
-  color:#fff;  
-  font-weight:bold;  
-}  
-</style>  </head>  <body>  <header>  
-  <button class="menu-btn" onclick="toggleSidebar()">☰</button>  
-  🕋 العروض المناسبة  
-  <a class="general-btn" href="results-gen.html">📋 العروض العامة</a>  
-</header>  <div id="sidebar" class="sidebar">  
-  <div class="close" onclick="toggleSidebar()">❌</div>  
-  <h3>👤 معلومات المعتمر</h3>  
-  <div id="userBox">⏳ تحميل...</div>  
-</div>  <div class="container" id="offers">⏳ جارٍ تحميل العروض...</div> 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>العروض المناسبة</title>
 
+<style>
+body{
+  font-family:Tajawal,Arial;
+  margin:0;
+  background:#f2f2f2;
+}
+header{
+  background:#8b0000;
+  color:#fff;
+  padding:12px;
+  text-align:center;
+  position:relative;
+}
+.menu-btn{
+  position:absolute;
+  right:15px;
+  top:10px;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:22px;
+  cursor:pointer;
+}
+.general-btn{
+  position:absolute;
+  left:15px;
+  top:14px;
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+}
+.sidebar{
+  position:fixed;
+  top:0;
+  right:-280px;
+  width:260px;
+  height:100%;
+  background:#fff;
+  box-shadow:-4px 0 10px rgba(0,0,0,.15);
+  padding:15px;
+  transition:.3s;
+  z-index:1000;
+}
+.sidebar.active{ right:0; }
+.sidebar .close{
+  text-align:left;
+  cursor:pointer;
+}
+.container{
+  max-width:900px;
+  margin:20px auto;
+  padding:10px;
+}
+.card{
+  background:#fff;
+  padding:16px;
+  border-radius:16px;
+  margin-bottom:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.06);
+}
+.card-header{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.card-header img{
+  width:45px;
+  height:45px;
+  object-fit:contain;
+  border-radius:8px;
+}
+.card-info{
+  margin-top:10px;
+  font-size:14px;
+}
+.price{
+  margin-top:10px;
+  font-weight:bold;
+  color:#8b0000;
+}
+.card-actions{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+.card-actions button{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#8b0000;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  🕋 العروض المناسبة
+  <a class="general-btn" href="results-gen.html">📋 العروض العامة</a>
+</header>
+
+<div id="sidebar" class="sidebar">
+  <div class="close" onclick="toggleSidebar()">❌</div>
+  <h3>👤 معلومات المعتمر</h3>
+  <div id="userBox">⏳ تحميل...</div>
+</div>
+
+<div class="container" id="offers">⏳ جارٍ تحميل العروض...</div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbzylk80YyLjyEERDxLNfm97TgWjMsmubMI6ND68UpZVWdzQwaKXgOH-B8oSsAAYcok0hA/exec";
-const OFFERS_API = "https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
+const SEARCH_API="https://script.google.com/macros/s/AKfycbzylk80YyLjyEERDxLNfm97TgWjMsmubMI6ND68UpZVWdzQwaKXgOH-B8oSsAAYcok0hA/exec";
+const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
 
-const phone = localStorage.getItem("umrah_phone");
-const userBox = document.getElementById("userBox");
-const offersBox = document.getElementById("offers");
+const phone=localStorage.getItem("umrah_phone");
+const userBox=document.getElementById("userBox");
+const offersBox=document.getElementById("offers");
 
-let userData = null;
-let offersData = [];
-let selectedOffer = null;
+let userData=null;
+let offersData=[];
+let selectedOffer=null;
 
 function toggleSidebar(){
   document.getElementById("sidebar").classList.toggle("active");
@@ -152,6 +164,7 @@ fetch(SEARCH_API+"?phone="+phone)
       <hr>
       📝 ${d.note||"-"}
     `;
+    renderOffers();
   }
 });
 
@@ -167,13 +180,15 @@ function isMatching(o){
   if(!userData) return false;
   return (
     (o.airport.includes(userData.airport) || userData.airport.includes(o.airport))
-    && diffDays(new Date(userData.travel_date), new Date(o.date)) <= 10
+    && diffDays(new Date(userData.travel_date), new Date(o.date))<=10
   );
 }
 
 /* ===== عرض العروض ===== */
 function renderOffers(){
-  const list = offersData.filter(isMatching);
+  if(!userData || !offersData.length) return;
+
+  const list=offersData.filter(isMatching);
   if(!list.length){
     offersBox.innerHTML="❌ لا توجد عروض مناسبة";
     return;
@@ -211,7 +226,7 @@ function renderOffers(){
 
 /* ===== التفاصيل ===== */
 function openDetails(o){
-  selectedOffer = o;
+  selectedOffer=o;
   document.getElementById("detailsContent").innerHTML=`
     <p><b>🕋 العرض:</b> ${o.offer}</p>
     <p><b>🏢 الوكالة:</b> ${o.agency}</p>
@@ -229,7 +244,7 @@ function closeDetails(){
 
 /* ===== تحضير التسجيل ===== */
 function prepareRegister(o){
-  selectedOffer = o;
+  selectedOffer=o;
   openDetails(o);
 }
 
@@ -245,24 +260,12 @@ function sendConfirmed(){
   fetch(SEARCH_API,{
     method:"POST",
     headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify({
-      customer:userData,
-      offer:selectedOffer
-    })
+    body:JSON.stringify({customer:userData,offer:selectedOffer})
   })
-  .then(r=>r.text())
-  .then(()=>{
-    showLoader(false);
-    closeDetails();
-    showToast("✅ تم إرسال الطلب بنجاح");
-  })
-  .catch(()=>{
-    showLoader(false);
-    showToast("❌ خطأ في الإرسال",false);
-  });
+  .then(()=>{ showLoader(false); closeDetails(); showToast("✅ تم إرسال الطلب بنجاح"); })
+  .catch(()=>{ showLoader(false); showToast("❌ خطأ في الإرسال",false); });
 }
 
-/* ===== أدوات ===== */
 function showLoader(show){
   document.getElementById("loader").style.display=show?"flex":"none";
 }
@@ -273,12 +276,19 @@ function showToast(msg,ok=true){
   t.style.display="block";
   setTimeout(()=>t.style.display="none",3000);
 }
-</script>  <!-- Modal -->  <div id="detailsModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;align-items:center;justify-content:center;">  
-  <div style="background:#fff;width:90%;max-width:500px;padding:20px;border-radius:16px;">  
-    <div style="text-align:left;cursor:pointer" onclick="closeDetails()">❌</div>  
-    <div id="detailsContent"></div>  
-    <button onclick="sendConfirmed()" style="width:100%;margin-top:10px;padding:10px;background:#8b0000;color:#fff;border:none;border-radius:10px">تأكيد الإرسال</button>  
-  </div>  
-</div>  <div id="toast" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);color:#fff;padding:12px 18px;border-radius:10px;z-index:3001;font-weight:bold;"></div>  
-<div id="loader" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:3000;align-items:center;justify-content:center;color:#fff;font-size:18px;">⏳ جارٍ الإرسال...</div>  </body>  
+</script>
+
+<!-- Modal -->
+<div id="detailsModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;align-items:center;justify-content:center;">
+  <div style="background:#fff;width:90%;max-width:500px;padding:20px;border-radius:16px;">
+    <div style="text-align:left;cursor:pointer" onclick="closeDetails()">❌</div>
+    <div id="detailsContent"></div>
+    <button onclick="sendConfirmed()" style="width:100%;margin-top:10px;padding:10px;background:#8b0000;color:#fff;border:none;border-radius:10px">تأكيد الإرسال</button>
+  </div>
+</div>
+
+<div id="toast" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);color:#fff;padding:12px 18px;border-radius:10px;z-index:3001;font-weight:bold;"></div>
+<div id="loader" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:3000;align-items:center;justify-content:center;color:#fff;font-size:18px;">⏳ جارٍ الإرسال...</div>
+
+</body>
 </html>
