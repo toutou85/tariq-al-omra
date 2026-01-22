@@ -184,6 +184,11 @@ function isMatching(o){
   return sameAirport &&
     diffDays(new Date(userData.travel_date), new Date(o.date)) <= 10;
 }
+function formatDate(d){
+  if(!d) return "-";
+  const date = new Date(d);
+  return date.toLocaleDateString("ar-DZ");
+}
 
 /* ===== عرض العروض ===== */
 function renderOffers(){
@@ -241,6 +246,48 @@ function registerOffer(offer){
   );
   alert("تم اختيار العرض");
 }
+  /* ===== التفاصيل ===== */
+function openDetails(o){
+  alert(
+    "تفاصيل العرض:\n\n" +
+    "العرض: " + (o.offer || "-") + "\n" +
+    "الوكالة: " + (o.agency || "-") + "\n" +
+    "الولاية: " + (o.state || "-") + "\n" +
+    "المطار: " + (o.airport || "-") + "\n" +
+    "التاريخ: " + formatDate(o.date) + "\n" +
+    "الفندق: " + (o.hotel || "-") + "\n" +
+    "السعر: " + (o.group || "-") + " دج"
+  );
+}
+
+/* ===== مشاركة ===== */
+function shareOffer(o){
+  const text =
+    "🕋 عرض عمرة:\n" +
+    o.offer + "\n" +
+    "✈️ " + o.airport + "\n" +
+    "📅 " + formatDate(o.date) + "\n" +
+    "💰 " + o.group + " دج";
+
+  if(navigator.share){
+    navigator.share({ text });
+  }else{
+    alert(text);
+  }
+}
+
+/* ===== تسجيل ===== */
+function openRegister(o){
+  localStorage.setItem(
+    "umrah_registration",
+    JSON.stringify({
+      pilgrim: userData,
+      offer: o
+    })
+  );
+  alert("تم اختيار العرض، جاهز للتسجيل ✉️");
+}
+
 </script>
 
 </body>
