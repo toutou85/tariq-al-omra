@@ -210,32 +210,60 @@ function isMatching(o){
 }
 
 /* ===== عرض العروض ===== */
-function renderOffers(){
-  const list = offersData.filter(isMatching);
+  <!-- رأس البطاقة -->
+  <div class="card-header">
+    <img src="${o.logo || ''}" onerror="this.style.display='none'">
+      <small>${o.agency} – ${o.state} 📍</small>
+    <div>
+      <strong>${o.offer}</strong><br>
+    </div>
+  </div>
 
-  offersBox.innerHTML = "";
-  if(!list.length){
-    offersBox.innerHTML =
-      "<div class='empty'>❌ لا توجد عروض مناسبة</div>";
-    return;
-  }
+  <!-- معلومات العرض -->
+  <div class="card-info">
+    <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>
+    <div>🏨 الأقامة في فندق ${o.hotel || "-"}</div>
+    <div>⏱️ مدة الرحلة: ${o.duration || "-"}</div>
+    <div>🛫 مسار الرحلة: ${o.flight || "-"}</div>
+  </div>
 
-  list.forEach(o=>{
-    offersBox.innerHTML += `
-      <div class="card">
-        <strong>${o.offer}</strong>
-        <div class="line">✈️ المطار: ${o.airport}</div>
-        <div class="line">📅 الإقلاع: ${o.date}</div>
-        <div class="line">🏨 الفندق: ${o.hotel}</div>
-        <div class="line">💰 السعر: ${o.group} دج</div>
+  <!-- السعر -->
+  <div class="price">💰 ${o.group} دج</div>
 
-        <button onclick='registerOffer(${JSON.stringify(o)})'>
-          📝 التسجيل في هذا العرض
-        </button>
-      </div>
-    `;
-  });
+  <!-- الأزرار -->
+        <div class="card-actions">
+          <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>
+          <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة</button>
+          <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
+        </div>
+  function openDetails(o){
+detailsContent.innerHTML = `
+  <p>🕋 <strong>اسم العرض:</strong> ${o.offer || "-"}</p>
+
+  <hr>
+
+  <p>🏢 <strong>الوكالة:</strong> ${o.agency || "-"}</p>
+  <p>📍 <strong>الولاية:</strong> ${o.state || "-"}</p>
+  <p>🏙️ <strong>المدينة:</strong> ${o.city || "-"}</p>
+  <hr>
+  <p>📅 <strong>تاريخ الرحلة:</strong> ${formatDate(o.date)}</p>
+  <p>⏱️ <strong>مدة الرحلة:</strong> ${o.duration || "-"}</p>
+  <p>✈️ <strong>نوع الرحلة:</strong> ${o.flight || "-"}</p>
+  <p>🛫 <strong>مطار الإقلاع:</strong> ${o.airport || "-"}</p>
+  <hr>
+  <p>🏨 <strong>الفندق:</strong> ${o.hotel || "-"}</p>
+  <hr>
+  <p>💰 <strong>الأسعار:</strong></p>
+  <p>👥 جماعية: ${o.group || "-"} دج</p>
+  <p>🛏️ خماسية: ${o.five || "-"} دج</p>
+  <p>🛏️ رباعية: ${o.four || "-"} دج</p>
+  <p>🛏️ ثلاثية: ${o.three || "-"} دج</p>
+  <p>🛏️ ثنائية: ${o.two || "-"} دج</p>
+
+  `;
+  detailsModal.style.display="flex";
 }
+function closeDetails(){detailsModal.style.display="none";}
 
 /* ===== تسجيل ===== */
 function registerOffer(offer){
