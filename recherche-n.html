@@ -143,6 +143,7 @@ function loadUser(){
   .then(d=>{
     if(!d.found){ alert("❌ لا يوجد طلب"); return; }
 
+localStorage.setItem("umrah_phone", p);
     loginBox.style.display="none";
     userBox.style.display="block";
 
