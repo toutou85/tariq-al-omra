@@ -123,9 +123,9 @@ header{
 const SEARCH_API="https://script.google.com/macros/s/AKfycbzylk80YyLjyEERDxLNfm97TgWjMsmubMI6ND68UpZVWdzQwaKXgOH-B8oSsAAYcok0hA/exec";
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
 
-const phone=localStorage.getItem("umrah_phone");
-const userBox=document.getElementById("userBox");
-const offersBox=document.getElementById("offers");
+const phone = localStorage.getItem("umrah_phone");
+const userBox = document.getElementById("userBox");
+const offersBox = document.getElementById("offers");
 
 let userData=null;
 let offersData=[];
@@ -142,6 +142,12 @@ function diffDays(d1,d2){
 function formatDate(d){
   return d ? new Date(d).toLocaleDateString("ar-DZ") : "-";
 }
+
+/* ===== التحقق من الهاتف ===== */
+if(!phone){
+  userBox.innerHTML="❌ رقم الهاتف غير موجود<br>الرجاء الرجوع وإعادة إدخاله";
+  offersBox.innerHTML="";
+}else{
 
 /* ===== جلب المعتمر ===== */
 fetch(SEARCH_API+"?phone="+phone)
@@ -165,7 +171,12 @@ fetch(SEARCH_API+"?phone="+phone)
       📝 ${d.note||"-"}
     `;
     renderOffers();
+  }else{
+    userBox.innerHTML="❌ لم يتم العثور على معلومات المعتمر";
   }
+})
+.catch(()=>{
+  userBox.innerHTML="❌ خطأ في الاتصال بالخادم";
 });
 
 /* ===== جلب العروض ===== */
@@ -175,6 +186,8 @@ fetch(OFFERS_API)
   offersData=d;
   renderOffers();
 });
+
+}
 
 function isMatching(o){
   if(!userData) return false;
@@ -242,7 +255,6 @@ function closeDetails(){
   document.getElementById("detailsModal").style.display="none";
 }
 
-/* ===== تحضير التسجيل ===== */
 function prepareRegister(o){
   selectedOffer=o;
   openDetails(o);
@@ -262,8 +274,15 @@ function sendConfirmed(){
     headers:{ "Content-Type":"application/json" },
     body:JSON.stringify({customer:userData,offer:selectedOffer})
   })
-  .then(()=>{ showLoader(false); closeDetails(); showToast("✅ تم إرسال الطلب بنجاح"); })
-  .catch(()=>{ showLoader(false); showToast("❌ خطأ في الإرسال",false); });
+  .then(()=>{
+    showLoader(false);
+    closeDetails();
+    showToast("✅ تم إرسال الطلب بنجاح");
+  })
+  .catch(()=>{
+    showLoader(false);
+    showToast("❌ خطأ في الإرسال",false);
+  });
 }
 
 function showLoader(show){
