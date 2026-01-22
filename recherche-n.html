@@ -5,44 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>صفحتي الخاصة</title>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 body{
   font-family:Tajawal,Arial;
   margin:0;
-  background:#f2f2f2;
+  background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
+    center/cover fixed no-repeat;
 }
 header{
+  height:60px;
   background:#8b0000;
   color:#fff;
-  padding:15px;
-  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 .container{
-  max-width:520px;
+  max-width:540px;
+  background:rgba(255,255,255,.95);
   margin:30px auto;
-  background:#fff;
   padding:25px;
-  border-radius:16px;
+  border-radius:18px;
+}
+h2{
+  color:#8b0000;
   text-align:center;
 }
+
 input,button{
   width:100%;
   padding:12px;
-  margin-top:12px;
+  margin-top:10px;
   border-radius:10px;
   border:1px solid #ccc;
+  font-size:14px;
 }
+
 button{
   background:#8b0000;
   color:#fff;
   cursor:pointer;
 }
+
 .welcome{
-  margin-top:20px;
   background:#f8f4ef;
-  padding:15px;
+  padding:18px;
   border-radius:14px;
-  text-align:right;
+  margin-bottom:15px;
+  line-height:1.9;
+}
+.welcome strong{
+  color:#8b0000;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:15px;
+}
+.actions .secondary{
+  background:#555;
 }
 </style>
 </head>
@@ -54,47 +81,114 @@ button{
 </header>
 
 <div class="container">
-  <input type="tel" id="phone" placeholder="أدخل رقم الهاتف">
-  <button onclick="check()">🔍 متابعة</button>
-  <div id="result"></div>
+
+  <!-- إدخال الهاتف -->
+  <div id="loginBox">
+    <input type="tel" id="phone" placeholder="أدخل رقم الهاتف">
+    <button onclick="loadUser()">🔍 متابعة</button>
+  </div>
+
+  <!-- بيانات المعتمر -->
+  <div id="userBox" style="display:none">
+
+    <div class="welcome">
+      🌙 مرحبًا بك <strong id="welcomeName"></strong><br>
+      نسعد بخدمتك في رحلتك المباركة 🤍
+    </div>
+
+    <input id="name" placeholder="الاسم">
+    <input id="lastname" placeholder="اللقب">
+    <input id="airport" placeholder="مطار الإقلاع">
+    <input id="residence" placeholder="الولاية">
+    <input type="date" id="travel_date">
+
+    <div class="actions">
+      <button onclick="saveLocal()">💾 حفظ التعديلات</button>
+      <button class="secondary" onclick="goResults()">⭐ العروض المناسبة</button>
+    </div>
+
+  </div>
+
 </div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbwaPdiqpKXpPc1_GIoVo5WV98ecIK-ay2QcQzVRqrVfezFuL-vGIziHuEJVG9TtrhAQCw/exec";
-const result=document.getElementById("result");
+const API =
+"https://script.google.com/macros/s/AKfycbwaPdiqpKXpPc1_GIoVo5WV98ecIK-ay2QcQzVRqrVfezFuL-vGIziHuEJVG9TtrhAQCw/exec";
 
+let userData = null;
+
+/* تنظيف رقم الهاتف */
 function normalize(p){
-  p=p.replace(/\D/g,"");
-  if(p.startsWith("213"))p=p.slice(3);
-  if(p.startsWith("0"))p=p.slice(1);
+  p = p.replace(/\D/g,"");
+  if(p.startsWith("213")) p = p.slice(3);
+  if(p.startsWith("0")) p = p.slice(1);
   return p;
 }
 
-function check(){
-  const phone=normalize(document.getElementById("phone").value);
-  if(!phone){ alert("أدخل رقم الهاتف"); return; }
+/* تنظيف تاريخ الإقلاع (إزالة الوقت) */
+function cleanDate(d){
+  if(!d) return "";
+  return d.toString().split("T")[0];
+}
 
-  fetch(API+"?phone="+phone)
-  .then(r=>r.json())
-  .then(d=>{
-    if(!d || d.found!==true){
-      result.innerHTML="❌ لا يوجد طلب بهذا الرقم";
+/* جلب بيانات المعتمر */
+function loadUser(){
+  const phone = normalize(document.getElementById("phone").value);
+  if(!phone){
+    alert("أدخل رقم الهاتف");
+    return;
+  }
+
+  fetch(API + "?phone=" + phone)
+  .then(r => r.json())
+  .then(d => {
+
+    if(!d || d.found !== true){
+      alert("❌ لا يوجد طلب بهذا الرقم");
       return;
     }
 
-    localStorage.setItem("umrah_phone",phone);
+    userData = d;
 
-    result.innerHTML=`
-      <div class="welcome">
-        <p><strong>👤 الاسم:</strong> ${d.name} ${d.lastname}</p>
-        <p><strong>✈️ المطار:</strong> ${d.airport}</p>
-        <p><strong>📅 تاريخ الإقلاع:</strong> ${d.travel_date}</p>
-        <button onclick="location.href='results.html'">
-          ⭐ العروض المناسبة
-        </button>
-      </div>
-    `;
+    /* حفظ الهاتف */
+    localStorage.setItem("umrah_phone", phone);
+
+    /* إظهار الصندوق */
+    loginBox.style.display = "none";
+    userBox.style.display = "block";
+
+    /* الترحيب */
+    welcomeName.innerText = d.name + " " + d.lastname;
+
+    /* تعبئة الحقول */
+    name.value = d.name || "";
+    lastname.value = d.lastname || "";
+    airport.value = d.airport || "";
+    residence.value = d.residence || "";
+    travel_date.value = cleanDate(d.travel_date);
+
+  })
+  .catch(()=>{
+    alert("❌ خطأ في الاتصال");
   });
+}
+
+/* حفظ التعديلات محليًا */
+function saveLocal(){
+  userData.name = name.value;
+  userData.lastname = lastname.value;
+  userData.airport = airport.value;
+  userData.residence = residence.value;
+  userData.travel_date = travel_date.value;
+
+  localStorage.setItem("umrah_user", JSON.stringify(userData));
+  alert("✅ تم حفظ التعديلات");
+}
+
+/* الانتقال لصفحة النتائج */
+function goResults(){
+  saveLocal();
+  location.href = "results.html";
 }
 </script>
 
