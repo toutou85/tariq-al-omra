@@ -122,7 +122,7 @@ header{
 <script>
 const SEARCH_API="https://script.google.com/macros/s/AKfycbzylk80YyLjyEERDxLNfm97TgWjMsmubMI6ND68UpZVWdzQwaKXgOH-B8oSsAAYcok0hA/exec";
 const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
-const MAIL_API = "https://script.google.com/macros/s/AKfycbw2nXeEvj4YT4UhucQnu5FoEvGXEMESGdP38JKPt29Z9b77lZQmP6hAAbYrK9wDMTYL/exec";
+const MAIL_API = "https://script.google.com/macros/s/AKfycbwcnFs_8Pyfo2sKuz7Nj2bPNSzUCpYBRKQtFbT93cisZGT9_RCtIWwO8TD5R7SUZl3o/exec";
 
 const phone = localStorage.getItem("umrah_phone");
 const userBox = document.getElementById("userBox");
@@ -278,21 +278,17 @@ function sendConfirmed(){
       offer: selectedOffer
     })
   })
-  .then(r => r.json())
-  .then(res => {
+  .then(r => r.text())
+  .then(txt => {
+    console.log("SERVER:", txt);
     showLoader(false);
     closeDetails();
-    if (res.status === "ok") {
-      showToast("✅ تم إرسال الطلب إلى الإيميل بنجاح");
-    } else {
-      showToast("❌ فشل الإرسال", false);
-      console.error(res.message);
-    }
+    showToast("✅ تم إرسال الطلب بنجاح");
   })
   .catch(err => {
-    showLoader(false);
-    showToast("❌ خطأ في الاتصال", false);
     console.error(err);
+    showLoader(false);
+    showToast("❌ فشل الإرسال", false);
   });
 }
 
