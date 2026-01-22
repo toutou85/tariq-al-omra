@@ -354,8 +354,13 @@ function closeDetails(){
 function showLoader(show){
   document.getElementById("loader").style.display = show ? "flex" : "none";
 }
-  const detailsModal = document.getElementById("detailsModal");
-const detailsContent = document.getElementById("detailsContent");
+let detailsModal, detailsContent;
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  detailsModal = document.getElementById("detailsModal");
+  detailsContent = document.getElementById("detailsContent");
+});
+
 function showToast(msg, ok=true){
   const t = document.getElementById("toast");
   t.style.background = ok ? "#2e7d32" : "#c62828";
