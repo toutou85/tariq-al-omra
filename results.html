@@ -124,8 +124,7 @@ header{
 <div class="container" id="offers">⏳ جارٍ تحميل العروض...</div>
 
 <script>
-  const detailsModal = document.getElementById("detailsModal");
-const detailsContent = document.getElementById("detailsContent");
+
 
 const SEARCH_API = "https://script.google.com/macros/s/AKfycbwaPdiqpKXpPc1_GIoVo5WV98ecIK-ay2QcQzVRqrVfezFuL-vGIziHuEJVG9TtrhAQCw/exec";
 const OFFERS_API = "https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
@@ -262,12 +261,14 @@ function shareOffer(o){
     "📅 " + formatDate(o.date) + "\n" +
     "💰 " + o.group + " دج";
 
-  if(navigator.share){
+  if (navigator.share && /Android|iPhone/i.test(navigator.userAgent)) {
     navigator.share({ text });
-  }else{
-    alert(text);
+  } else {
+    navigator.clipboard.writeText(text);
+    showToast("📋 تم نسخ العرض", true);
   }
 }
+
 
 /* ===== تسجيل ===== */
 function openRegister(btn, o){
@@ -353,7 +354,8 @@ function closeDetails(){
 function showLoader(show){
   document.getElementById("loader").style.display = show ? "flex" : "none";
 }
-
+  const detailsModal = document.getElementById("detailsModal");
+const detailsContent = document.getElementById("detailsContent");
 function showToast(msg, ok=true){
   const t = document.getElementById("toast");
   t.style.background = ok ? "#2e7d32" : "#c62828";
@@ -361,7 +363,7 @@ function showToast(msg, ok=true){
   t.style.display = "block";
   setTimeout(()=> t.style.display="none", 3000);
 }
-
+ 
 </script>
 <!-- نافذة التفاصيل -->
 <div id="detailsModal" style="
