@@ -234,17 +234,13 @@ function openDetails(o){
 function closeDetails(){ detailsModal.style.display="none"; }
 
 /* ===== التسجيل + الإرسال ===== */
-function openRegister(btn, o){
-
-  if(btn.disabled) return;
+function openRegister(o){
 
   if(!userData){
     showToast("❌ معلومات المعتمر غير متوفرة", false);
     return;
   }
 
-  btn.disabled = true;
-  btn.style.opacity = ".6";
   showLoader(true);
 
   const customer = {
@@ -267,63 +263,21 @@ function openRegister(btn, o){
     price: o.group
   };
 
-  fetch(SEARCH_API, {
+  fetch(EMAIL_API, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ customer, offer })
   })
   .then(r => r.text())
   .then(res => {
-    console.log("SERVER:", res);
+    console.log("EMAIL_API:", res);
     showLoader(false);
-
-    showToast("✅ تم إرسال طلبك بنجاح");
+    showToast("✅ تم إرسال الطلب بنجاح، سيتم الاتصال بك");
   })
   .catch(err => {
     console.error(err);
     showLoader(false);
-    showToast("❌ فشل الاتصال بالخادم", false);
-    btn.disabled = false;
-    btn.style.opacity = "1";
-  });
-}
---- معلومات العرض ---
-${selectedOffer.offer}
-${selectedOffer.hotel}
-${selectedOffer.duration}
-${selectedOffer.group} دج
-`;
-
-  const payload=new URLSearchParams({
-    name:userData.name,
-    lastname:userData.lastname,
-    phone:userData.phone,
-    airport:userData.airport,
-    residence:userData.residence,
-    travel_date:userData.travel_date,
-    hotel:selectedOffer.hotel||"",
-    duration:selectedOffer.duration||"",
-    flight:selectedOffer.flight||"",
-    note:(userData.note||"")+"\n"+note
-  });
-
-  fetch(SEARCH_API,{method:"POST",body:payload})
-  .then(r=>r.text())
-  .then(res=>{
-    showLoader(false);
-    closeDetails();
-    if(res==="ADDED"||res==="UPDATED"){
-      showToast("✅ تم إرسال الطلب بنجاح");
-    }else{
-      showToast("⚠️ فشل الإرسال",false);
-    }
-  })
-  .catch(()=>{
-    showLoader(false);
-    closeDetails();
-    showToast("❌ خطأ في الاتصال",false);
+    showToast("❌ فشل إرسال الطلب", false);
   });
 }
 
