@@ -284,52 +284,68 @@ function openRegister(btn, o){
   btn.style.opacity = ".6";
   showLoader(true);
 
+  // 🔴 دمج معلومات العرض داخل note (كما يفهمه GAS)
+  const offerDetails = `
+--- معلومات العرض ---
+اسم العرض: ${o.offer || "-"}
+الوكالة: ${o.agency || "-"}
+الولاية: ${o.state || "-"}
+المطار: ${o.airport || "-"}
+تاريخ الانطلاق: ${formatDate(o.date)}
+الفندق: ${o.hotel || "-"}
+المدة: ${o.duration || "-"}
+نوع الرحلة: ${o.flight || "-"}
+السعر: ${o.group || "-"} دج
+----------------------
+`;
+
   const payload = new URLSearchParams({
 
-    /* المعتمر */
+    // ✅ معلومات المعتمر (مطابقة 100% لـ GAS)
     name: userData.name,
     lastname: userData.lastname,
     phone: userData.phone,
     airport: userData.airport,
     residence: userData.residence,
     travel_date: userData.travel_date,
-    note: userData.note || "",
 
-    /* العرض */
+    // هذه الحقول مطلوبة في Sheet
     hotel: o.hotel || "",
     duration: o.duration || "",
     room: o.room || "",
     route: o.route || "",
     flight: o.flight || "",
-    group: o.group || "",
-    offer: o.offer || ""
+
+    // 🔴 هنا السر
+    note: (userData.note || "") + "\n\n" + offerDetails
   });
 
- fetch(SEARCH_API, {
-  method: "POST",
-  body: payload
-})
-.then(r => r.text())
-.then(res => {
-  console.log("SERVER:", res);
-
-  showLoader(false);
-
-  if (res === "ADDED" || res === "UPDATED") {
-    showToast("✅ تم إرسال طلبك بنجاح");
-  } else {
-    showToast("⚠️ حدث خطأ أثناء الإرسال", false);
-    btn.disabled = false;
-    btn.style.opacity = "1";
-  }
+  fetch(SEARCH_API, {
+    method: "POST",
+    body: payload
   })
-  .catch(()=>{
+  .then(r => r.text())
+  .then(res => {
+    console.log("SERVER:", res);
+    showLoader(false);
+
+    if(res === "ADDED" || res === "UPDATED"){
+      showToast("✅ تم إرسال الطلب بنجاح، تحقق من الإيميل");
+    }else{
+      showToast("⚠️ لم يتم حفظ الطلب", false);
+      btn.disabled = false;
+      btn.style.opacity = "1";
+    }
+  })
+  .catch(err => {
+    console.error(err);
     showLoader(false);
     showToast("❌ فشل الاتصال بالخادم", false);
     btn.disabled = false;
     btn.style.opacity = "1";
   });
 }
+
 
 
 /* ===== تفاصيل العرض ===== */
