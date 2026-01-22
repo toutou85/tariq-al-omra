@@ -2,219 +2,6 @@
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>تأكيد التسجيل</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">  <style>  
-body{  
-  font-family:Tajawal,Arial;  
-  margin:0;  
-  background:  
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),  
-    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")  
-    center/cover fixed no-repeat;  
-}  
-header{  
-  height:60px;  
-  background:#8b0000;  
-  color:#fff;  
-  display:flex;  
-  align-items:center;  
-  padding:0 15px;  
-}  
-.menu-btn{font-size:26px;cursor:pointer}  
-header h1{flex:1;text-align:center;font-size:18px;margin:0}  
-  
-#sideMenu{  
-  position:fixed;top:0;right:-260px;  
-  width:260px;height:100%;  
-  background:#8b0000;  
-  padding-top:70px;  
-  transition:.3s;z-index:10000  
-}  
-#sideMenu a{  
-  display:block;padding:14px 18px;  
-  color:#fff;text-decoration:none;  
-  border-bottom:1px solid rgba(255,255,255,.15)  
-}  
-#sideMenu a:hover{background:rgba(255,255,255,.15)}  
-#overlay{  
-  display:none;position:fixed;inset:0;  
-  background:rgba(0,0,0,.6);z-index:9000  
-}  
-  
-.container{  
-  max-width:800px;  
-  margin:25px auto;  
-  background:rgba(255,255,255,.95);  
-  padding:22px;  
-  border-radius:20px;  
-}  
-  
-.section{  
-  background:#f9f9f9;  
-  border-radius:16px;  
-  padding:18px;  
-  margin-top:15px;  
-}  
-.section h3{  
-  margin-top:0;  
-  color:#8b0000;  
-  font-size:17px;  
-}  
-.row{  
-  font-size:14px;  
-  margin-top:6px;  
-  color:#333;  
-}  
-  
-button.main{  
-  width:100%;  
-  padding:14px;  
-  margin-top:22px;  
-  border:none;  
-  border-radius:12px;  
-  background:#8b0000;  
-  color:#fff;  
-  font-size:17px;  
-  cursor:pointer;  
-}  
-  
-#popup{  
-  display:none;  
-  position:fixed;  
-  inset:0;  
-  background:rgba(0,0,0,.6);  
-  z-index:12000;  
-  align-items:center;  
-  justify-content:center;  
-}  
-#popupBox{  
-  background:#fff;  
-  padding:28px;  
-  border-radius:18px;  
-  text-align:center;  
-  max-width:340px;  
-}  
-</style>  </head>  <body>  <header>  
-  <div class="menu-btn" onclick="openMenu()">☰</div>  
-  <h1>🕋 تأكيد التسجيل</h1>  
-</header>  <nav id="sideMenu">  
-  <a href="results-gen.html">🕋 العروض العامة</a>  
-  <a href="recherche-oeffer.html">📩 طلب عرض عمرة</a>  
-  <a href="recherche-n.html">👤 صفحتي الخاصة</a>  
-</nav>  
-<div id="overlay" onclick="closeMenu()"></div>  <div class="container">    <div class="section">  
-    <h3>👤 بيانات المعتمر</h3>  
-    <div id="userData">⏳ تحميل...</div>  
-  </div>    <div class="section">  
-    <h3>🕋 بيانات العرض</h3>  
-    <div id="offerData">⏳ تحميل...</div>  
-  </div>  <button class="main" onclick="send()">📩 تأكيد وإرسال الطلب</button>
-
-</div>  <div id="popup">  
-  <div id="popupBox">  
-    <h3 id="popTitle">⏳ جارٍ إرسال الطلب</h3>  
-    <p id="popText">استغفر الله العظيم 🤍</p>  
-  </div>  
-</div>  <script>  
-/* ===== APIs ===== */  
-const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";  
-const EMAIL_API="https://script.google.com/macros/s/AKfycbzcxJ2mvd-Nnr5mdzPItK6_3pWnX3kR_EIQuKZanjW93RGIh06d4PDqcdWwMV0AyiVB/exec";  
-  
-/* ===== محاولة الاستقبال من المسارين ===== */  
-let customer = null;  
-let offer = null;  
-  
-/* 1️⃣ المسار الجديد (sessionStorage) */  
-const sessionData = JSON.parse(sessionStorage.getItem("umrahRequest") || "null");  
-if(sessionData){  
-  customer = {  
-    name: sessionData.first + " " + sessionData.last,  
-    phone: sessionData.phone  
-  };  
-  offer = {  
-    agency: sessionData.agency,  
-    state: sessionData.state,  
-    airport: sessionData.airport,  
-    date: sessionData.date,  
-    hotel: sessionData.hotel || "-",  
-    group: sessionData.price  
-  };  
-}  
-  
-/* 2️⃣ المسار القديم (localStorage) */  
-if(!customer || !offer){  
-  const phone = localStorage.getItem("umrah_phone");  
-  const storedOffer = JSON.parse(localStorage.getItem("selected_offer") || "null");  
-  
-  if(phone && storedOffer){  
-    offer = storedOffer;  
-  
-    fetch(SEARCH_API+"?phone="+phone)  
-      .then(r=>r.json())  
-      .then(d=>{  
-        customer = {  
-          name: d.name,  
-          phone: phone,  
-          airport: d.airport,  
-          hotel: d.hotel,  
-          duration: d.duration  
-        };  
-        render();  
-      });  
-  }else{  
-    location.href="results-gen.html";  
-  }  
-}else{  
-  render();  
-}  
-  
-/* ===== عرض البيانات ===== */  
-function render(){  
-  userData.innerHTML = `  
-    <div class="row">الاسم: ${customer.name}</div>  
-    <div class="row">الهاتف: ${customer.phone}</div>  
-  `;  
-  
-  offerData.innerHTML = `  
-    <div class="row">الوكالة: ${offer.agency || "-"}</div>  
-    <div class="row">الولاية: ${offer.state || "-"}</div>  
-    <div class="row">المطار: ${offer.airport || "-"}</div>  
-    <div class="row">تاريخ الرحلة: ${offer.date || "-"}</div>  
-    <div class="row">الفندق: ${offer.hotel || "-"}</div>  
-    <div class="row">سعر الغرفة الجماعية: ${offer.group || "-"} دج</div>  
-  `;  
-}  
-  
-/* ===== الإرسال ===== */  
-function send(){  
-  popup.style.display="flex";  
-  
-  fetch(EMAIL_API,{  
-    method:"POST",  
-    body:JSON.stringify({customer,offer})  
-  }).then(()=>{  
-    popTitle.innerText="✅ تم إرسال طلبك بنجاح";  
-    popText.innerText="نسأل الله أن يكتب لك عمرة مقبولة 🌙";  
-  
-    setTimeout(()=>{  
-      sessionStorage.removeItem("umrahRequest");  
-      localStorage.removeItem("umrah_phone");  
-      localStorage.removeItem("selected_offer");  
-      location.href="results-gen.html";  
-    },3000);  
-  });  
-}  
-  
-function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}  
-function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}  
-</script>  </body>  
-</html>  
-هدا الكود يرسل وصحيح  
-بنفس طريقة اصلح الاخر   
-<!DOCTYPE html>  
-<html lang="ar" dir="rtl">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
 <title>العروض المناسبة</title>  <style>  
 body{  
   font-family:Tajawal,Arial;  
@@ -475,23 +262,24 @@ function sendConfirmed(){
   
   fetch(SEND_API,{  
     method:"POST",  
-    headers:{ "Content-Type":"application/json" },  
-    body:JSON.stringify({  
-      customer:userData,  
-      offer:selectedOffer  
+    body: JSON.stringify({  
+      customer: userData,  
+      offer: selectedOffer  
     })  
   })  
-  .then(r=>r.text())  
-  .then(()=>{  
+  .then(r => r.text())  
+  .then(() => {  
     showLoader(false);  
     closeDetails();  
     showToast("✅ تم إرسال الطلب بنجاح");  
   })  
-  .catch(()=>{  
+  .catch(() => {  
     showLoader(false);  
-    showToast("❌ فشل الإرسال",false);  
+    showToast("❌ فشل الإرسال", false);  
   });  
 }  
+  
+  
   
 function showLoader(show){  
   document.getElementById("loader").style.display = show ? "flex" : "none";  
@@ -515,4 +303,4 @@ function showToast(msg,ok=true){
 <div id="loader" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:3000;align-items:center;justify-content:center;color:#fff;font-size:18px;">  
   ⏳ جارٍ الإرسال...  
 </div>  </body>  
-</html>  
+</html> 
