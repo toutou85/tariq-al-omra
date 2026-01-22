@@ -159,27 +159,50 @@ function isMatching(o){
 /* ===== عرض العروض ===== */
 function renderOffers(){
   const list = offersData.filter(isMatching);
+
   if(!list.length){
-    offersBox.innerHTML="❌ لا توجد عروض مناسبة";
+    offersBox.innerHTML = "❌ لا توجد عروض مناسبة";
     return;
   }
 
-  offersBox.innerHTML="";
+  offersBox.innerHTML = "";
+
   list.forEach(o=>{
     offersBox.innerHTML += `
       <div class="card">
-        <strong>${o.offer}</strong><br>
-        ✈️ ${o.airport}<br>
-        📅 ${o.date}<br>
-        🏨 ${o.hotel}<br>
-        💰 ${o.group} دج
-        <button onclick='registerOffer(${JSON.stringify(o)})'>
-          📩 تسجيل
-        </button>
+
+        <!-- رأس البطاقة -->
+        <div class="card-header">
+          <img src="${o.logo || ''}" onerror="this.style.display='none'">
+          <div>
+            <small>${o.agency || "-"} – ${o.state || "-"} 📍</small><br>
+            <strong>${o.offer}</strong>
+          </div>
+        </div>
+
+        <!-- معلومات العرض -->
+        <div class="card-info">
+          <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>
+          <div>🏨 الإقامة في فندق ${o.hotel || "-"}</div>
+          <div>⏱️ مدة الرحلة: ${o.duration || "-"}</div>
+          <div>🛫 مسار الرحلة: ${o.flight || "-"}</div>
+        </div>
+
+        <!-- السعر -->
+        <div class="price">💰 ${o.group || "-"} دج</div>
+
+        <!-- الأزرار -->
+        <div class="card-actions">
+          <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>
+          <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة</button>
+          <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
+        </div>
+
       </div>
     `;
   });
 }
+
 
 /* ===== تسجيل ===== */
 function registerOffer(offer){
