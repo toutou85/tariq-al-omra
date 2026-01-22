@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -12,10 +13,10 @@ header{background:#8b0000;color:#fff;padding:15px;text-align:center}
 
 .field{margin-bottom:10px}
 .field label{font-size:13px;color:#555}
-.field input, .field textarea{
+.field input,.field textarea,.field select{
   width:100%;padding:10px;border-radius:10px;border:1px solid #ccc
 }
-input[readonly], textarea[readonly]{background:#eee}
+input[readonly],textarea[readonly],select:disabled{background:#eee}
 
 button{
   width:100%;padding:12px;margin-top:10px;
@@ -64,72 +65,39 @@ button{
   <div class="field"><label>المسار</label><input id="route" readonly></div>
   <div class="field"><label>نوع الرحلة</label><input id="flight" readonly></div>
   <div class="field"><label>ملاحظة</label><textarea id="note" readonly></textarea></div>
- <div class="field">
-  <label>الولاية</label>
-  <select id="residence" readonly>
-    <option value="">اختر الولاية</option>
-    <option>أدرار</option>
-    <option>الشلف</option>
-    <option>الأغواط</option>
-    <option>أم البواقي</option>
-    <option>باتنة</option>
-    <option>بجاية</option>
-    <option>بسكرة</option>
-    <option>بشار</option>
-    <option>البليدة</option>
-    <option>البويرة</option>
-    <option>تمنراست</option>
-    <option>تبسة</option>
-    <option>تلمسان</option>
-    <option>تيارت</option>
-    <option>تيزي وزو</option>
-    <option>الجزائر</option>
-    <option>الجلفة</option>
-    <option>جيجل</option>
-    <option>سطيف</option>
-    <option>سعيدة</option>
-    <option>سكيكدة</option>
-    <option>سيدي بلعباس</option>
-    <option>عنابة</option>
-    <option>قالمة</option>
-    <option>قسنطينة</option>
-    <option>المدية</option>
-    <option>مستغانم</option>
-    <option>المسيلة</option>
-    <option>معسكر</option>
-    <option>ورقلة</option>
-    <option>وهران</option>
-    <option>البيض</option>
-    <option>إليزي</option>
-    <option>برج بوعريريج</option>
-    <option>بومرداس</option>
-    <option>الطارف</option>
-    <option>تندوف</option>
-    <option>تيسمسيلت</option>
-    <option>الوادي</option>
-    <option>خنشلة</option>
-    <option>سوق أهراس</option>
-    <option>تيبازة</option>
-    <option>ميلة</option>
-    <option>عين الدفلى</option>
-    <option>النعامة</option>
-    <option>عين تموشنت</option>
-    <option>غرداية</option>
-    <option>غليزان</option>
-    <option>تيميمون</option>
-    <option>برج باجي مختار</option>
-    <option>أولاد جلال</option>
-    <option>بني عباس</option>
-    <option>عين صالح</option>
-    <option>عين قزام</option>
-    <option>تقرت</option>
-    <option>جانت</option>
-    <option>المغير</option>
-    <option>المنيعة</option>
-  </select>
-</div>
 
-  <div class="field"><label>تاريخ الإقلاع</label><input type="date" id="travel_date" readonly></div>
+  <div class="field">
+    <label>الولاية</label>
+    <select id="residence" disabled>
+      <option value="">اختر الولاية</option>
+      <option>أدرار</option><option>الشلف</option><option>الأغواط</option>
+      <option>أم البواقي</option><option>باتنة</option><option>بجاية</option>
+      <option>بسكرة</option><option>بشار</option><option>البليدة</option>
+      <option>البويرة</option><option>تمنراست</option><option>تبسة</option>
+      <option>تلمسان</option><option>تيارت</option><option>تيزي وزو</option>
+      <option>الجزائر</option><option>الجلفة</option><option>جيجل</option>
+      <option>سطيف</option><option>سعيدة</option><option>سكيكدة</option>
+      <option>سيدي بلعباس</option><option>عنابة</option><option>قالمة</option>
+      <option>قسنطينة</option><option>المدية</option><option>مستغانم</option>
+      <option>المسيلة</option><option>معسكر</option><option>ورقلة</option>
+      <option>وهران</option><option>البيض</option><option>إليزي</option>
+      <option>برج بوعريريج</option><option>بومرداس</option><option>الطارف</option>
+      <option>تندوف</option><option>تيسمسيلت</option><option>الوادي</option>
+      <option>خنشلة</option><option>سوق أهراس</option><option>تيبازة</option>
+      <option>ميلة</option><option>عين الدفلى</option><option>النعامة</option>
+      <option>عين تموشنت</option><option>غرداية</option><option>غليزان</option>
+      <option>تيميمون</option><option>برج باجي مختار</option>
+      <option>أولاد جلال</option><option>بني عباس</option>
+      <option>عين صالح</option><option>عين قزام</option>
+      <option>تقرت</option><option>جانت</option>
+      <option>المغير</option><option>المنيعة</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>تاريخ الإقلاع</label>
+    <input type="date" id="travel_date" readonly>
+  </div>
 
   <button class="edit" onclick="enableEdit()">✏️ تعديل المعلومات</button>
   <button class="save" id="saveBtn" onclick="saveEdit()" style="display:none">
@@ -153,19 +121,27 @@ button{
 <script>
 const API="https://script.google.com/macros/s/AKfycbzylk80YyLjyEERDxLNfm97TgWjMsmubMI6ND68UpZVWdzQwaKXgOH-B8oSsAAYcok0hA/exec";
 
+/* ✅ توحيد رقم الهاتف (9 أرقام فقط) */
 function normalize(p){
   p=p.replace(/\D/g,"");
-  if(p.startsWith("213"))p=p.slice(3);
-  if(p.startsWith("0"))p=p.slice(1);
+
+  if(p.startsWith("00213")) p=p.slice(5);
+  else if(p.startsWith("213")) p=p.slice(3);
+
+  if(p.startsWith("0")) p=p.slice(1);
+
+  if(p.length!==9) return null;
   return p;
 }
 
 function loadUser(){
   const p=normalize(phone.value);
+  if(!p){ alert("❌ رقم الهاتف غير صحيح"); return; }
+
   fetch(API+"?phone="+p)
   .then(r=>r.json())
   .then(d=>{
-    if(!d.found) return alert("❌ لا يوجد طلب");
+    if(!d.found){ alert("❌ لا يوجد طلب"); return; }
 
     loginBox.style.display="none";
     userBox.style.display="block";
@@ -189,8 +165,11 @@ function loadUser(){
 }
 
 function enableEdit(){
-  document.querySelectorAll("#userBox input,textarea")
-    .forEach(i=>i.readOnly=false);
+  document.querySelectorAll("#userBox input,textarea,select")
+  .forEach(i=>{
+    i.readOnly=false;
+    i.disabled=false;
+  });
   saveBtn.style.display="block";
 }
 
@@ -214,19 +193,21 @@ function saveEdit(){
   };
 
   fetch(API,{method:"POST",body:new URLSearchParams(data)})
-  .then(r=>r.text())
-  .then(()=>{
+  .then(()=> {
     wait.style.display="none";
     alert("✅ تم تسجيل التعديلات بنجاح");
 
-    document.querySelectorAll("#userBox input,textarea")
-      .forEach(i=>i.readOnly=true);
+    document.querySelectorAll("#userBox input,textarea,select")
+    .forEach(i=>{
+      i.readOnly=true;
+      i.disabled=true;
+    });
 
     saveBtn.style.display="none";
   })
   .catch(()=>{
     wait.style.display="none";
-    alert("❌ حدث خطأ، حاول مرة أخرى");
+    alert("❌ حدث خطأ");
   });
 }
 </script>
