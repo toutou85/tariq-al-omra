@@ -14,12 +14,28 @@ body{
 header{
   background:#8b0000;
   color:#fff;
+  padding:12px;
+  text-align:center;
+  font-size:18px;
+}
+.main{
+  display:flex;
+  max-width:1200px;
+  margin:20px auto;
+  gap:15px;
+}
+aside{
+  width:260px;
+  background:#fff;
+  border-radius:18px;
   padding:15px;
+}
+aside h3{
+  margin-top:0;
   text-align:center;
 }
 .container{
-  max-width:900px;
-  margin:25px auto;
+  flex:1;
   background:#fff;
   padding:20px;
   border-radius:18px;
@@ -45,16 +61,31 @@ header{
   background:#f8f4ef;
   padding:15px;
   border-radius:14px;
-  margin-bottom:10px;
+  margin-bottom:12px;
+}
+.card button{
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#8b0000;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h2>🕋 عروض العمرة</h2>
-</header>
+<header>🕋 منصة الوفاض – عروض العمرة</header>
+
+<div class="main">
+
+<aside id="userBox">
+  ⏳ تحميل معلومات المعتمر...
+</aside>
 
 <div class="container">
 
@@ -63,12 +94,13 @@ header{
     ⭐ العروض المناسبة
   </button>
   <button id="tabAll" onclick="switchTab('all')">
-    📋 كل العروض
+    📋 العروض العامة
   </button>
 </div>
 
 <div id="offers">⏳ جارٍ التحميل...</div>
 
+</div>
 </div>
 
 <script>
@@ -78,6 +110,7 @@ const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiL
 const phone=localStorage.getItem("umrah_phone");
 let userData=null, offersData=[], currentTab="match";
 const box=document.getElementById("offers");
+const userBox=document.getElementById("userBox");
 
 function diffDays(d1,d2){
   return Math.abs((d1-d2)/(1000*60*60*24));
@@ -87,7 +120,16 @@ function diffDays(d1,d2){
 fetch(SEARCH_API+"?phone="+phone)
 .then(r=>r.json())
 .then(d=>{
-  if(d && d.found) userData=d;
+  if(d && d.found){
+    userData=d;
+    userBox.innerHTML=`
+      <h3>👤 المعتمر</h3>
+      <strong>${d.name}</strong><br>
+      📞 ${d.phone}<br>
+      ✈️ ${d.airport}<br>
+      📅 ${d.travel_date}
+    `;
+  }
 });
 
 /* جلب العروض */
@@ -108,7 +150,7 @@ function isMatching(o){
   const ud=new Date(userData.travel_date);
   const od=new Date(o.date);
 
-  return sameAirport && diffDays(ud,od)<=7;
+  return sameAirport && diffDays(ud,od)<=10;
 }
 
 function render(){
@@ -132,6 +174,9 @@ function render(){
         📅 ${o.date}<br>
         🏨 ${o.hotel}<br>
         💰 ${o.group} دج
+        <button onclick='register(${JSON.stringify(o)})'>
+          📝 التسجيل في هذا العرض
+        </button>
       </div>
     `;
   });
@@ -142,6 +187,12 @@ function switchTab(t){
   tabMatch.classList.toggle("active",t==="match");
   tabAll.classList.toggle("active",t==="all");
   render();
+}
+
+function register(offer){
+  const data={...userData,...offer};
+  localStorage.setItem("selected_offer",JSON.stringify(data));
+  window.location.href="form.html";
 }
 </script>
 
