@@ -229,7 +229,8 @@ function renderOffers(){
         <div class="card-actions">
           <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>
           <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة</button>
-          <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
+          <button onclick='openRegister(this, ${JSON.stringify(o)})'>📩 تسجيل</button>
+
         </div>
 
       </div>
@@ -277,16 +278,22 @@ function shareOffer(o){
 }
 
 /* ===== تسجيل ===== */
-function openRegister(o){
+function openRegister(btn, o){
+
+  if(btn.disabled) return;
 
   if(!userData){
-    alert("❌ معلومات المعتمر غير متوفرة");
+    showToast("❌ معلومات المعتمر غير متوفرة", false);
     return;
   }
 
+  btn.disabled = true;
+  btn.style.opacity = ".6";
+  showLoader(true);
+
   const payload = new URLSearchParams({
 
-    /* معلومات المعتمر */
+    /* المعتمر */
     name: userData.name,
     lastname: userData.lastname,
     phone: userData.phone,
@@ -295,7 +302,7 @@ function openRegister(o){
     travel_date: userData.travel_date,
     note: userData.note || "",
 
-    /* معلومات العرض */
+    /* العرض */
     hotel: o.hotel || "",
     duration: o.duration || "",
     room: o.room || "",
@@ -305,22 +312,26 @@ function openRegister(o){
     offer: o.offer || ""
   });
 
-  fetch(SEARCH_API,{
-    method:"POST",
-    body: payload
-  })
+  fetch(SEARCH_API, { method:"POST", body: payload })
   .then(r=>r.text())
   .then(res=>{
+    showLoader(false);
     if(res==="ADDED" || res==="UPDATED"){
-      alert("✅ تم تسجيل طلبك بنجاح، سيتم التواصل معك");
+      showToast("✅ تم إرسال طلبك بنجاح");
     }else{
-      alert("⚠️ حدث خطأ، حاول مرة أخرى");
+      showToast("⚠️ حدث خطأ أثناء الإرسال", false);
+      btn.disabled = false;
+      btn.style.opacity = "1";
     }
   })
   .catch(()=>{
-    alert("❌ فشل الاتصال بالخادم");
+    showLoader(false);
+    showToast("❌ فشل الاتصال بالخادم", false);
+    btn.disabled = false;
+    btn.style.opacity = "1";
   });
 }
+
 
 /* ===== تفاصيل العرض ===== */
 function openDetails(o){
@@ -340,6 +351,17 @@ function openDetails(o){
 
 function closeDetails(){
   detailsModal.style.display="none";
+}
+function showLoader(show){
+  document.getElementById("loader").style.display = show ? "flex" : "none";
+}
+
+function showToast(msg, ok=true){
+  const t = document.getElementById("toast");
+  t.style.background = ok ? "#2e7d32" : "#c62828";
+  t.innerText = msg;
+  t.style.display = "block";
+  setTimeout(()=> t.style.display="none", 3000);
 }
 
 </script>
@@ -366,6 +388,22 @@ function closeDetails(){
     <h3 style="margin-top:0">ℹ️ تفاصيل العرض</h3>
     <div id="detailsContent"></div>
   </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" style="
+  display:none;
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#2e7d32;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:10px;
+  z-index:3001;
+  font-weight:bold;
+">
 </div>
 
 </body>
