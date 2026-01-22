@@ -269,8 +269,6 @@ function formatDate(d){
 
 /* جلب بيانات المستخدم */
 <!-- معلومات المعتمر -->
-<div id="userInfo" class="user-info" style="display:none"></div>
-
 fetch(SEARCH_API+"?phone="+phone)
 .then(r=>r.json())
 .then(d=>{
