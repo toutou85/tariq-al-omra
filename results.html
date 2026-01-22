@@ -4,105 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>العروض المناسبة</title>
-
 <style>
-body{
-  font-family:Tajawal,Arial;
-  margin:0;
-  background:#f2f2f2;
-}
-header{
-  background:#8b0000;
-  color:#fff;
-  padding:12px;
-  text-align:center;
-  position:relative;
-}
-.menu-btn{
-  position:absolute;
-  right:15px;
-  top:10px;
-  background:none;
-  border:none;
-  color:#fff;
-  font-size:22px;
-  cursor:pointer;
-}
-.general-btn{
-  position:absolute;
-  left:15px;
-  top:14px;
-  color:#fff;
-  text-decoration:none;
-  font-size:14px;
-}
-.sidebar{
-  position:fixed;
-  top:0;
-  right:-280px;
-  width:260px;
-  height:100%;
-  background:#fff;
-  box-shadow:-4px 0 10px rgba(0,0,0,.15);
-  padding:15px;
-  transition:.3s;
-  z-index:1000;
-}
-.sidebar.active{ right:0; }
-.sidebar .close{
-  text-align:left;
-  cursor:pointer;
-}
-.container{
-  max-width:900px;
-  margin:20px auto;
-  padding:10px;
-}
-.card{
-  background:#fff;
-  padding:16px;
-  border-radius:16px;
-  margin-bottom:12px;
-  box-shadow:0 4px 10px rgba(0,0,0,.06);
-}
-.card-header{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-.card-header img{
-  width:45px;
-  height:45px;
-  object-fit:contain;
-  border-radius:8px;
-}
-.card-info{
-  margin-top:10px;
-  font-size:14px;
-}
-.price{
-  margin-top:10px;
-  font-weight:bold;
-  color:#8b0000;
-}
-.card-actions{
-  display:flex;
-  gap:8px;
-  margin-top:10px;
-}
-.card-actions button{
-  flex:1;
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  background:#8b0000;
-  color:#fff;
-  font-weight:bold;
-  cursor:pointer;
-}
+/* نفس ستايلك */
+body{font-family:Tajawal,Arial;margin:0;background:#f2f2f2;}
+header{background:#8b0000;color:#fff;padding:12px;text-align:center;position:relative;}
+.menu-btn{position:absolute;right:15px;top:10px;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;}
+.general-btn{position:absolute;left:15px;top:14px;color:#fff;text-decoration:none;font-size:14px;}
+.sidebar{position:fixed;top:0;right:-280px;width:260px;height:100%;background:#fff;box-shadow:-4px 0 10px rgba(0,0,0,.15);padding:15px;transition:.3s;z-index:1000;}
+.sidebar.active{right:0;} .sidebar .close{text-align:left;cursor:pointer;}
+.container{max-width:900px;margin:20px auto;padding:10px;}
+.card{background:#fff;padding:16px;border-radius:16px;margin-bottom:12px;box-shadow:0 4px 10px rgba(0,0,0,.06);}
+.card-header{display:flex;gap:10px;align-items:center;}
+.card-header img{width:45px;height:45px;object-fit:contain;border-radius:8px;}
+.card-info{margin-top:10px;font-size:14px;}
+.price{margin-top:10px;font-weight:bold;color:#8b0000;}
+.card-actions{display:flex;gap:8px;margin-top:10px;}
+.card-actions button{flex:1;padding:10px;border:none;border-radius:10px;background:#8b0000;color:#fff;font-weight:bold;cursor:pointer;}
 </style>
 </head>
-
 <body>
 
 <header>
@@ -120,9 +39,9 @@ header{
 <div class="container" id="offers">⏳ جارٍ تحميل العروض...</div>
 
 <script>
-const SEARCH_API="https://script.google.com/macros/s/AKfycbzylk80YyLjyEERDxLNfm97TgWjMsmubMI6ND68UpZVWdzQwaKXgOH-B8oSsAAYcok0hA/exec";
-const OFFERS_API="https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
-const MAIL_API = "https://script.google.com/macros/s/AKfycbwcnFs_8Pyfo2sKuz7Nj2bPNSzUCpYBRKQtFbT93cisZGT9_RCtIWwO8TD5R7SUZl3o/exec";
+const SEARCH_API = "https://script.google.com/macros/s/AKfycbzylk80YyLjyEERDxLNfm97TgWjMsmubMI6ND68UpZVWdzQwaKXgOH-B8oSsAAYcok0hA/exec";
+const OFFERS_API = "https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
+const MAIL_API = "https://script.google.com/macros/s/AKfycbxsUhYHyBpJE-xF0-wZf_iMXD7q_xgOg-ODCajn2H4ZWgbswWAwNhsRgEdKyhMpyg9f/exec";
 
 const phone = localStorage.getItem("umrah_phone");
 const userBox = document.getElementById("userBox");
@@ -132,62 +51,44 @@ let userData=null;
 let offersData=[];
 let selectedOffer=null;
 
-function toggleSidebar(){
-  document.getElementById("sidebar").classList.toggle("active");
-}
+function toggleSidebar(){document.getElementById("sidebar").classList.toggle("active");}
+function diffDays(d1,d2){return Math.abs((d1-d2)/(1000*60*60*24));}
+function formatDate(d){return d ? new Date(d).toLocaleDateString("ar-DZ") : "-";}
 
-function diffDays(d1,d2){
-  return Math.abs((d1-d2)/(1000*60*60*24));
-}
-
-function formatDate(d){
-  return d ? new Date(d).toLocaleDateString("ar-DZ") : "-";
-}
-
-/* ===== التحقق من الهاتف ===== */
+/* ===== جلب بيانات المعتمر ===== */
 if(!phone){
   userBox.innerHTML="❌ رقم الهاتف غير موجود<br>الرجاء الرجوع وإعادة إدخاله";
   offersBox.innerHTML="";
-}else{
+} else {
+  fetch(SEARCH_API+"?phone="+phone)
+  .then(r=>r.json())
+  .then(d=>{
+    if(d && d.found){
+      userData = d;
+      userBox.innerHTML = `
+        <b>${d.name} ${d.lastname}</b><br><br>
+        📞 ${d.phone}<br>
+        ✈️ ${d.airport}<br>
+        🏨 ${d.hotel}<br>
+        ⏱️ ${d.duration}<br>
+        🛏️ ${d.room}<br>
+        🗺️ ${d.route}<br>
+        ✈️ ${d.flight}<br>
+        🏠 ${d.residence}<br>
+        📅 ${d.travel_date}<br>
+        📌 ${d.status}<br><hr>
+        📝 ${d.note||"-"}
+      `;
+      renderOffers();
+    } else {
+      userBox.innerHTML="❌ لم يتم العثور على معلومات المعتمر";
+    }
+  })
+  .catch(()=> userBox.innerHTML="❌ خطأ في الاتصال بالخادم");
 
-/* ===== جلب المعتمر ===== */
-fetch(SEARCH_API+"?phone="+phone)
-.then(r=>r.json())
-.then(d=>{
-  if(d && d.found){
-    userData=d;
-    userBox.innerHTML=`
-      <b>${d.name} ${d.lastname}</b><br><br>
-      📞 ${d.phone}<br>
-      ✈️ ${d.airport}<br>
-      🏨 ${d.hotel}<br>
-      ⏱️ ${d.duration}<br>
-      🛏️ ${d.room}<br>
-      🗺️ ${d.route}<br>
-      ✈️ ${d.flight}<br>
-      🏠 ${d.residence}<br>
-      📅 ${d.travel_date}<br>
-      📌 ${d.status}<br>
-      <hr>
-      📝 ${d.note||"-"}
-    `;
-    renderOffers();
-  }else{
-    userBox.innerHTML="❌ لم يتم العثور على معلومات المعتمر";
-  }
-})
-.catch(()=>{
-  userBox.innerHTML="❌ خطأ في الاتصال بالخادم";
-});
-
-/* ===== جلب العروض ===== */
-fetch(OFFERS_API)
-.then(r=>r.json())
-.then(d=>{
-  offersData=d;
-  renderOffers();
-});
-
+  fetch(OFFERS_API)
+  .then(r=>r.json())
+  .then(d=>{offersData=d; renderOffers();});
 }
 
 function isMatching(o){
@@ -198,37 +99,25 @@ function isMatching(o){
   );
 }
 
-/* ===== عرض العروض ===== */
 function renderOffers(){
   if(!userData || !offersData.length) return;
-
   const list=offersData.filter(isMatching);
-  if(!list.length){
-    offersBox.innerHTML="❌ لا توجد عروض مناسبة";
-    return;
-  }
-
+  if(!list.length){offersBox.innerHTML="❌ لا توجد عروض مناسبة"; return;}
   offersBox.innerHTML="";
   list.forEach(o=>{
     offersBox.innerHTML+=`
       <div class="card">
         <div class="card-header">
           <img src="${o.logo||""}" onerror="this.style.display='none'">
-          <div>
-            <small>${o.agency||"-"} – ${o.state||"-"} 📍</small><br>
-            <strong>${o.offer}</strong>
-          </div>
+          <div><small>${o.agency||"-"} – ${o.state||"-"} 📍</small><br><strong>${o.offer}</strong></div>
         </div>
-
         <div class="card-info">
           <div>📅 ${formatDate(o.date)}</div>
           <div>🏨 ${o.hotel||"-"}</div>
           <div>⏱️ ${o.duration||"-"}</div>
           <div>🛫 ${o.flight||"-"}</div>
         </div>
-
         <div class="price">💰 ${o.group||"-"} دج</div>
-
         <div class="card-actions">
           <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>
           <button onclick='prepareRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
@@ -238,7 +127,6 @@ function renderOffers(){
   });
 }
 
-/* ===== التفاصيل ===== */
 function openDetails(o){
   selectedOffer=o;
   document.getElementById("detailsContent").innerHTML=`
@@ -252,50 +140,33 @@ function openDetails(o){
   document.getElementById("detailsModal").style.display="flex";
 }
 
-function closeDetails(){
-  document.getElementById("detailsModal").style.display="none";
-}
+function closeDetails(){document.getElementById("detailsModal").style.display="none";}
+function prepareRegister(o){selectedOffer=o; openDetails(o);}
 
-function prepareRegister(o){
-  selectedOffer=o;
-  openDetails(o);
-}
-
-/* ===== تأكيد الإرسال ===== */
+/* ===== إرسال الإيميل ===== */
 function sendConfirmed(){
-  if(!userData || !selectedOffer){
-    showToast("❌ بيانات غير مكتملة",false);
-    return;
-  }
-
+  if(!userData || !selectedOffer){showToast("❌ بيانات غير مكتملة",false);return;}
   showLoader(true);
 
-  fetch(MAIL_API, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      customer: userData,
-      offer: selectedOffer
+  const url =
+    MAIL_API +
+    "?customer=" + encodeURIComponent(JSON.stringify(userData)) +
+    "&offer=" + encodeURIComponent(JSON.stringify(selectedOffer));
+
+  fetch(url)
+    .then(() => {
+      showLoader(false);
+      closeDetails();
+      showToast("✅ تم إرسال الطلب إلى الإيميل بنجاح");
     })
-  })
-  .then(r => r.text())
-  .then(txt => {
-    console.log("SERVER:", txt);
-    showLoader(false);
-    closeDetails();
-    showToast("✅ تم إرسال الطلب بنجاح");
-  })
-  .catch(err => {
-    console.error(err);
-    showLoader(false);
-    showToast("❌ فشل الإرسال", false);
-  });
+    .catch(err => {
+      console.error(err);
+      showLoader(false);
+      showToast("❌ فشل الإرسال", false);
+    });
 }
 
-
-function showLoader(show){
-  document.getElementById("loader").style.display=show?"flex":"none";
-}
+function showLoader(show){document.getElementById("loader").style.display=show?"flex":"none";}
 function showToast(msg,ok=true){
   const t=document.getElementById("toast");
   t.style.background=ok?"#2e7d32":"#c62828";
@@ -305,7 +176,7 @@ function showToast(msg,ok=true){
 }
 </script>
 
-<!-- Modal -->
+<!-- تفاصيل ونوافذ الإرسال -->
 <div id="detailsModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;align-items:center;justify-content:center;">
   <div style="background:#fff;width:90%;max-width:500px;padding:20px;border-radius:16px;">
     <div style="text-align:left;cursor:pointer" onclick="closeDetails()">❌</div>
