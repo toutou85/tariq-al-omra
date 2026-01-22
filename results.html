@@ -109,7 +109,7 @@ header{
 <header>
   <button class="menu-btn" onclick="toggleSidebar()">☰</button>
   🕋 العروض المناسبة
-  <a class="general-btn" href="results.gen.html">📋 العروض العامة</a>
+  <a class="general-btn" href="results-gen.html">📋 العروض العامة</a>
 </header>
 
 <!-- ===== Sidebar ===== -->
@@ -159,6 +159,9 @@ fetch(SEARCH_API+"?phone="+phone)
       📞 ${d.phone}<br>
       ✈️ ${d.airport}<br>
       📅 ${d.travel_date}
+        
+
+
     `;
   }else{
     userBox.innerHTML="❌ لم يتم العثور على المعتمر";
