@@ -276,23 +276,24 @@ function sendConfirmed(){
 
   fetch(SEND_API,{
     method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify({
-      customer:userData,
-      offer:selectedOffer
+    body: JSON.stringify({
+      customer: userData,
+      offer: selectedOffer
     })
   })
-  .then(r=>r.text())
-  .then(()=>{
+  .then(r => r.text())
+  .then(() => {
     showLoader(false);
     closeDetails();
     showToast("✅ تم إرسال الطلب بنجاح");
   })
-  .catch(()=>{
+  .catch(() => {
     showLoader(false);
-    showToast("❌ فشل الإرسال",false);
+    showToast("❌ فشل الإرسال", false);
   });
 }
+
+
 
 function showLoader(show){
   document.getElementById("loader").style.display = show ? "flex" : "none";
