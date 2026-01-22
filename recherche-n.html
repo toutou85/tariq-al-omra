@@ -89,7 +89,7 @@ button{
 </div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbwaPdiqpKXpPc1_GIoVo5WV98ecIK-ay2QcQzVRqrVfezFuL-vGIziHuEJVG9TtrhAQCw/exec";
+const API="https://script.google.com/macros/s/AKfycbxhRh98qURsNPaPt0LTCLF6Cx8iGvIXJXk0Jjj1O3mdGvdxRH18zH_aFz4rNYc1JxS59A/exec";
 
 function normalize(p){
   p=p.replace(/\D/g,"");
@@ -150,14 +150,20 @@ function saveEdit(){
     residence:residence.value,
     travel_date:travel_date.value
   };
-
-  fetch(API,{method:"POST",body:new URLSearchParams(data)})
-  .then(()=> {
-    wait.style.display="none";
-    alert("✅ تم تسجيل التعديلات بنجاح");
-    location.reload();
-  });
-}
+  
+fetch(API,{
+  method:"POST",
+  body:new URLSearchParams(data)
+})
+.then(r => r.text())
+.then(() => {
+  wait.style.display = "none";
+  alert("✅ تم تسجيل التعديلات بنجاح");
+})
+.catch(() => {
+  wait.style.display = "none";
+  alert("❌ حدث خطأ، حاول مرة أخرى");
+});
 </script>
 
 </body>
