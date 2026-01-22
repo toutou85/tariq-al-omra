@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>صفحتي الخاصة </title>
+<title>صفحتي الخاصة</title>
 
 <style>
 body{font-family:Tajawal,Arial;margin:0;background:#f2f2f2}
@@ -15,7 +15,7 @@ header{background:#8b0000;color:#fff;padding:15px;text-align:center}
 .field input, .field textarea{
   width:100%;padding:10px;border-radius:10px;border:1px solid #ccc
 }
-input[disabled], textarea[disabled]{background:#eee}
+input[readonly], textarea[readonly]{background:#eee}
 
 button{
   width:100%;padding:12px;margin-top:10px;
@@ -25,7 +25,6 @@ button{
 .save{background:#8b0000;color:#fff}
 .go{background:#00695c;color:#fff}
 
-/* نافذة الانتظار */
 #wait{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,.6);
@@ -55,19 +54,18 @@ button{
 
   <input type="hidden" id="row">
 
-  <div class="field"><label>الاسم</label><input id="name" disabled></div>
-
-  <div class="field"><label>اللقب</label><input id="lastname" disabled></div>
-  <div class="field"><label>الهاتف</label><input id="phone2" disabled></div>
-  <div class="field"><label>مطار الإقلاع</label><input id="airport" disabled></div>
-  <div class="field"><label>الفندق</label><input id="hotel" disabled></div>
-  <div class="field"><label>المدة</label><input id="duration" disabled></div>
-  <div class="field"><label>الغرفة</label><input id="room" disabled></div>
-  <div class="field"><label>المسار</label><input id="route" disabled></div>
-  <div class="field"><label>نوع الرحلة</label><input id="flight" disabled></div>
-  <div class="field"><label>ملاحظة</label><textarea id="note" disabled></textarea></div>
-  <div class="field"><label>الولاية</label><input id="residence" disabled></div>
-  <div class="field"><label>تاريخ الإقلاع</label><input type="date" id="travel_date" disabled></div>
+  <div class="field"><label>الاسم</label><input id="name" readonly></div>
+  <div class="field"><label>اللقب</label><input id="lastname" readonly></div>
+  <div class="field"><label>الهاتف</label><input id="phone2" readonly></div>
+  <div class="field"><label>مطار الإقلاع</label><input id="airport" readonly></div>
+  <div class="field"><label>الفندق</label><input id="hotel" readonly></div>
+  <div class="field"><label>المدة</label><input id="duration" readonly></div>
+  <div class="field"><label>الغرفة</label><input id="room" readonly></div>
+  <div class="field"><label>المسار</label><input id="route" readonly></div>
+  <div class="field"><label>نوع الرحلة</label><input id="flight" readonly></div>
+  <div class="field"><label>ملاحظة</label><textarea id="note" readonly></textarea></div>
+  <div class="field"><label>الولاية</label><input id="residence" readonly></div>
+  <div class="field"><label>تاريخ الإقلاع</label><input type="date" id="travel_date" readonly></div>
 
   <button class="edit" onclick="enableEdit()">✏️ تعديل المعلومات</button>
   <button class="save" id="saveBtn" onclick="saveEdit()" style="display:none">
@@ -81,7 +79,6 @@ button{
 </div>
 </div>
 
-<!-- نافذة انتظار -->
 <div id="wait">
   <div id="waitBox">
     ⏳ جارٍ حفظ التعديلات…<br>
@@ -129,7 +126,7 @@ function loadUser(){
 
 function enableEdit(){
   document.querySelectorAll("#userBox input,textarea")
-    .forEach(i=>i.disabled=false);
+    .forEach(i=>i.readOnly=false);
   saveBtn.style.display="block";
 }
 
@@ -151,20 +148,23 @@ function saveEdit(){
     residence:residence.value,
     travel_date:travel_date.value
   };
-  
-fetch(API,{
-  method:"POST",
-  body:new URLSearchParams(data)
-})
-.then(r => r.text())
-.then(() => {
-  wait.style.display = "none";
-  alert("✅ تم تسجيل التعديلات بنجاح");
-})
-.catch(() => {
-  wait.style.display = "none";
-  alert("❌ حدث خطأ، حاول مرة أخرى");
-});
+
+  fetch(API,{method:"POST",body:new URLSearchParams(data)})
+  .then(r=>r.text())
+  .then(()=>{
+    wait.style.display="none";
+    alert("✅ تم تسجيل التعديلات بنجاح");
+
+    document.querySelectorAll("#userBox input,textarea")
+      .forEach(i=>i.readOnly=true);
+
+    saveBtn.style.display="none";
+  })
+  .catch(()=>{
+    wait.style.display="none";
+    alert("❌ حدث خطأ، حاول مرة أخرى");
+  });
+}
 </script>
 
 </body>
