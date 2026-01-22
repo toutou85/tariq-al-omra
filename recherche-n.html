@@ -5,72 +5,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>صفحتي الخاصة</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <style>
 body{
   font-family:Tajawal,Arial;
   margin:0;
-  background:
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
-    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
-    center/cover fixed no-repeat;
+  background:#f2f2f2;
 }
 header{
-  height:60px;
   background:#8b0000;
   color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  padding:15px;
+  text-align:center;
 }
 .container{
-  max-width:540px;
-  background:rgba(255,255,255,.95);
+  max-width:560px;
   margin:30px auto;
+  background:#fff;
   padding:25px;
   border-radius:18px;
 }
-h2{
-  color:#8b0000;
-  text-align:center;
-}
-
-input,button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:10px;
-  border:1px solid #ccc;
-  font-size:14px;
-}
-
-button{
-  background:#8b0000;
-  color:#fff;
-  cursor:pointer;
-}
-
 .welcome{
   background:#f8f4ef;
-  padding:18px;
+  padding:15px;
   border-radius:14px;
   margin-bottom:15px;
   line-height:1.9;
 }
-.welcome strong{
-  color:#8b0000;
+.welcome strong{color:#8b0000}
+
+.field{
+  margin-bottom:10px;
+}
+.field label{
+  font-size:13px;
+  color:#555;
+}
+.field input{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+.field input[disabled]{
+  background:#eee;
 }
 
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:15px;
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
 }
-.actions .secondary{
-  background:#555;
-}
+.edit{background:#555;color:#fff}
+.save{background:#8b0000;color:#fff}
+.go{background:#00695c;color:#fff}
 </style>
 </head>
 
@@ -82,32 +72,53 @@ button{
 
 <div class="container">
 
-  <!-- إدخال الهاتف -->
-  <div id="loginBox">
-    <input type="tel" id="phone" placeholder="أدخل رقم الهاتف">
-    <button onclick="loadUser()">🔍 متابعة</button>
+<!-- تسجيل الدخول -->
+<div id="loginBox">
+  <input type="tel" id="phone" placeholder="أدخل رقم الهاتف">
+  <button class="save" onclick="loadUser()">🔍 متابعة</button>
+</div>
+
+<!-- بيانات المعتمر -->
+<div id="userBox" style="display:none">
+
+  <div class="welcome">
+    🌙 مرحبًا بك <strong id="welcomeName"></strong><br>
+    هذه معلوماتك المسجلة لدينا
   </div>
 
-  <!-- بيانات المعتمر -->
-  <div id="userBox" style="display:none">
-
-    <div class="welcome">
-      🌙 مرحبًا بك <strong id="welcomeName"></strong><br>
-      نسعد بخدمتك في رحلتك المباركة 🤍
-    </div>
-
-    <input id="name" placeholder="الاسم">
-    <input id="lastname" placeholder="اللقب">
-    <input id="airport" placeholder="مطار الإقلاع">
-    <input id="residence" placeholder="الولاية">
-    <input type="date" id="travel_date">
-
-    <div class="actions">
-      <button onclick="saveLocal()">💾 حفظ التعديلات</button>
-      <button class="secondary" onclick="goResults()">⭐ العروض المناسبة</button>
-    </div>
-
+  <div class="field">
+    <label>الاسم</label>
+    <input id="name" disabled>
   </div>
+
+  <div class="field">
+    <label>اللقب</label>
+    <input id="lastname" disabled>
+  </div>
+
+  <div class="field">
+    <label>مطار الإقلاع</label>
+    <input id="airport" disabled>
+  </div>
+
+  <div class="field">
+    <label>الولاية</label>
+    <input id="residence" disabled>
+  </div>
+
+  <div class="field">
+    <label>تاريخ الإقلاع</label>
+    <input type="date" id="travel_date" disabled>
+  </div>
+
+  <button class="edit" onclick="enableEdit()">✏️ تعديل المعلومات</button>
+  <button class="save" id="saveBtn" onclick="saveToSheet()" style="display:none">
+    💾 حفظ التعديلات
+  </button>
+
+  <button class="go" onclick="goResults()">⭐ العروض المناسبة</button>
+
+</div>
 
 </div>
 
@@ -115,17 +126,15 @@ button{
 const API =
 "https://script.google.com/macros/s/AKfycbwaPdiqpKXpPc1_GIoVo5WV98ecIK-ay2QcQzVRqrVfezFuL-vGIziHuEJVG9TtrhAQCw/exec";
 
-let userData = null;
+let userData=null;
 
-/* تنظيف رقم الهاتف */
 function normalize(p){
-  p = p.replace(/\D/g,"");
-  if(p.startsWith("213")) p = p.slice(3);
-  if(p.startsWith("0")) p = p.slice(1);
+  p=p.replace(/\D/g,"");
+  if(p.startsWith("213"))p=p.slice(3);
+  if(p.startsWith("0"))p=p.slice(1);
   return p;
 }
 
-/* تنظيف تاريخ الإقلاع (إزالة الوقت) */
 function cleanDate(d){
   if(!d) return "";
   return d.toString().split("T")[0];
@@ -133,62 +142,66 @@ function cleanDate(d){
 
 /* جلب بيانات المعتمر */
 function loadUser(){
-  const phone = normalize(document.getElementById("phone").value);
-  if(!phone){
-    alert("أدخل رقم الهاتف");
-    return;
-  }
+  const phone=normalize(document.getElementById("phone").value);
+  if(!phone){ alert("أدخل رقم الهاتف"); return; }
 
-  fetch(API + "?phone=" + phone)
-  .then(r => r.json())
-  .then(d => {
-
-    if(!d || d.found !== true){
+  fetch(API+"?phone="+phone)
+  .then(r=>r.json())
+  .then(d=>{
+    if(!d || d.found!==true){
       alert("❌ لا يوجد طلب بهذا الرقم");
       return;
     }
 
-    userData = d;
+    userData=d;
+    localStorage.setItem("umrah_phone",phone);
 
-    /* حفظ الهاتف */
-    localStorage.setItem("umrah_phone", phone);
+    loginBox.style.display="none";
+    userBox.style.display="block";
 
-    /* إظهار الصندوق */
-    loginBox.style.display = "none";
-    userBox.style.display = "block";
+    welcomeName.innerText=d.name+" "+d.lastname;
 
-    /* الترحيب */
-    welcomeName.innerText = d.name + " " + d.lastname;
-
-    /* تعبئة الحقول */
-    name.value = d.name || "";
-    lastname.value = d.lastname || "";
-    airport.value = d.airport || "";
-    residence.value = d.residence || "";
-    travel_date.value = cleanDate(d.travel_date);
-
-  })
-  .catch(()=>{
-    alert("❌ خطأ في الاتصال");
+    name.value=d.name;
+    lastname.value=d.lastname;
+    airport.value=d.airport;
+    residence.value=d.residence;
+    travel_date.value=cleanDate(d.travel_date);
   });
 }
 
-/* حفظ التعديلات محليًا */
-function saveLocal(){
-  userData.name = name.value;
-  userData.lastname = lastname.value;
-  userData.airport = airport.value;
-  userData.residence = residence.value;
-  userData.travel_date = travel_date.value;
-
-  localStorage.setItem("umrah_user", JSON.stringify(userData));
-  alert("✅ تم حفظ التعديلات");
+/* تفعيل التعديل */
+function enableEdit(){
+  document.querySelectorAll("#userBox input").forEach(i=>i.disabled=false);
+  saveBtn.style.display="block";
 }
 
-/* الانتقال لصفحة النتائج */
+/* حفظ التعديلات في Google Sheets */
+function saveToSheet(){
+
+  const data={
+    phone: normalize(phone.value || userData.phone),
+    name: name.value,
+    lastname: lastname.value,
+    airport: airport.value,
+    residence: residence.value,
+    travel_date: travel_date.value,
+    update: "1"
+  };
+
+  fetch(API,{
+    method:"POST",
+    body:new URLSearchParams(data)
+  })
+  .then(()=>{
+    alert("✅ تم تحديث معلوماتك");
+    document.querySelectorAll("#userBox input").forEach(i=>i.disabled=true);
+    saveBtn.style.display="none";
+  });
+}
+
+/* الانتقال */
 function goResults(){
-  saveLocal();
-  location.href = "results.html";
+  location.href="results.html";
 }
 </script>
 
