@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>العروض المناسبة</title>
+
 <style>
-/* نفس ستايلك */
 body{font-family:Tajawal,Arial;margin:0;background:#f2f2f2;}
 header{background:#8b0000;color:#fff;padding:12px;text-align:center;position:relative;}
 .menu-btn{position:absolute;right:15px;top:10px;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;}
 .general-btn{position:absolute;left:15px;top:14px;color:#fff;text-decoration:none;font-size:14px;}
 .sidebar{position:fixed;top:0;right:-280px;width:260px;height:100%;background:#fff;box-shadow:-4px 0 10px rgba(0,0,0,.15);padding:15px;transition:.3s;z-index:1000;}
-.sidebar.active{right:0;} .sidebar .close{text-align:left;cursor:pointer;}
+.sidebar.active{right:0;}
+.sidebar .close{text-align:left;cursor:pointer;}
 .container{max-width:900px;margin:20px auto;padding:10px;}
 .card{background:#fff;padding:16px;border-radius:16px;margin-bottom:12px;box-shadow:0 4px 10px rgba(0,0,0,.06);}
 .card-header{display:flex;gap:10px;align-items:center;}
@@ -22,6 +23,7 @@ header{background:#8b0000;color:#fff;padding:12px;text-align:center;position:rel
 .card-actions button{flex:1;padding:10px;border:none;border-radius:10px;background:#8b0000;color:#fff;font-weight:bold;cursor:pointer;}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -39,9 +41,10 @@ header{background:#8b0000;color:#fff;padding:12px;text-align:center;position:rel
 <div class="container" id="offers">⏳ جارٍ تحميل العروض...</div>
 
 <script>
-const SEARCH_API = "const API="https://script.google.com/macros/s/AKfycbwsZZ1jb1b-BIUviU2j2bpZ-Av7NGoB67bvAY2ZnFFM6kQ6nPcqFPZ7EWExDFGYqYTP/exec";
+/* ✅ API صحيحة */
+const SEARCH_API = "https://script.google.com/macros/s/AKfycbwsZZ1jb1b-BIUviU2j2bpZ-Av7NGoB67bvAY2ZnFFM6kQ6nPcqFPZ7EWExDFGYqYTP/exec";
 const OFFERS_API = "https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
-const MAIL_API = "https://script.google.com/macros/s/AKfycbwXHAcgydulctkjJEM2To647tVaAf8zJgbxjmiRAUKlhR4sSPFH8qWrddSLm84zD3A/exec";
+const MAIL_API   = "https://script.google.com/macros/s/AKfycbwXHAcgydulctkjJEM2To647tVaAf8zJgbxjmiRAUKlhR4sSPFH8qWrddSLm84zD3A/exec";
 
 const phone = localStorage.getItem("umrah_phone");
 const userBox = document.getElementById("userBox");
@@ -51,7 +54,9 @@ let userData=null;
 let offersData=[];
 let selectedOffer=null;
 
-function toggleSidebar(){document.getElementById("sidebar").classList.toggle("active");}
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("active");
+}
 function diffDays(d1,d2){return Math.abs((d1-d2)/(1000*60*60*24));}
 function formatDate(d){return d ? new Date(d).toLocaleDateString("ar-DZ") : "-";}
 
@@ -60,12 +65,13 @@ if(!phone){
   userBox.innerHTML="❌ رقم الهاتف غير موجود<br>الرجاء الرجوع وإعادة إدخاله";
   offersBox.innerHTML="";
 } else {
-  fetch(SEARCH_API+"?phone="+phone)
+
+  fetch(SEARCH_API+"?phone="+encodeURIComponent(phone))
   .then(r=>r.json())
   .then(d=>{
     if(d && d.found){
-      userData = d;
-      userBox.innerHTML = `
+      userData=d;
+      userBox.innerHTML=`
         <b>${d.name} ${d.lastname}</b><br><br>
         📞 ${d.phone}<br>
         ✈️ ${d.airport}<br>
@@ -84,32 +90,45 @@ if(!phone){
       userBox.innerHTML="❌ لم يتم العثور على معلومات المعتمر";
     }
   })
-  .catch(()=> userBox.innerHTML="❌ خطأ في الاتصال بالخادم");
+  .catch(()=>userBox.innerHTML="❌ خطأ في الاتصال بالخادم");
 
   fetch(OFFERS_API)
   .then(r=>r.json())
-  .then(d=>{offersData=d; renderOffers();});
+  .then(d=>{
+    offersData=d||[];
+    renderOffers();
+  });
 }
 
 function isMatching(o){
   if(!userData) return false;
   return (
+    o.airport &&
+    userData.airport &&
     (o.airport.includes(userData.airport) || userData.airport.includes(o.airport))
-    && diffDays(new Date(userData.travel_date), new Date(o.date))<=10
+    && diffDays(new Date(userData.travel_date), new Date(o.date)) <= 10
   );
 }
 
 function renderOffers(){
   if(!userData || !offersData.length) return;
+
   const list=offersData.filter(isMatching);
-  if(!list.length){offersBox.innerHTML="❌ لا توجد عروض مناسبة"; return;}
+  if(!list.length){
+    offersBox.innerHTML="❌ لا توجد عروض مناسبة";
+    return;
+  }
+
   offersBox.innerHTML="";
   list.forEach(o=>{
     offersBox.innerHTML+=`
       <div class="card">
         <div class="card-header">
           <img src="${o.logo||""}" onerror="this.style.display='none'">
-          <div><small>${o.agency||"-"} – ${o.state||"-"} 📍</small><br><strong>${o.offer}</strong></div>
+          <div>
+            <small>${o.agency||"-"} – ${o.state||"-"} 📍</small><br>
+            <strong>${o.offer}</strong>
+          </div>
         </div>
         <div class="card-info">
           <div>📅 ${formatDate(o.date)}</div>
@@ -139,34 +158,28 @@ function openDetails(o){
   `;
   document.getElementById("detailsModal").style.display="flex";
 }
-
 function closeDetails(){document.getElementById("detailsModal").style.display="none";}
-function prepareRegister(o){selectedOffer=o; openDetails(o);}
+function prepareRegister(o){selectedOffer=o;openDetails(o);}
 
-/* ===== إرسال الإيميل ===== */
 function sendConfirmed(){
-  if(!userData || !selectedOffer){showToast("❌ بيانات غير مكتملة",false);return;}
-  showLoader(true);
+  if(!userData||!selectedOffer) return;
+  document.getElementById("loader").style.display="flex";
 
   const url =
     MAIL_API +
     "?customer=" + encodeURIComponent(JSON.stringify(userData)) +
     "&offer=" + encodeURIComponent(JSON.stringify(selectedOffer));
 
-  fetch(url)
-    .then(() => {
-      showLoader(false);
-      closeDetails();
-      showToast("✅ تم إرسال الطلب إلى الإيميل بنجاح");
-    })
-    .catch(err => {
-      console.error(err);
-      showLoader(false);
-      showToast("❌ فشل الإرسال", false);
-    });
+  fetch(url).then(()=>{
+    document.getElementById("loader").style.display="none";
+    closeDetails();
+    showToast("✅ تم إرسال الطلب");
+  }).catch(()=>{
+    document.getElementById("loader").style.display="none";
+    showToast("❌ فشل الإرسال",false);
+  });
 }
 
-function showLoader(show){document.getElementById("loader").style.display=show?"flex":"none";}
 function showToast(msg,ok=true){
   const t=document.getElementById("toast");
   t.style.background=ok?"#2e7d32":"#c62828";
@@ -176,7 +189,7 @@ function showToast(msg,ok=true){
 }
 </script>
 
-<!-- تفاصيل ونوافذ الإرسال -->
+<!-- النوافذ -->
 <div id="detailsModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;align-items:center;justify-content:center;">
   <div style="background:#fff;width:90%;max-width:500px;padding:20px;border-radius:16px;">
     <div style="text-align:left;cursor:pointer" onclick="closeDetails()">❌</div>
