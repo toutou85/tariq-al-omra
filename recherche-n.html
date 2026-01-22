@@ -44,6 +44,7 @@ header h1{flex:1;text-align:center;font-size:18px;margin:0}
   text-decoration:none;
   border-bottom:1px solid rgba(255,255,255,.15);
 }
+
 #overlay{
   display:none;
   position:fixed;
@@ -69,7 +70,11 @@ input,button{
   border:1px solid #ccc;
 }
 
-button{background:#8b0000;color:#fff}
+button{
+  background:#8b0000;
+  color:#fff;
+  cursor:pointer;
+}
 
 .welcome{
   margin-top:20px;
@@ -134,15 +139,17 @@ button{background:#8b0000;color:#fff}
 </div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
-const phoneInput=document.getElementById("phone");
-const result=document.getElementById("result");
-const popup=document.getElementById("popup");
+const API =
+"https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
+
+const phoneInput = document.getElementById("phone");
+const result = document.getElementById("result");
+const popup = document.getElementById("popup");
 
 function normalize(p){
-  p=p.replace(/\D/g,"");
-  if(p.startsWith("213"))p=p.slice(3);
-  if(p.startsWith("0"))p=p.slice(1);
+  p = p.replace(/\D/g,"");
+  if(p.startsWith("213")) p = p.slice(3);
+  if(p.startsWith("0")) p = p.slice(1);
   return p;
 }
 
@@ -152,27 +159,30 @@ function formatDate(d){
 }
 
 function check(){
-  const phone=normalize(phoneInput.value);
-  if(!phone) return alert("أدخل رقم الهاتف");
+  const phone = normalize(phoneInput.value);
+  if(!phone){
+    alert("أدخل رقم الهاتف");
+    return;
+  }
 
-  popup.style.display="flex";
+  popup.style.display = "flex";
 
-  fetch(API+"?phone="+phone)
-  .then(r=>r.json())
-  .then(d=>{
-    popup.style.display="none";
+  fetch(API + "?phone=" + phone)
+  .then(res => res.json())
+  .then(d => {
 
-    if(!d.found){
-      result.innerHTML="❌ لا يوجد طلب بهذا الرقم";
+    popup.style.display = "none";
+    console.log(d);
+
+    if(!d || Object.keys(d).length === 0){
+      result.innerHTML = "❌ لا يوجد طلب بهذا الرقم";
       return;
     }
 
-    localStorage.setItem("umrah_phone",phone);
-
-    result.innerHTML=`
+    result.innerHTML = `
       <div class="welcome">
-        <p>🌙 مرحبًا بك <strong>${d.name} ${d.lastname || ""}</strong></p>
-        <p>📞 الهاتف: ${d.phone}</p>
+        <p>🌙 مرحبًا بك <strong>${d.name || ""} ${d.lastname || ""}</strong></p>
+        <p>📞 الهاتف: ${d.phone || "-"}</p>
         <p>✈️ المطار: ${d.airport || "-"}</p>
         <p>🏨 الفندق: ${d.hotel || "-"}</p>
         <p>⏳ المدة: ${d.duration || "-"}</p>
@@ -188,20 +198,26 @@ function check(){
         </div>
       </div>
     `;
+  })
+  .catch(err=>{
+    popup.style.display="none";
+    result.innerHTML="❌ خطأ في الاتصال";
+    console.error(err);
   });
 }
 
 function go(type){
-  location.href="results.html?view="+type;
+  location.href = "results.html?view=" + type;
 }
 
 function openMenu(){
-  sideMenu.style.right="0";
-  overlay.style.display="block";
+  sideMenu.style.right = "0";
+  overlay.style.display = "block";
 }
+
 function closeMenu(){
-  sideMenu.style.right="-260px";
-  overlay.style.display="none";
+  sideMenu.style.right = "-260px";
+  overlay.style.display = "none";
 }
 </script>
 
