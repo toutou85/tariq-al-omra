@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -9,7 +8,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* ====== الأساس ====== */
 body{
   font-family:Tajawal,Arial;
   margin:0;
@@ -19,7 +17,6 @@ body{
     center/cover fixed no-repeat;
 }
 
-/* ====== الهيدر ====== */
 header{
   height:60px;
   background:#8b0000;
@@ -29,14 +26,8 @@ header{
   padding:0 15px;
 }
 .menu-btn{font-size:26px;cursor:pointer}
-header h1{
-  flex:1;
-  text-align:center;
-  font-size:18px;
-  margin:0;
-}
+header h1{flex:1;text-align:center;font-size:18px;margin:0}
 
-/* ====== القائمة الجانبية ====== */
 #sideMenu{
   position:fixed;
   top:0;right:-260px;
@@ -53,8 +44,6 @@ header h1{
   text-decoration:none;
   border-bottom:1px solid rgba(255,255,255,.15);
 }
-#sideMenu a:hover{background:rgba(255,255,255,.15)}
-
 #overlay{
   display:none;
   position:fixed;
@@ -63,7 +52,6 @@ header h1{
   z-index:9000;
 }
 
-/* ====== المحتوى ====== */
 .container{
   max-width:520px;
   background:rgba(255,255,255,.93);
@@ -73,46 +61,33 @@ header h1{
   text-align:center;
 }
 
-h2{color:#8b0000;margin-top:0}
-
 input,button{
   width:100%;
   padding:12px;
   margin-top:12px;
   border-radius:10px;
   border:1px solid #ccc;
-  font-size:15px;
-}
-button{
-  background:#8b0000;
-  color:#fff;
-  cursor:pointer;
 }
 
-/* ====== بطاقة الترحيب ====== */
+button{background:#8b0000;color:#fff}
+
 .welcome{
   margin-top:20px;
   background:#f8f4ef;
   padding:18px;
   border-radius:14px;
+  text-align:right;
 }
-.welcome strong{color:#8b0000}
 
-/* ====== أزرار الانتقال ====== */
 .actions{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
   margin-top:15px;
 }
-.actions button{
-  background:#444;
-}
-.actions button.primary{
-  background:#8b0000;
-}
+.actions button{background:#444}
+.actions .primary{background:#8b0000}
 
-/* ====== نافذة الانتظار ====== */
 #popup{
   display:none;
   position:fixed;
@@ -126,8 +101,6 @@ button{
   background:#fff;
   padding:25px;
   border-radius:14px;
-  text-align:center;
-  max-width:320px;
 }
 </style>
 </head>
@@ -147,15 +120,12 @@ button{
 <div id="overlay" onclick="closeMenu()"></div>
 
 <div class="container">
-<h2>الدخول إلى صفحتك</h2>
-
-<input type="tel" id="phone" placeholder="أدخل رقم الهاتف">
-<button onclick="check()">🔍 متابعة</button>
-
-<div id="result"></div>
+  <h2>الدخول إلى صفحتك</h2>
+  <input type="tel" id="phone" placeholder="أدخل رقم الهاتف">
+  <button onclick="check()">🔍 متابعة</button>
+  <div id="result"></div>
 </div>
 
-<!-- نافذة الذكر -->
 <div id="popup">
   <div id="popupBox">
     <h3>⏳ يرجى الانتظار</h3>
@@ -164,14 +134,10 @@ button{
 </div>
 
 <script>
-const SEARCH_API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
-
+const API="https://script.google.com/macros/s/AKfycbxMbVj_Fb7Gam2LPFOgAUpmuhy7jV9RKT_wBSVjGJ1LWyHYc_VqBoIkZZYHFEPdUY9CpA/exec";
 const phoneInput=document.getElementById("phone");
 const result=document.getElementById("result");
 const popup=document.getElementById("popup");
-
-const urlPhone=new URLSearchParams(location.search).get("phone");
-if(urlPhone) phoneInput.value=urlPhone;
 
 function normalize(p){
   p=p.replace(/\D/g,"");
@@ -180,47 +146,42 @@ function normalize(p){
   return p;
 }
 
+function formatDate(d){
+  if(!d) return "-";
+  return new Date(d).toLocaleDateString("ar-DZ");
+}
+
 function check(){
-  const p=normalize(phoneInput.value);
-  if(!p) return alert("أدخل رقم الهاتف");
+  const phone=normalize(phoneInput.value);
+  if(!phone) return alert("أدخل رقم الهاتف");
 
   popup.style.display="flex";
-  fetch(SEARCH_API+"?phone="+p)
+
+  fetch(API+"?phone="+phone)
   .then(r=>r.json())
   .then(d=>{
     popup.style.display="none";
+
     if(!d.found){
       result.innerHTML="❌ لا يوجد طلب بهذا الرقم";
       return;
     }
 
-    localStorage.setItem("umrah_phone",p);
+    localStorage.setItem("umrah_phone",phone);
 
     result.innerHTML=`
       <div class="welcome">
-        مرحبًا بك يا <strong>${d.name}</strong> 🌙<br>
-fetch(SEARCH_API+"?phone="+phone)
-.then(r=>r.json())
-.then(d=>{
-  userData = d;
+        <p>🌙 مرحبًا بك <strong>${d.name} ${d.lastname || ""}</strong></p>
+        <p>📞 الهاتف: ${d.phone}</p>
+        <p>✈️ المطار: ${d.airport || "-"}</p>
+        <p>🏨 الفندق: ${d.hotel || "-"}</p>
+        <p>⏳ المدة: ${d.duration || "-"}</p>
+        <p>🛏️ الغرفة: ${d.room || "-"}</p>
+        <p>🗺️ المسار: ${d.route || "-"}</p>
+        <p>🛫 نوع الرحلة: ${d.flight || "-"}</p>
+        <p>📍 الولاية: ${d.residence || "-"}</p>
+        <p>📅 تاريخ الانطلاق: ${formatDate(d.travel_date)}</p>
 
-  const box = document.getElementById("userInfo");
-  box.style.display = "block";
-
-  box.innerHTML = `
-    <p><strong>👤 الاسم:</strong> ${d.name || ""} ${d.lastname || ""}</p>
-    <p><strong>📞 الهاتف:</strong> ${d.phone || "-"}</p>
-    <p><strong>✈️ المطار:</strong> ${d.airport || "-"}</p>
-    <p><strong>🏨 الفندق:</strong> ${d.hotel || "-"}</p>
-    <p><strong>⏳ المدة:</strong> ${d.duration || "-"}</p>
-    <p><strong>🛏️ الغرفة:</strong> ${d.room || "-"}</p>
-    <p><strong>🗺️ المسار:</strong> ${d.route || "-"}</p>
-    <p><strong>🛫 نوع الرحلة:</strong> ${d.flight || "-"}</p>
-    <p><strong>📍 الولاية:</strong> ${d.residence || "-"}</p>
-    <p><strong>📅 تاريخ الانطلاق:</strong> ${formatDate(d.travel_date)}</p>
-  `;
-});
-        نسأل الله أن ييسر لك العمرة
         <div class="actions">
           <button class="primary" onclick="go('my')">⭐ العروض المناسبة</button>
           <button onclick="go('all')">📋 كل العروض</button>
@@ -231,7 +192,7 @@ fetch(SEARCH_API+"?phone="+phone)
 }
 
 function go(type){
-   location.href="results.html?view="+type;
+  location.href="results.html?view="+type;
 }
 
 function openMenu(){
