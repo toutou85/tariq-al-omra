@@ -124,6 +124,9 @@ header{
 <div class="container" id="offers">⏳ جارٍ تحميل العروض...</div>
 
 <script>
+  const detailsModal = document.getElementById("detailsModal");
+const detailsContent = document.getElementById("detailsContent");
+
 const SEARCH_API = "https://script.google.com/macros/s/AKfycbwaPdiqpKXpPc1_GIoVo5WV98ecIK-ay2QcQzVRqrVfezFuL-vGIziHuEJVG9TtrhAQCw/exec";
 const OFFERS_API = "https://script.google.com/macros/s/AKfycbzHhKu-K6pxKLRe8b1KpiLfI39i9p0lsmUpuNBL62C1K8yozuFEnu3Pr8kRNUedFi42Tg/exec";
 
@@ -247,19 +250,8 @@ function registerOffer(offer){
   );
   alert("تم اختيار العرض");
 }
-  /* ===== التفاصيل ===== */
-function openDetails(o){
-  alert(
-    "تفاصيل العرض:\n\n" +
-    "العرض: " + (o.offer || "-") + "\n" +
-    "الوكالة: " + (o.agency || "-") + "\n" +
-    "الولاية: " + (o.state || "-") + "\n" +
-    "المطار: " + (o.airport || "-") + "\n" +
-    "التاريخ: " + formatDate(o.date) + "\n" +
-    "الفندق: " + (o.hotel || "-") + "\n" +
-    "السعر: " + (o.group || "-") + " دج"
-  );
-}
+ 
+
 
 /* ===== مشاركة ===== */
 function shareOffer(o){
@@ -312,17 +304,23 @@ function openRegister(btn, o){
     offer: o.offer || ""
   });
 
-  fetch(SEARCH_API, { method:"POST", body: payload })
-  .then(r=>r.text())
-  .then(res=>{
-    showLoader(false);
-    if(res==="ADDED" || res==="UPDATED"){
-      showToast("✅ تم إرسال طلبك بنجاح");
-    }else{
-      showToast("⚠️ حدث خطأ أثناء الإرسال", false);
-      btn.disabled = false;
-      btn.style.opacity = "1";
-    }
+ fetch(SEARCH_API, {
+  method: "POST",
+  body: payload
+})
+.then(r => r.text())
+.then(res => {
+  console.log("SERVER:", res);
+
+  showLoader(false);
+
+  if (res === "ADDED" || res === "UPDATED") {
+    showToast("✅ تم إرسال طلبك بنجاح");
+  } else {
+    showToast("⚠️ حدث خطأ أثناء الإرسال", false);
+    btn.disabled = false;
+    btn.style.opacity = "1";
+  }
   })
   .catch(()=>{
     showLoader(false);
@@ -404,6 +402,20 @@ function showToast(msg, ok=true){
   z-index:3001;
   font-weight:bold;
 ">
+</div>
+<!-- Loader -->
+<div id="loader" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  z-index:3000;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:18px;
+">
+  ⏳ جارٍ إرسال الطلب...
 </div>
 
 </body>
