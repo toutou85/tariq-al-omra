@@ -150,19 +150,38 @@ function diffDays(d1,d2){
 
 /* ===== جلب المعتمر ===== */
 fetch(SEARCH_API+"?phone="+phone)
-.then(r=>r.json())
 .then(d=>{
   if(d && d.found){
     userData = d;
+
+    // رسالة الترحيب
+    document.getElementById("welcome").innerText =
+      "🌙 مرحبًا بك " + d.name + " " + d.lastname;
+
+    // عرض معلومات المعتمر (كما هي في GAS)
     userBox.innerHTML = `
-      <strong>${d.name}</strong><br>
-      📞 ${d.phone}<br>
-      ✈️ ${d.airport}<br>
-      📅 ${d.travel_date}
-        
+      <strong>👤 ${d.name} ${d.lastname}</strong><br><br>
 
+      📞 <b>الهاتف:</b> ${d.phone}<br>
+      ✈️ <b>مطار الإقلاع:</b> ${d.airport}<br>
+      🏨 <b>الفندق:</b> ${d.hotel}<br>
+      ⏱️ <b>المدة:</b> ${d.duration}<br>
+      🛏️ <b>نوع الغرفة:</b> ${d.room}<br>
+      🗺️ <b>المسار:</b> ${d.route}<br>
+      ✈️ <b>نوع الرحلة:</b> ${d.flight}<br>
+      🏠 <b>الولاية:</b> ${d.residence}<br>
+      📅 <b>تاريخ الانطلاق:</b> ${d.travel_date}<br>
+      📌 <b>الحالة:</b> ${d.status}<br>
 
+      <hr>
+      📝 <b>ملاحظة:</b><br>
+      ${d.note || "—"}
     `;
+  }else{
+    userBox.innerHTML = "❌ لم يتم العثور على الطلب";
+  }
+});
+
   }else{
     userBox.innerHTML="❌ لم يتم العثور على المعتمر";
   }
