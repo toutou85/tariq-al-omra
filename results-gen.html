@@ -88,6 +88,7 @@ select{padding:8px;border-radius:8px}
 .airport-row{display:flex;gap:16px;overflow-x:auto}
 
 .card{
+  position:relative;
   min-width:300px;
   background:#fff;
   border-radius:18px;
@@ -141,6 +142,10 @@ select{padding:8px;border-radius:8px}
   gap:8px;
   font-size:13px;
   color:#555;
+  .airline-card span{
+  display:none;
+}
+
 }
 #detailsModal,#registerModal{
   display:none;
