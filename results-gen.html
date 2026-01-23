@@ -132,6 +132,25 @@ select{padding:8px;border-radius:8px}
   font-size:14px;
 }
 
+.airline-card{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  margin:6px 0 10px;
+  font-size:13px;
+  color:#555;
+}
+
+.airline-card img{
+  width:32px;
+  height:32px;
+  object-fit:contain;
+  background:#fff;
+  border-radius:6px;
+  padding:3px;
+  box-shadow:0 1px 4px rgba(0,0,0,.2);
+}
 #detailsModal,#registerModal{
   display:none;
   position:fixed;
@@ -409,6 +428,10 @@ function closeDetails(){detailsModal.style.display="none";}
 function shareOffer(o){
   const text=`🕋 عرض عمرة
 ${o.offer}
+<div class="airline-card">
+  <img src="${o.airlineLogo}" alt="${o.airline}">
+  <span>${o.airline}</span>
+</div>
 🏢 ${o.agency}
 ✈️ ${o.airport}
 📅 ${formatDate(o.date)}
