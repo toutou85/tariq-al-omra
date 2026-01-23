@@ -97,6 +97,62 @@ button.submit{
   font-size:16px;
   cursor:pointer;
 }
+  #sendingModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.sending-box{
+  background:#fff;
+  padding:30px 25px;
+  border-radius:16px;
+  text-align:center;
+  width:260px;
+  animation:scaleIn .3s ease;
+}
+
+@keyframes scaleIn{
+  from{transform:scale(.8);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.spinner{
+  width:40px;
+  height:40px;
+  border:4px solid #eee;
+  border-top:4px solid #8b0000;
+  border-radius:50%;
+  margin:0 auto 15px;
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+#countdownText{
+  font-size:15px;
+  margin-bottom:8px;
+  color:#333;
+}
+
+.zikr{
+  font-size:16px;
+  color:#8b0000;
+  font-weight:bold;
+  animation:fade 1.5s infinite;
+}
+
+@keyframes fade{
+  0%,100%{opacity:1}
+  50%{opacity:.4}
+}
+
 </style>
 </head>
 
@@ -262,13 +318,35 @@ agencySelect.onchange=()=>{
   }
 };
 
-form.onsubmit=e=>{
+form.onsubmit = e => {
   e.preventDefault();
-  msg.textContent="⏳ جاري الإرسال...";
-  fetch(API,{method:"POST",body:new FormData(form)})
-  .then(()=>msg.textContent="✅ تم نشر العرض")
-  .catch(()=>msg.textContent="❌ خطأ");
+
+  const modal = document.getElementById("sendingModal");
+  const text = document.getElementById("countdownText");
+
+  let time = 5;
+  modal.style.display = "flex";
+  text.textContent = `⏳ يتم الإرسال... ${time}`;
+
+  const timer = setInterval(() => {
+    time--;
+    text.textContent = `⏳ يتم الإرسال... ${time}`;
+    if (time === 0) clearInterval(timer);
+  }, 1000);
+
+  fetch(API, { method: "POST", body: new FormData(form) })
+    .then(() => {
+      setTimeout(() => {
+        modal.style.display = "none";
+        msg.textContent = "✅ تم نشر العرض";
+      }, 5000); // نفس مدة العد
+    })
+    .catch(() => {
+      modal.style.display = "none";
+      msg.textContent = "❌ خطأ في الإرسال";
+    });
 };
+
 
 function openMenu(){
   sidebar.classList.add("active");
@@ -301,6 +379,14 @@ airlineSelect.addEventListener("change", () => {
 
 
 </script>
+<!-- نافذة الإرسال -->
+<div id="sendingModal" style="display:none;">
+  <div class="sending-box">
+    <div class="spinner"></div>
+    <p id="countdownText">⏳ يتم الإرسال... 5</p>
+    <p class="zikr">🤍 استغفر الله</p>
+  </div>
+</div>
 
 </body>
 </html>
