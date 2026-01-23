@@ -152,7 +152,9 @@ button.submit{
   0%,100%{opacity:1}
   50%{opacity:.4}
 }
-
+#msg{
+  transition:opacity .5s ease;
+}
 </style>
 </head>
 
@@ -338,6 +340,13 @@ form.onsubmit = e => {
     body: new FormData(form)
   })
   .then(() => msg.textContent = "✅ تم نشر العرض")
+setTimeout(() => {
+  msg.style.opacity = "0";
+  setTimeout(() => {
+    msg.textContent = "";
+    msg.style.opacity = "1";
+  }, 500);
+}, 4000);
   .catch(() => msg.textContent = "❌ خطأ في الإرسال");
 };
 
