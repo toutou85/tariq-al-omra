@@ -180,7 +180,25 @@ button.submit{
   <option>مطار الوادي</option>
   <option>مطار غرداية</option>
 </select>
+<label>شركة الطيران</label>
+<select name="airline" id="airlineSelect" required>
+  <option value="">اختر شركة الطيران</option>
+  <option value="الخطوط الجوية الجزائرية" data-logo="https://upload.wikimedia.org/wikipedia/ar/5/5d/Air_Algerie_Logo.svg">الخطوط الجوية الجزائرية</option>
+  <option value="الخطوط الجوية الأردنية" data-logo="https://upload.wikimedia.org/wikipedia/ar/2/24/Royal_Jordanian_Logo.svg">الخطوط الجوية الأردنية</option>
+  <option value="الخطوط الجوية السعودية" data-logo="https://upload.wikimedia.org/wikipedia/ar/6/6f/Saudia_Logo.svg">الخطوط الجوية السعودية</option>
+  <option value="الخطوط الجوية التركية" data-logo="https://upload.wikimedia.org/wikipedia/commons/9/9d/Turkish_Airlines_logo.svg">الخطوط الجوية التركية</option>
+  <option value="فلاي ناس" data-logo="https://upload.wikimedia.org/wikipedia/commons/5/53/Flynas_Logo.svg">فلاي ناس</option>
+  <option value="نوفلار" data-logo="">نوفلار</option>
+  <option value="الخطوط الجوية الإماراتية" data-logo="https://upload.wikimedia.org/wikipedia/commons/d/d0/Emirates_logo.svg">الخطوط الجوية الإماراتية</option>
+  <option value="الخطوط الجوية القطرية" data-logo="https://upload.wikimedia.org/wikipedia/commons/6/6b/Qatar_Airways_Logo.svg">الخطوط الجوية القطرية</option>
+</select>
 
+<label>رابط شعار شركة الطيران (اختياري)</label>
+<input type="url" id="airlineLogoInput" name="airlineLogo" placeholder="https://">
+
+<div id="airlineLogoBox" style="text-align:center;margin-top:10px">
+  <img id="airlineLogo" style="max-width:160px;display:none">
+</div>
 <div class="row">
   <div><input name="group" placeholder="جماعية"></div>
   <div><input name="five" placeholder="خماسية"></div>
@@ -258,6 +276,34 @@ function closeMenu(){
   sidebar.classList.remove("active");
   overlay.classList.remove("active");
 }
+<script>
+const airlineSelect = document.getElementById("airlineSelect");
+const airlineLogoInput = document.getElementById("airlineLogoInput");
+const airlineLogo = document.getElementById("airlineLogo");
+
+airlineSelect.onchange = () => {
+  const opt = airlineSelect.options[airlineSelect.selectedIndex];
+  const logoUrl = opt.getAttribute("data-logo");
+
+  if (logoUrl) {
+    airlineLogo.src = logoUrl;
+    airlineLogo.style.display = "block";
+    airlineLogoInput.value = logoUrl;
+  } else {
+    airlineLogo.style.display = "none";
+    airlineLogoInput.value = "";
+  }
+};
+
+airlineLogoInput.oninput = () => {
+  if (airlineLogoInput.value) {
+    airlineLogo.src = airlineLogoInput.value;
+    airlineLogo.style.display = "block";
+  } else {
+    airlineLogo.style.display = "none";
+  }
+};
+</script>
 </script>
 
 </body>
