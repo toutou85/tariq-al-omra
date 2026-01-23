@@ -364,6 +364,11 @@ function render(){
     <div>
       <strong>${o.offer}</strong><br>
     </div>
+<div class="airline-card">
+  <img src="${o.airlineLogo || ''}"
+       onerror="this.style.display='none'">
+  <span>${o.airline || ''}</span>
+</div>
   </div>
 
   <!-- معلومات العرض -->
