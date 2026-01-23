@@ -428,9 +428,12 @@ function closeDetails(){detailsModal.style.display="none";}
 function shareOffer(o){
   const text=`🕋 عرض عمرة
 ${o.offer}
+
 <div class="airline-card">
-  <img src="${o.airlineLogo}" alt="${o.airline}">
-  <span>${o.airline}</span>
+  <img src="${o.airlineLogo || ''}" 
+       onerror="this.style.display='none'">
+  <span>${o.airline || ''}</span>
+</div>
 </div>
 🏢 ${o.agency}
 ✈️ ${o.airport}
