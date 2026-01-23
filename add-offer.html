@@ -182,6 +182,7 @@ button.submit{
 </select>
 <label>شركة الطيران</label>
 <select name="airline" id="airlineSelect" required>
+  <input type="hidden" name="airlineLogo" id="airlineLogoInput">
   <option value="">اختر شركة الطيران</option>
   <option value="الخطوط الجوية الجزائرية" data-logo="https://i.supaimg.com/66713104-b2e9-4136-8ae4-a2b72287260f.png">الخطوط الجوية الجزائرية</option>
   <option value="الخطوط الجوية الأردنية" data-logo="https://i.supaimg.com/2b05b831-9b52-491a-8b22-75131494e19e.png">الخطوط الجوية الأردنية</option>
@@ -194,7 +195,7 @@ button.submit{
     <option value="الخطوط الجوية المصرية" data-logo="https://i.supaimg.com/7862dbb4-97fd-4a1d-aa23-ccb4eac316c8.png">الخطوط الجوية المصرية</option>
 </select>
 
-<input type="hidden" name="airlineLogo" id="airlineLogoInput">
+
 
 <div id="airlineLogoBox" style="text-align:center;margin-top:10px">
   <img id="airlineLogo" style="max-width:160px;display:none">
@@ -281,6 +282,7 @@ function closeMenu(){
 
 const airlineSelect = document.getElementById("airlineSelect");
 const airlineLogo = document.getElementById("airlineLogo");
+const airlineLogoInput = document.getElementById("airlineLogoInput");
 
 airlineSelect.addEventListener("change", () => {
   const option = airlineSelect.options[airlineSelect.selectedIndex];
@@ -289,12 +291,13 @@ airlineSelect.addEventListener("change", () => {
   if (logoUrl && logoUrl.trim() !== "") {
     airlineLogo.src = logoUrl;
     airlineLogo.style.display = "block";
+    airlineLogoInput.value = logoUrl; // ✅ هذا هو المهم
   } else {
     airlineLogo.style.display = "none";
     airlineLogo.src = "";
+    airlineLogoInput.value = "";
   }
 });
-
 
 
 </script>
