@@ -72,7 +72,7 @@ top:60px;
   margin:25px auto;
   background:rgba(255,255,255,.60);
   padding:20px;
-  border-radius:20px
+  border-radius:20px;
 }
 
 .filters{
@@ -133,19 +133,26 @@ select{padding:8px;border-radius:8px}
   font-size:14px;
 }
 
+.card{
+  position:relative;
+}
+
 .airline-card{
   position:absolute;
   bottom:12px;
   left:12px;
   display:flex;
   align-items:center;
-  gap:8px;
-  font-size:13px;
-  color:#555;
-  .airline-card span{
+}
+
+.airline-card span{
   display:none;
 }
 
+.airline-card img{
+  width:32px;
+  height:32px;
+  object-fit:contain;
 }
 #detailsModal,#registerModal{
   display:none;
