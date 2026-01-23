@@ -443,25 +443,16 @@ function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 
 
 
-const API =
-"https://script.google.com/macros/s/AKfycbyvzI28aV9CqJVPwsOhhOs8jj8oguy--BVv-tvX4wgHj4-w3eaaEUGI3-5cFk085eVo/exec";
 
-// 1️⃣ أولًا: زِد العداد
-fetch(API + "?action=count")
-  .then(() => {
-    // 2️⃣ بعد الزيادة: اقرأ العدد
-    return fetch(API + "?action=view");
-  })
+
+</script>
+<script>
+fetch("https://script.google.com/macros/s/AKfycbw1Ki2kG8Bblu_0itA1ggz3whAJJj9HCsOPx07ZDXed72GfNrXoKnHbV9RDW0d4B8Zd/exec?action=view")
   .then(res => res.json())
   .then(data => {
-    console.log("العداد:", data);
     document.getElementById("visitors").textContent = data.count;
   })
   .catch(err => console.error(err));
-
-fetch("https://script.google.com/macros/s/AKfycbyvzI28aV9CqJVPwsOhhOs8jj8oguy--BVv-tvX4wgHj4-w3eaaEUGI3-5cFk085eVo/exec")
-  .catch(err => console.error("Error count visit:", err));
-
 </script>
 
 </body>
