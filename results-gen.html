@@ -220,15 +220,15 @@ header h1{
 </a>
 <header>
 <div class="menu-btn" onclick="openMenu()">☰</div>
+<h1>🕋 العروض العامة</h1>
   <!-- عدد الزوار -->
   <div class="visitor-box">
     <i class="fa-solid fa-users"></i>
     <div>
-      <span id="visitors">…</span><br>
+<span id="visitors">0</span>
       <small>زائر</small>
     </div>
   </div>
-<h1>🕋 العروض العامة</h1>
 </header>
 
 <nav id="sideMenu">
@@ -446,12 +446,15 @@ function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 
 
 
-fetch("https://script.google.com/macros/s/AKfycbw1Ki2kG8Bblu_0itA1ggz3whAJJj9HCsOPx07ZDXed72GfNrXoKnHbV9RDW0d4B8Zd/exec?action=view")
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("visitors").textContent = data.count;
-  })
-  .catch(err => console.error(err));
+
+
+
+fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {
+  cache: "no-store"
+})
+.then(r => r.json())
+.then(d => document.getElementById("visitors").textContent = d.count);
+
 </script>
 
 </body>
