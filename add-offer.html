@@ -323,31 +323,59 @@ agencySelect.onchange=()=>{
 form.onsubmit = e => {
   e.preventDefault();
 
-  // ✅ تأكيد تعبئة شعار شركة الطيران
+  // تأكيد تعبئة شعار شركة الطيران
   if (!airlineLogoInput.value) {
     const option = airlineSelect.options[airlineSelect.selectedIndex];
     const logoUrl = option ? option.getAttribute("data-logo") : "";
     airlineLogoInput.value = logoUrl || "";
   }
 
-  console.log("AIRLINE:", airlineSelect.value);
-  console.log("LOGO:", airlineLogoInput.value);
+  // إظهار نافذة الإرسال
+  const modal = document.getElementById("sendingModal");
+  const countdownText = document.getElementById("countdownText");
+  let time = 5;
 
-  msg.textContent = "⏳ جاري الإرسال...";
+  modal.style.display = "flex";
+  countdownText.textContent = `⏳ يتم الإرسال... ${time}`;
+
+  const timer = setInterval(() => {
+    time--;
+    countdownText.textContent = `⏳ يتم الإرسال... ${time}`;
+    if (time === 0) clearInterval(timer);
+  }, 1000);
+
+  msg.textContent = "";
 
   fetch(API, {
     method: "POST",
     body: new FormData(form)
   })
-  .then(() => msg.textContent = "✅ تم نشر العرض")
-setTimeout(() => {
-  msg.style.opacity = "0";
-  setTimeout(() => {
-    msg.textContent = "";
-    msg.style.opacity = "1";
-  }, 500);
-}, 4000);
-  .catch(() => msg.textContent = "❌ خطأ في الإرسال");
+  .then(() => {
+    // إخفاء نافذة الإرسال
+    setTimeout(() => {
+      modal.style.display = "none";
+
+      // رسالة النجاح
+      msg.style.opacity = "1";
+      msg.style.color = "green";
+      msg.textContent = "✅ تم نشر العرض بنجاح";
+
+      // إخفاء الرسالة بعد 4 ثوانٍ
+      setTimeout(() => {
+        msg.style.opacity = "0";
+        setTimeout(() => {
+          msg.textContent = "";
+          msg.style.opacity = "1";
+        }, 500);
+      }, 4000);
+
+    }, 5000); // نفس مدة العد التنازلي
+  })
+  .catch(() => {
+    modal.style.display = "none";
+    msg.style.color = "red";
+    msg.textContent = "❌ خطأ في الإرسال";
+  });
 };
 
 function openMenu(){
