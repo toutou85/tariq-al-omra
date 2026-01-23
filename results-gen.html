@@ -137,19 +137,23 @@ select{padding:8px;border-radius:8px}
   position:relative;
 }
 
-.airline-card img{
-  width:180px;
-  height:60px;
-  object-fit:contain;
-  background:linear-gradient(#fff,#f7f7f7);
-  padding:8px;
-  border-radius:12px;
-  box-shadow:0 6px 16px rgba(0,0,0,.18);
-  transition:.3s;
+.airline-card{
+  position:absolute;
+  bottom:170px;
+  left:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.airline-card img:hover{
-  transform:scale(1.05);
+.airline-card img{
+  width:170px;        /* إطار ثابت */
+  height:55px;        /* إطار ثابت */
+  object-fit:contain; /* يحافظ على النسبة */
+  background:#fff;    /* خلفية موحدة */
+  padding:6px;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
 }
 
 #detailsModal,#registerModal{
