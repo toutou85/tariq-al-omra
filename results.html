@@ -21,6 +21,31 @@ header{background:#8b0000;color:#fff;padding:12px;text-align:center;position:rel
 .price{margin-top:10px;font-weight:bold;color:#8b0000;}
 .card-actions{display:flex;gap:8px;margin-top:10px;}
 .card-actions button{flex:1;padding:10px;border:none;border-radius:10px;background:#8b0000;color:#fff;font-weight:bold;cursor:pointer;}
+.card{
+  position:relative;
+}
+
+.airline-card{
+  position:absolute;
+  bottom:160px;
+  left:15px;
+  display:flex;
+  align-items:center;
+ justify-content:flex-start;
+}
+.airline-card span{
+  display:none;
+}
+.airline-card img{
+  width:80px;        /* إطار ثابت */
+  height:55px;        /* إطار ثابت */
+  object-fit:contain; /* يحافظ على النسبة */
+  background:#fff;    /* خلفية موحدة */
+  padding:6px;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
 </style>
 </head>
 
@@ -122,21 +147,26 @@ function renderOffers(){
   offersBox.innerHTML="";
   list.forEach(o=>{
     offersBox.innerHTML+=`
-      <div class="card">
-        <div class="card-header">
-          <img src="${o.logo||""}" onerror="this.style.display='none'">
-          <div>
-            <small>${o.agency||"-"} – ${o.state||"-"} 📍</small><br>
-            <strong>${o.offer}</strong>
-          </div>
-        </div>
-        <div class="card-info">
-          <div>📅 ${formatDate(o.date)}</div>
-          <div>🏨 ${o.hotel||"-"}</div>
-          <div>⏱️ ${o.duration||"-"}</div>
-          <div>🛫 ${o.flight||"-"}</div>
-        </div>
-        <div class="price">💰 ${o.group||"-"} دج</div>
+     <div class="card-header">
+    <img src="${o.logo || ''}" onerror="this.style.display='none'">
+      <small>${o.agency} – ${o.state} 📍</small>
+    <div>
+      <strong>${o.offer}</strong><br>
+    </div>
+<div class="airline-card">
+  <img src="${o.airlineLogo || ''}"
+  onerror="this.style.display='none'">
+  <span>${o.airline || ''}</span>
+</div>
+  </div>
+    <!-- معلومات العرض -->
+  <div class="card-info">
+    <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>
+    <div>🏨 الأقامة في فندق ${o.hotel || "-"}</div>
+    <div>⏱️ مدة الرحلة: ${o.duration || "-"}</div>
+    <div>🛫 مسار الرحلة: ${o.flight || "-"}</div>
+  </div>
+    <div class="price">💰 ${o.group} دج</div>
         <div class="card-actions">
           <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>
           <button onclick='prepareRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
