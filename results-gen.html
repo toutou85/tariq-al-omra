@@ -137,23 +137,21 @@ select{padding:8px;border-radius:8px}
   position:relative;
 }
 
-.airline-card{
-  position:absolute;
-  bottom:160px;
-  left:12px;
-  display:flex;
-  align-items:center;
-}
-
-.airline-card span{
-  display:none;
-}
-
 .airline-card img{
-  width:170px;
-  height:32px;
+  width:180px;
+  height:60px;
   object-fit:contain;
+  background:linear-gradient(#fff,#f7f7f7);
+  padding:8px;
+  border-radius:12px;
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+  transition:.3s;
 }
+
+.airline-card img:hover{
+  transform:scale(1.05);
+}
+
 #detailsModal,#registerModal{
   display:none;
   position:fixed;
