@@ -321,32 +321,25 @@ agencySelect.onchange=()=>{
 form.onsubmit = e => {
   e.preventDefault();
 
-  const modal = document.getElementById("sendingModal");
-  const text = document.getElementById("countdownText");
+  // ✅ تأكيد تعبئة شعار شركة الطيران
+  if (!airlineLogoInput.value) {
+    const option = airlineSelect.options[airlineSelect.selectedIndex];
+    const logoUrl = option ? option.getAttribute("data-logo") : "";
+    airlineLogoInput.value = logoUrl || "";
+  }
 
-  let time = 5;
-  modal.style.display = "flex";
-  text.textContent = `⏳ يتم الإرسال... ${time}`;
+  console.log("AIRLINE:", airlineSelect.value);
+  console.log("LOGO:", airlineLogoInput.value);
 
-  const timer = setInterval(() => {
-    time--;
-    text.textContent = `⏳ يتم الإرسال... ${time}`;
-    if (time === 0) clearInterval(timer);
-  }, 1000);
+  msg.textContent = "⏳ جاري الإرسال...";
 
-  fetch(API, { method: "POST", body: new FormData(form) })
-    .then(() => {
-      setTimeout(() => {
-        modal.style.display = "none";
-        msg.textContent = "✅ تم نشر العرض";
-      }, 5000); // نفس مدة العد
-    })
-    .catch(() => {
-      modal.style.display = "none";
-      msg.textContent = "❌ خطأ في الإرسال";
-    });
+  fetch(API, {
+    method: "POST",
+    body: new FormData(form)
+  })
+  .then(() => msg.textContent = "✅ تم نشر العرض")
+  .catch(() => msg.textContent = "❌ خطأ في الإرسال");
 };
-
 
 function openMenu(){
   sidebar.classList.add("active");
