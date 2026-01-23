@@ -275,32 +275,24 @@ function closeMenu(){
   overlay.classList.remove("active");
 }
 
+
 const airlineSelect = document.getElementById("airlineSelect");
-const airlineLogoInput = document.getElementById("airlineLogoInput");
 const airlineLogo = document.getElementById("airlineLogo");
 
-airlineSelect.onchange = () => {
-  const opt = airlineSelect.options[airlineSelect.selectedIndex];
-  const logoUrl = opt.getAttribute("data-logo");
+airlineSelect.addEventListener("change", () => {
+  const option = airlineSelect.options[airlineSelect.selectedIndex];
+  const logoUrl = option.getAttribute("data-logo");
 
-  if (logoUrl) {
+  if (logoUrl && logoUrl.trim() !== "") {
     airlineLogo.src = logoUrl;
     airlineLogo.style.display = "block";
-    airlineLogoInput.value = logoUrl;
   } else {
     airlineLogo.style.display = "none";
-    airlineLogoInput.value = "";
+    airlineLogo.src = "";
   }
-};
+});
 
-airlineLogoInput.oninput = () => {
-  if (airlineLogoInput.value) {
-    airlineLogo.src = airlineLogoInput.value;
-    airlineLogo.style.display = "block";
-  } else {
-    airlineLogo.style.display = "none";
-  }
-};
+
 
 </script>
 
