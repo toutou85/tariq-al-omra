@@ -492,7 +492,17 @@ function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 
 function sendWhatsAppOnly(o){
 
-  const agencyPhone = (o.phone || "").replace(/\D/g,"");
+  let agencyPhone = (o.phone || "").replace(/\D/g,"");
+
+// إذا لم يبدأ بمفتاح الجزائر، نضيفه
+if(agencyPhone && !agencyPhone.startsWith("213")){
+  agencyPhone = "213" + agencyPhone;
+}
+
+if(!agencyPhone){
+  alert("رقم هاتف الوكالة غير صالح");
+  return;
+}
 
 
   const clientName =
