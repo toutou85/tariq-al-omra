@@ -131,10 +131,11 @@ select{padding:8px;border-radius:8px}
   
 /* 🔒 توحيد حجم البطاقات */
 /* عنوان العرض */
-..card-header{
+
+
+.card-header{
   text-align:center;
 }
-
 /* السطر الأول: اسم الوكالة + عنوان العرض */
 .header-row{
   display:flex;
@@ -380,11 +381,10 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
       c.className="card";  
       c.innerHTML=`  
           
-  <!-- رأس البطاقة -->  
-  <div class="card-header">  
-    <img src="${o.logo || ''}" onerror="this.style.display='none'">  
-      <small>${o.agency} – ${o.state} 📍</small>  
-   <div class="card-header">
+  <!-- رأس البطاقة -->
+<div class="card-header">
+
+  <!-- السطر الأول: اسم الوكالة + عنوان العرض -->
   <div class="header-row">
     <small class="agency-name">
       ${o.agency} – ${o.state} 📍
@@ -408,8 +408,8 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     class="airline-logo"
     src="${o.airlineLogo || ''}"
     onerror="this.style.display='none'">
+
 </div>
-  
   <!-- معلومات العرض -->  
   <div class="card-info">  
     <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>  
