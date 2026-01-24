@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تعديل عروض الوكالة</title>
+<title>إدارة عروض الوكالة</title>
 
 <style>
 body{
@@ -23,7 +23,7 @@ label{display:block;margin-top:12px;font-weight:bold}
 select,input{
   width:100%;
   padding:10px;
-  margin-top:5px;
+  margin-top:6px;
   border-radius:8px;
   border:1px solid #ccc;
 }
@@ -52,12 +52,9 @@ button{
   gap:10px;
   margin-top:10px;
 }
-.actions button{
-  flex:1;
-}
+.actions button{flex:1}
 .edit{background:#0066cc}
 .delete{background:#b00000}
-.hidden{display:none}
 .msg{text-align:center;margin-top:10px;font-weight:bold}
 </style>
 </head>
@@ -65,11 +62,11 @@ button{
 <body>
 
 <div class="container">
-<h2>✏️ إدارة عروض الوكالة</h2>
+<h2>✏️ لوحة إدارة عروض الوكالة</h2>
 
 <label>اختر الوكالة</label>
 <select id="agencySelect">
-  <option value="">-- اختر --</option>
+  <option value="">-- اختر الوكالة --</option>
 </select>
 
 <label>رقم هاتف الوكالة (للتأكيد)</label>
@@ -82,71 +79,38 @@ button{
 <hr>
 
 <div id="offersBox"></div>
-
 </div>
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbz594T6qrkNFDQBGYVCOc3k_sZIxoSDbf_JhY9GqJzyCRKtyQ7BeDesB3l0VI1FrVGOpA/exec";
-
-let allOffers = [];
-
-// تحميل البيانات
-fetch(API)
-.then(r=>r.json())
-.then(data=>{
-  allOffers = data;
-  const agencies = [...new Set(data.map(o=>o.agency))];
-  agencies.forEach(a=>{
-    agencySelect.innerHTML += `<option value="${a}">${a}</option>`;
-  });
-});
-
-function loadOffers(){
-  const agency = agencySelect.value;
-  const phone = phoneInput.value.trim();
-  const box = document.getElementById("offersBox");
-  const msg = document.getElementById("msg");
-
-  box.innerHTML = "";
-  msg.textContent = "";
-
-  if(!agency || !phone){
-    msg.textContent = "⚠️ اختر الوكالة وأدخل رقم الهاتف";
-    return;
-  }
-
- <script>
-const API = "https://script.google.com/macros/s/AKfycbzV28HibStpWUmjCRmxiyxP-l-EjiFlW2m_lprMZkz8JUsV7XU3DH15gXsbkK9FhzYFbg/exec";
+/* 🔵 سكربت الإدارة فقط */
+const API = "https://script.google.com/macros/s/AKfycbwRBydMWFwS6huHj8jIDbpMy8uqP0ohBEE8N-VyEq4sqcffkGiKgEmiK0yBD3YW_NVDSw/exec";
 
 const agencySelect = document.getElementById("agencySelect");
-const phoneInput = document.getElementById("phoneInput");
-const msg = document.getElementById("msg");
-const box = document.getElementById("offersBox");
+const phoneInput   = document.getElementById("phoneInput");
+const msg          = document.getElementById("msg");
+const box          = document.getElementById("offersBox");
 
 let allOffers = [];
 
-// تحميل البيانات
+/* تحميل كل العروض (لجلب أسماء الوكالات) */
 fetch(API)
 .then(r => r.json())
 .then(data => {
   allOffers = data;
 
   const agencies = [...new Set(data.map(o => o.agency))];
-
   agencies.forEach(a => {
-    if (a) {
-      agencySelect.innerHTML += `<option value="${a}">${a}</option>`;
-    }
+    if (a) agencySelect.innerHTML += `<option value="${a}">${a}</option>`;
   });
 })
-.catch(err => {
-  msg.textContent = "❌ خطأ في تحميل الوكالات";
-  console.error(err);
+.catch(() => {
+  msg.textContent = "❌ فشل تحميل الوكالات";
 });
 
+/* تحميل عروض الوكالة بعد التحقق */
 function loadOffers(){
   const agency = agencySelect.value;
-  const phone = phoneInput.value.trim();
+  const phone  = phoneInput.value.trim();
 
   box.innerHTML = "";
   msg.textContent = "";
@@ -168,7 +132,6 @@ function loadOffers(){
       <div class="offer">
         <h4>${o.offer}</h4>
         <small>📅 ${o.date} | ⏱ ${o.duration}</small><br>
-        <small>✈️ ${o.airline} – ${o.airport}</small><br>
         <small>🏨 ${o.hotel}</small>
 
         <div class="actions">
@@ -179,8 +142,45 @@ function loadOffers(){
     `;
   });
 }
-</script>
 
+/* تعديل الفندق (كنموذج أولي) */
+function editOffer(row){
+  const newHotel = prompt("✏️ أدخل اسم الفندق الجديد:");
+  if(!newHotel) return;
+
+  const fd = new FormData();
+  fd.append("action","update");
+  fd.append("row",row);
+  fd.append("phone",phoneInput.value);
+  fd.append("hotel",newHotel);
+
+  fetch(API,{method:"POST",body:fd})
+  .then(r=>r.text())
+  .then(res=>{
+    alert(res);
+    location.reload();
+  });
+}
+
+/* حذف عرض */
+function deleteOffer(row){
+  if(!confirm("⚠️ هل أنت متأكد من حذف العرض؟")) return;
+
+  const fd = new FormData();
+  fd.append("action","delete");
+  fd.append("row",row);
+  fd.append("phone",phoneInput.value);
+
+  fetch(API,{method:"POST",body:fd})
+  .then(r=>r.text())
+  .then(res=>{
+    alert(res);
+    location.reload();
+  });
+}
+</script>
 
 </body>
 </html>
+
+
