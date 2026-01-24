@@ -492,7 +492,8 @@ function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 
 function sendWhatsAppOnly(o){
 
-  const agencyPhone = (o.agencyPhone || o.phone || "").replace(/\D/g,"");
+  const agencyPhone = (o.phone || "").replace(/\D/g,"");
+
 
   const clientName =
     (document.getElementById("cFirst")?.value || "") + " " +
