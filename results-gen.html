@@ -352,6 +352,9 @@ list.sort((a, b) => new Date(a.date) - new Date(b.date));
 
   Object.keys(grouped).forEach(ap=>{
     const g=document.createElement("div");
+    // ترتيب رحلات هذا المطار حسب تاريخ الإقلاع (الأقرب أولاً)
+grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
+
     g.className="airport-group";
     g.innerHTML=`<div class="airport-title">✈️ ${ap}</div>`;
     const r=document.createElement("div");
