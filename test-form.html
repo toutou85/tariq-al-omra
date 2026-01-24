@@ -131,37 +131,37 @@ select{padding:8px;border-radius:8px}
   
 /* 🔒 توحيد حجم البطاقات */
 /* عنوان العرض */
+..card-header{
+  text-align:center;
+}
+
+/* السطر الأول: اسم الوكالة + عنوان العرض */
+.header-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.agency-name{
+  font-size:13px;
+  color:#555;
+  white-space:nowrap;
+}
+
 .offer-title{
-  display:block;
   font-size:18px;
   font-weight:900;
-  margin-bottom:6px;
-}
-
-/* شعار الطيران + واتساب */
-.airline-inline{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:6px;
-}
-
-/* الشعار */
-.airline-logo{
-  width:80px;
-  height:45px;
-  object-fit:contain;
-  background:#fff;
-  padding:6px;
-  border-radius:10px;
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
+  flex:1;
+  text-align:center;
 }
 
 /* زر واتساب */
-.wa-inline-btn{
-  width:42px;
-  height:42px;
+.wa-below{
+  margin:0 auto 10px;
+  width:48px;
+  height:48px;
   border-radius:50%;
   border:none;
   background:#25D366;
@@ -171,9 +171,22 @@ select{padding:8px;border-radius:8px}
   cursor:pointer;
 }
 
-.wa-inline-btn i{
+.wa-below i{
   color:#fff;
-  font-size:20px;
+  font-size:24px;
+}
+
+/* شعار الطيران */
+.airline-logo{
+  display:block;
+  margin:0 auto;
+  width:100px;
+  height:50px;
+  object-fit:contain;
+  background:#fff;
+  padding:6px;
+  border-radius:12px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
 }
   
 #detailsModal,#registerModal{  
@@ -371,23 +384,31 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   <div class="card-header">  
     <img src="${o.logo || ''}" onerror="this.style.display='none'">  
       <small>${o.agency} – ${o.state} 📍</small>  
-   <div>  
-      <strong>${o.offer}</strong><br>  
-    </div>  
-<div class="airline-box">
-  <img class="airline-logo"
-       src="${o.airlineLogo || ''}"
-       onerror="this.style.display='none'">
+   <div class="card-header">
+  <div class="header-row">
+    <small class="agency-name">
+      ${o.agency} – ${o.state} 📍
+    </small>
 
-  <button class="wa-icon-btn"
-    title="تواصل عبر واتساب"
-    onclick='openWaModal(${JSON.stringify(o)})'>
+    <strong class="offer-title">
+      ${o.offer}
+    </strong>
+  </div>
+
+  <!-- زر واتساب -->
+  <button
+    class="wa-below"
+    onclick='openWaModal(${JSON.stringify(o)})'
+    title="تواصل عبر واتساب">
     <i class="fab fa-whatsapp"></i>
   </button>
+
+  <!-- شعار الطيران -->
+  <img
+    class="airline-logo"
+    src="${o.airlineLogo || ''}"
+    onerror="this.style.display='none'">
 </div>
-  
-</div>   
-  </div>  
   
   <!-- معلومات العرض -->  
   <div class="card-info">  
