@@ -513,7 +513,7 @@ function sendWhatsAppOnly(o){
   window.open(`https://wa.me/${ADMIN_PHONE}?text=${text}`, "_blank");
 
   // إرسال للوكالة
-  if(agencyPhone){
+  if(Phone){
     setTimeout(()=>{
       window.open(`https://wa.me/${agencyPhone}?text=${text}`, "_blank");
     },600);
