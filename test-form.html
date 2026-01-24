@@ -489,24 +489,34 @@ function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}
 function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 
 
-function sendWhatsAppFromCard(o){
+function sendWhatsAppAndSave(o){
 
-  // استخراج رقم الهاتف من بيانات Google Sheets
-  let rawPhone = o.phone || "";
-  let agencyPhone = String(rawPhone).replace(/\D/g,"");
+  const clientName  = document.getElementById("clientName").value.trim();
+  const clientPhone = document.getElementById("clientPhone").value.trim();
+
+  if(!clientName || !clientPhone){
+    alert("يرجى إدخال اسم ورقم هاتف المعتمر");
+    return;
+  }
+
+  // 📞 رقم الوكالة من Google Sheets
+  let agencyPhone = String(o.phone || "").replace(/\D/g,"");
 
   if(!agencyPhone){
     alert("رقم هاتف الوكالة غير متوفر");
     return;
   }
 
-  // إضافة مفتاح الجزائر إن لم يكن موجودًا
   if(!agencyPhone.startsWith("213")){
     agencyPhone = "213" + agencyPhone;
   }
 
+  // 📩 رسالة واتساب
   const message = `
 السلام عليكم ورحمة الله وبركاته 🌿
+
+أنا ${clientName}
+رقم هاتفي: ${clientPhone}
 
 أرغب في التسجيل في عرض عمرة من موقع *طريق العمرة* 🕋
 
@@ -523,22 +533,25 @@ function sendWhatsAppFromCard(o){
     "_blank"
   );
 
-  // 2️⃣ تسجيل العملية في Google Sheets (اختياري لكن مفيد)
+  // 2️⃣ إرسال البيانات إلى Google Sheets + Email
   fetch(
     "https://script.google.com/macros/s/AKfycbzvVAO9qu-bwwJxg9jOJZyzwhRQdZf-FcJCZ0Uw1FcvqFD25JT978PPerBo7EuCk2_L/exec",
     {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         agency: o.agency,
-        phone: agencyPhone,
         offer: o.offer,
         date: o.date,
-        time: new Date().toLocaleString("ar-DZ")
+        hotel: o.hotel || "",
+        price: o.group || "",
+        agencyPhone: agencyPhone,
+        clientName: clientName,
+        clientPhone: clientPhone
       })
     }
   );
 }
-
 
 
 
