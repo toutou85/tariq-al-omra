@@ -54,6 +54,62 @@ button{
 <label>رقم هاتف الوكالة</label>
 <input id="phoneInput" placeholder="رقم الهاتف">
 
+<button class="main" <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعديل عروض العمرة</title>
+
+<style>
+body{font-family:Tajawal,Arial;background:#f2f2f2;margin:0}
+.container{max-width:900px;margin:40px auto;background:#fff;padding:20px;border-radius:14px}
+h2{text-align:center;color:#8b0000}
+label{font-weight:bold;margin-top:12px;display:block}
+input,select{
+  width:100%;padding:10px;margin-top:5px;
+  border:1px solid #ccc;border-radius:8px
+}
+button{
+  padding:12px;border:none;border-radius:10px;
+  cursor:pointer;font-size:15px
+}
+.main{width:100%;background:#8b0000;color:#fff;margin-top:12px}
+.offer{border:1px solid #ddd;border-radius:12px;padding:15px;margin-top:15px;background:#fafafa}
+.actions{display:flex;gap:10px;margin-top:10px}
+.actions button{flex:1}
+.edit{background:#0066cc;color:#fff}
+.delete{background:#b00000;color:#fff}
+.msg{text-align:center;margin-top:10px;font-weight:bold}
+
+/* modal */
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);
+  display:none;align-items:center;justify-content:center;z-index:9999
+}
+.modal-box{
+  background:#fff;width:95%;max-width:700px;
+  border-radius:14px;padding:20px;
+  max-height:90vh;overflow:auto
+}
+.save{background:#008000;color:#fff;width:100%;margin-top:15px}
+.close{background:#ccc;width:100%;margin-top:10px}
+.row{display:flex;gap:10px}
+.row>div{flex:1}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>✏️ تعديل عروض الوكالة</h2>
+
+<label>اختر الوكالة</label>
+<select id="agencySelect"><option value="">-- اختر --</option></select>
+
+<label>رقم هاتف الوكالة</label>
+<input id="phoneInput">
+
 <button class="main" onclick="loadOffers()">🔐 دخول</button>
 <p class="msg" id="msg"></p>
 
@@ -61,7 +117,7 @@ button{
 <div id="offersBox"></div>
 </div>
 
-<!-- Modal التعديل -->
+<!-- Modal -->
 <div class="modal" id="editModal">
   <div class="modal-box">
 
@@ -82,12 +138,47 @@ button{
       </div>
     </div>
 
+    <label>نوع الرحلة</label>
+    <select id="flightType">
+      <option>مباشرة</option>
+      <option>غير مباشرة</option>
+    </select>
+
     <label>مطار الإقلاع</label>
-    <input id="airport">
+    <select id="airport">
+      <option>مطار الجزائر</option>
+      <option>مطار وهران</option>
+      <option>مطار قسنطينة</option>
+      <option>مطار عنابة</option>
+      <option>مطار جيجل</option>
+      <option>مطار باتنة</option>
+      <option>مطار ورقلة</option>
+      <option>مطار تمنغاست</option>
+      <option>مطار أدرار</option>
+      <option>مطار الوادي</option>
+      <option>مطار غرداية</option>
+    </select>
+
+   <label>شركة الطيران</label>
+<select name="airline" id="airlineSelect" required>
+  
+  <option value="">اختر شركة الطيران</option>
+  <option value="الخطوط الجوية الجزائرية" data-logo="https://i.supaimg.com/66713104-b2e9-4136-8ae4-a2b72287260f.png">الخطوط الجوية الجزائرية</option>
+  <option value="الخطوط الجوية الأردنية" data-logo="https://i.supaimg.com/2b05b831-9b52-491a-8b22-75131494e19e.png">الخطوط الجوية الأردنية</option>
+  <option value="الخطوط الجوية السعودية" data-logo="https://i.supaimg.com/68cbc0c4-f7ea-4885-b102-3cb9c45eb086.png">الخطوط الجوية السعودية</option>
+  <option value="الخطوط الجوية التركية" data-logo="https://i.supaimg.com/b54bb949-25e5-4bcd-bec7-fc47854952ec.png">الخطوط الجوية التركية</option>
+  <option value="فلاي ناس" data-logo="https://i.supaimg.com/ba2ebef9-bad8-4640-bcf0-e625ff0775c1.webp">فلاي ناس</option>
+  <option value="نوفلار" data-logo="https://i.supaimg.com/7c39556f-f3bb-4475-b7a7-bd278b555927.png">نوفلار</option>
+  <option value="الخطوط الجوية الإماراتية" data-logo="https://upload.wikimedia.org/wikipedia/commons/d/d0/Emirates_logo.svg">الخطوط الجوية الإماراتية</option>
+  <option value="الخطوط الجوية القطرية" data-logo="https://i.supaimg.com/c215f6d4-6fe0-4197-95f3-88c16a0e847d.png">الخطوط الجوية القطرية</option>
+    <option value="الخطوط الجوية المصرية" data-logo="https://i.supaimg.com/7862dbb4-97fd-4a1d-aa23-ccb4eac316c8.png">الخطوط الجوية المصرية</option>
+   <option value="طيران أديل السعودي" data-logo="https://i.ibb.co/GzhC6vQ/t-l-chargement-removebg-preview.png">طيران أديل السعودي</option>
+
+</select>
 
     <div class="row">
       <div><label>جماعية</label><input id="group"></div>
-      <div><label>خماسية</label><input id="five"></div>
+      
     </div>
 
     <div class="row">
@@ -108,7 +199,7 @@ button{
 </div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbwRBydMWFwS6huHj8jIDbpMy8uqP0ohBEE8N-VyEq4sqcffkGiKgEmiK0yBD3YW_NVDSw/exec";
+const API="https://script.google.com/macros/s/AKfycbzn8J1EVx6qduv_okNTSWA6G5yQHgCDAUIiEjN6ySKYflNafH1Why7Hh0pCdBsB-MG9tg/exec";
 
 const agencySelect=document.getElementById("agencySelect");
 const phoneInput=document.getElementById("phoneInput");
@@ -117,7 +208,7 @@ const msg=document.getElementById("msg");
 
 let allOffers=[];
 
-/* تحميل الوكالات */
+/* تحميل البيانات */
 fetch(API).then(r=>r.json()).then(data=>{
   allOffers=data;
   [...new Set(data.map(o=>o.agency))].forEach(a=>{
@@ -148,33 +239,34 @@ function loadOffers(){
   });
 }
 
-/* فتح المودال مع تعبئة نفس الفورم */
 function openEdit(o){
   editRow.value=o.row;
-  offer.value=o.offer||"";
-  date.value=o.date||"";
-  duration.value=o.duration||"";
-  airport.value=o.airport||"";
-  group.value=o.group||"";
-  five.value=o.five||"";
-  four.value=o.four||"";
-  three.value=o.three||"";
-  two.value=o.two||"";
-  hotel.value=o.hotel||"";
+  offer.value=o.offer;
+  date.value=o.date;
+  duration.value=o.duration;
+  flightType.value=o.flightType;
+  airport.value=o.airport;
+  airline.value=o.airline;
+  group.value=o.group;
+  five.value=o.five;
+  four.value=o.four;
+  three.value=o.three;
+  two.value=o.two;
+  hotel.value=o.hotel;
   editModal.style.display="flex";
 }
 
 function closeModal(){editModal.style.display="none";}
 
-/* حفظ التعديل */
 function saveEdit(){
   const fd=new FormData();
   fd.append("action","update");
   fd.append("row",editRow.value);
   fd.append("phone",phoneInput.value);
 
-  ["offer","date","duration","airport","group","five","four","three","two","hotel"]
-  .forEach(id=>fd.append(id,document.getElementById(id).value));
+  ["offer","date","duration","flightType","airport","airline",
+   "group","five","four","three","two","hotel"]
+   .forEach(id=>fd.append(id,document.getElementById(id).value));
 
   fetch(API,{method:"POST",body:fd})
   .then(r=>r.text())
@@ -184,9 +276,8 @@ function saveEdit(){
   });
 }
 
-/* حذف */
 function deleteOffer(row){
-  if(!confirm("هل أنت متأكد من الحذف؟"))return;
+  if(!confirm("هل أنت متأكد؟"))return;
   const fd=new FormData();
   fd.append("action","delete");
   fd.append("row",row);
