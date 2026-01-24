@@ -3,56 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>العروض العامة للعمرة</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>اختبار واتساب الوكالات</title>
 
 <style>
 body{
-  font-family:Tajawal,Arial;
-  margin:0;
-  background:
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
-    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
-    center/cover fixed no-repeat;
-}
-header{
-  height:60px;
-  background:#8b0000;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  padding:0 15px;
-}
-.menu-btn{font-size:26px;cursor:pointer}
-header h1{flex:1;text-align:center;font-size:18px;margin:0}
-.container{
-  max-width:1200px;
-  margin:25px auto;
-  background:rgba(255,255,255,.60);
+  font-family:Arial;
+  background:#f2f2f2;
   padding:20px;
-  border-radius:20px;
 }
-.airport-row{display:flex;gap:16px;overflow-x:auto}
 .card{
-  min-width:300px;
   background:#fff;
-  border-radius:18px;
-  padding:16px;
-  box-shadow:0 8px 25px rgba(0,0,0,.08);
-}
-.card-actions{
-  display:flex;
-  gap:8px;
-  margin-top:10px;
-}
-.card-actions button{
-  flex:1;
-  padding:10px;
-  border:none;
+  padding:15px;
+  margin-bottom:10px;
   border-radius:10px;
-  background:#8b0000;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+button{
+  background:#25D366;
   color:#fff;
+  border:none;
+  padding:10px 15px;
+  border-radius:8px;
   cursor:pointer;
 }
 </style>
@@ -60,108 +31,76 @@ header h1{flex:1;text-align:center;font-size:18px;margin:0}
 
 <body>
 
-<header>
-  <div class="menu-btn">☰</div>
-  <h1>🕋 العروض العامة</h1>
-</header>
+<h2>📞 اختبار واتساب الوكالات</h2>
 
-<div class="container">
-  <div id="offers">⏳ جارٍ تحميل العروض...</div>
-</div>
+<div id="list">جاري التحميل...</div>
 
 <script>
-const OFFERS_API = "https://script.google.com/macros/s/AKfycbwN-Mgn61HDqdCD2_shOx3nRAcW-O8GxquhSpxaSX0Az00W1W_48lVFCowDqF41ZN_7dQ/exec";
-let offersData = [];
+// 🔹 API الذي يجلب الوكالات من Google Sheets
+const OFFERS_API =
+"https://script.google.com/macros/s/AKfycbwN-Mgn61HDqdCD2_shOx3nRAcW-O8GxquhSpxaSX0Az00W1W_48lVFCowDqF41ZN_7dQ/exec";
 
-function formatDate(d){
-  return d ? new Date(d).toLocaleDateString("ar-DZ") : "-";
-}
+// 🔹 API تسجيل الإرسال (Google Sheets)
+const LOG_API =
+"https://script.google.com/macros/s/AKfycbzvVAO9qu-bwwJxg9jOJZyzwhRQdZf-FcJCZ0Uw1FcvqFD25JT978PPerBo7EuCk2_L/exec";
 
 fetch(OFFERS_API)
-.then(r=>r.json())
-.then(data=>{
-  offersData = data;
-  render();
-});
+.then(r => r.json())
+.then(data => render(data));
 
-function render(){
-  const offers = document.getElementById("offers");
-  offers.innerHTML = "";
+function render(data){
+  const list = document.getElementById("list");
+  list.innerHTML = "";
 
-  offersData.forEach((o, i)=>{
-    const card = document.createElement("div");
-    card.className = "card";
+  data.forEach(o => {
 
-    card.innerHTML = `
-      <strong>${o.offer}</strong>
-      <div>🏢 ${o.agency}</div>
-      <div>📅 ${formatDate(o.date)}</div>
-      <div>🏨 ${o.hotel || "-"}</div>
-      <div>💰 ${o.group} دج</div>
+    // رقم الهاتف من الشيت
+    let phone = String(o.phone || "").replace(/\D/g,"");
+    if(!phone) return;
 
-      <div class="card-actions">
-        <button onclick="openDetailsByIndex(${i})">ℹ️ التفاصيل</button>
-        <button onclick="shareOfferByIndex(${i})">📤 مشاركة</button>
-        <button onclick="openRegisterByIndex(${i})">📩 تسجيل</button>
-        <button style="background:#25D366" onclick="sendWhatsAppByIndex(${i})">
-          <i class="fab fa-whatsapp"></i> واتساب
-        </button>
-      </div>
+    if(!phone.startsWith("213")){
+      phone = "213" + phone;
+    }
+
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <div><strong>🏢 الوكالة:</strong> ${o.agency}</div>
+      <div><strong>📞 الهاتف:</strong> ${phone}</div>
+      <br>
+      <button onclick="sendWhatsApp('${phone}','${o.agency}')">
+        📲 واتساب
+      </button>
     `;
-    offers.appendChild(card);
+
+    list.appendChild(div);
   });
 }
 
-/* ====== أزرار ====== */
-
-function openDetailsByIndex(i){
-  const o = offersData[i];
-  alert("تفاصيل: " + o.offer);
-}
-
-function shareOfferByIndex(i){
-  const o = offersData[i];
-  const text = `عرض عمرة\n${o.offer}\n${formatDate(o.date)}\n${o.group} دج`;
-  window.open("https://wa.me/?text="+encodeURIComponent(text));
-}
-
-function openRegisterByIndex(i){
-  alert("التسجيل في العرض رقم " + i);
-}
-
-function sendWhatsAppByIndex(i){
-  sendWhatsAppOnly(offersData[i]);
-}
-
-/* ====== واتساب ====== */
-
-function sendWhatsAppOnly(o){
-  let agencyPhone = (o.phone || "").replace(/\D/g,"");
-
-  if(!agencyPhone){
-    alert("رقم هاتف الوكالة غير موجود");
-    return;
-  }
-
-  if(!agencyPhone.startsWith("213")){
-    agencyPhone = "213" + agencyPhone;
-  }
+function sendWhatsApp(phone, agency){
 
   const message = `
 السلام عليكم 🌿
-أرغب في التسجيل في عرض عمرة
-
-▪️ الوكالة: ${o.agency}
-▪️ العرض: ${o.offer}
-▪️ تاريخ الإقلاع: ${formatDate(o.date)}
-▪️ الفندق: ${o.hotel || "-"}
-▪️ السعر: ${o.group} دج
+أرغب في التواصل مع وكالة ${agency}
+من موقع طريق العمرة 🕋
 `;
 
+  // 1️⃣ فتح واتساب
   window.open(
-    `https://wa.me/${agencyPhone}?text=${encodeURIComponent(message)}`,
+    "https://wa.me/" + phone + "?text=" + encodeURIComponent(message),
     "_blank"
   );
+
+  // 2️⃣ تسجيل في Google Sheets
+  fetch(LOG_API,{
+    method:"POST",
+    body:JSON.stringify({
+      agency: agency,
+      phone: phone,
+      time: new Date().toLocaleString("ar-DZ")
+    })
+  });
 }
 </script>
 
