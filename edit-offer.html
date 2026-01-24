@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعديل عروض الوكالة</title>
+
+<style>
+body{
+  font-family:Tajawal,Arial;
+  background:#f2f2f2;
+  margin:0;
+}
+.container{
+  max-width:900px;
+  margin:40px auto;
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+}
+h2{
+  text-align:center;
+  color:#8b0000;
+}
+label{font-weight:bold;margin-top:10px;display:block}
+select,input{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+button{
+  margin-top:15px;
+  padding:12px;
+  width:100%;
+  background:#8b0000;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.offer{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:15px;
+  margin-top:15px;
+  background:#fafafa;
+}
+.offer h4{
+  margin:0 0 8px;
+  color:#333;
+}
+.offer small{color:#666}
+.edit-btn{
+  background:#0066cc;
+  margin-top:10px;
+}
+.hidden{display:none}
+.error{color:red;text-align:center;margin-top:10px}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>✏️ تعديل عروض الوكالة</h2>
+
+<label>اختر الوكالة</label>
+<select id="agencySelect">
+  <option value="">-- اختر --</option>
+</select>
+
+<label>رقم هاتف الوكالة (للتأكيد)</label>
+<input id="phoneCheck" placeholder="أدخل رقم الهاتف">
+
+<button onclick="verifyAgency()">🔐 تأكيد والدخول</button>
+
+<p class="error" id="errorMsg"></p>
+
+<hr>
+
+<div id="offersBox" class="hidden"></div>
+
+</div>
+
+<script>
+const API = "https://script.google.com/macros/s/AKfycbx7sQEUTNhglETA_Irkc5UOvy62SvS-9ftS4v-Ugh8cnTQjDiNs6-kp-SdR8QsOnXE-zw/exec";
+
+let allData = [];
+
+// تحميل كل العروض
+fetch(API)
+.then(r=>r.json())
+.then(data=>{
+  allData = data;
+
+  const agencies = [...new Set(data.map(o=>o.agency))];
+  const select = document.getElementById("agencySelect");
+
+  agencies.forEach(a=>{
+    select.innerHTML += `<option value="${a}">${a}</option>`;
+  });
+});
+
+function verifyAgency(){
+  const agency = agencySelect.value;
+  const phone = phoneCheck.value.trim();
+  const error = document.getElementById("errorMsg");
+  const box = document.getElementById("offersBox");
+
+  error.textContent = "";
+  box.innerHTML = "";
+  box.classList.add("hidden");
+
+  if(!agency || !phone){
+    error.textContent = "⚠️ اختر الوكالة وأدخل رقم الهاتف";
+    return;
+  }
+
+  const offers = allData.filter(o => o.agency === agency && o.phone === phone);
+
+  if(offers.length === 0){
+    error.textContent = "❌ رقم الهاتف غير صحيح أو لا توجد عروض";
+    return;
+  }
+
+  box.classList.remove("hidden");
+
+  offers.forEach(o=>{
+    box.innerHTML += `
+      <div class="offer">
+        <h4>${o.offer}</h4>
+        <small>📅 ${o.date} | ⏱ ${o.duration}</small><br>
+        <small>✈️ ${o.airline} – ${o.airport}</small><br>
+        <small>🏨 ${o.hotel}</small>
+
+        <button class="edit-btn" onclick="editOffer('${o.id || ''}')">
+          ✏️ تعديل العرض
+        </button>
+      </div>
+    `;
+  });
+}
+
+function editOffer(id){
+  alert("✏️ هنا نفتح نموذج التعديل (المرحلة القادمة)");
+}
+</script>
+
+</body>
+</html>
