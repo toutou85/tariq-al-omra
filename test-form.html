@@ -130,37 +130,26 @@ select{padding:8px;border-radius:8px}
 }  
   
 /* 🔒 توحيد حجم البطاقات */
-.card{
-  width:300px;
-  height:430px;              /* نفس الطول للجميع */
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
+/* عنوان العرض */
+.offer-title{
+  display:block;
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:6px;
 }
 
-/* رأس البطاقة */
-.card-header{
+/* شعار الطيران + واتساب */
+.airline-inline{
   display:flex;
   align-items:center;
+  justify-content:center;
   gap:10px;
+  margin-bottom:6px;
 }
 
-/* اسم العرض */
-.card-header div{
-  flex:1;
-}
-
-/* صندوق الطيران */
-.airline-box{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-}
-
-/* شعار الطيران */
+/* الشعار */
 .airline-logo{
-  width:70px;
+  width:80px;
   height:45px;
   object-fit:contain;
   background:#fff;
@@ -170,26 +159,21 @@ select{padding:8px;border-radius:8px}
 }
 
 /* زر واتساب */
-.wa-icon-btn{
-  background:#25D366;
-  border:none;
+.wa-inline-btn{
   width:42px;
   height:42px;
   border-radius:50%;
+  border:none;
+  background:#25D366;
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
 }
 
-.wa-icon-btn i{
-  font-size:22px;
+.wa-inline-btn i{
   color:#fff;
-}
-
-/* تثبيت مساحة المعلومات */
-.card-info{
-  flex-grow:1;
+  font-size:20px;
 }
   
 #detailsModal,#registerModal{  
@@ -387,7 +371,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   <div class="card-header">  
     <img src="${o.logo || ''}" onerror="this.style.display='none'">  
       <small>${o.agency} – ${o.state} 📍</small>  
-    <div>  
+   <div>  
       <strong>${o.offer}</strong><br>  
     </div>  
 <div class="airline-box">
@@ -402,7 +386,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   </button>
 </div>
   
-</div>  
+</div>   
   </div>  
   
   <!-- معلومات العرض -->  
