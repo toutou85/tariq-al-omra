@@ -369,19 +369,19 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
       c.className="card";  
       c.innerHTML=`  
           
+  
   <!-- رأس البطاقة -->
-<div class="card-header">
-
-  <!-- السطر الأول: اسم الوكالة + عنوان العرض -->
-  <div class="header-row">
-    <small class="agency-name">
-      ${o.agency} – ${o.state} 📍
-    </small>
-
-    <strong class="offer-title">
-      ${o.offer}
-    </strong>
-  </div>
+  <div class="card-header">
+    <img src="${o.logo || ''}" onerror="this.style.display='none'">
+      <small>${o.agency} – ${o.state} 📍</small>
+    <div>
+      <strong>${o.offer}</strong><br>
+    </div>
+<div class="airline-card">
+  <img src="${o.airlineLogo || ''}"
+  onerror="this.style.display='none'">
+  <span>${o.airline || ''}</span>
+</div>
 
   <!-- زر واتساب -->
   <button
@@ -390,12 +390,8 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     title="تواصل عبر واتساب">
     <i class="fab fa-whatsapp"></i>
   </button>
+  </div>
 
-  <!-- شعار الطيران -->
-  <img
-    class="airline-logo"
-    src="${o.airlineLogo || ''}"
-    onerror="this.style.display='none'">
 
 </div>
   <!-- معلومات العرض -->  
