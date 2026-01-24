@@ -340,6 +340,8 @@ function render(){
   if(fAgency.value) list=list.filter(o=>o.agency===fAgency.value);
   if(fState.value) list=list.filter(o=>o.state===fState.value);
   if(fDate.value) list=list.filter(o=>formatDate(o.date)===fDate.value);
+// ترتيب العروض حسب تاريخ الإقلاع (الأقرب أولاً)
+list.sort((a, b) => new Date(a.date) - new Date(b.date));
 
   const grouped={};
   list.forEach(o=>{
