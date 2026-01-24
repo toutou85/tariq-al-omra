@@ -197,8 +197,11 @@ button.submit{
   </div>
 </div>
 
-<label>رقم الهاتف</label>
-<input name="phone" id="phoneInput" required>
+<div id="phoneBox">
+  <label>رقم الهاتف</label>
+  <input name="phone" id="phoneInput" required>
+</div>
+
 
 <hr>
 
@@ -302,25 +305,38 @@ fetch(API).then(r=>r.json()).then(data=>{
   });
 });
 
-agencySelect.onchange=()=>{
-  const v=agencySelect.value;
-  if(v==="__new__"){
-    agencyInput.value="";
-    stateInput.value="";
-    cityInput.value="";
-    phoneInput.value="";
-    logo.style.display="none";
-  }else if(agencies[v]){
-    agencyInput.value=v;
-    stateInput.value=agencies[v].state;
-    cityInput.value=agencies[v].city;
-    phoneInput.value=agencies[v].phone;
-    if(agencies[v].logo){
-      logo.src=agencies[v].logo;
-      logo.style.display="block";
+const phoneBox = document.getElementById("phoneBox");
+
+agencySelect.onchange = () => {
+  const v = agencySelect.value;
+
+  if (v === "__new__") {
+    // وكالة جديدة → إظهار الهاتف
+    agencyInput.value = "";
+    stateInput.value = "";
+    cityInput.value = "";
+    phoneInput.value = "";
+    phoneBox.style.display = "block";
+    logo.style.display = "none";
+
+  } else if (agencies[v]) {
+    // وكالة موجودة → إخفاء الهاتف
+    agencyInput.value = v;
+    stateInput.value = agencies[v].state;
+    cityInput.value = agencies[v].city;
+
+    phoneInput.value = agencies[v].phone || "";
+    phoneBox.style.display = "none"; // 🔒 إخفاء الرقم
+
+    if (agencies[v].logo) {
+      logo.src = agencies[v].logo;
+      logo.style.display = "block";
+    } else {
+      logo.style.display = "none";
     }
   }
 };
+
 
 form.onsubmit = e => {
   e.preventDefault();
