@@ -16,58 +16,56 @@ body{
   margin:40px auto;
   background:#fff;
   padding:20px;
-  border-radius:12px;
+  border-radius:14px;
 }
-h2{
-  text-align:center;
-  color:#8b0000;
-}
-label{font-weight:bold;margin-top:10px;display:block}
+h2{text-align:center;color:#8b0000}
+label{display:block;margin-top:12px;font-weight:bold}
 select,input{
   width:100%;
   padding:10px;
-  margin-top:6px;
+  margin-top:5px;
   border-radius:8px;
   border:1px solid #ccc;
 }
-
 button{
-  margin-top:15px;
+  margin-top:12px;
   padding:12px;
   width:100%;
   background:#8b0000;
   color:#fff;
   border:none;
   border-radius:10px;
-  font-size:16px;
   cursor:pointer;
+  font-size:15px;
 }
-
 .offer{
   border:1px solid #ddd;
-  border-radius:10px;
+  border-radius:12px;
   padding:15px;
   margin-top:15px;
   background:#fafafa;
 }
-.offer h4{
-  margin:0 0 8px;
-  color:#333;
-}
+.offer h4{margin:0 0 6px}
 .offer small{color:#666}
-.edit-btn{
-  background:#0066cc;
+.actions{
+  display:flex;
+  gap:10px;
   margin-top:10px;
 }
+.actions button{
+  flex:1;
+}
+.edit{background:#0066cc}
+.delete{background:#b00000}
 .hidden{display:none}
-.error{color:red;text-align:center;margin-top:10px}
+.msg{text-align:center;margin-top:10px;font-weight:bold}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<h2>✏️ تعديل عروض الوكالة</h2>
+<h2>✏️ إدارة عروض الوكالة</h2>
 
 <label>اختر الوكالة</label>
 <select id="agencySelect">
@@ -75,60 +73,54 @@ button{
 </select>
 
 <label>رقم هاتف الوكالة (للتأكيد)</label>
-<input id="phoneCheck" placeholder="أدخل رقم الهاتف">
+<input id="phoneInput" placeholder="أدخل رقم الهاتف">
 
-<button onclick="verifyAgency()">🔐 تأكيد والدخول</button>
+<button onclick="loadOffers()">🔐 دخول</button>
 
-<p class="error" id="errorMsg"></p>
+<p class="msg" id="msg"></p>
 
 <hr>
 
-<div id="offersBox" class="hidden"></div>
+<div id="offersBox"></div>
 
 </div>
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbx7sQEUTNhglETA_Irkc5UOvy62SvS-9ftS4v-Ugh8cnTQjDiNs6-kp-SdR8QsOnXE-zw/exec";
+const API = "https://script.google.com/macros/s/AKfycbzV28HibStpWUmjCRmxiyxP-l-EjiFlW2m_lprMZkz8JUsV7XU3DH15gXsbkK9FhzYFbg/exec";
 
-let allData = [];
+let allOffers = [];
 
-// تحميل كل العروض
+// تحميل البيانات
 fetch(API)
 .then(r=>r.json())
 .then(data=>{
-  allData = data;
-
+  allOffers = data;
   const agencies = [...new Set(data.map(o=>o.agency))];
-  const select = document.getElementById("agencySelect");
-
   agencies.forEach(a=>{
-    select.innerHTML += `<option value="${a}">${a}</option>`;
+    agencySelect.innerHTML += `<option value="${a}">${a}</option>`;
   });
 });
 
-function verifyAgency(){
+function loadOffers(){
   const agency = agencySelect.value;
-  const phone = phoneCheck.value.trim();
-  const error = document.getElementById("errorMsg");
+  const phone = phoneInput.value.trim();
   const box = document.getElementById("offersBox");
+  const msg = document.getElementById("msg");
 
-  error.textContent = "";
   box.innerHTML = "";
-  box.classList.add("hidden");
+  msg.textContent = "";
 
   if(!agency || !phone){
-    error.textContent = "⚠️ اختر الوكالة وأدخل رقم الهاتف";
+    msg.textContent = "⚠️ اختر الوكالة وأدخل رقم الهاتف";
     return;
   }
 
-  const offers = allData.filter(o => o.agency === agency && o.phone === phone);
+  const offers = allOffers.filter(o => o.agency === agency && o.phone == phone);
 
   if(offers.length === 0){
-    error.textContent = "❌ رقم الهاتف غير صحيح أو لا توجد عروض";
+    msg.textContent = "❌ رقم الهاتف غير صحيح أو لا توجد عروض";
     return;
   }
-
-  box.classList.remove("hidden");
 
   offers.forEach(o=>{
     box.innerHTML += `
@@ -138,16 +130,47 @@ function verifyAgency(){
         <small>✈️ ${o.airline} – ${o.airport}</small><br>
         <small>🏨 ${o.hotel}</small>
 
-        <button class="edit-btn" onclick="editOffer('${o.id || ''}')">
-          ✏️ تعديل العرض
-        </button>
+        <div class="actions">
+          <button class="edit" onclick="editOffer(${o.row})">✏️ تعديل</button>
+          <button class="delete" onclick="deleteOffer(${o.row})">🗑️ حذف</button>
+        </div>
       </div>
     `;
   });
 }
 
-function editOffer(id){
-  alert("✏️ هنا نفتح نموذج التعديل (المرحلة القادمة)");
+function editOffer(row){
+  const newHotel = prompt("✏️ اسم الفندق الجديد:");
+  if(!newHotel) return;
+
+  const fd = new FormData();
+  fd.append("action","update");
+  fd.append("row",row);
+  fd.append("phone",phoneInput.value);
+  fd.append("hotel",newHotel);
+
+  fetch(API,{method:"POST",body:fd})
+  .then(r=>r.text())
+  .then(res=>{
+    alert(res);
+    location.reload();
+  });
+}
+
+function deleteOffer(row){
+  if(!confirm("❗ هل أنت متأكد من حذف العرض؟")) return;
+
+  const fd = new FormData();
+  fd.append("action","delete");
+  fd.append("row",row);
+  fd.append("phone",phoneInput.value);
+
+  fetch(API,{method:"POST",body:fd})
+  .then(r=>r.text())
+  .then(res=>{
+    alert(res);
+    location.reload();
+  });
 }
 </script>
 
