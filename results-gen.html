@@ -601,6 +601,13 @@ fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089q
 .then(r => r.json())  
 .then(d => document.getElementById("visitors").textContent = d.count);  
   
+
+
+fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {
+  method: "POST",
+  cache: "no-store"
+});
+
 </script>  <!-- نافذة واتساب -->  <div id="waModal" style="  
   display:none;  
   position:fixed;  
@@ -639,5 +646,8 @@ fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089q
 </button>
 
   </div>  
-</div>  </body>  
+
+</div> 
+ </body>  
+
 </html>  
