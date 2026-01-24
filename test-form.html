@@ -129,40 +129,68 @@ select{padding:8px;border-radius:8px}
   font-size:14px;  
 }  
   
-.card{  
-  position:relative;  
-}  
-  
-.airline-card{  
-  position:absolute;  
-  bottom:160px;  
-  left:15px;  
-  display:flex;  
-  align-items:center;  
- justify-content:flex-start;  
-}  
-.airline-card span{  
-  display:none;  
-}  
-.airline-card img{  
-  width:80px;        /* إطار ثابت */  
-  height:55px;        /* إطار ثابت */  
-  object-fit:contain; /* يحافظ على النسبة */  
-  background:#fff;    /* خلفية موحدة */  
-  padding:6px;  
-  border-radius:10px;  
-  box-shadow:0 3px 10px rgba(0,0,0,.15);  
-}  
-.airline-card{  
-  width:90px;  
-  height:65px;  
-}  
-  
-.airline-card img{  
-  width:100%;  
-  height:100%;  
-  object-fit:contain;  
-}  
+/* 🔒 توحيد حجم البطاقات */
+.card{
+  width:300px;
+  height:430px;              /* نفس الطول للجميع */
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+/* رأس البطاقة */
+.card-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* اسم العرض */
+.card-header div{
+  flex:1;
+}
+
+/* صندوق الطيران */
+.airline-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+}
+
+/* شعار الطيران */
+.airline-logo{
+  width:70px;
+  height:45px;
+  object-fit:contain;
+  background:#fff;
+  padding:6px;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+/* زر واتساب */
+.wa-icon-btn{
+  background:#25D366;
+  border:none;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+.wa-icon-btn i{
+  font-size:22px;
+  color:#fff;
+}
+
+/* تثبيت مساحة المعلومات */
+.card-info{
+  flex-grow:1;
+}
   
 #detailsModal,#registerModal{  
   display:none;  
@@ -243,26 +271,8 @@ header h1{
   font-size:18px;  
   margin:0;  
 }  
-  .wa-icon-btn{  
-  background:transparent;  
-  border:none;  
-  padding:0;  
-  cursor:pointer;  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-}  
   
-.wa-icon-btn i{  
-  font-size:80px;          /* نفس روح أيقونات الطيران */  
-  color:#25D366;           /* أخضر واتساب */  
-  transition:.2s ease;  
-}  
-  
-.wa-icon-btn:hover i{  
-  transform:scale(1.15);  
-  filter:drop-shadow(0 2px 6px rgba(0,0,0,.25));  
-}  
+
   
 </style>  </head>  <body>  <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
 <i class="fab fa-whatsapp"></i>  
@@ -380,15 +390,17 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <div>  
       <strong>${o.offer}</strong><br>  
     </div>  
-<div class="airline-card">  
-  <img src="${o.airlineLogo || ''}"  
-  onerror="this.style.display='none'">  
-  <span>${o.airline || ''}</span>  
-  <button class="wa-icon-btn"  
-  title="تواصل عبر واتساب"  
-  onclick='openWaModal(${JSON.stringify(o)})'>  
-  <i class="fab fa-whatsapp"></i>  
-</button>  
+<div class="airline-box">
+  <img class="airline-logo"
+       src="${o.airlineLogo || ''}"
+       onerror="this.style.display='none'">
+
+  <button class="wa-icon-btn"
+    title="تواصل عبر واتساب"
+    onclick='openWaModal(${JSON.stringify(o)})'>
+    <i class="fab fa-whatsapp"></i>
+  </button>
+</div>
   
 </div>  
   </div>  
