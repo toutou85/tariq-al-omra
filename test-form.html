@@ -375,10 +375,10 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <div>
       <strong>${o.offer}</strong><br>
     </div>
-<div class="airline-card">
-  <img src="${o.airlineLogo || ''}"
-  onerror="this.style.display='none'">
-  <span>${o.airline || ''}</span>
+<div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
+  ${o.airlineLogo 
+    ? `<img src="${o.airlineLogo}" onerror="this.parentNode.classList.add('empty');this.remove()">`
+    : ``}
 </div>
 
   <!-- زر واتساب -->
