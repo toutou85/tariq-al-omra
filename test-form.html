@@ -394,10 +394,11 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
           <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>
           <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة</button>
           <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
-          <button style="background:#25D366"
-  onclick='sendWhatsAppFromCard(${JSON.stringify(o)})'>
+  <button style="background:#25D366"
+  onclick='openWaModal(${JSON.stringify(o)})'>
   <i class="fab fa-whatsapp"></i> واتساب
 </button>
+
 
         </div>
       `;
@@ -489,18 +490,36 @@ function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}
 function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}
 
 
-function sendWhatsAppAndSave(o){
+let waOffer = null;
 
-  const clientName  = document.getElementById("clientName").value.trim();
-  const clientPhone = document.getElementById("clientPhone").value.trim();
+// فتح النافذة
+function openWaModal(o){
+  waOffer = o;
+  document.getElementById("waModal").style.display = "flex";
+}
 
-  if(!clientName || !clientPhone){
-    alert("يرجى إدخال اسم ورقم هاتف المعتمر");
+// غلق النافذة
+function closeWaModal(){
+  document.getElementById("waModal").style.display = "none";
+}
+
+// تأكيد الإرسال
+function confirmWhatsApp(){
+
+  const first = waFirst.value.trim();
+  const last  = waLast.value.trim();
+  const phone = waPhone.value.trim();
+
+  if(!first || !last || !phone){
+    alert("يرجى ملء جميع الحقول");
     return;
   }
 
+  const clientName  = first + " " + last;
+  const clientPhone = phone;
+
   // 📞 رقم الوكالة من Google Sheets
-  let agencyPhone = String(o.phone || "").replace(/\D/g,"");
+  let agencyPhone = String(waOffer.phone || "").replace(/\D/g,"");
 
   if(!agencyPhone){
     alert("رقم هاتف الوكالة غير متوفر");
@@ -520,38 +539,41 @@ function sendWhatsAppAndSave(o){
 
 أرغب في التسجيل في عرض عمرة من موقع *طريق العمرة* 🕋
 
-▪️ الوكالة: ${o.agency}
-▪️ العرض: ${o.offer}
-▪️ تاريخ الإقلاع: ${formatDate(o.date)}
-▪️ الفندق: ${o.hotel || "-"}
-▪️ السعر: ${o.group} دج
+▪️ الوكالة: ${waOffer.agency}
+▪️ العرض: ${waOffer.offer}
+▪️ تاريخ الإقلاع: ${formatDate(waOffer.date)}
+▪️ الفندق: ${waOffer.hotel || "-"}
+▪️ السعر: ${waOffer.group} دج
 `;
 
-  // 1️⃣ فتح واتساب الوكالة
+  // 1️⃣ فتح واتساب
   window.open(
     "https://wa.me/" + agencyPhone + "?text=" + encodeURIComponent(message),
     "_blank"
   );
 
-  // 2️⃣ إرسال البيانات إلى Google Sheets + Email
+  // 2️⃣ إرسال إلى Google Sheets + Email
   fetch(
     "https://script.google.com/macros/s/AKfycbzvVAO9qu-bwwJxg9jOJZyzwhRQdZf-FcJCZ0Uw1FcvqFD25JT978PPerBo7EuCk2_L/exec",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        agency: o.agency,
-        offer: o.offer,
-        date: o.date,
-        hotel: o.hotel || "",
-        price: o.group || "",
+        agency: waOffer.agency,
+        offer: waOffer.offer,
+        date: waOffer.date,
+        hotel: waOffer.hotel,
+        price: waOffer.group,
         agencyPhone: agencyPhone,
         clientName: clientName,
         clientPhone: clientPhone
       })
     }
   );
+
+  closeWaModal();
 }
+
 
 
 
@@ -566,6 +588,47 @@ fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089q
 .then(d => document.getElementById("visitors").textContent = d.count);
 
 </script>
+<!-- نافذة واتساب -->
+<div id="waModal" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:30000;
+  align-items:center;
+  justify-content:center;
+">
+  <div style="
+    background:#fff;
+    width:90%;
+    max-width:420px;
+    padding:20px;
+    border-radius:18px;
+  ">
+    <h3>👤 بيانات المعتمر</h3>
+
+    <input id="waFirst" placeholder="الاسم"
+      style="width:100%;padding:10px;margin:6px 0">
+
+    <input id="waLast" placeholder="اللقب"
+      style="width:100%;padding:10px;margin:6px 0">
+
+    <input id="waPhone" placeholder="رقم الهاتف"
+      style="width:100%;padding:10px;margin:6px 0">
+
+    <button onclick="confirmWhatsApp()"
+      style="width:100%;padding:12px;
+      background:#25D366;color:#fff;
+      border:none;border-radius:10px;margin-top:10px">
+      <i class="fab fa-whatsapp"></i> إرسال
+    </button>
+
+    <button onclick="closeWaModal()"
+      style="width:100%;padding:10px;margin-top:6px">
+      إلغاء
+    </button>
+  </div>
+</div>
 
 </body>
 </html>
