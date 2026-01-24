@@ -129,31 +129,32 @@ select{padding:8px;border-radius:8px}
   cursor:pointer;  
   font-size:14px;  
 }  
-  
-.card{  
-  position:relative;  
-}  
-  
-.airline-card{  
-  position:absolute;  
-  bottom:160px;  
-  left:15px;  
-  display:flex;  
-  align-items:center;  
- justify-content:flex-start;  
-}  
-.airline-card span{  
-  display:none;  
-}  
-.airline-card img{  
-  width:80px;        /* إطار ثابت */  
-  height:55px;        /* إطار ثابت */  
-  object-fit:contain; /* يحافظ على النسبة */  
-  background:#fff;    /* خلفية موحدة */  
-  padding:6px;  
-  border-radius:10px;  
-  box-shadow:0 3px 10px rgba(0,0,0,.15);  
-}  
+.airline-card{
+  position:absolute;
+  bottom:160px;
+  left:15px;
+  width:92px;              /* إطار ثابت */
+  height:67px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+.airline-card img{
+  max-width:80px;
+  max-height:55px;
+  object-fit:contain;
+}
+
+/* في حالة عدم وجود صورة */
+.airline-card.empty::after{
+  content:"—";
+  font-size:28px;
+  color:#bbb;
+}
   
 /* زر واتساب */  
 .wa-below{  
