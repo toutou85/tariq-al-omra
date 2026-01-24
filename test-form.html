@@ -507,8 +507,8 @@ function sendWhatsAppOnly(o){
   const message = `
 السلام عليكم ورحمة الله وبركاته 🌿
 
-أنا ${clientName}
-رقم هاتفي: ${clientPhone}
+أنا ${clientName || "—"}
+رقم هاتفي: ${clientPhone || "—"}
 
 أرغب في التسجيل في عرض عمرة من موقع *طريق العمرة* 🕋
 
@@ -519,28 +519,30 @@ function sendWhatsAppOnly(o){
 ▪️ السعر: ${o.group} دج
 `;
 
-  // 1️⃣ واتساب للوكالة
+  // 1️⃣ واتساب الوكالة (مضمون)
   window.open(
     `https://wa.me/${agencyPhone}?text=${encodeURIComponent(message)}`,
     "_blank"
   );
 
   // 2️⃣ إرسال نسخة لك (Google Sheets + Email)
-  fetch("https://script.google.com/macros/s/AKfycbzvVAO9qu-bwwJxg9jOJZyzwhRQdZf-FcJCZ0Uw1FcvqFD25JT978PPerBo7EuCk2_L/exec",{
-    method:"POST",
-    body: JSON.stringify({
-      agency: o.agency,
-      offer: o.offer,
-      date: o.date,
-      hotel: o.hotel,
-      price: o.group,
-      agencyPhone: agencyPhone,
-      clientName: clientName.trim(),
-      clientPhone: clientPhone
-    })
-  });
+  fetch(
+    "https://script.google.com/macros/s/AKfycbzvVAO9qu-bwwJxg9jOJZyzwhRQdZf-FcJCZ0Uw1FcvqFD25JT978PPerBo7EuCk2_L/exec",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        agency: o.agency,
+        offer: o.offer,
+        date: o.date,
+        hotel: o.hotel,
+        price: o.group,
+        agencyPhone: agencyPhone,
+        clientName: clientName.trim(),
+        clientPhone: clientPhone
+      })
+    }
+  );
 }
-
 
 
 
