@@ -466,7 +466,10 @@ function openRegister(o){
   selectedOffer=o;
   registerModal.style.display="flex";
 }
-
+// غلق النافذة
+function closeWaModal(){
+  document.getElementById("waModal").style.display = "none";
+}
 function sendRegister(){
   if(!cFirst.value||!cLast.value||!cPhone.value){
     alert("يرجى ملء جميع الحقول");
