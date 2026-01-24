@@ -115,6 +115,47 @@ function loadOffers(){
     return;
   }
 
+ <script>
+const API = "https://script.google.com/macros/s/AKfycbzV28HibStpWUmjCRmxiyxP-l-EjiFlW2m_lprMZkz8JUsV7XU3DH15gXsbkK9FhzYFbg/exec";
+
+const agencySelect = document.getElementById("agencySelect");
+const phoneInput = document.getElementById("phoneInput");
+const msg = document.getElementById("msg");
+const box = document.getElementById("offersBox");
+
+let allOffers = [];
+
+// تحميل البيانات
+fetch(API)
+.then(r => r.json())
+.then(data => {
+  allOffers = data;
+
+  const agencies = [...new Set(data.map(o => o.agency))];
+
+  agencies.forEach(a => {
+    if (a) {
+      agencySelect.innerHTML += `<option value="${a}">${a}</option>`;
+    }
+  });
+})
+.catch(err => {
+  msg.textContent = "❌ خطأ في تحميل الوكالات";
+  console.error(err);
+});
+
+function loadOffers(){
+  const agency = agencySelect.value;
+  const phone = phoneInput.value.trim();
+
+  box.innerHTML = "";
+  msg.textContent = "";
+
+  if(!agency || !phone){
+    msg.textContent = "⚠️ اختر الوكالة وأدخل رقم الهاتف";
+    return;
+  }
+
   const offers = allOffers.filter(o => o.agency === agency && o.phone == phone);
 
   if(offers.length === 0){
@@ -138,41 +179,8 @@ function loadOffers(){
     `;
   });
 }
-
-function editOffer(row){
-  const newHotel = prompt("✏️ اسم الفندق الجديد:");
-  if(!newHotel) return;
-
-  const fd = new FormData();
-  fd.append("action","update");
-  fd.append("row",row);
-  fd.append("phone",phoneInput.value);
-  fd.append("hotel",newHotel);
-
-  fetch(API,{method:"POST",body:fd})
-  .then(r=>r.text())
-  .then(res=>{
-    alert(res);
-    location.reload();
-  });
-}
-
-function deleteOffer(row){
-  if(!confirm("❗ هل أنت متأكد من حذف العرض؟")) return;
-
-  const fd = new FormData();
-  fd.append("action","delete");
-  fd.append("row",row);
-  fd.append("phone",phoneInput.value);
-
-  fetch(API,{method:"POST",body:fd})
-  .then(r=>r.text())
-  .then(res=>{
-    alert(res);
-    location.reload();
-  });
-}
 </script>
+
 
 </body>
 </html>
