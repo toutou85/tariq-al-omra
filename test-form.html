@@ -133,41 +133,6 @@ select{padding:8px;border-radius:8px}
   font-size:14px;
 }
 
-.card{
-  position:relative;
-}
-
-.airline-card{
-  position:absolute;
-  bottom:160px;
-  left:15px;
-  display:flex;
-  align-items:center;
- justify-content:flex-start;
-}
-.airline-card span{
-  display:none;
-}
-.airline-card img{
-  width:80px;        /* إطار ثابت */
-  height:55px;        /* إطار ثابت */
-  object-fit:contain; /* يحافظ على النسبة */
-  background:#fff;    /* خلفية موحدة */
-  padding:6px;
-  border-radius:10px;
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
-}
-.airline-card{
-  width:90px;
-  height:65px;
-}
-
-.airline-card img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-
 #detailsModal,#registerModal{
   display:none;
   position:fixed;
@@ -406,10 +371,18 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <div>
       <strong>${o.offer}</strong><br>
     </div>
-<div class="airline-card">
-  <img src="${o.airlineLogo || ''}"
-  onerror="this.style.display='none'">
-  <span>${o.airline || ''}</span>
+<div class="card-header">
+  <img src="${o.logo || ''}" onerror="this.style.display='none'">
+
+  <div class="card-title">
+    <small>${o.agency} – ${o.state} 📍</small><br>
+    <strong>${o.offer}</strong>
+  </div>
+
+  <div class="airline-card">
+    <img src="${o.airlineLogo || ''}" onerror="this.style.display='none'">
+  </div>
+</div>
   <button class="wa-icon-btn"
   title="تواصل عبر واتساب"
   onclick='openWaModal(${JSON.stringify(o)})'>
