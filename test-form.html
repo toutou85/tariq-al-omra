@@ -237,6 +237,27 @@ header h1{
   font-size:18px;
   margin:0;
 }
+  .wa-icon-btn{
+  background:transparent;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.wa-icon-btn i{
+  font-size:28px;          /* نفس روح أيقونات الطيران */
+  color:#25D366;           /* أخضر واتساب */
+  transition:.2s ease;
+}
+
+.wa-icon-btn:hover i{
+  transform:scale(1.15);
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.25));
+}
+
 </style>
 </head>
 
@@ -298,6 +319,10 @@ header h1{
 <input id="cLast" placeholder="اللقب">
 <input id="cPhone" placeholder="رقم الهاتف">
 <button onclick="sendRegister()">إرسال</button>
+   <button onclick="closeWaModal()"
+      style="width:100%;padding:10px;margin-top:6px">
+      إلغاء
+    </button>
 </div>
 </div>
 
@@ -375,6 +400,12 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   <img src="${o.airlineLogo || ''}"
   onerror="this.style.display='none'">
   <span>${o.airline || ''}</span>
+  <button class="wa-icon-btn"
+  title="تواصل عبر واتساب"
+  onclick='openWaModal(${JSON.stringify(o)})'>
+  <i class="fab fa-whatsapp"></i>
+</button>
+
 </div>
   </div>
 
@@ -394,10 +425,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
           <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>
           <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة</button>
           <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
-  <button style="background:#25D366"
-  onclick='openWaModal(${JSON.stringify(o)})'>
-  <i class="fab fa-whatsapp"></i> واتساب
-</button>
+  
 
 
         </div>
