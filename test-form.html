@@ -3,159 +3,157 @@
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>العروض العامة للعمرة</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">  <style>  
-body{  
-  font-family:Tajawal,Arial;  
-  margin:0;  
-  background:  
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),  
-    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")  
-    center/cover fixed no-repeat;  
-}  
-  
-header{  
-  height:60px;  
-  background:#8b0000;  
-  color:#fff;  
-  display:flex;  
-  align-items:center;  
-  padding:0 15px;  
-}  
-.menu-btn{font-size:26px;cursor:pointer}  
-header h1{flex:1;text-align:center;font-size:18px;margin:0}  
-  
-.whatsapp-top{  
-  position:fixed;  
-top:60px;                    
-  left:12px;  
-  width:48px;  
-  height:48px;  
-  background:#25D366;  
-  color:#fff;  
-  border-radius:50%;  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  font-size:28px;  
-  z-index:13000;  
-}  
-  
-#sideMenu{  
-  position:fixed;  
-  top:0;right:-260px;  
-  width:260px;height:100%;  
-  background:#8b0000;  
-  padding-top:70px;  
-  transition:.3s;  
-  z-index:10000  
-}  
-#sideMenu a{  
-  display:block;  
-  padding:14px 18px;  
-  color:#fff;  
-  text-decoration:none;  
-}  
-#overlay{  
-  display:none;  
-  position:fixed;  
-  inset:0;  
-  background:rgba(0,0,0,.6);  
-  z-index:9000  
-}  
-  
-.container{  
-  max-width:1200px;  
-  margin:25px auto;  
-  background:rgba(255,255,255,.60);  
-  padding:20px;  
-  border-radius:20px;  
-}  
-  
-.filters{  
-  display:grid;  
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));  
-  gap:10px;  
-  margin-bottom:20px  
-}  
-select{padding:8px;border-radius:8px}  
-  
-.airport-group{margin-bottom:30px}  
-.airport-title{font-weight:900;color:#8b0000;margin-bottom:10px}  
-.airport-row{display:flex;gap:16px;overflow-x:auto}  
-  
-.card{  
-  position:relative;  
-  min-width:300px;  
-  background:#fff;  
-  border-radius:18px;  
-  padding:16px;  
-  box-shadow:0 8px 25px rgba(0,0,0,.08);  
-}  
-  
-.card-header{  
-  display:flex;  
-  gap:10px;  
-  align-items:center;  
-}  
-.card-header img{  
-  width:48px;  
-  height:48px;  
-  object-fit:contain;  
-}  
-  
-.price{  
-  margin-top:10px;  
-  background:#f8f4ef;  
-  padding:10px;  
-  border-radius:10px;  
-  text-align:center;  
-  font-weight:900;  
-  color:#8b0000  
-}  
-  
-.card-actions{  
-  display:flex;  
-  gap:8px;  
-  margin-top:10px;  
-}  
-.card-actions button{  
-  flex:1;  
-  padding:10px;  
-  border:none;  
-  border-radius:10px;  
-  background:#8b0000;  
-  color:#fff;  
-  cursor:pointer;  
-  font-size:14px;  
-}  
-  
-/* 🔒 توحيد حجم البطاقات */
-/* عنوان العرض */
+<title>العروض العامة للعمرة</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
 
+<style>
+body{
+  font-family:Tajawal,Arial;
+  margin:0;
+  background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
+    center/cover fixed no-repeat;
+}
+
+header{
+  height:60px;
+  background:#8b0000;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  padding:0 15px;
+}
+.menu-btn{font-size:26px;cursor:pointer}
+header h1{flex:1;text-align:center;font-size:18px;margin:0}
+
+.whatsapp-top{
+  position:fixed;
+top:60px;                  
+  left:12px;
+  width:48px;
+  height:48px;
+  background:#25D366;
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  z-index:13000;
+}
+
+#sideMenu{
+  position:fixed;
+  top:0;right:-260px;
+  width:260px;height:100%;
+  background:#8b0000;
+  padding-top:70px;
+  transition:.3s;
+  z-index:10000
+}
+#sideMenu a{
+  display:block;
+  padding:14px 18px;
+  color:#fff;
+  text-decoration:none;
+}
+#overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:9000
+}
+
+.container{
+  max-width:1200px;
+  margin:25px auto;
+  background:rgba(255,255,255,.60);
+  padding:20px;
+  border-radius:20px;
+}
+
+.filters{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:10px;
+  margin-bottom:20px
+}
+select{padding:8px;border-radius:8px}
+
+.airport-group{margin-bottom:30px}
+.airport-title{font-weight:900;color:#8b0000;margin-bottom:10px}
+.airport-row{display:flex;gap:16px;overflow-x:auto}
+
+.card{
+  position:relative;
+  min-width:300px;
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
 
 .card-header{
-  text-align:center;
-}
-/* السطر الأول: اسم الوكالة + عنوان العرض */
-.header-row{
   display:flex;
-  justify-content:space-between;
-  align-items:center;
   gap:10px;
-  margin-bottom:10px;
+  align-items:center;
+}
+.card-header img{
+  width:48px;
+  height:48px;
+  object-fit:contain;
 }
 
-.agency-name{
-  font-size:13px;
-  color:#555;
-  white-space:nowrap;
-}
-
-.offer-title{
-  font-size:18px;
-  font-weight:900;
-  flex:1;
+.price{
+  margin-top:10px;
+  background:#f8f4ef;
+  padding:10px;
+  border-radius:10px;
   text-align:center;
+  font-weight:900;
+  color:#8b0000
+}
+
+.card-actions{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+.card-actions button{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#8b0000;
+  color:#fff;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.card{
+  position:relative;
+}
+
+.airline-card{
+  position:absolute;
+  bottom:160px;
+  left:15px;
+  display:flex;
+  align-items:center;
+ justify-content:flex-start;
+}
+.airline-card span{
+  display:none;
+}
+.airline-card img{
+  width:80px;        /* إطار ثابت */
+  height:55px;        /* إطار ثابت */
+  object-fit:contain; /* يحافظ على النسبة */
+  background:#fff;    /* خلفية موحدة */
+  padding:6px;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
 }
 
 /* زر واتساب */
@@ -177,102 +175,92 @@ select{padding:8px;border-radius:8px}
   font-size:24px;
 }
 
-/* شعار الطيران */
-.airline-logo{
-  display:block;
-  margin:0 auto;
-  width:100px;
-  height:50px;
-  object-fit:contain;
-  background:#fff;
-  padding:6px;
-  border-radius:12px;
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
+#detailsModal,#registerModal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:20000;
+  align-items:center;
+  justify-content:center;
 }
-  
-#detailsModal,#registerModal{  
-  display:none;  
-  position:fixed;  
-  inset:0;  
-  background:rgba(0,0,0,.6);  
-  z-index:20000;  
-  align-items:center;  
-  justify-content:center;  
-}  
-  
-.modal-box{  
-  background:#fff;  
-  width:90%;  
-  max-width:420px;  
-  padding:20px;  
-  border-radius:18px;  
-}  
-.modal-box input{  
-  width:100%;  
-  padding:10px;  
-  margin:6px 0;  
-  border-radius:8px;  
-  border:1px solid #ccc;  
-}  
-.card-info{  
-  margin-top:8px;  
-  font-size:14px;  
-  line-height:1.6;  
-}  
-  
-.visitor-box{  
-  display:flex;  
-  align-items:center;  
-.visitor-box{  
-  margin-left:25px;   /* اسحبه شوية نحو الوسط */  
-}  
-  gap:10px;  
-  background:rgba(255,255,255,.15);  
-  backdrop-filter:blur(6px);  
-  color:#222;  
-  padding:12px 18px;  
-  border-radius:14px;  
-  font-family:Tajawal,Arial;  
-  width:max-content;  
-  box-shadow:0 8px 20px rgba(0,0,0,.15);  
-}  
-  
-.visitor-box i{  
-  font-size:26px;  
-  color:#1e90ff;  
-}  
-  
-.visitor-box span{  
-color:#fff;  
-  font-size:22px;  
-  font-weight:700;  
-}  
-  
-.visitor-box small{  
-color:#fff;  
-  font-size:13px;  
-  opacity:.85;  
-}  
-header{  
-  height:60px;  
-  background:#8b0000;  
-  color:#fff;  
-  display:flex;  
-  align-items:center;  
-  gap:10px;  
-  padding:0 15px;  
-}  
-  
-header h1{  
-  flex:1;  
-  text-align:center;  
-  font-size:18px;  
-  margin:0;  
-}  
-  
 
-  
-</style>  </head>  <body>  <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
+.modal-box{
+  background:#fff;
+  width:90%;
+  max-width:420px;
+  padding:20px;
+  border-radius:18px;
+}
+.modal-box input{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+.card-info{
+  margin-top:8px;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.visitor-box{
+  display:flex;
+  align-items:center;
+.visitor-box{
+  margin-left:25px;   /* اسحبه شوية نحو الوسط */
+}
+  gap:10px;
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(6px);
+  color:#222;
+  padding:12px 18px;
+  border-radius:14px;
+  font-family:Tajawal,Arial;
+  width:max-content;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.visitor-box i{
+  font-size:26px;
+  color:#1e90ff;
+}
+
+.visitor-box span{
+color:#fff;
+  font-size:22px;
+  font-weight:700;
+}
+
+.visitor-box small{
+color:#fff;
+  font-size:13px;
+  opacity:.85;
+}
+header{
+  height:60px;
+  background:#8b0000;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:0 15px;
+}
+
+header h1{
+  flex:1;
+  text-align:center;
+  font-size:18px;
+  margin:0;
+}
+</style>
+
+
+
+
+
+</head>  <body>  <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
 <i class="fab fa-whatsapp"></i>  
 </a>  
 <header>  
