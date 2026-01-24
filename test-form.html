@@ -157,6 +157,16 @@ select{padding:8px;border-radius:8px}
   border-radius:10px;
   box-shadow:0 3px 10px rgba(0,0,0,.15);
 }
+.airline-card{
+  width:90px;
+  height:65px;
+}
+
+.airline-card img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
 
 #detailsModal,#registerModal{
   display:none;
@@ -248,7 +258,7 @@ header h1{
 }
 
 .wa-icon-btn i{
-  font-size:28px;          /* نفس روح أيقونات الطيران */
+  font-size:40px;          /* نفس روح أيقونات الطيران */
   color:#25D366;           /* أخضر واتساب */
   transition:.2s ease;
 }
@@ -319,7 +329,7 @@ header h1{
 <input id="cLast" placeholder="اللقب">
 <input id="cPhone" placeholder="رقم الهاتف">
 <button onclick="sendRegister()">إرسال</button>
-   <button onclick="closeWaModal()"
+   <button onclick="closeModal()"
       style="width:100%;padding:10px;margin-top:6px">
       إلغاء
     </button>
