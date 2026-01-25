@@ -101,20 +101,44 @@ select{padding:8px;border-radius:8px}
   flex-direction:column;
   gap:12px;
 }
+.card-header{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.card-header img{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+  border-radius:8px;
+}
+
+.card-header strong{
+  font-size:15px;
+  color:#222;
+}
+
+.card-header small{
+  color:#777;
+  font-size:13px;
+}
+.airline-card img{
+  max-width:40px;
+  max-height:5px;
+  object-fit:contain;
+}
+
+/* في حالة عدم وجود صورة */
+.airline-card.empty::after{
+  content:"—";
+  font-size:28px;
+  color:#bbb;
+}
 
 
 
 
-.card-header{  
-  display:flex;  
-  gap:10px;  
-  align-items:center;  
-}  
-.card-header img{  
-  width:60px;  
-  height:48px;  
-  object-fit:contain;  
-}  
   
 .price{  
   margin-top:10px;  
@@ -143,18 +167,7 @@ select{padding:8px;border-radius:8px}
 }  
 
 
-.airline-card img{
-  max-width:80px;
-  max-height:55px;
-  object-fit:contain;
-}
 
-/* في حالة عدم وجود صورة */
-.airline-card.empty::after{
-  content:"—";
-  font-size:28px;
-  color:#bbb;
-}
   
 /* زر واتساب */  
 .wa-below{  
@@ -204,9 +217,6 @@ select{padding:8px;border-radius:8px}
   font-size:14px;  
   line-height:1.6;  
 }  
-  
- 
-
   
 .visitor-box i{  
   font-size:26px;  
@@ -379,7 +389,7 @@ header h1{
   .logo{
     height:100px;
     transform: translateY(-3px);
-  .visitor-box{padding:6px 10px;}
+  .visitor-box{padding:6px 0px;}
   .menu-btn{font-size:10px;}
 }
 
