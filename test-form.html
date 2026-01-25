@@ -101,7 +101,7 @@ select{padding:8px;border-radius:8px}
 
 .card-header{
  padding:19px 14px 10px; 
-  
+  position:absolute;
   top:-18px;
   left:16px;
   right:16px;
@@ -118,8 +118,8 @@ select{padding:8px;border-radius:8px}
 }
 
 .card-header img{
-  width:46px;
-  height:46px;
+  width:20px;
+  height:20px;
   object-fit:contain;
   border-radius:10px;
   background:#fff;
@@ -164,9 +164,28 @@ select{padding:8px;border-radius:8px}
 }
 
 .logo{
-  height:30px;
+  height:60px;
   width:auto;
   display:block;
+}
+.airline-card{
+  position:absolute;
+  top:12px;           /* مكانه ثابت */
+  left:12px;
+  width:30px;         /* تصغير الإطار */
+  height:32px;
+  background:#fff;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+
+.airline-card img{
+  max-width:90%;
+  max-height:90%;
+  object-fit:contain;
 }
 
 
@@ -196,10 +215,6 @@ select{padding:8px;border-radius:8px}
   cursor:pointer;  
   font-size:14px;  
 }  
-
-
-
-  
 /* زر واتساب */  
 .wa-below{  
   margin:0 auto 10px;  
@@ -275,6 +290,7 @@ color:#fff;
   padding:12px 18px;
   border-radius:14px;
   box-shadow:0 8px 20px rgba(0,0,0,.15);
+  transform:translateY(-4px); /* يطلع لفوق */
 }
 
   
@@ -312,6 +328,7 @@ header h1{
   cursor:pointer;
   color:#fff;
   justify-self:start;
+ transform:translateY(-4px); /* يطلع لفوق */
 }
 
 
