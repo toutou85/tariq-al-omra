@@ -92,12 +92,24 @@ select{padding:8px;border-radius:8px}
   padding:16px;  
   box-shadow:0 8px 25px rgba(0,0,0,.08);  
 }  
-  
-.card-header{  
-  display:flex;  
-  gap:10px;  
-  align-items:center;  
-}  
+ .card-header{
+ padding:19px 14px 10px; 
+  position:absolute;
+  top:-26px;
+  left:16px;
+  right:16px;
+
+  background:rgba(255,255,255,.95);
+  border-radius:22px;
+  padding:12px 14px;
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
+} 
+ 
 .card-header img{  
   width:48px;  
   height:48px;  
@@ -202,25 +214,28 @@ select{padding:8px;border-radius:8px}
 .card-info{  
   margin-top:8px;  
   font-size:14px;  
-  line-height:1.6;  
+  line-height:2.6;  
 }  
   
-.visitor-box{  
-  display:flex;  
-  align-items:center;  
-.visitor-box{  
-  margin-left:25px;   /* اسحبه شوية نحو الوسط */  
-}  
-  gap:10px;  
-  background:rgba(255,255,255,.15);  
-  backdrop-filter:blur(6px);  
-  color:#222;  
-  padding:12px 18px;  
-  border-radius:14px;  
-  font-family:Tajawal,Arial;  
-  width:max-content;  
-  box-shadow:0 8px 20px rgba(0,0,0,.15);  
-}  
+.visitor-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  position:absolute;
+  left:15px;          /* أقصى اليسار */
+  top:50%;
+  transform:translateY(-50%);
+
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(6px);
+  padding:12px 18px;
+  border-radius:14px;
+  font-family:Tajawal,Arial;
+  width:max-content;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+ 
   
 .visitor-box i{  
   font-size:26px;  
@@ -279,10 +294,10 @@ header{
 .site-logo{
   position:absolute;
   left:50%;
-  transform:translateX(-50%);
+  transform:translateX(-70%);
 }
 .site-logo{
-  height:42px;
+  height:60px;
   width:auto;
   cursor:pointer;
   padding:6px 10px;
