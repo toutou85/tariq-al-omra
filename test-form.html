@@ -302,7 +302,7 @@ header{
 /* اللوقو */
 .site-logo{
   position:absolute;
-  left:50%;
+  left:65%;
   top:6px;                     /* ينزل قليلاً داخل الشريط */
   transform:translateX(-50%);
   
@@ -336,7 +336,7 @@ header{
     rotateX(0deg);
 }@media (max-width:600px){
   .site-logo{
-    height:48px;
+    height:60px;
     top:4px;
   }
 
@@ -507,14 +507,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     : ``}
 </div>
 
-  <!-- زر واتساب -->
-  <button
-    class="wa-below"
-    onclick='openWaModal(${JSON.stringify(o)})'
-    title="تواصل عبر واتساب">
-    <i class="fab fa-whatsapp"></i>
-  </button>
-  </div>
+
 
 
 </div>
@@ -527,7 +520,20 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   </div>  
   
   <!-- السعر -->  
-  <div class="price">💰 ${o.group} دج</div>  
+  <div class="price">💰 ${o.group} دج
+
+
+  <!-- زر واتساب -->
+  <button
+    class="wa-below"
+    onclick='openWaModal(${JSON.stringify(o)})'
+    title="تواصل عبر واتساب">
+    <i class="fab fa-whatsapp"></i>
+  </button>
+  </div>
+
+
+</div>  
   
   <!-- الأزرار -->  
         <div class="card-actions">  
