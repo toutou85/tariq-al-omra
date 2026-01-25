@@ -90,19 +90,15 @@ select{padding:8px;border-radius:8px}
 .airport-title{font-weight:900;color:#8b0000;margin-bottom:10px}  
 .airport-row{display:flex;gap:16px;overflow-x:auto}  
   
-.card{  
-  position:relative;  
-  min-width:300px;  
-  background:#fff;  
-  border-radius:18px;  
-  padding:16px;  
-  box-shadow:0 8px 25px rgba(0,0,0,.08);  
-}  
-  .airline-card{
+.card{
+  position:relative;
+}
+
+.airline-card{
   position:absolute;
-  bottom:160px;
-  left:15px;
-  width:92px;              /* إطار ثابت */
+  top:10px;
+  left:10px;
+  width:92px;
   height:67px;
   display:flex;
   align-items:center;
@@ -110,14 +106,25 @@ select{padding:8px;border-radius:8px}
   background:#fff;
   border-radius:10px;
   box-shadow:0 3px 10px rgba(0,0,0,.15);
+  z-index:5;
 }
+
+@media (max-width:600px){
+  .airline-card{
+    width:70px;
+    height:50px;
+    top:8px;
+    left:8px;
+  }
+}
+
 .card-header{  
   display:flex;  
   gap:10px;  
   align-items:center;  
 }  
 .card-header img{  
-  width:48px;  
+  width:60px;  
   height:48px;  
   object-fit:contain;  
 }  
@@ -266,6 +273,10 @@ header h1{
   padding:0 15px;
   z-index:15000;
 }
+#registerModal{
+  display:none;
+  position:fixed;
+}
 
 /* ====== زر القائمة (يمين) ====== */
 .menu-btn{
@@ -363,10 +374,20 @@ header h1{
 
 /* ====== استجابة الهاتف ====== */
 @media (max-width:600px){
-  .logo{height:100px;}
-  .visitor-box span{font-size:17px;}
-  .menu-btn{font-size:24px;}
+  .logo{
+    height:70px;
+    transform: translateY(-10px);
+  }
 }
+
+@media (max-width:600px){
+  .visitor-box{padding:6px 10px;}
+}
+
+@media (max-width:600px){
+  .menu-btn{font-size:26px;}
+}
+
 </style>
 
 
