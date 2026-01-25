@@ -100,6 +100,7 @@ select{padding:8px;border-radius:8px}
 }
 
 .card-header{
+ padding:20px 14px 10px; 
   position:absolute;
   top:-18px;
   left:16px;
@@ -113,7 +114,7 @@ select{padding:8px;border-radius:8px}
   align-items:center;
   gap:12px;
 
-  box-shadow:0 6px 18px rgba(0,0,0,.12);
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
 }
 
 .card-header img{
@@ -141,12 +142,22 @@ select{padding:8px;border-radius:8px}
 }
 
 
+/* إطار شعار الطيران */
+.airline-card{
+  background:#fff;        /* ✔️ الخلفية تبقى دائمًا */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
 /* في حالة عدم وجود صورة */
 .airline-card.empty::after{
   content:"—";
   font-size:40px;
   color:#bbb;
+  line-height:1;
 }
+
 
 
 .price{  
