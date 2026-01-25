@@ -396,36 +396,34 @@ header{
   font-size:21px;
   font-weight:900;
   color:#8b0000;
-  letter-spacing:.4px;
-}@media (max-width:600px){
+  letter-spacing:.5px;
+  text-shadow:0 1px 2px rgba(0,0,0,.15);
+}
+
+@media (max-width:600px){
   .agency-name{
     font-size:15px;
   }
 }.location{
   display:inline-flex;
   align-items:center;
-  gap:4px;
+  gap:5px;
   margin-right:6px;
-  color:#444;
-  font-size:14px;
+  color:#555;
+  font-size:13px;
+  background:rgba(139,0,0,.08);
+  padding:3px 8px;
+  border-radius:20px;
 }
 
 .location i{
-  color:#8b0000;      /* نفس لون الهوية */
-  font-size:10px;
-}
-
-
-.offer-title.umrah{
-  background:rgba(255,255,255,.15);
-  backdrop-filter:blur(6px);
-  color:#fff;
-  font-size:12px;
-  font-weight:700;
-  padding:10px 14px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.25);
-  text-align:center;
+  color:#8b0000;
+  font-size:11px;
+}@media (max-width:600px){
+  .offer-title.umrah{
+    font-size:11px;
+    padding:6px 10px;
+  }
 }
 </style> 
 
