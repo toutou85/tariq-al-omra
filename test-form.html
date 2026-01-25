@@ -146,8 +146,18 @@ select{padding:8px;border-radius:8px}
 
 
 
-
 .airline-card{
+ 
+
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:70% auto;
+
+  background-color:#fff;
+  border-radius:12px;
+  box-shadow:0 3px 10px rgba(0,0,0,.
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+
   position:absolute;
 
   top:150px;        /* 👈 يتحكم في المسافة تحت الغيمة */
@@ -178,7 +188,6 @@ select{padding:8px;border-radius:8px}
 
 
 
-/* في حالة عدم وجود صورة */
 .airline-card.empty::after{
   content:"—";
   font-size:28px;
@@ -340,40 +349,6 @@ header{
     top:4px;
   }
 
-.price-box{
-  display:flex;
-  align-items:center;
-  gap:2px;
-  margin-top:2px;
-}
-
-.price{
-  flex:1;
-  background:#f8f4ef;
-  padding:10px;
-  border-radius:10px;
-  text-align:center;
-  font-weight:500;
-  color:#8b0000;
-}
-
-/* زر واتساب بجانب السعر */
-.wa-price{
-  margin:0 auto 10px;  
-  width:48px;  
-  height:48px;  
-  border-radius:50%;  
-  border:none;  
-  background:#25D366;  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  cursor:pointer;  
-}  
-
-.wa-price:hover{
-  transform:scale(1.08);
-}
 
 </style> 
 
