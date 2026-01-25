@@ -5,14 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
 <title>العروض العامة للعمرة</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
  <style>  
-body{  
-  font-family:Tajawal,Arial;  
-  margin:0;  
-  background:  
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),  
-    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")  
-    center/cover fixed no-repeat;  
-}  
+ 
+  
+/* ====== إعدادات عامة ====== */
+body{
+  font-family:Tajawal,Arial;
+  margin:0;
+  padding-top:60px; /* مهم لأن الهيدر ثابت */
+  background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
+    center/cover fixed no-repeat;
+}
   
 header{  
   height:60px;  
@@ -22,6 +26,8 @@ header{
   align-items:center;  
   padding:0 15px;  
 }  
+ 
+  
 .menu-btn{font-size:26px;cursor:pointer}  
 header h1{flex:1;text-align:center;font-size:18px;margin:0}  
   
@@ -206,17 +212,7 @@ select{padding:8px;border-radius:8px}
 }  
   
  
-.visitor-box{  
-  gap:10px;  
-  background:rgba(255,255,255,.15);  
-  backdrop-filter:blur(6px);  
-  color:#222;  
-  padding:12px 18px;  
-  border-radius:14px;  
-  font-family:Tajawal,Arial;  
-  width:max-content;  
-  box-shadow:0 8px 20px rgba(0,0,0,.15);  
-}  
+
   
 .visitor-box i{  
   font-size:26px;  
@@ -234,15 +230,18 @@ color:#fff;
   font-size:13px;  
   opacity:.85;  
 }  
-header{  
-  height:60px;  
-  background:#8b0000;  
-  color:#fff;  
-  display:flex;  
-  align-items:center;  
-  gap:10px;  
-  padding:0 15px;  
-}  
+ .visitor-box{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(6px);
+  color:#fff;
+  padding:12px 18px;
+  border-radius:14px;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
   
 header h1{  
   flex:1;  
@@ -252,16 +251,6 @@ header h1{
 }  
 
 
-/* ====== إعدادات عامة ====== */
-body{
-  font-family:Tajawal,Arial;
-  margin:0;
-  padding-top:60px; /* مهم لأن الهيدر ثابت */
-  background:
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
-    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
-    center/cover fixed no-repeat;
-}
 
 /* ====== الشريط العلوي ====== */
 .top-bar{
@@ -298,14 +287,6 @@ body{
   display:block;
 }
 
-/* ====== عداد الزوار (يسار) ====== */
-.visitor-box{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:#fff;
-  justify-self:end;
-}
 
 
 /* ====== القائمة الجانبية ====== */
@@ -382,13 +363,11 @@ body{
 
 /* ====== استجابة الهاتف ====== */
 @media (max-width:600px){
-  .logo{height:60px;}
+  .logo{height:100px;}
   .visitor-box span{font-size:17px;}
   .menu-btn{font-size:24px;}
 }
 </style>
-
-
 
 
 </head>  <body>  <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
@@ -536,18 +515,30 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
       c.innerHTML=`  
           
   
+ <div class="card">
+
+  <!-- شعار شركة الطيران (عنصر مستقل) -->
+  <div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
+    ${
+      o.airlineLogo
+        ? `<img src="${o.airlineLogo}"
+               onerror="this.parentNode.classList.add('empty');this.remove()">`
+        : ``
+    }
+  </div>
+
   <!-- رأس البطاقة -->
   <div class="card-header">
     <img src="${o.logo || ''}" onerror="this.style.display='none'">
-      <small>${o.agency} – ${o.state} 📍</small>
     <div>
       <strong>${o.offer}</strong><br>
+      <small>${o.agency} – ${o.state} 📍</small>
     </div>
-<div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
-  ${o.airlineLogo 
-    ? `<img src="${o.airlineLogo}" onerror="this.parentNode.classList.add('empty');this.remove()">`
-    : ``}
+  </div>
+
+  <!-- باقي البطاقة -->
 </div>
+
 
   <!-- زر واتساب -->
   <button
@@ -559,7 +550,6 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   </div>
 
 
-</div>
   <!-- معلومات العرض -->  
   <div class="card-info">  
     <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>  
