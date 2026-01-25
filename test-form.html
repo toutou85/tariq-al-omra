@@ -92,7 +92,19 @@ select{padding:8px;border-radius:8px}
   padding:16px;  
   box-shadow:0 8px 25px rgba(0,0,0,.08);  
 }  
-  
+  .airline-card{
+  position:absolute;
+  bottom:160px;
+  left:15px;
+  width:92px;              /* إطار ثابت */
+  height:67px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
 .card-header{  
   display:flex;  
   gap:10px;  
@@ -129,19 +141,7 @@ select{padding:8px;border-radius:8px}
   cursor:pointer;  
   font-size:14px;  
 }  
-.airline-card{
-  position:absolute;
-  bottom:160px;
-  left:15px;
-  width:92px;              /* إطار ثابت */
-  height:67px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#fff;
-  border-radius:10px;
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
-}
+
 
 .airline-card img{
   max-width:80px;
@@ -293,7 +293,7 @@ body{
 }
 
 .logo{
-  height:42px;
+  height:80px;
   width:auto;
   display:block;
 }
