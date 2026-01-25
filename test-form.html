@@ -565,19 +565,21 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     : ``}
 
   </div>  
-  
-  <!-- السعر -->  
-  <div class="price">💰 ${o.group} دج
+  <div class="price-box">
 
+  <div class="price">
+    💰 ${o.group} دج
+  </div>
 
-  <!-- زر واتساب -->
   <button
-    class="wa-below"
+    type="button"
+    class="wa-price"
     onclick='openWaModal(${JSON.stringify(o)})'
     title="تواصل عبر واتساب">
     <i class="fab fa-whatsapp"></i>
   </button>
-  </div>
+
+</div>
 
 
 </div>  
