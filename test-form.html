@@ -150,11 +150,11 @@ select{padding:8px;border-radius:8px}
 .airline-card{
   position:absolute;
 
-  top:100px;        /* 👈 يتحكم في المسافة تحت الغيمة */
+  top:150px;        /* 👈 يتحكم في المسافة تحت الغيمة */
   left:15px;
 
   width:92px;
-  height:100px;
+  height:50px;
 
   display:flex;
   align-items:center;
@@ -217,7 +217,7 @@ select{padding:8px;border-radius:8px}
   border:1px solid #ccc;  
 }  
 .card-info{  
-  margin-top:80px;  
+  margin-top:85px;  
   font-size:19px;  
   line-height:1.6;  
 }  
@@ -530,11 +530,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <div>
       <strong>${o.offer}</strong><br>
     </div>
-<div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
-  ${o.airlineLogo 
-    ? `<img src="${o.airlineLogo}" onerror="this.parentNode.classList.add('empty');this.remove()">`
-    : ``}
-</div>
+
 
 
 
@@ -546,6 +542,11 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <div>🏨 الأقامة في فندق ${o.hotel || "-"}</div>  
     <div>⏱️ مدة الرحلة: ${o.duration || "-"}</div>  
     <div>🛫 مسار الرحلة: ${o.flight || "-"}</div>  
+<div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
+  ${o.airlineLogo 
+    ? `<img src="${o.airlineLogo}" onerror="this.parentNode.classList.add('empty');this.remove()">`
+    : ``}
+
   </div>  
   
   <!-- السعر -->  
