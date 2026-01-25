@@ -4,19 +4,15 @@
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
 <title>العروض العامة للعمرة</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
- <style>  
- 
-  
-/* ====== إعدادات عامة ====== */
-body{
-  font-family:Tajawal,Arial;
-  margin:0;
-  padding-top:60px; /* مهم لأن الهيدر ثابت */
-  background:
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
-    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
-    center/cover fixed no-repeat;
-}
+<style>  
+body{  
+  font-family:Tajawal,Arial;  
+  margin:0;  
+  background:  
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),  
+    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")  
+    center/cover fixed no-repeat;  
+}  
   
 header{  
   height:60px;  
@@ -26,8 +22,6 @@ header{
   align-items:center;  
   padding:0 15px;  
 }  
- 
-  
 .menu-btn{font-size:26px;cursor:pointer}  
 header h1{flex:1;text-align:center;font-size:18px;margin:0}  
   
@@ -90,106 +84,26 @@ select{padding:8px;border-radius:8px}
 .airport-title{font-weight:900;color:#8b0000;margin-bottom:10px}  
 .airport-row{display:flex;gap:16px;overflow-x:auto}  
   
-.card{
-  position:relative;
-  min-width:300px;
-  background:#fff;
-  border-radius:22px;
-  padding:40px 16px 16px; /* فراغ علوي للرأس */
-  box-shadow:0 10px 28px rgba(0,0,0,.12);
-}
-
-.card-header{
- padding:19px 14px 10px; 
-  position:absolute;
-  top:-26px;
-  left:16px;
-  right:16px;
-
-  background:rgba(255,255,255,.95);
-  border-radius:22px;
-  padding:12px 14px;
-
-  display:flex;
-  align-items:center;
-  gap:12px;
-
-  box-shadow:0 6px 18px rgba(0,0,0,.18);
-}
-
-.card-header img{
-  width:20px;
-  height:20px;
-  object-fit:contain;
-  border-radius:10px;
-  background:#fff;
-}
-
-
-.card-header strong{
-  font-size:15px;
-  color:#222;
-}
-
-.card-header strong{
-  font-size:15px;
-  color:#222;
-}
-
-.card-header small{
-  font-size:13px;
-  color:#777;
-}
-
-
-/* إطار شعار الطيران */
-.airline-card{
-  background:#fff;        /* ✔️ الخلفية تبقى دائمًا */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* في حالة عدم وجود صورة */
-.airline-card.empty::after{
-  content:"—";
-  font-size:40px;
-  color:#bbb;
-  line-height:1;
-}
-/* ====== الشعار (وسط) ====== */
-.logo-center{
-  justify-self:center;
-  cursor:pointer;
-}
-
-.logo{
-  height:60px;
-  width:auto;
-  display:block;
-}
-.airline-card{
-  position:absolute;
-  top:38px;           /* مكانه ثابت */
-  left:12px;
-  width:30px;         /* تصغير الإطار */
-  height:32px;
-  background:#fff;
-  border-radius:8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 4px 10px rgba(0,0,0,.15);
-}
-
-.airline-card img{
-  max-width:90%;
-  max-height:90%;
-  object-fit:contain;
-}
-
-
-
+.card{  
+  position:relative;  
+  min-width:300px;  
+  background:#fff;  
+  border-radius:18px;  
+  padding:16px;  
+  box-shadow:0 8px 25px rgba(0,0,0,.08);  
+}  
+  
+.card-header{  
+  display:flex;  
+  gap:10px;  
+  align-items:center;  
+}  
+.card-header img{  
+  width:48px;  
+  height:48px;  
+  object-fit:contain;  
+}  
+  
 .price{  
   margin-top:10px;  
   background:#f8f4ef;  
@@ -215,6 +129,33 @@ select{padding:8px;border-radius:8px}
   cursor:pointer;  
   font-size:14px;  
 }  
+.airline-card{
+  position:absolute;
+  bottom:160px;
+  left:15px;
+  width:92px;              /* إطار ثابت */
+  height:67px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+.airline-card img{
+  max-width:80px;
+  max-height:55px;
+  object-fit:contain;
+}
+
+/* في حالة عدم وجود صورة */
+.airline-card.empty::after{
+  content:"—";
+  font-size:28px;
+  color:#bbb;
+}
+  
 /* زر واتساب */  
 .wa-below{  
   margin:0 auto 10px;  
@@ -261,7 +202,24 @@ select{padding:8px;border-radius:8px}
 .card-info{  
   margin-top:8px;  
   font-size:14px;  
-  line-height:1.9;  
+  line-height:1.6;  
+}  
+  
+.visitor-box{  
+  display:flex;  
+  align-items:center;  
+.visitor-box{  
+  margin-left:25px;   /* اسحبه شوية نحو الوسط */  
+}  
+  gap:10px;  
+  background:rgba(255,255,255,.15);  
+  backdrop-filter:blur(6px);  
+  color:#222;  
+  padding:12px 18px;  
+  border-radius:14px;  
+  font-family:Tajawal,Arial;  
+  width:max-content;  
+  box-shadow:0 8px 20px rgba(0,0,0,.15);  
 }  
   
 .visitor-box i{  
@@ -280,98 +238,27 @@ color:#fff;
   font-size:13px;  
   opacity:.85;  
 }  
- .visitor-box{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:rgba(255,255,255,.15);
-  backdrop-filter:blur(6px);
-  color:#fff;
-  padding:12px 18px;
-  border-radius:14px;
-  box-shadow:0 8px 20px rgba(0,0,0,.15);
-  transform:translateY(-4px); /* يطلع لفوق */
-}
-
+header{  
+  height:60px;  
+  background:#8b0000;  
+  color:#fff;  
+  display:flex;  
+  align-items:center;  
+  gap:10px;  
+  padding:0 15px;  
+}  
   
 header h1{  
   flex:1;  
   text-align:center;  
   font-size:18px;  
   margin:0;  
-}  
+} 
 
 
 
-/* ====== الشريط العلوي ====== */
-.top-bar{
-  position:fixed;
-  top:0;
-  right:0;
-  left:0;
-  height:60px;
-  background:#8b0000;
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:center;
-  padding:0 15px;
-  z-index:15000;
-}
-#registerModal{
-  display:none;
-  position:fixed;
-}
 
-/* ====== زر القائمة (يمين) ====== */
-.menu-btn{
-  font-size:30px;
-  cursor:pointer;
-  color:#fff;
-  justify-self:start;
- transform:translateY(-4px); /* يطلع لفوق */
-}
-
-
-/* ====== القائمة الجانبية ====== */
-#sideMenu{
-  position:fixed;
-  top:0;
-  right:-260px;
-  width:260px;
-  height:100%;
-  background:#8b0000;
-  padding-top:70px;
-  transition:.3s;
-  z-index:10000;
-}
-
-#sideMenu a{
-  display:block;
-  padding:14px 18px;
-  color:#fff;
-  text-decoration:none;
-}
-
-/* ====== غطاء القائمة ====== */
-#overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:9000;
-}
-
-/* ====== الحاوية ====== */
-.container{
-  max-width:1200px;
-  margin:25px auto;
-  background:rgba(255,255,255,.60);
-  padding:20px;
-  border-radius:20px;
-}
-
-/* ====== نافذة ترحيبية ====== */
-.modal{
+ .modal{
   display:none;
   position:fixed;
   inset:0;
@@ -381,60 +268,41 @@ header h1{
   justify-content:center;
 }
 
-.modal-box{
-  background:#fff;
-  padding:25px;
-  border-radius:18px;
-  max-width:420px;
-  text-align:center;
-}
 
-.modal-box h2{
-  margin-top:0;
-  color:#8b0000;
-}
 
-.modal-box button{
-  margin-top:15px;
-  padding:10px 20px;
-  border:none;
-  background:#8b0000;
-  color:#fff;
-  border-radius:10px;
+ 
+
+ .site-logo{
+  height:42px;
+  width:auto;
   cursor:pointer;
-}
-.info-row{
-  display:flex;
-  align-items:flex-start;
-  gap:10px;
-  margin-top:10px;
-}
 
-.wa-side{
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  border:none;
-  background:#25D366;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  flex-shrink:0;
-}
+  /* إطار وهوية موقع */
+  padding:6px 10px;
+  border-radius:14px;
 
-.wa-side i{
-  color:#fff;
-  font-size:22px;
+  background:
+    linear-gradient(135deg,
+      rgba(255,215,0,.25),
+      rgba(139,0,0,.25)
+    );
+
+  backdrop-filter:blur(6px);
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,.35),
+    inset 0 0 0 1px rgba(255,255,255,.35);
+
+  transition:.25s ease;
 }
 
+</style> 
 
 
 
-
-</style>
-
-
+</head>  <body>  <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
+<i class="fab fa-whatsapp"></i>  
+</a>  
 </head>  <body>  <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
 <i class="fab fa-whatsapp"></i>  
 </a>  
@@ -446,13 +314,13 @@ header h1{
 
   <!-- الشعار (وسط) -->
   <div class="logo-center" onclick="openWelcome()">
-   <img
+ <img
   src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769337506/ei_1769337332026-removebg-preview_1_y2xsij.png"
   alt="طريق العمرة"
-  class="logo"
+  class="logo site-logo"
   onclick="openWelcome()"
-  style="cursor:pointer"
 >
+
 
   </div>
 
@@ -580,34 +448,30 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
       c.innerHTML=`  
           
   
- 
-
-  <!-- شعار شركة الطيران (عنصر مستقل) -->
-  <div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
-    ${
-      o.airlineLogo
-        ? `<img src="${o.airlineLogo}"
-               onerror="this.parentNode.classList.add('empty');this.remove()">`
-        : ``
-    }
-  </div>
-
   <!-- رأس البطاقة -->
   <div class="card-header">
     <img src="${o.logo || ''}" onerror="this.style.display='none'">
+      <small>${o.agency} – ${o.state} 📍</small>
     <div>
       <strong>${o.offer}</strong><br>
-      <small>${o.agency} – ${o.state} 📍</small>
     </div>
+<div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
+  ${o.airlineLogo 
+    ? `<img src="${o.airlineLogo}" onerror="this.parentNode.classList.add('empty');this.remove()">`
+    : ``}
+</div>
+
+  <!-- زر واتساب -->
+  <button
+    class="wa-below"
+    onclick='openWaModal(${JSON.stringify(o)})'
+    title="تواصل عبر واتساب">
+    <i class="fab fa-whatsapp"></i>
+  </button>
   </div>
 
-  <!-- باقي البطاقة -->
 
-
-
-  </div>
-
-
+</div>
   <!-- معلومات العرض -->  
   <div class="card-info">  
     <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>  
@@ -615,13 +479,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <div>⏱️ مدة الرحلة: ${o.duration || "-"}</div>  
     <div>🛫 مسار الرحلة: ${o.flight || "-"}</div>  
   </div>  
-    <!-- زر واتساب -->
-  <button
-    class="wa-below"
-    onclick='openWaModal(${JSON.stringify(o)})'
-    title="تواصل عبر واتساب">
-    <i class="fab fa-whatsapp"></i>
-  </button>
+  
   <!-- السعر -->  
   <div class="price">💰 ${o.group} دج</div>  
   
@@ -819,7 +677,6 @@ fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089q
 .then(r => r.json())  
 .then(d => document.getElementById("visitors").textContent = d.count);  
   
-
 function openWelcome(){
   document.getElementById("welcomeModal").style.display="flex";
 }
@@ -827,6 +684,8 @@ function closeWelcome(){
   document.getElementById("welcomeModal").style.display="none";
 }
 
+
+ 
 </script>  <!-- نافذة واتساب -->
 <div id="waModal"
      onclick="closeWaModal()"
@@ -925,11 +784,6 @@ function closeWelcome(){
     ">
       إغلاق
     </button>
-
-  </div>
-</div>
-
-
  </body>  
 
 </html>  
