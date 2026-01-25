@@ -4,20 +4,271 @@
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
 <title>العروض العامة للعمرة</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
+ <style>  
+body{  
+  font-family:Tajawal,Arial;  
+  margin:0;  
+  background:  
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),  
+    url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")  
+    center/cover fixed no-repeat;  
+}  
+  
+header{  
+  height:60px;  
+  background:#8b0000;  
+  color:#fff;  
+  display:flex;  
+  align-items:center;  
+  padding:0 15px;  
+}  
+.menu-btn{font-size:26px;cursor:pointer}  
+header h1{flex:1;text-align:center;font-size:18px;margin:0}  
+  
+.whatsapp-top{  
+  position:fixed;  
+top:60px;                    
+  left:12px;  
+  width:48px;  
+  height:48px;  
+  background:#25D366;  
+  color:#fff;  
+  border-radius:50%;  
+  display:flex;  
+  align-items:center;  
+  justify-content:center;  
+  font-size:28px;  
+  z-index:13000;  
+}  
+  
+#sideMenu{  
+  position:fixed;  
+  top:0;right:-260px;  
+  width:260px;height:100%;  
+  background:#8b0000;  
+  padding-top:70px;  
+  transition:.3s;  
+  z-index:10000  
+}  
+#sideMenu a{  
+  display:block;  
+  padding:14px 18px;  
+  color:#fff;  
+  text-decoration:none;  
+}  
+#overlay{  
+  display:none;  
+  position:fixed;  
+  inset:0;  
+  background:rgba(0,0,0,.6);  
+  z-index:9000  
+}  
+  
+.container{  
+  max-width:1200px;  
+  margin:25px auto;  
+  background:rgba(255,255,255,.60);  
+  padding:20px;  
+  border-radius:20px;  
+}  
+  
+.filters{  
+  display:grid;  
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));  
+  gap:10px;  
+  margin-bottom:20px  
+}  
+select{padding:8px;border-radius:8px}  
+  
+.airport-group{margin-bottom:30px}  
+.airport-title{font-weight:900;color:#8b0000;margin-bottom:10px}  
+.airport-row{display:flex;gap:16px;overflow-x:auto}  
+  
+.card{  
+  position:relative;  
+  min-width:300px;  
+  background:#fff;  
+  border-radius:18px;  
+  padding:16px;  
+  box-shadow:0 8px 25px rgba(0,0,0,.08);  
+}  
+  
+.card-header{  
+  display:flex;  
+  gap:10px;  
+  align-items:center;  
+}  
+.card-header img{  
+  width:48px;  
+  height:48px;  
+  object-fit:contain;  
+}  
+  
+.price{  
+  margin-top:10px;  
+  background:#f8f4ef;  
+  padding:10px;  
+  border-radius:10px;  
+  text-align:center;  
+  font-weight:900;  
+  color:#8b0000  
+}  
+  
+.card-actions{  
+  display:flex;  
+  gap:8px;  
+  margin-top:10px;  
+}  
+.card-actions button{  
+  flex:1;  
+  padding:10px;  
+  border:none;  
+  border-radius:10px;  
+  background:#8b0000;  
+  color:#fff;  
+  cursor:pointer;  
+  font-size:14px;  
+}  
+.airline-card{
+  position:absolute;
+  bottom:160px;
+  left:15px;
+  width:92px;              /* إطار ثابت */
+  height:67px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+.airline-card img{
+  max-width:80px;
+  max-height:55px;
+  object-fit:contain;
+}
+
+/* في حالة عدم وجود صورة */
+.airline-card.empty::after{
+  content:"—";
+  font-size:28px;
+  color:#bbb;
+}
+  
+/* زر واتساب */  
+.wa-below{  
+  margin:0 auto 10px;  
+  width:48px;  
+  height:48px;  
+  border-radius:50%;  
+  border:none;  
+  background:#25D366;  
+  display:flex;  
+  align-items:center;  
+  justify-content:center;  
+  cursor:pointer;  
+}  
+  
+.wa-below i{  
+  color:#fff;  
+  font-size:24px;  
+}  
+  
+#detailsModal,#registerModal{  
+  display:none;  
+  position:fixed;  
+  inset:0;  
+  background:rgba(0,0,0,.6);  
+  z-index:20000;  
+  align-items:center;  
+  justify-content:center;  
+}  
+  
+.modal-box{  
+  background:#fff;  
+  width:90%;  
+  max-width:420px;  
+  padding:20px;  
+  border-radius:18px;  
+}  
+.modal-box input{  
+  width:100%;  
+  padding:10px;  
+  margin:6px 0;  
+  border-radius:8px;  
+  border:1px solid #ccc;  
+}  
+.card-info{  
+  margin-top:8px;  
+  font-size:14px;  
+  line-height:1.6;  
+}  
+  
+.visitor-box{  
+  display:flex;  
+  align-items:center;  
+.visitor-box{  
+  margin-left:25px;   /* اسحبه شوية نحو الوسط */  
+}  
+  gap:10px;  
+  background:rgba(255,255,255,.15);  
+  backdrop-filter:blur(6px);  
+  color:#222;  
+  padding:12px 18px;  
+  border-radius:14px;  
+  font-family:Tajawal,Arial;  
+  width:max-content;  
+  box-shadow:0 8px 20px rgba(0,0,0,.15);  
+}  
+  
+.visitor-box i{  
+  font-size:26px;  
+  color:#1e90ff;  
+}  
+  
+.visitor-box span{  
+color:#fff;  
+  font-size:22px;  
+  font-weight:700;  
+}  
+  
+.visitor-box small{  
+color:#fff;  
+  font-size:13px;  
+  opacity:.85;  
+}  
+header{  
+  height:60px;  
+  background:#8b0000;  
+  color:#fff;  
+  display:flex;  
+  align-items:center;  
+  gap:10px;  
+  padding:0 15px;  
+}  
+  
+header h1{  
+  flex:1;  
+  text-align:center;  
+  font-size:18px;  
+  margin:0;  
+}  
+
 <style>
 /* ====== إعدادات عامة ====== */
 body{
   font-family:Tajawal,Arial;
   margin:0;
-  padding-top:60px; /* مهم: لأن الهيدر ثابت */
+  padding-top:60px; /* مهم لأن الهيدر ثابت */
   background:
     linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
     url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
     center/cover fixed no-repeat;
 }
 
-/* ====== الهيدر (محسّن) ====== */
-header.top-bar{
+/* ====== الشريط العلوي ====== */
+.top-bar{
   position:fixed;
   top:0;
   right:0;
@@ -31,7 +282,7 @@ header.top-bar{
   z-index:15000;
 }
 
-/* زر القائمة (يمين) */
+/* ====== زر القائمة (يمين) ====== */
 .menu-btn{
   font-size:26px;
   cursor:pointer;
@@ -39,65 +290,27 @@ header.top-bar{
   justify-self:start;
 }
 
-/* الشعار (وسط حقيقي) */
-.logo-title,
+/* ====== الشعار (وسط) ====== */
 .logo-center{
   justify-self:center;
-  display:flex;
-  align-items:center;
   cursor:pointer;
 }
 
 .logo{
   height:42px;
   width:auto;
+  display:block;
 }
 
-/* عداد الزوار (يسار) */
+/* ====== عداد الزوار (يسار) ====== */
 .visitor-box{
   display:flex;
   align-items:center;
-  gap:10px;
-  background:rgba(255,255,255,.15);
-  backdrop-filter:blur(6px);
-  padding:8px 14px;
-  border-radius:14px;
-  box-shadow:0 8px 20px rgba(0,0,0,.15);
+  gap:8px;
   color:#fff;
   justify-self:end;
 }
 
-.visitor-box i{
-  font-size:22px;
-  color:#fff;
-}
-
-.visitor-box span{
-  font-size:20px;
-  font-weight:700;
-}
-
-.visitor-box small{
-  font-size:12px;
-  opacity:.85;
-}
-
-/* ====== زر واتساب ====== */
-.whatsapp-top{
-  position:fixed;
-  top:70px;
-  left:12px;
-  width:48px;
-  height:48px;
-  background:#25D366;
-  color:#fff;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  z-index:13000;
-}
 
 /* ====== القائمة الجانبية ====== */
 #sideMenu{
@@ -119,7 +332,7 @@ header.top-bar{
   text-decoration:none;
 }
 
-/* غطاء القائمة */
+/* ====== غطاء القائمة ====== */
 #overlay{
   display:none;
   position:fixed;
@@ -128,7 +341,7 @@ header.top-bar{
   z-index:9000;
 }
 
-/* ====== المحتوى ====== */
+/* ====== الحاوية ====== */
 .container{
   max-width:1200px;
   margin:25px auto;
@@ -137,90 +350,8 @@ header.top-bar{
   border-radius:20px;
 }
 
-/* ====== الفلاتر ====== */
-.filters{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:10px;
-  margin-bottom:20px;
-}
-
-select{
-  padding:8px;
-  border-radius:8px;
-}
-
-/* ====== البطاقات ====== */
-.card{
-  position:relative;
-  min-width:300px;
-  background:#fff;
-  border-radius:18px;
-  padding:16px;
-  box-shadow:0 8px 25px rgba(0,0,0,.08);
-}
-
-.card-header{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-
-.card-header img{
-  width:48px;
-  height:48px;
-  object-fit:contain;
-}
-
-.price{
-  margin-top:10px;
-  background:#f8f4ef;
-  padding:10px;
-  border-radius:10px;
-  text-align:center;
-  font-weight:900;
-  color:#8b0000;
-}
-
-.card-actions{
-  display:flex;
-  gap:8px;
-  margin-top:10px;
-}
-
-.card-actions button{
-  flex:1;
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  background:#8b0000;
-  color:#fff;
-  cursor:pointer;
-}
-
-/* ====== شعار الطيران ====== */
-.airline-card{
-  position:absolute;
-  bottom:160px;
-  left:15px;
-  width:92px;
-  height:67px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#fff;
-  border-radius:10px;
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
-}
-
-.airline-card img{
-  max-width:80px;
-  max-height:55px;
-  object-fit:contain;
-}
-
-/* ====== المودالات ====== */
-#detailsModal,#registerModal{
+/* ====== نافذة ترحيبية ====== */
+.modal{
   display:none;
   position:fixed;
   inset:0;
@@ -232,10 +363,25 @@ select{
 
 .modal-box{
   background:#fff;
-  width:90%;
-  max-width:420px;
-  padding:20px;
+  padding:25px;
   border-radius:18px;
+  max-width:420px;
+  text-align:center;
+}
+
+.modal-box h2{
+  margin-top:0;
+  color:#8b0000;
+}
+
+.modal-box button{
+  margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  background:#8b0000;
+  color:#fff;
+  border-radius:10px;
+  cursor:pointer;
 }
 
 /* ====== استجابة الهاتف ====== */
@@ -245,6 +391,7 @@ select{
   .menu-btn{font-size:24px;}
 }
 </style>
+
 
 
 
@@ -259,11 +406,14 @@ select{
 
   <!-- الشعار (وسط) -->
   <div class="logo-center" onclick="openWelcome()">
-    <img
-      src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769337506/ei_1769337332026-removebg-preview_1_y2xsij.png"
-      alt="طريق العمرة"
-      class="logo"
-    >
+   <img
+  src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769337506/ei_1769337332026-removebg-preview_1_y2xsij.png"
+  alt="طريق العمرة"
+  class="logo"
+  onclick="openWelcome()"
+  style="cursor:pointer"
+>
+
   </div>
 
   <!-- عداد الزوار (يسار) -->
@@ -680,20 +830,55 @@ function closeWelcome(){
 
   </div>
 </div>
-<div id="welcomeModal" class="modal" onclick="closeWelcome()">
-  <div class="modal-box" onclick="event.stopPropagation()">
-    <h2>مرحبًا بكم في طريق العمرة 🕋</h2>
+<div id="welcomeModal" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:30000;
+  align-items:center;
+  justify-content:center;
+" onclick="closeWelcome()">
+
+  <div style="
+    background:#fff;
+    padding:25px;
+    border-radius:18px;
+    max-width:420px;
+    width:90%;
+    text-align:center;
+    font-family:Tajawal,Arial;
+  " onclick="event.stopPropagation()">
+
+    <h2 style="color:#8b0000;margin-top:0">
+      مرحبًا بكم في طريق العمرة 🕋
+    </h2>
+
     <p>
-      موقع <b>طريق العمرة</b> يسهّل عليكم تصفح أفضل عروض العمرة
-      من وكالات <b>مرخصة ومعتمدة</b>،  
-      تسجيل سريع، معلومات واضحة، ومرافقة حتى أداء العمرة بإذن الله.
+      موقع <b>طريق العمرة</b> يسهّل عليكم تصفح
+      أفضل عروض العمرة من وكالات <b>مرخصة ومعتمدة</b>،
+      مع تسجيل سهل ومعلومات واضحة.
     </p>
+
     <p style="font-weight:bold;color:#0b5f3c">
-      📿 نيتك علينا… والطريق علينا
+      نيتك صادقة… والطريق علينا بإذن الله 🤲
     </p>
-    <button onclick="closeWelcome()">إغلاق</button>
+
+    <button onclick="closeWelcome()" style="
+      margin-top:15px;
+      padding:10px 20px;
+      border:none;
+      background:#8b0000;
+      color:#fff;
+      border-radius:10px;
+      cursor:pointer;
+    ">
+      إغلاق
+    </button>
+
   </div>
 </div>
+
 
  </body>  
 
