@@ -292,18 +292,35 @@ header h1{
 <div id="detailsContent"></div>
 
   </div>  
-</div>  <!-- نافذة التسجيل -->  <div id="registerModal">  
-<div class="modal-box">  
-<h3>📩 تسجيل في العرض</h3>  
-<input id="cFirst" placeholder="الاسم">  
-<input id="cLast" placeholder="اللقب">  
-<input id="cPhone" placeholder="رقم الهاتف">  
-<button onclick="sendRegister()">إرسال</button>  
-   <button onclick="closeModal()"  
-      style="width:100%;padding:10px;margin-top:6px">  
-      إلغاء  
-    </button>  
-</div>  
+</div> 
+  <!-- نافذة التسجيل -->
+  <div id="registerModal"
+     onclick="closeRegisterModal()"
+     style="display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.6);
+     z-index:25000;
+     display:flex;
+     align-items:center;
+     justify-content:center;">
+
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <h3>📩 تسجيل في العرض</h3>
+
+    <input id="cFirst" placeholder="الاسم">
+    <input id="cLast" placeholder="اللقب">
+    <input id="cPhone" placeholder="رقم الهاتف">
+
+    <button onclick="sendRegister()">إرسال</button>
+
+    <button onclick="closeRegisterModal()"
+      style="width:100%;padding:10px;margin-top:6px">
+      إلغاء
+    </button>
+  </div>
+</div>
+
 </div>  <script>  
 const OFFERS_API="https://script.google.com/macros/s/AKfycbwN-Mgn61HDqdCD2_shOx3nRAcW-O8GxquhSpxaSX0Az00W1W_48lVFCowDqF41ZN_7dQ/exec";  
   
@@ -473,14 +490,17 @@ ${o.offer}
     : window.open("https://wa.me/?text="+encodeURIComponent(text));  
 }  
   
-function openRegister(o){  
-  selectedOffer=o;  
-  registerModal.style.display="flex";  
-}  
-// غلق النافذة  
-function closeWaModal(){  
-  document.getElementById("waModal").style.display = "none";  
-}  
+
+
+  function openRegister(o){
+  selectedOffer = o;
+  document.getElementById("registerModal").style.display = "flex";
+}
+
+function closeRegisterModal(){
+  document.getElementById("registerModal").style.display = "none";
+}
+
 function sendRegister(){  
   if(!cFirst.value||!cLast.value||!cPhone.value){  
     alert("يرجى ملء جميع الحقول");  
