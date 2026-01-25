@@ -272,28 +272,51 @@ header h1{
 
  
 
- .site-logo{
+header{
+  position:relative;   /* مهم */
+}
+
+.site-logo{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+}
+.site-logo{
   height:42px;
   width:auto;
   cursor:pointer;
-
-  /* إطار وهوية موقع */
   padding:6px 10px;
   border-radius:14px;
 
   background:
-    linear-gradient(135deg,
-      rgba(255,215,0,.25),
-      rgba(139,0,0,.25)
+    linear-gradient(145deg,
+      rgba(255,255,255,.25),
+      rgba(0,0,0,.25)
     );
 
-  backdrop-filter:blur(6px);
-
   box-shadow:
-    0 4px 10px rgba(0,0,0,.35),
-    inset 0 0 0 1px rgba(255,255,255,.35);
+    0 3px 6px rgba(0,0,0,.35),
+    0 8px 18px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.35),
+    inset 0 -2px 4px rgba(0,0,0,.35);
 
   transition:.25s ease;
+  transform-style:preserve-3d;
+}
+
+/* حركة خفيفة عند المرور */
+.site-logo:hover{
+  transform:
+    translateX(-50%)
+    translateY(-2px)
+    rotateX(6deg);
+}
+
+@media (max-width:600px){
+  .site-logo{
+    height:34px;
+    padding:5px 8px;
+  }
 }
 
 </style> 
