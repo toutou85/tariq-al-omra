@@ -281,8 +281,10 @@ header h1{
 <select id="fAgency"><option value="">🏢 كل الوكالات</option></select>  
 <select id="fState"><option value="">📍 كل الولايات</option></select>  
 <select id="fDate"><option value="">📅 كل التواريخ</option></select>  
-</div>  <div id="offers">⏳ جارٍ تحميل العروض...</div>  
-</div>  <!-- نافذة التفاصيل -->  <div id="detailsModal" onclick="closeDetails()">  
+</div> 
+  <div id="offers">⏳ جارٍ تحميل العروض...</div>  
+</div>  <!-- نافذة التفاصيل --> 
+  <div id="detailsModal" onclick="closeDetails()">  
   <div class="modal-box" onclick="event.stopPropagation()">  
     <button onclick="closeDetails()"  
       style="position:absolute;top:10px;left:10px;  
@@ -295,7 +297,7 @@ header h1{
 </div> 
   <!-- نافذة التسجيل -->
   <div id="registerModal"
-     onclick="closeRegisterModal()"
+    
      style="display:none;
      position:fixed;
      inset:0;
@@ -606,14 +608,7 @@ function confirmWhatsApp(){
   );  
   
   closeWaModal();  
-}  
-  
-  
-  
-  
-  
-  
-  
+}    
   
 fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {  
   cache: "no-store"  
@@ -621,12 +616,6 @@ fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089q
 .then(r => r.json())  
 .then(d => document.getElementById("visitors").textContent = d.count);  
   
-
-
-fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {
-  method: "POST",
-  cache: "no-store"
-});
 
 </script>  <!-- نافذة واتساب -->
 <div id="waModal"
