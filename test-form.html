@@ -108,7 +108,9 @@ select{padding:8px;border-radius:8px}
   display:flex;
   align-items:center;
     align-items:center;          /* توسيط عمودي */
-  justify-content:center;      /* توسيط أفقي */
+  justify-content:center; /* توسيط أفقي */
+   align-items:flex-end;   /* 👈 ينزل العناصر للأسفل */
+  padding-bottom:5px;    /* تحكم دقيق في النزول */
   gap:12px;
 
   box-shadow:0 6px 18px rgba(0,0,0,.18);
@@ -304,7 +306,7 @@ header{
   height:60px;
   width:auto;
   cursor:pointer;
-  padding:19px 19px;
+  padding:2px 19px;
   border-radius:14px;
 
   background:
@@ -334,7 +336,7 @@ header{
 @media (max-width:600px){
   .site-logo{
     height:60px;
-    padding:5px 8px;
+    padding:20px 8px;
   }
 
 
