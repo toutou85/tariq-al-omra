@@ -182,7 +182,7 @@ select{padding:8px;border-radius:8px}
 }
   
 .agency-name{
-  font-size:15px;      /* 👈 كبّر حسب رغبتك */
+  font-size:12px;      /* 👈 كبّر حسب رغبتك */
   font-weight:900;
   color:#8b0000;
 }
@@ -388,6 +388,32 @@ header{
 .wa-price:active{
   transform:scale(.95);
 }
+
+
+
+
+.agency-name{
+  font-size:21px;
+  font-weight:900;
+  color:#8b0000;
+  letter-spacing:.4px;
+}@media (max-width:600px){
+  .agency-name{
+    font-size:18px;
+  }
+}.location{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  margin-right:6px;
+  color:#444;
+  font-size:14px;
+}
+
+.location i{
+  color:#8b0000;      /* نفس لون الهوية */
+  font-size:14px;
+}
 </style> 
 
 
@@ -542,9 +568,15 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   
   <!-- رأس البطاقة -->
   <div class="card-header">
-    <img src="${o.logo || ''}" onerror="this.style.display='none'">
-      <small>${o.agency} – ${o.state} 📍</small>
-    <div>
+    <img src="${o.logo || ''}" 
+
+<small>
+  <span class="agency-name">${o.agency}</span>
+  <span class="location">
+    <i class="fa-solid fa-location-dot"></i>
+    ${o.state}
+  </span>
+</small>
       <strong>${o.offer}</strong><br>
     </div>
 
