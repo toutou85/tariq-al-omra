@@ -281,8 +281,10 @@ header h1{
 <select id="fAgency"><option value="">🏢 كل الوكالات</option></select>  
 <select id="fState"><option value="">📍 كل الولايات</option></select>  
 <select id="fDate"><option value="">📅 كل التواريخ</option></select>  
-</div>  <div id="offers">⏳ جارٍ تحميل العروض...</div>  
-</div>  <!-- نافذة التفاصيل -->  <div id="detailsModal" onclick="closeDetails()">  
+</div> 
+  <div id="offers">⏳ جارٍ تحميل العروض...</div>  
+</div>  <!-- نافذة التفاصيل --> 
+  <div id="detailsModal" onclick="closeDetails()">  
   <div class="modal-box" onclick="event.stopPropagation()">  
     <button onclick="closeDetails()"  
       style="position:absolute;top:10px;left:10px;  
@@ -292,18 +294,35 @@ header h1{
 <div id="detailsContent"></div>
 
   </div>  
-</div>  <!-- نافذة التسجيل -->  <div id="registerModal">  
-<div class="modal-box">  
-<h3>📩 تسجيل في العرض</h3>  
-<input id="cFirst" placeholder="الاسم">  
-<input id="cLast" placeholder="اللقب">  
-<input id="cPhone" placeholder="رقم الهاتف">  
-<button onclick="sendRegister()">إرسال</button>  
-   <button onclick="closeModal()"  
-      style="width:100%;padding:10px;margin-top:6px">  
-      إلغاء  
-    </button>  
-</div>  
+</div> 
+  <!-- نافذة التسجيل -->
+  <div id="registerModal"
+    
+     style="display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.6);
+     z-index:25000;
+     
+     align-items:center;
+     justify-content:center;">
+
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <h3>📩 تسجيل في العرض</h3>
+
+    <input id="cFirst" placeholder="الاسم">
+    <input id="cLast" placeholder="اللقب">
+    <input id="cPhone" placeholder="رقم الهاتف">
+
+    <button onclick="sendRegister()">إرسال</button>
+
+    <button onclick="closeRegisterModal()"
+      style="width:100%;padding:10px;margin-top:6px">
+      إلغاء
+    </button>
+  </div>
+</div>
+
 </div>  <script>  
 const OFFERS_API="https://script.google.com/macros/s/AKfycbwN-Mgn61HDqdCD2_shOx3nRAcW-O8GxquhSpxaSX0Az00W1W_48lVFCowDqF41ZN_7dQ/exec";  
   
@@ -473,14 +492,17 @@ ${o.offer}
     : window.open("https://wa.me/?text="+encodeURIComponent(text));  
 }  
   
-function openRegister(o){  
-  selectedOffer=o;  
-  registerModal.style.display="flex";  
-}  
-// غلق النافذة  
-function closeWaModal(){  
-  document.getElementById("waModal").style.display = "none";  
-}  
+
+
+  function openRegister(o){
+  selectedOffer = o;
+  document.getElementById("registerModal").style.display = "flex";
+}
+
+function closeRegisterModal(){
+  document.getElementById("registerModal").style.display = "none";
+}
+
 function sendRegister(){  
   if(!cFirst.value||!cLast.value||!cPhone.value){  
     alert("يرجى ملء جميع الحقول");  
@@ -586,14 +608,7 @@ function confirmWhatsApp(){
   );  
   
   closeWaModal();  
-}  
-  
-  
-  
-  
-  
-  
-  
+}    
   
 fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {  
   cache: "no-store"  
@@ -601,43 +616,61 @@ fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089q
 .then(r => r.json())  
 .then(d => document.getElementById("visitors").textContent = d.count);  
   
-</script>  <!-- نافذة واتساب -->  <div id="waModal" style="  
-  display:none;  
-  position:fixed;  
-  inset:0;  
-  background:rgba(0,0,0,.6);  
-  z-index:30000;  
-  align-items:center;  
-  justify-content:center;  
-">  
-  <div style="  
-    background:#fff;  
-    width:90%;  
-    max-width:420px;  
-    padding:20px;  
-    border-radius:18px;  
-  ">  
-    <h3>👤 بيانات المعتمر</h3>  <input id="waFirst" placeholder="الاسم"  
-  style="width:100%;padding:10px;margin:6px 0">  
 
-<input id="waLast" placeholder="اللقب"  
-  style="width:100%;padding:10px;margin:6px 0">  
+</script>  <!-- نافذة واتساب -->
+<div id="waModal"
+     onclick="closeWaModal()"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.6);
+     z-index:30000;
+    
+     align-items:center;
+     justify-content:center;
+     ">
 
-<input id="waPhone" placeholder="رقم الهاتف"  
-  style="width:100%;padding:10px;margin:6px 0">  
+  <div onclick="event.stopPropagation()"
+       style="
+       background:#fff;
+       width:90%;
+       max-width:420px;
+       padding:20px;
+       border-radius:18px;
+       ">
 
-<button onclick="confirmWhatsApp()"  
-  style="width:100%;padding:12px;  
-  background:#25D366;color:#fff;  
-  border:none;border-radius:10px;margin-top:10px">  
-  <i class="fab fa-whatsapp"></i> إرسال  
-</button>  
+    <h3>👤 بيانات المعتمر</h3>
 
-<button onclick="closeWaModal()"  
-  style="width:100%;padding:10px;margin-top:6px">  
-  إلغاء  
-</button>
+    <input id="waFirst" placeholder="الاسم"
+      style="width:100%;padding:10px;margin:6px 0">
 
-  </div>  
-</div>  </body>  
+    <input id="waLast" placeholder="اللقب"
+      style="width:100%;padding:10px;margin:6px 0">
+
+    <input id="waPhone" placeholder="رقم الهاتف"
+      style="width:100%;padding:10px;margin:6px 0">
+
+    <button onclick="confirmWhatsApp()"
+      style="
+      width:100%;
+      padding:12px;
+      background:#25D366;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      margin-top:10px">
+      <i class="fab fa-whatsapp"></i> إرسال
+    </button>
+
+    <button onclick="closeWaModal()"
+      style="width:100%;padding:10px;margin-top:6px">
+      إلغاء
+    </button>
+
+  </div>
+</div>
+
+ </body>  
+
 </html>  
