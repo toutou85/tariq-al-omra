@@ -94,24 +94,40 @@ select{padding:8px;border-radius:8px}
   position:relative;
   min-width:300px;
   background:#fff;
-  border-radius:18px;
-  padding:18px 16px 16px;
-  box-shadow:0 10px 30px rgba(0,0,0,.12);
-  display:flex;
-  flex-direction:column;
-  gap:12px;
+  border-radius:22px;
+  padding:40px 16px 16px; /* فراغ علوي للرأس */
+  box-shadow:0 10px 28px rgba(0,0,0,.12);
 }
+
 .card-header{
+  position:absolute;
+  top:-18px;
+  left:16px;
+  right:16px;
+
+  background:rgba(255,255,255,.95);
+  border-radius:22px;
+  padding:12px 14px;
+
   display:flex;
-  gap:12px;
   align-items:center;
+  gap:12px;
+
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
 }
 
 .card-header img{
-  width:48px;
-  height:48px;
+  width:46px;
+  height:46px;
   object-fit:contain;
-  border-radius:8px;
+  border-radius:10px;
+  background:#fff;
+}
+
+
+.card-header strong{
+  font-size:15px;
+  color:#222;
 }
 
 .card-header strong{
@@ -120,14 +136,10 @@ select{padding:8px;border-radius:8px}
 }
 
 .card-header small{
-  color:#777;
   font-size:13px;
+  color:#777;
 }
-.airline-card img{
-  max-width:90px;
-  max-height:90px;
-  object-fit:contain;
-}
+
 
 /* في حالة عدم وجود صورة */
 .airline-card.empty::after{
@@ -137,9 +149,6 @@ select{padding:8px;border-radius:8px}
 }
 
 
-
-
-  
 .price{  
   margin-top:10px;  
   background:#f8f4ef;  
@@ -295,23 +304,6 @@ header h1{
   display:block;
 }
 
-.airline-card{
-  position:absolute;
-  top:10px;
-  left:10px;
-  width:60px;
-  height:30px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#fff;
-  border-radius:10px;
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
-  z-index:5;
-}
-
-
-
 /* ====== القائمة الجانبية ====== */
 #sideMenu{
   position:fixed;
@@ -388,7 +380,7 @@ header h1{
 
 .logo{
   height:70px;
-  transform: translateY(-10px);
+  transform: translateY(5px);
 }
 
 </style>
