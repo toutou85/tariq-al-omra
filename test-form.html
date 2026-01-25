@@ -145,22 +145,9 @@ select{padding:8px;border-radius:8px}
 }  
 
 
-
 .airline-card{
- 
-
-  background-repeat:no-repeat;
-  background-position:center;
-  background-size:70% auto;
-
-  background-color:#fff;
-  border-radius:12px;
-  box-shadow:0 3px 10px rgba(0,0,0,.
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
-
   position:absolute;
-
-  top:150px;        /* 👈 يتحكم في المسافة تحت الغيمة */
+  top:150px;           /* 👈 تحكم في المسافة تحت الغيمة */
   left:15px;
 
   width:92px;
@@ -173,24 +160,24 @@ select{padding:8px;border-radius:8px}
   background:#fff;
   border-radius:12px;
   box-shadow:0 3px 10px rgba(0,0,0,.15);
-}
-.airline-card img{
-  max-width:30px;
-  max-height:70px;
-  object-fit:contain;
-}
-.airline-card{
+
   transition:.2s ease;
 }
+
+.airline-card img{
+  max-width:60px;      /* 👈 تحكم في حجم الشعار */
+  max-height:35px;
+  object-fit:contain;
+}
+
 .airline-card:hover{
   transform:translateY(2px);
 }
 
-
-
+/* في حالة عدم وجود صورة */
 .airline-card.empty::after{
   content:"—";
-  font-size:28px;
+  font-size:26px;
   color:#bbb;
 }
   
