@@ -389,7 +389,64 @@ header{
   transform:scale(.95);
 }
 
+.offer-title.umrah{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
 
+  background:linear-gradient(
+    135deg,
+    rgba(139,0,0,.9),
+    rgba(180,40,40,.9)
+  );
+
+  color:#fff;
+  font-size:13px;
+  font-weight:800;
+  padding:8px 12px;
+  border-radius:14px;
+  text-align:center;
+
+  box-shadow:0 6px 15px rgba(0,0,0,.25);
+  letter-spacing:.3px;
+
+  /* أنيميشن الدخول */
+  animation:fadeUp .6s ease-out both;
+}
+
+/* أيقونة الكعبة */
+.offer-title.umrah .icon{
+  font-size:15px;
+  animation:pulse 1.8s infinite;
+}
+
+/* موبايل */
+@media (max-width:600px){
+  .offer-title.umrah{
+    font-size:11px;
+    padding:6px 10px;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@keyframes pulse{
+  0%{ transform:scale(1); }
+  50%{ transform:scale(1.15); }
+  100%{ transform:scale(1); }
+}
 
 
 .agency-name{
@@ -581,6 +638,10 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   <div class="card-header">
     <img src="${o.logo || ''}" 
 
+<div class="offer-title umrah">
+  🕋 ${o.offer}
+</div>
+<div>
 <small>
   <span class="agency-name">${o.agency}
   <span class="location">
@@ -588,11 +649,9 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     ${o.state}
   </span>
 </small>
-
-
-<div class="offer-title umrah">
-  🕋 ${o.offer}
 </div>
+
+
 
 
 </div>
