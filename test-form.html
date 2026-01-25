@@ -101,7 +101,7 @@ select{padding:8px;border-radius:8px}
   left:16px;
   right:16px;
 
-  height:120px;                 /* 👈 مهم لتوسيط عمودي حقيقي */
+  height:110px;                 /* 👈 مهم لتوسيط عمودي حقيقي */
   padding:0 30px;              /* نحيد padding العمودي */
   background:rgba(255,255,255,.95);
   border-radius:22px;
@@ -112,7 +112,7 @@ select{padding:8px;border-radius:8px}
     align-items:center;          /* توسيط عمودي */
   justify-content:center; /* توسيط أفقي */
    align-items:flex-end;   /* 👈 ينزل العناصر للأسفل */
-  padding-bottom:1px;    /* تحكم دقيق في النزول */
+  padding-bottom:3px;    /* تحكم دقيق في النزول */
   gap:12px;
 
   box-shadow:0 6px 18px rgba(0,0,0,.18);
@@ -201,7 +201,7 @@ select{padding:8px;border-radius:8px}
   border:1px solid #ccc;  
 }  
 .card-info{  
-  margin-top:70px;  
+  margin-top:50px;  
   font-size:19px;  
   line-height:1.6;  
 }  
@@ -339,19 +339,17 @@ header{
 
 /* زر واتساب بجانب السعر */
 .wa-price{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:#25D366;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  font-size:22px;
-  text-decoration:none;
-  box-shadow:0 4px 12px rgba(0,0,0,.25);
-  transition:.2s ease;
-}
+  margin:0 auto 10px;  
+  width:48px;  
+  height:48px;  
+  border-radius:50%;  
+  border:none;  
+  background:#25D366;  
+  display:flex;  
+  align-items:center;  
+  justify-content:center;  
+  cursor:pointer;  
+}  
 
 .wa-price:hover{
   transform:scale(1.08);
