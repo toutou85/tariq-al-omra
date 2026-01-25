@@ -101,7 +101,7 @@ select{padding:8px;border-radius:8px}
   left:16px;
   right:16px;
 
-  height:70px;                 /* 👈 مهم لتوسيط عمودي حقيقي */
+  height:80px;                 /* 👈 مهم لتوسيط عمودي حقيقي */
   padding:0 14px;              /* نحيد padding العمودي */
   background:rgba(255,255,255,.95);
   border-radius:22px;
@@ -112,7 +112,7 @@ select{padding:8px;border-radius:8px}
     align-items:center;          /* توسيط عمودي */
   justify-content:center; /* توسيط أفقي */
    align-items:flex-end;   /* 👈 ينزل العناصر للأسفل */
-  padding-bottom:5px;    /* تحكم دقيق في النزول */
+  padding-bottom:1px;    /* تحكم دقيق في النزول */
   gap:12px;
 
   box-shadow:0 6px 18px rgba(0,0,0,.18);
@@ -303,6 +303,7 @@ header{
 .site-logo{
   position:absolute;
   left:65%;
+    top:6px;                  /* 👈 ينزل قليلاً داخل الشريط */
   transform:translateX(-70%);
 }
 .site-logo{
