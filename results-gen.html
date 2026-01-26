@@ -922,18 +922,7 @@ function confirmWhatsApp(){
         agencyPhone: agencyPhone,  
         clientName: clientName,  
         clientPhone: clientPhone  
-    })  
-    }  
-  );  
-  
-  closeWaModal();  
-}    
-  
-fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {  
-  cache: "no-store"  
-})  
-.then(r => r.json())  
-.then(d => document.getElementById("visitors").textContent = d.count);  
+  .then(d => document.getElementById("visitors").textContent = d.count);  
   
 function openWelcome(){
   document.getElementById("welcomeModal").style.display="flex";
@@ -944,10 +933,7 @@ function closeWelcome(){
 
 
  
-</script>  
-
-
-<!-- نافذة واتساب -->
+</script>  <!-- نافذة واتساب -->
 <div id="waModal"
      onclick="closeWaModal()"
      style="
@@ -956,21 +942,41 @@ function closeWelcome(){
      inset:0;
      background:rgba(0,0,0,.6);
      z-index:30000;
+    
      align-items:center;
      justify-content:center;
      ">
 
-  <div class="modal-box" onclick="event.stopPropagation()">
+  <div onclick="event.stopPropagation()"
+       style="
+       background:#fff;
+       width:90%;
+       max-width:420px;
+       padding:20px;
+       border-radius:18px;
+       ">
 
-    <h3>📲 تواصل عبر واتساب</h3>
+    <h3>👤 بيانات المعتمر</h3>
 
-    <input id="waFirst" placeholder="الاسم">
-    <input id="waLast" placeholder="اللقب">
-    <input id="waPhone" placeholder="رقم الهاتف">
+    <input id="waFirst" placeholder="الاسم"
+      style="width:100%;padding:10px;margin:6px 0">
+
+    <input id="waLast" placeholder="اللقب"
+      style="width:100%;padding:10px;margin:6px 0">
+
+    <input id="waPhone" placeholder="رقم الهاتف"
+      style="width:100%;padding:10px;margin:6px 0">
 
     <button onclick="confirmWhatsApp()"
-      style="width:100%;padding:10px;margin-top:10px;background:#25D366;color:#fff;border:none;border-radius:10px">
-      إرسال عبر واتساب
+      style="
+      width:100%;
+      padding:12px;
+      background:#25D366;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      margin-top:10px">
+      <i class="fab fa-whatsapp"></i> إرسال
     </button>
 
     <button onclick="closeWaModal()"
@@ -980,4 +986,51 @@ function closeWelcome(){
 
   </div>
 </div>
+<div id="welcomeModal" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:30000;
+  align-items:center;
+  justify-content:center;
+" onclick="closeWelcome()">
 
+  <div style="
+    background:#fff;
+    padding:25px;
+    border-radius:18px;
+    max-width:420px;
+    width:90%;
+    text-align:center;
+    font-family:Tajawal,Arial;
+  " onclick="event.stopPropagation()">
+
+    <h2 style="color:#8b0000;margin-top:0">
+      مرحبًا بكم في طريق العمرة 🕋
+    </h2>
+
+    <p>
+      موقع <b>طريق العمرة</b> يسهّل عليكم تصفح
+      أفضل عروض العمرة من وكالات <b>مرخصة ومعتمدة</b>،
+      مع تسجيل سهل ومعلومات واضحة.
+    </p>
+
+    <p style="font-weight:bold;color:#0b5f3c">
+      نيتك صادقة… والطريق علينا بإذن الله 🤲
+    </p>
+
+    <button onclick="closeWelcome()" style="
+      margin-top:15px;
+      padding:10px 20px;
+      border:none;
+      background:#8b0000;
+      color:#fff;
+      border-radius:10px;
+      cursor:pointer;
+    ">
+      إغلاق
+    </button>
+ </body>  
+
+</html>  
