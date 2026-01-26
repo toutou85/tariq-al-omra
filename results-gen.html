@@ -428,7 +428,8 @@ overflow:visible;   /* ✅ فقط هنا */
 
 .agency-logo{
 margin-left:2px;   /* ⬅️ يدفعه يمين */
-
+margin-left:auto;          /* أقصى اليمين */
+  transform:translateX(10px);/* ضبط دقيق */
   width:70px;
   height:auto;
   object-fit:contain;
@@ -476,6 +477,7 @@ margin-left:2px;   /* ⬅️ يدفعه يمين */
 }
 .agency-name{
   font-size:18px;
+ justify-content:space-between; /* يوزّع المساحة
   font-weight:900;
 color:#000;   /* ← أسود */
 }
