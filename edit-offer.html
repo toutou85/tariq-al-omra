@@ -211,7 +211,7 @@ button{
   <img id="airlineLogoPreview" style="max-width:140px;display:none">
 </div>
 
-
+<button class="save" onclick="saveEdit()">💾 حفظ التعديلات</button> <button class="close" onclick="closeModal()">إلغاء</button> </div> </div>
 <script>
 const API="https://script.google.com/macros/s/AKfycbzn8J1EVx6qduv_okNTSWA6G5yQHgCDAUIiEjN6ySKYflNafH1Why7Hh0pCdBsB-MG9tg/exec";
 
@@ -243,21 +243,38 @@ function loadOffers(){
     return;
   }
 
-  // توحيد رقم الهاتف (إزالة كل شيء غير الأرقام)
-  const cleanInputPhone = phone.replace(/\D/g, "");
+  // توحيد رقم الهاتف
+  const inputPhone = phone.replace(/\D/g, "");
 
-  const offers = allOffers.filter(o => {
-    const sheetAgency = String(o.agency || "").trim();
-    const sheetPhone  = String(o.phone  || "").replace(/\D/g, "");
+  // استخراج أول رقم هاتف مرتبط بهذه الوكالة من البيانات
+  const agencyRow = allOffers.find(o =>
+    String(o.agency || "").trim() === agency
+  );
 
-    return sheetAgency === agency && sheetPhone === cleanInputPhone;
-  });
+  if(!agencyRow){
+    msg.textContent = "❌ الوكالة غير موجودة";
+    return;
+  }
+
+  const sheetPhone = String(agencyRow.phone || "").replace(/\D/g, "");
+
+  // التحقق فقط
+  if(sheetPhone !== inputPhone){
+    msg.textContent = "❌ رقم الهاتف غير صحيح";
+    return;
+  }
+
+  // ✅ الفلترة بالوكالة فقط
+  const offers = allOffers.filter(o =>
+    String(o.agency || "").trim() === agency
+  );
 
   if(!offers.length){
     msg.textContent = "❌ لا توجد عروض";
     return;
   }
 
+  // عرض العروض
   offers.forEach(o=>{
     box.innerHTML += `
       <div class="offer">
@@ -273,4 +290,14 @@ function loadOffers(){
   });
 }
 
-function openEdit(o){ editRow.value=o.row; offer.value=o.offer||""; date.value=o.date||""; duration.value=o.duration||""; flightType.value=o.flightType||""; airport.value=o.airport||""; airline.value=o.airline||""; group.value=o.group||""; four.value=o.four||""; three.value=o.three||""; two.value=o.two||""; hotel.value=o.hotel||""; editModal.style.display="flex"; } function closeModal(){editModal.style.display="none";} function saveEdit(){ const fd=new FormData(); fd.append("action","update"); fd.append("row",editRow.value); fd.append("phone",phoneInput.value); ["offer","date","duration","flightType","airport","airline", "group","four","three","two","hotel"] .forEach(id=>fd.append(id,document.getElementById(id).value)); fetch(API,{method:"POST",body:fd}) .then(r=>r.text()) .then(res=>{ alert(res); location.reload(); }); } function deleteOffer(row){ if(!confirm("هل أنت متأكد؟"))return; const fd=new FormData(); fd.append("action","delete"); fd.append("row",row); fd.append("phone",phoneInput.value); fetch(API,{method:"POST",body:fd}) .then(r=>r.text()) .then(res=>{ alert(res); location.reload(); }); } </script> </body> </html>
+
+function openEdit(o){ editRow.value=o.row; offer.value=o.offer||""; date.value=o.date||""; 
+										 duration.value=o.duration||""; flightType.value=o.flightType||""; airport.value=o.airport||"";
+										 airline.value=o.airline||""; group.value=o.group||""; four.value=o.four||""; three.value=o.three||""; two.value=o.two||""; hotel.value=o.hotel||""; editModal.style.display="flex"; } function closeModal(){editModal.style.display="none";} function saveEdit(){ const fd=new FormData(); fd.append("action","update"); fd.append("row",editRow.value); fd.append("phone",phoneInput.value); ["offer","date","duration","flightType","airport","airline", "group","four","three","two","hotel"] .forEach(id=>fd.append(id,document.getElementById(id).value)); fetch(API,{method:"POST",body:fd})
+	.then(r=>r.text())
+  .then(res=>{ alert(res); location.reload(); }); } function deleteOffer(row){ if(!confirm("هل أنت متأكد؟"))return; const
+	fd=new FormData(); fd.append("action","delete"); fd.append("row",row); fd.append("phone",phoneInput.value); 
+																																							fetch(API,{method:"POST",body:fd}) 
+																																								.then(r=>r.text()) .then(res=>{ 
+																																									alert(res); location.reload(); }); } 
+</script> </body> </html>
