@@ -396,7 +396,7 @@ header{
 /* عنوان العرض فوق الغيمة */
 .offer-title-float{
   position:absolute;
-  top:-78px;                 /* يتحكم في الارتفاع فوق الغيمة */
+  top:-100px;                 /* يتحكم في الارتفاع فوق الغيمة */
   left:50%;
   transform:translateX(-50%);
   z-index:20;
@@ -632,7 +632,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   🕋 ${o.offer}
 </div>
   <div class="card-header">
-    <img src="${o.logo || ''}">
+    <img src="${o.logo || ''}" alt="logo" />
 
 <small>
   <span class="agency-name">${o.agency}
