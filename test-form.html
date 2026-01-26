@@ -92,6 +92,8 @@ overflow-y:visible; /* 👈 الحل */
     display:flex;
   flex-direction:column;
   position:relative;  
+overflow:visible;   /* ✅ فقط هنا */
+
   min-width:300px;  
   background:#fff;  
   border-radius:18px;  
@@ -400,7 +402,7 @@ header{
 
 .offer-title-float{
   position:absolute;
-  top:-100px;
+  top:-55px;
   left:50%;
   transform:translateX(-50%);
   z-index:50;
@@ -453,7 +455,7 @@ header{
 
 @media (max-width:600px){
   .agency-name{
-    font-size:15px;
+    font-size:18px;
   }
 }.location{
   display:inline-flex;
