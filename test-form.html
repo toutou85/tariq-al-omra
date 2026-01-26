@@ -156,7 +156,7 @@ overflow:visible;   /* ✅ فقط هنا */
 
 .airline-card{
   position:absolute;
-  top:190px;           /* 👈 تحكم في المسافة تحت الغيمة */
+  top:220px;           /* 👈 تحكم في المسافة تحت الغيمة */
   left:15px;
 
   width:92px;
@@ -410,79 +410,70 @@ header{
 }
 
 /* العنوان الطافي (الحل القاطع) */
-
-
 .offer-title-float{
   position:absolute;
-  top:5px;
+  top:-32px;
   left:50%;
-  transform:translateX(-50%);
+  transform:translateX(-50%) translateZ(0);
   z-index:9999;
   isolation:isolate;
 
-  background:#fff;
-  color:#8b0000;
+  background:transparent;   /* ❌ إزالة الخلفية */
+  border:none;              /* ❌ إزالة الإطار */
+  box-shadow:none;          /* ❌ إزالة الظل */
 
-  font-size:20px;
+  font-size:22px;
   font-weight:900;
   white-space:nowrap;
 
-  padding:6px 16px;
-  border-radius:999px;
+  color:#8b0000;
 
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-  border:2px solid rgba(139,0,0,.25);
+  /* تأثير 3D */
+  text-shadow:
+    0 2px 0 #fff,
+    0 6px 12px rgba(0,0,0,.25);
+
+  transform-style:preserve-3d;
+  animation:title3DPulse 2.6s ease-in-out infinite;
 
   pointer-events:none;
 }
-
-/* ✨ الأنميشن تحت العنوان */
-.offer-title-float::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  bottom:-10px;              /* 👈 تحت العنوان مباشرة */
-  transform:translateX(-50%);
-
-  width:30%;
-  height:4px;
-  border-radius:50px;
-
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(139,0,0,.9),
-    transparent
-  );
-
-  animation:titlePulseLine 2.2s ease-in-out infinite;
-}
-@keyframes titlePulseLine{
+@keyframes title3DPulse{
   0%{
-    width:20%;
-    opacity:.3;
+    transform:
+      translateX(-50%)
+      scale(1)
+      rotateX(0deg);
+    text-shadow:
+      0 2px 0 #fff,
+      0 6px 12px rgba(0,0,0,.25);
   }
+
   50%{
-    width:70%;
-    opacity:1;
+    transform:
+      translateX(-50%)
+      scale(1.08)
+      rotateX(12deg);
+    text-shadow:
+      0 6px 0 #fff,
+      0 16px 26px rgba(0,0,0,.35);
   }
+
   100%{
-    width:20%;
-    opacity:.3;
+    transform:
+      translateX(-50%)
+      scale(1)
+      rotateX(0deg);
+    text-shadow:
+      0 2px 0 #fff,
+      0 6px 12px rgba(0,0,0,.25);
   }
-}
+
 @media (max-width:600px){
   .offer-title-float{
-    font-size:14px;
-    padding:5px 14px;
+    font-size:15px;
+    top:-26px;
   }
-
-  .offer-title-float::after{
-    bottom:-8px;
-    height:3px;
-  }
-}
-  
 
 
 
