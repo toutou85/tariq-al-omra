@@ -14,6 +14,8 @@
 <meta property="og:image:height" content="630">
 
 <title>العروض العامة للعمرة</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
+
+
 <style>  
 body{  
   font-family:Tajawal,Arial;  
@@ -98,138 +100,7 @@ overflow-x:auto;
 overflow-y:visible; /* 👈 الحل */
 }
   
-.card{  
-    display:flex;
-  flex-direction:column;
-  position:relative;  
-overflow:visible;   /* ✅ فقط هنا */
 
-  min-width:300px;  
-  background:#fff;  
-  border-radius:18px;  
-  padding:10px;  
-  box-shadow:0 8px 25px rgba(0,0,0,.08);  
-}  
- .card-header{
-  position:absolute;
-  top:-40px;
-  left:16px;
-  right:16px;
-
-  height:130px;
-  padding:14px 18px;
-
-  background:rgba(255,255,255,.95);
-  border-radius:22px;
-  box-shadow:0 6px 18px rgba(0,0,0,.18);
-
-  display:flex;
-  align-items:flex-end;      /* ⬇️ أسفل الخيمة */
-  justify-content:flex-end;  /* ➡️ أقصى اليمين */
-  gap:14px;
-
-  z-index:20;
-}
-.card-header img{  
-  width:55px;  
-  height:55px;  
-  object-fit:contain;  
-}  
-.card-actions{  
-  margin-top:auto;   /* 👈 ينزل الأزرار للقاع */
-  display:flex;  
-  gap:8px;  
-  margin-top:40px;  
-}  
-.card-actions button{  
-  flex:1;  
-  padding:10px;  
-  border:none;  
-  border-radius:10px;  
-  background:#8b0000;  
-  color:#fff;  
-  cursor:pointer;  
-  font-size:14px;  
-}  
-
-
-.airline-card{
-  position:absolute;
-  top:220px;           /* 👈 تحكم في المسافة تحت الغيمة */
-  left:15px;
-
-  width:92px;
-  height:50px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:#fff;
-  border-radius:12px;
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
-
-  transition:.2s ease;
-}
-
-.airline-card img{
-  max-width:60px;      /* 👈 تحكم في حجم الشعار */
-  max-height:35px;
-  object-fit:contain;
-}
-
-.airline-card:hover{
-  transform:translateY(2px);
-}
-
-/* في حالة عدم وجود صورة */
-.airline-card.empty::after{
-  content:"—";
-  font-size:26px;
-  color:#bbb;
-}
-  
-.agency-name{
-  font-size:10px;      /* 👈 كبّر حسب رغبتك */
-  font-weight:900;
-  color:#8b0000;
-}
-  
-.wa-below i{  
-  color:#fff;  
-  font-size:24px;  
-}  
-  
-#detailsModal,#registerModal{  
-  display:none;  
-  position:fixed;  
-  inset:0;  
-  background:rgba(0,0,0,.6);  
-  z-index:20000;  
-  align-items:center;  
-  justify-content:center;  
-}  
-  
-.modal-box{  
-  background:#fff;  
-  width:90%;  
-  max-width:420px;  
-  padding:20px;  
-  border-radius:18px;  
-}  
-.modal-box input{  
-  width:100%;  
-  padding:10px;  
-  margin:6px 0;  
-  border-radius:8px;  
-  border:1px solid #ccc;  
-}  
-.card-info{  
-  margin-top:50px;  
-  font-size:19px;  
-  line-height:1.6;  
-}  
-  
 .visitor-box{
   display:flex;
   align-items:center;
@@ -333,6 +204,123 @@ header{
     height:90px;
     top:4px;
   }
+
+
+
+
+.card{  
+    display:flex;
+  flex-direction:column;
+  position:relative;  
+overflow:visible;   /* ✅ فقط هنا */
+
+  min-width:300px;  
+  background:#fff;  
+  border-radius:18px;  
+  padding:10px;  
+  box-shadow:0 8px 25px rgba(0,0,0,.08);  
+}  
+ 
+.card-header img{  
+  width:55px;  
+  height:55px;  
+  object-fit:contain;  
+}  
+.card-actions{  
+  margin-top:auto;   /* 👈 ينزل الأزرار للقاع */
+  display:flex;  
+  gap:8px;  
+  margin-top:40px;  
+}  
+.card-actions button{  
+  flex:1;  
+  padding:10px;  
+  border:none;  
+  border-radius:10px;  
+  background:#8b0000;  
+  color:#fff;  
+  cursor:pointer;  
+  font-size:14px;  
+}  
+
+
+.airline-card{
+  position:absolute;
+  top:220px;           /* 👈 تحكم في المسافة تحت الغيمة */
+  left:15px;
+
+  width:92px;
+  height:50px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+
+  transition:.2s ease;
+}
+
+.airline-card img{
+  max-width:60px;      /* 👈 تحكم في حجم الشعار */
+  max-height:35px;
+  object-fit:contain;
+}
+
+.airline-card:hover{
+  transform:translateY(2px);
+}
+
+/* في حالة عدم وجود صورة */
+.airline-card.empty::after{
+  content:"—";
+  font-size:26px;
+  color:#bbb;
+}
+  
+.agency-name{
+  font-size:10px;      /* 👈 كبّر حسب رغبتك */
+  font-weight:900;
+  color:#8b0000;
+}
+  
+.wa-below i{  
+  color:#fff;  
+  font-size:24px;  
+}  
+  
+#detailsModal,#registerModal{  
+  display:none;  
+  position:fixed;  
+  inset:0;  
+  background:rgba(0,0,0,.6);  
+  z-index:20000;  
+  align-items:center;  
+  justify-content:center;  
+}  
+  
+.modal-box{  
+  background:#fff;  
+  width:90%;  
+  max-width:420px;  
+  padding:20px;  
+  border-radius:18px;  
+}  
+.modal-box input{  
+  width:100%;  
+  padding:10px;  
+  margin:6px 0;  
+  border-radius:8px;  
+  border:1px solid #ccc;  
+}  
+.card-info{  
+  margin-top:50px;  
+  font-size:19px;  
+  line-height:1.6;  
+}  
+  
 .price-box{
   display:flex;
   align-items:stretch;
@@ -392,118 +380,112 @@ header{
   z-index:10;
 }
 
-/* =========================
-   الهيدر
-========================= *
-   العنوان الطافي
-.offer-title-float{
+
+
+.card-header{
   position:absolute;
-  top:10px;
+  top:-40px;
+  left:16px;
+  right:16px;
+
+  height:120px;
+  padding:14px 18px;
+
+  background:#fff;
+  border-radius:22px;
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
+
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-end;
+  gap:12px;
+
+  z-index:10;
+}
+.offer-title{
+  position:absolute;
+  top:-26px;
   left:50%;
   transform:translateX(-50%);
-  z-index:9999;
 
   font-size:18px;
   font-weight:900;
-  white-space:nowrap;
   color:#8b0000;
-  background:none;
-  border:none;
-  box-shadow:none;
-  text-shadow:
-    0 2px 0 #fff,
-    0 6px 12px rgba(0,0,0,.25);
-  animation:title3DPulse 2.6s ease-in-out infinite;
-  pointer-events:none;
+
+  background:#fff;
+  padding:5px 16px;
+  border-radius:14px;
+
+  z-index:20;
+
+  animation:offerPulse 2.6s ease-in-out infinite;
+  transform-style:preserve-3d;
 }
-@keyframes title3DPulse{
-  0%   { transform:translateX(-50%) scale(1); }
-  50%  { transform:translateX(-50%) scale(1.1); }
-  100% { transform:translateX(-50%) scale(1); }
+
+@keyframes offerPulse{
+  0%{
+    transform:translateX(-50%) scale(1);
+  }
+  50%{
+    transform:translateX(-50%) scale(1.08);
+  }
+  100%{
+    transform:translateX(-50%) scale(1);
+  }
+.agency-logo{
+  width:60px;
+  height:auto;
+  object-fit:contain;
+
+  transform-style:preserve-3d;
+  transition:.35s ease;
+
+  filter:
+    drop-shadow(0 6px 0 rgba(255,255,255,.7))
+    drop-shadow(0 10px 18px rgba(0,0,0,.35));
 }
-   اسم الوكالة (تحكم منفرد)
-.agency-box{
-  display:flex;
-  flex-direction:column;   /* 👈 الاسم فوق، الموقع تحت */
-  align-items:flex-end;    /* 👈 أقصى اليمين */
-  text-align:right;
-  gap:4px;
+
+.agency-logo:hover{
+  transform:
+    perspective(800px)
+    translateY(-4px)
+    translateZ(30px)
+    rotateX(6deg)
+    rotateY(-6deg);
+
+  filter:
+    drop-shadow(0 6px 0 rgba(255,255,255,.85))
+    drop-shadow(0 18px 30px rgba(0,0,0,.55));
 }
-  .agency-name{
-  font-size:30px;
-  font-weight:900;
-  color:#8b0000;
-  letter-spacing:.4px;
-  text-shadow:0 1px 2px rgba(0,0,0,.15);
-}
-   الموقع (تحكم منفرد)
-.location{
+.agency-location{
   display:inline-flex;
   align-items:center;
   gap:6px;
+
   font-size:12px;
-  font-weight:600;
+  font-weight:700;
   color:#8b0000;
+
   background:rgba(139,0,0,.08);
   border:1.5px solid rgba(139,0,0,.25);
-  padding:3px 10px;
-  border-radius:999px;
+  padding:4px 12px;
+  border-radius:999px;   /* 👈 شكل البويضة */
+
   line-height:1;
 }
-.location i{
+
+.agency-location i{
   font-size:12px;
   color:#8b0000;
 }
-   الهاتف فقط
-@media (max-width:600px){
-  .offer-title-float{
-    font-size:15px;
-    top:20px;
-  }
-  .agency-name{
-    font-size:5px;
-  }
-  .location{
-    font-size:11px;
-    padding:3px 8px;
-  }
+.agency-name{
+  font-size:20px;
+  font-weight:900;
+  color:#8b0000;
+}
+
+
  
-   شعار الوكالة – 3D طافي 
-.card-header img.agency-logo{
-  position:absolute;
-  right:3px;   /* 👈 تحكم دقيق */
-  width:100px;
-    bottom:10px;
-  height:auto;
-  object-fit:contain;
-  background:none !important;
-  padding:0 !important;
-  border:none !important;
-  /* إحساس الخروج */
-  filter:
-    drop-shadow(0 6px 0 rgba(255,255,255,.65))
-    drop-shadow(0 10px 18px rgba(0,0,0,.45));
-  transform:
-    perspective(900px)
-    translateZ(25px);
-  transition:.35s ease;
-}
-/* طفو خفيف */
-.agency-logo:hover{
-  transform:
-    perspective(900px)
-    translateY(-4px)
-    translateZ(35px)
-    rotateX(6deg)
-    rotateY(-6deg);
-  filter:
-    drop-shadow(0 6px 0 rgba(255,255,255,.75))
-    drop-shadow(0 18px 30px rgba(0,0,0,.55));
-}
-@media (max-width:600px){
-  .agency-logo{
-    width:90px;
-  }
 </style> 
 </head>  
 <body>  
