@@ -165,21 +165,34 @@ fetch(API).then(r=>r.json()).then(data=>{
 
 /* عرض العروض */
 function loadOffers(){
-  const agency=agencySelect.value;
-  const phone=phoneInput.value.trim();
-  box.innerHTML=""; msg.textContent="";
+  const agency = agencySelect.value.trim();
+  const phone  = phoneInput.value.trim();
 
-  const cleanInputPhone = phone.replace(/\D/g,"");
+  box.innerHTML = "";
+  msg.textContent = "";
 
-const offers = allOffers.filter(o => {
-  const sheetPhone = String(o.phone || "").replace(/\D/g,"");
-  return o.agency === agency && sheetPhone === cleanInputPhone;
-});
+  if(!agency || !phone){
+    msg.textContent = "⚠️ يرجى اختيار الوكالة وإدخال رقم الهاتف";
+    return;
+  }
 
-  if(!offers.length){msg.textContent="❌ لا توجد عروض";return;}
+  // توحيد رقم الهاتف (إزالة كل شيء غير الأرقام)
+  const cleanInputPhone = phone.replace(/\D/g, "");
+
+  const offers = allOffers.filter(o => {
+    const sheetAgency = String(o.agency || "").trim();
+    const sheetPhone  = String(o.phone  || "").replace(/\D/g, "");
+
+    return sheetAgency === agency && sheetPhone === cleanInputPhone;
+  });
+
+  if(!offers.length){
+    msg.textContent = "❌ لا توجد عروض";
+    return;
+  }
 
   offers.forEach(o=>{
-    box.innerHTML+=`
+    box.innerHTML += `
       <div class="offer">
         <b>${o.offer}</b><br>
         <small>📅 ${o.date} | ⏱ ${o.duration}</small><br>
@@ -188,60 +201,8 @@ const offers = allOffers.filter(o => {
           <button class="edit" onclick='openEdit(${JSON.stringify(o)})'>✏️ تعديل</button>
           <button class="delete" onclick="deleteOffer(${o.row})">🗑️ حذف</button>
         </div>
-      </div>`;
+      </div>
+    `;
   });
 }
 
-function openEdit(o){
-  editRow.value=o.row;
-  offer.value=o.offer||"";
-  date.value=o.date||"";
-  duration.value=o.duration||"";
-  flightType.value=o.flightType||"";
-  airport.value=o.airport||"";
-  airline.value=o.airline||"";
-  group.value=o.group||"";
-  four.value=o.four||"";
-  three.value=o.three||"";
-  two.value=o.two||"";
-  hotel.value=o.hotel||"";
-  editModal.style.display="flex";
-}
-
-function closeModal(){editModal.style.display="none";}
-
-function saveEdit(){
-  const fd=new FormData();
-  fd.append("action","update");
-  fd.append("row",editRow.value);
-  fd.append("phone",phoneInput.value);
-
-  ["offer","date","duration","flightType","airport","airline",
-   "group","four","three","two","hotel"]
-   .forEach(id=>fd.append(id,document.getElementById(id).value));
-
-  fetch(API,{method:"POST",body:fd})
-  .then(r=>r.text())
-  .then(res=>{
-    alert(res);
-    location.reload();
-  });
-}
-
-function deleteOffer(row){
-  if(!confirm("هل أنت متأكد؟"))return;
-  const fd=new FormData();
-  fd.append("action","delete");
-  fd.append("row",row);
-  fd.append("phone",phoneInput.value);
-  fetch(API,{method:"POST",body:fd})
-  .then(r=>r.text())
-  .then(res=>{
-    alert(res);
-    location.reload();
-  });
-}
-</script>
-
-</body>
-</html>
