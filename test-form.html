@@ -582,26 +582,23 @@ header{
   .card-header/* =========================
    نفس ستايل الهاتف – لكن بطاقات أكثر في الحاسوب
 ========================= */
+/* =========================
+   الحاسوب: نفس كارد الهاتف + عدد أكثر
+========================= */
 @media (min-width: 992px){
 
   .airport-row{
-    display:grid;                      /* 👈 يتحول Grid */
-    grid-template-columns:repeat(3, 1fr); /* 3 بطاقات في الصف */
-    gap:22px;
-    overflow-x:visible;               /* ❌ لا سحب */
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:20px;
+    overflow-x:visible;
   }
 
   .card{
-    min-width:unset;                  /* مهم */
-    width:100%;
+    min-width:300px;   /* نفس الهاتف */
+    max-width:100%;
   }
 
-
-/* شاشات كبيرة جدًا */
-@media (min-width: 1300px){
-  .airport-row{
-    grid-template-columns:repeat(4, 1fr); /* 4 بطاقات */
-  }
 
 </style> 
 </head>  
@@ -747,6 +744,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   <div class="card-header">
 
    <img src="${o.logo || ''}" alt="logo" class="agency-logo">
+</div>
     <small>
       <span class="agency-name">${o.agency}</span>
       <span class="location">
