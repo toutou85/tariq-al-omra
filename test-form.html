@@ -491,59 +491,99 @@ color:#000 !important;
 }
 
 /* =========================
-   نسخة الحاسوب فقط – صحيحة
+   تحكم كامل للحاسوب فقط
 ========================= */
 @media (min-width: 992px){
 
+  /* ===== البطاقة ===== */
   .card{
-    min-width:380px;
+    min-width:400px;
+    padding:16px;
   }
 
+  /* ===== الغيمة ===== */
   .card-header{
-    height:160px;
-    padding:22px 28px;
-    border-radius:34px;
+    position:absolute;
+    top:-50px;
+    left:20px;
+    right:20px;
+
+    height:170px;
+    padding:26px 32px;
+
+    border-radius:36px;
+    background:#fff;
+    box-shadow:0 12px 30px rgba(0,0,0,.18);
+
     display:flex;
     align-items:flex-end;
-    justify-content:space-between;
+    justify-content:flex-start;
+    gap:20px;
   }
 
-  /* صندوق الوكالة */
+  /* ===== صندوق الوكالة ===== */
   .agency-box{
     flex:1;
     min-width:0;
+    display:flex;
+    flex-direction:column;
     align-items:flex-start;
   }
 
-  /* اسم الوكالة */
+  /* ===== اسم الوكالة ===== */
   .agency-name{
-    font-size:22px;
+    font-size:24px;
     font-weight:900;
     color:#000 !important;
-    line-height:1.4;
+    line-height:1.35;
     white-space:normal;
+    margin-bottom:6px;
   }
 
-  /* الموقع */
+  /* ===== موقع الوكالة ===== */
   .agency-location{
     font-size:14px;
-    padding:6px 14px;
-    margin-top:6px;
+    padding:6px 16px;
+    border-radius:999px;
   }
 
-  /* شعار الوكالة */
-  .agency-logo{
-    width:110px;
-    margin-left:24px;
-    flex-shrink:0;
-  }
-
-  /* عنوان العرض */
+  /* ===== عنوان العرض ===== */
   .offer-title{
-    font-size:22px;
-    top:8px;
-    min-width:340px;
+    font-size:24px;
+    top:10px;
+    min-width:360px;
   }
+
+  /* ===== محتوى البطاقة ===== */
+  .card-info{
+    margin-top:180px; /* ⬅️ يبعد المحتوى عن الغيمة */
+    font-size:18px;
+    line-height:1.7;
+  }
+
+  /* ===== شعار الطيران ===== */
+  .airline-card{
+    top:240px;
+    left:20px;
+    width:110px;
+    height:60px;
+  }
+
+  .airline-card img{
+    max-width:80px;
+    max-height:40px;
+  }
+
+  /* ===== أزرار البطاقة ===== */
+  .card-actions{
+    gap:12px;
+  }
+
+  .card-actions button{
+    font-size:15px;
+    padding:12px;
+  }
+
 }
 
 
