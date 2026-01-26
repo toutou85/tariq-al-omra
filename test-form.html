@@ -631,30 +631,9 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     grouped[ap].forEach(o=>{  
       const c=document.createElement("div");  
       c.className="card";  
-      c.innerHTML=`  
           
   
   <!-- رأس البطاقة -->
-<div class="offer-title-float">
-  🕋 ${o.offer}
-</div>
-  <div class="card-header">
-    <img src="${o.logo || ''}" alt="logo" />
-
-<small>
-  <span class="agency-name">${o.agency}
-  <span class="location">
-    <i class="fa-solid fa-location-dot"></i>
-    ${o.state}
-  </span>
-</small>
-</div>
-
-
-
-
-</div>
-  <div class="card">
 
   <div class="offer-title-float">
     🕋 ${o.offer}
@@ -694,13 +673,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة</button>
     <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
   </div>
-
-
-    
-  
-  
-        </div>  
-      `;  
+`;
       r.appendChild(c);  
     });  
   
