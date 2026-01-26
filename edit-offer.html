@@ -14,6 +14,123 @@ input,select{
   width:100%;padding:10px;margin-top:5px;
   border:1px solid #ccc;border-radius:8px
 }
+	header{  
+  height:60px;  
+  background:#8b0000;  
+  color:#fff;  
+  display:flex;  
+  align-items:center;  
+  padding:0 15px;  
+}  
+.menu-btn{font-size:26px;cursor:pointer}  
+header h1{flex:1;text-align:center;font-size:18px;margin:0}  
+  
+.whatsapp-top{  
+  position:fixed;  
+top:60px;                    
+  left:12px;  
+  width:48px;  
+  height:48px;  
+  background:#25D366;  
+  color:#fff;  
+  border-radius:50%;  
+  display:flex;  
+  align-items:center;  
+  justify-content:center;  
+  font-size:28px;  
+  z-index:13000;  
+}  
+  
+#sideMenu{  
+  position:fixed;  
+  top:0;right:-260px;  
+  width:260px;height:100%;  
+  background:#8b0000;  
+  padding-top:70px;  
+  transition:.3s;  
+  z-index:10000  
+}  
+#sideMenu a{  
+  display:block;  
+  padding:14px 18px;  
+  color:#fff;  
+  text-decoration:none;  
+}  
+#overlay{  
+  display:none;  
+  position:fixed;  
+  inset:0;  
+  background:rgba(0,0,0,.6);  
+  z-index:9000  
+}  
+
+	.visitor-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  position:absolute;
+  left:15px;          /* أقصى اليسار */
+  top:50%;
+  transform:translateY(-50%);
+
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(6px);
+  padding:12px 18px;
+  border-radius:14px;
+  font-family:Tajawal,Arial;
+  width:max-content;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+ 
+  
+.visitor-box i{  
+  font-size:20px;  
+  color:#1e90ff;  
+}  
+  
+.visitor-box span{  
+color:#fff;  
+  font-size:18px;  
+  font-weight:700;  
+}  
+  
+.visitor-box small{  
+color:#fff;  
+  font-size:13px;  
+  opacity:.85;  
+}  
+header{  
+  height:60px;  
+  background:#8b0000;  
+  color:#fff;  
+  display:flex;  
+  align-items:center;  
+  gap:10px;  
+  padding:0 15px;  
+}  
+  
+header h1{  
+  flex:1;  
+  text-align:center;  
+  font-size:18px;  
+  margin:0;  
+} 
+.site-logo{
+  position:absolute;
+  left:62%;
+  top:6px;                     /* ينزل قليلاً داخل الشريط */
+  transform:translateX(-50%);
+  
+  height:58px;
+  width:auto;
+  cursor:pointer;
+	 /* 3D effect */
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.45));
+  transform-style:preserve-3d;
+
+  transition:transform .25s ease, filter .25s ease;
+}
 button{
   padding:12px;border:none;border-radius:10px;
   cursor:pointer;font-size:15px
@@ -49,7 +166,31 @@ button{
 </head>
 
 <body>
-
+<header class="top-bar">
+  <!-- القائمة الجانبية (يمين) -->
+  <div class="menu-btn" onclick="openMenu()">☰</div>
+  <!-- الشعار (وسط) -->
+  <div class="logo-center" onclick="openWelcome()">
+ <img
+  src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769426692/ei_1769426620917-removebg-preview_yuws6p.png"
+  alt="طريق العمرة"
+  class="logo site-logo"
+  onclick="openWelcome()">
+  </div>
+  <!-- عداد الزوار (يسار) -->
+  <div class="visitor-box">
+    <i class="fa-solid fa-users"></i>
+    <div>
+      <span id="visitors">0</span>
+      <small>زائر</small>
+    </div>
+  </div>
+</header>
+	 <nav id="sideMenu">  
+<a href="results-gen.html">🕋 العروض العامة</a>  
+<a href="recherche-oeffer.html">📩 طلب عرض عمرة</a>  
+<a href="recherche-n.html">👤 صفحتي الخاصة</a>  
+</nav>  
 <div class="container">
 <h2>✏️ إدارة عروض الوكالة</h2>
 <a href="add-offer.html" class="nav-btn add-btn">
@@ -299,5 +440,56 @@ function openEdit(o){ editRow.value=o.row; offer.value=o.offer||""; date.value=o
 	fd=new FormData(); fd.append("action","delete"); fd.append("row",row); fd.append("phone",phoneInput.value); 
 																																							fetch(API,{method:"POST",body:fd}) 
 																																								.then(r=>r.text()) .then(res=>{ 
-																																									alert(res); location.reload(); }); } 
-</script> </body> </html>
+	function openWelcome(){
+  document.getElementById("welcomeModal").style.display="flex";
+}
+function closeWelcome(){
+  document.getElementById("welcomeModal").style.display="none";
+}																																								alert(res); location.reload(); }); } 
+</script> 
+	<div id="welcomeModal" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:30000;
+  align-items:center;
+  justify-content:center;
+" onclick="closeWelcome()">
+  <div style="
+    background:#fff;
+    padding:25px;
+    border-radius:18px;
+    max-width:420px;
+    width:90%;
+    text-align:center;
+    font-family:Tajawal,Arial;
+  " onclick="event.stopPropagation()">
+
+    <h2 style="color:#8b0000;margin-top:0">
+      مرحبًا بكم في طريق العمرة 🕋
+    </h2>
+
+    <p>
+      موقع <b>طريق العمرة</b> يسهّل عليكم تصفح
+      أفضل عروض العمرة من وكالات <b>مرخصة ومعتمدة</b>،
+      مع تسجيل سهل ومعلومات واضحة.
+    </p>
+
+    <p style="font-weight:bold;color:#0b5f3c">
+      نيتك صادقة… والطريق علينا بإذن الله 🤲
+    </p>
+
+    <button onclick="closeWelcome()" style="
+      margin-top:15px;
+      padding:10px 20px;
+      border:none;
+      background:#8b0000;
+      color:#fff;
+      border-radius:10px;
+      cursor:pointer;
+    ">
+      إغلاق
+    </button>
+</body>
+</html>
