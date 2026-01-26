@@ -284,9 +284,6 @@ header h1{
   margin:0;  
 } 
 
-
-
-
  .modal{
   display:none;
   position:fixed;
@@ -469,11 +466,9 @@ header{
   display:inline-flex;
   align-items:center;
   gap:6px;
-
   font-size:12px;
   font-weight:600;
   color:#8b0000;
-
   background:rgba(139,0,0,.08);
   border:1.5px solid rgba(139,0,0,.25);
   padding:3px 10px;
@@ -516,7 +511,11 @@ header{
    شعار الوكالة – 3D طافي
 ========================= */
 .card-header img.agency-logo{
+  position:absolute;
+  right:30px;   /* 👈 تحكم دقيق */
   width:100px;
+    bottom:10px;
+
   height:auto;
 
   object-fit:contain;
@@ -552,39 +551,109 @@ header{
 }
 @media (max-width:600px){
   .agency-logo{
-    width:100px;
+    width:80px;
   }
-
-
-
+  /* =========================
+   نسخة الحاسوب (Desktop)
+========================= */
+@media (min-width: 992px){
+  /* الحاوية العامة */
+  .container{
+    max-width:1400px;
+    padding:30px;
+  }
+  /* الفلاتر في صف واحد */
+  .filters{
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+  }
+  select{
+    font-size:16px;
+    padding:10px;
+  }
+  /* صف المطار */
+  .airport-row{
+    gap:22px;
+    padding-bottom:20px;
+  }
+  /* الكارد */
+  .card{
+    min-width:340px;
+    padding:16px;
+  }
+  /* رأس الكارد */
+  .card-header{
+    height:150px;
+    top:-50px;
+  }
+  /* اسم الوكالة */
+  .agency-name{
+    font-size:26px;
+  }
+  /* الموقع */
+  .location{
+    font-size:13px;
+  }
+  /* معلومات العرض */
+  .card-info{
+    font-size:16px;
+    margin-top:10px;
+  }
+  /* السعر */
+  .price{
+    font-size:20px;
+  }
+  /* أزرار الكارد */
+  .card-actions button{
+    font-size:15px;
+    padding:12px;
+  }
+  /* شعار شركة الطيران */
+  .airline-card{
+    top:240px;
+    width:110px;
+    height:60px;
+  }
+  .airline-card img{
+    max-width:75px;
+    max-height:40px;
+  }
+  /* الهيدر */
+  header{
+    height:70px;
+  }
+  header h1{
+    font-size:20px;
+  }
+  /* الشعار */
+  .site-logo{
+    height:65px;
+  }
+  /* عداد الزوار */
+  .visitor-box{
+    font-size:15px;
+    padding:14px 20px;
+  }
+  .visitor-box span{
+    font-size:20px;
+  }
 </style> 
-
-
-
 </head>  
 <body>  
 <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
 <i class="fab fa-whatsapp"></i>  
 </a>  
-
- 
-
 <header class="top-bar">
   <!-- القائمة الجانبية (يمين) -->
   <div class="menu-btn" onclick="openMenu()">☰</div>
-
   <!-- الشعار (وسط) -->
   <div class="logo-center" onclick="openWelcome()">
  <img
   src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769337506/ei_1769337332026-removebg-preview_1_y2xsij.png"
   alt="طريق العمرة"
   class="logo site-logo"
-  onclick="openWelcome()"
->
-
-
+  onclick="openWelcome()">
   </div>
-
   <!-- عداد الزوار (يسار) -->
   <div class="visitor-box">
     <i class="fa-solid fa-users"></i>
@@ -684,8 +753,6 @@ function render(){
   if(fAgency.value) list=list.filter(o=>o.agency===fAgency.value);  
   if(fState.value) list=list.filter(o=>o.state===fState.value);  
   if(fDate.value) list=list.filter(o=>formatDate(o.date)===fDate.value);  
-  
-  
   const grouped={};  
   list.forEach(o=>{  
     const ap=o.airport||"غير محدد";  
@@ -705,17 +772,12 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   
     grouped[ap].forEach(o=>{  
       const c=document.createElement("div");  
-      c.className="card";  
-          
+      c.className="card";        
   c.innerHTML = `
-  
   <!-- رأس البطاقة -->
-
-  
 <div class="offer-title-float">
     🕋 ${o.offer}
 </div>
-  
   <div class="card-header">
 
    <img src="${o.logo || ''}" alt="logo" class="agency-logo">
@@ -811,9 +873,6 @@ ${o.offer}
     ? navigator.share({text})  
     : window.open("https://wa.me/?text="+encodeURIComponent(text));  
 }  
-  
-
-
   function openRegister(o){
   selectedOffer = o;
   document.getElementById("registerModal").style.display = "flex";
@@ -841,11 +900,8 @@ function sendRegister(){
   
   location.href="results-fenal.html";  
 }  
-  
 function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}  
-function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}  
-  
-  
+function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}   
 let waOffer = null;  
   
 // فتح النافذة  
@@ -870,7 +926,6 @@ function confirmWhatsApp(){
     alert("يرجى ملء جميع الحقول");  
     return;  
   }  
-  
   const clientName  = first + " " + last;  
   const clientPhone = phone;  
   
@@ -942,12 +997,7 @@ function openWelcome(){
 function closeWelcome(){
   document.getElementById("welcomeModal").style.display="none";
 }
-
-
- 
 </script>  
-
-
 <!-- نافذة واتساب -->
 <div id="waModal"
      onclick="closeWaModal()"
@@ -981,14 +1031,6 @@ function closeWelcome(){
 
   </div>
 </div>
-
-
-
-
-
-
-
-
 <div id="welcomeModal" style="
   display:none;
   position:fixed;
@@ -998,7 +1040,6 @@ function closeWelcome(){
   align-items:center;
   justify-content:center;
 " onclick="closeWelcome()">
-
   <div style="
     background:#fff;
     padding:25px;
