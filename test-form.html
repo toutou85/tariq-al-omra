@@ -486,12 +486,12 @@ header{
 
 
 
-</head>  <body>  <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
+</head>  
+<body>  
+<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
 <i class="fab fa-whatsapp"></i>  
 </a>  
-</head>  <body>  <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
-<i class="fab fa-whatsapp"></i>  
-</a>  
+
  
 
 <header class="top-bar">
@@ -654,42 +654,48 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
 
 
 </div>
-  <!-- معلومات العرض -->  
-  <div class="card-info">  
-    <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>  
-    <div>🏨 الأقامة في فندق ${o.hotel || "-"}</div>  
-    <div>⏱️ مدة الرحلة: ${o.duration || "-"}</div>  
-    <div>🛫 مسار الرحلة: ${o.flight || "-"}</div>  
-<div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
-  ${o.airlineLogo 
-    ? `<img src="${o.airlineLogo}" onerror="this.parentNode.classList.add('empty');this.remove()">`
-    : ``}
+  <div class="card">
 
-  </div>  
-  <div class="price-box">
-
-  <div class="price">
-    💰 ${o.group} دج
+  <div class="offer-title-float">
+    🕋 ${o.offer}
   </div>
 
-  <button
-    type="button"
-    class="wa-price"
-    onclick='openWaModal(${JSON.stringify(o)})'
-    title="تواصل عبر واتساب">
-    <i class="fab fa-whatsapp"></i>
-  </button>
+  <div class="card-header">
+    <img src="${o.logo || ''}" alt="logo">
+    <small>
+      <span class="agency-name">${o.agency}</span>
+      <span class="location">
+        <i class="fa-solid fa-location-dot"></i>
+        ${o.state}
+      </span>
+    </small>
+  </div>
 
-</div>
+  <div class="card-info">
+    <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>
+    <div>🏨 الفندق: ${o.hotel || "-"}</div>
+    <div>⏱️ المدة: ${o.duration || "-"}</div>
+    <div>✈️ الرحلة: ${o.flight || "-"}</div>
+
+    <div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
+      ${o.airlineLogo ? `<img src="${o.airlineLogo}">` : ``}
+    </div>
+
+    <div class="price-box">
+      <div class="price">💰 ${o.group} دج</div>
+      <button class="wa-price" onclick='openWaModal(${JSON.stringify(o)})'>
+        <i class="fab fa-whatsapp"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="card-actions">
+    <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>
+    <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة</button>
+    <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
+  </div>
 
 
-</div>  
-  
-  <!-- الأزرار -->  
-        <div class="card-actions">  
-          <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>  
-          <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة</button>  
-          <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>  
     
   
   
