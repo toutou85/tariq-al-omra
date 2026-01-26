@@ -205,7 +205,7 @@ header{
     top:4px;
   }
 
-
+}
 
 
 .card{  
@@ -490,7 +490,62 @@ color:#000 !important;
   white-space:normal;   /* يسمح بالتمدد
 }
 
+/* =========================
+   DESKTOP CARD CONTROL
+   التحكم الكامل في البطاقة – حاسوب فقط
+========================= */
+@media (min-width: 992px){
 
+
+
+  /* الكارد */
+  .card{
+    display:flex;
+    flex-direction:row;   /* ⬅️ هذا هو الفرق الجذري */
+    gap:24px;
+    min-width:520px;
+  }
+
+  /* الغيمة تصبح عمود جانبي */
+  .card-header{
+    position:relative;
+    top:auto;
+    left:auto;
+    right:auto;
+
+    width:40%;
+    height:auto;
+
+    border-radius:28px;
+    padding:24px;
+  }
+
+  /* محتوى الكارد */
+  .card-info{
+    margin-top:0;
+    width:60%;
+    font-size:18px;
+  }
+
+  /* عنوان العرض */
+  .offer-title{
+    position:relative;
+    top:auto;
+    left:auto;
+    transform:none;
+    margin-bottom:14px;
+    text-align:right;
+  }
+
+  /* شعار الطيران */
+  .airline-card{
+    position:relative;
+    top:auto;
+    left:auto;
+    margin-top:10px;
+  }
+
+}
  
 </style> 
 </head>  
