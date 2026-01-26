@@ -226,7 +226,7 @@ overflow:visible;   /* ✅ فقط هنا */
   border:1px solid #ccc;  
 }  
 .card-info{  
-  margin-top:5px;  
+  margin-top:0px;  
   font-size:19px;  
   line-height:1.6;  
 }  
@@ -410,6 +410,8 @@ header{
 }
 
 /* العنوان الطافي (الحل القاطع) */
+
+
 .offer-title-float{
   position:absolute;
   top:-32px;
@@ -433,7 +435,53 @@ header{
 
   pointer-events:none;
 }
-  
+
+/* ✨ الأنميشن تحت العنوان */
+.offer-title-float::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-10px;              /* 👈 تحت العنوان مباشرة */
+  transform:translateX(-50%);
+
+  width:30%;
+  height:4px;
+  border-radius:50px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(139,0,0,.9),
+    transparent
+  );
+
+  animation:titlePulseLine 2.2s ease-in-out infinite;
+}
+@keyframes titlePulseLine{
+  0%{
+    width:20%;
+    opacity:.3;
+  }
+  50%{
+    width:70%;
+    opacity:1;
+  }
+  100%{
+    width:20%;
+    opacity:.3;
+  }
+}
+@media (max-width:600px){
+  .offer-title-float{
+    font-size:14px;
+    padding:5px 14px;
+  }
+
+  .offer-title-float::after{
+    bottom:-8px;
+    height:3px;
+  }
+}
   
 
 
