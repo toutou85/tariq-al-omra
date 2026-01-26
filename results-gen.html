@@ -426,6 +426,13 @@ overflow:visible;   /* ✅ فقط هنا */
   }
 }
 
+.agency-box{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;   /* النص يبدأ طبيعي */
+  flex:1;                   /* ⬅️ هذا هو المفتاح */
+  min-width:0;              /* يمنع الانكسار الغريب */
+}
 .agency-logo{
 margin-left:2px;   /* ⬅️ يدفعه يمين */
 margin-left:auto;          /* أقصى اليمين */
@@ -480,6 +487,7 @@ margin-left:auto;          /* أقصى اليمين */
  justify-content:space-between; /* يوزّع المساحة
   font-weight:900;
 color:#000;   /* ← أسود */
+  white-space:normal;   /* يسمح بالتمدد
 }
 
 
