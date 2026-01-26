@@ -745,14 +745,14 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
 
    <img src="${o.logo || ''}" alt="logo" class="agency-logo">
 </div>
-    <small>
-      <span class="agency-name">${o.agency}</span>
-      <span class="location">
-        <i class="fa-solid fa-location-dot"></i>
-        ${o.state}
-      </span>
-    </small>
+   <div class="agency-box">
+  <div class="agency-name">${o.agency}</div>
+  <div class="location">
+    <i class="fa-solid fa-location-dot"></i>
+    ${o.state}
   </div>
+</div>
+
 
   <div class="card-info">
     <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>
