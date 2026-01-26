@@ -398,20 +398,28 @@ header{
   transform:scale(.95);
 }
 
-/* عنوان العرض فوق الغيمة */
+.card{
+  position:relative;
+  overflow:visible;
+  z-index:1;
+}
+
+/* الغيمة */
 .card-header{
-  z-index:20;
+  position:absolute;
+  z-index:5;          /* 👈 أقل من العنوان */
   overflow:visible;
 }
 
-/* عنوان العرض */
+/* العنوان الطافي */
 .offer-title-float{
   position:absolute;
-  top:-90px;              /* 👈 فوق الغيمة */
+  top:-55px;          /* 👈 فوق الغيمة */
   left:50%;
   transform:translateX(-50%);
-  z-index:999;
+  z-index:50;         /* 👈 أعلى من الغيمة */
 
+  
   font-size:40px;
   font-weight:900;
   white-space:nowrap;
