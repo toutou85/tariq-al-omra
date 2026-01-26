@@ -489,39 +489,49 @@ margin-left:auto;          /* أقصى اليمين */
 color:#000 !important;
   white-space:normal;   /* يسمح بالتمدد
 }
-
 /* =========================
-   تحكم كامل للحاسوب فقط
+   DESKTOP CARD CONTROL
+   التحكم الكامل في البطاقة – حاسوب فقط
 ========================= */
 @media (min-width: 992px){
 
-  /* ===== البطاقة ===== */
+  /* ======================
+     البطاقة نفسها
+  ====================== */
   .card{
-    min-width:400px;
-    padding:16px;
+    position:relative;
+    min-width:420px;
+    padding:18px;
+    border-radius:22px;
+    background:#fff;
+    box-shadow:0 10px 28px rgba(0,0,0,.12);
   }
 
-  /* ===== الغيمة ===== */
+  /* ======================
+     الغيمة (الهيدر)
+  ====================== */
   .card-header{
     position:absolute;
-    top:-50px;
-    left:20px;
-    right:20px;
+    top:-55px;
+    left:24px;
+    right:24px;
 
-    height:170px;
-    padding:26px 32px;
+    height:180px;
+    padding:28px 34px;
 
-    border-radius:36px;
     background:#fff;
-    box-shadow:0 12px 30px rgba(0,0,0,.18);
+    border-radius:38px;
+    box-shadow:0 14px 34px rgba(0,0,0,.18);
 
     display:flex;
     align-items:flex-end;
     justify-content:flex-start;
-    gap:20px;
+    gap:24px;
   }
 
-  /* ===== صندوق الوكالة ===== */
+  /* ======================
+     صندوق الوكالة
+  ====================== */
   .agency-box{
     flex:1;
     min-width:0;
@@ -530,58 +540,108 @@ color:#000 !important;
     align-items:flex-start;
   }
 
-  /* ===== اسم الوكالة ===== */
+  /* ======================
+     اسم الوكالة
+  ====================== */
   .agency-name{
-    font-size:24px;
+    font-size:26px;
     font-weight:900;
     color:#000 !important;
     line-height:1.35;
     white-space:normal;
-    margin-bottom:6px;
+    margin-bottom:8px;
   }
 
-  /* ===== موقع الوكالة ===== */
+  /* ======================
+     موقع الوكالة
+  ====================== */
   .agency-location{
-    font-size:14px;
-    padding:6px 16px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+
+    font-size:15px;
+    font-weight:700;
+    color:#8b0000;
+
+    background:rgba(139,0,0,.08);
+    border:1.5px solid rgba(139,0,0,.25);
+    padding:6px 18px;
     border-radius:999px;
   }
 
-  /* ===== عنوان العرض ===== */
+  /* ======================
+     عنوان العرض
+  ====================== */
   .offer-title{
-    font-size:24px;
+    position:absolute;
     top:10px;
-    min-width:360px;
+    left:50%;
+    transform:translateX(-50%);
+
+    font-size:26px;
+    font-weight:900;
+    color:#8b0000;
+
+    min-width:380px;
+    text-align:center;
   }
 
-  /* ===== محتوى البطاقة ===== */
+  /* ======================
+     محتوى البطاقة
+  ====================== */
   .card-info{
-    margin-top:180px; /* ⬅️ يبعد المحتوى عن الغيمة */
+    margin-top:190px;
     font-size:18px;
-    line-height:1.7;
+    line-height:1.75;
+    color:#222;
   }
 
-  /* ===== شعار الطيران ===== */
+  /* ======================
+     شعار شركة الطيران
+  ====================== */
   .airline-card{
-    top:240px;
-    left:20px;
-    width:11px;
-    height:60px;
+    position:absolute;
+    top:255px;
+    left:24px;
+
+    width:120px;
+    height:64px;
+
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 6px 16px rgba(0,0,0,.15);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
 
   .airline-card img{
-    max-width:8px;
-    max-height:4px;
+    max-width:90px;
+    max-height:44px;
+    object-fit:contain;
   }
 
-  /* ===== أزرار البطاقة ===== */
+  /* ======================
+     صندوق السعر
+  ====================== */
+  .price-box{
+    margin-top:10px;
+  }
+
+  /* ======================
+     أزرار البطاقة
+  ====================== */
   .card-actions{
-    gap:12px;
+    margin-top:16px;
+    gap:14px;
   }
 
   .card-actions button{
-    font-size:15px;
-    padding:12px;
+    padding:14px;
+    font-size:16px;
+    border-radius:12px;
   }
 
 }
