@@ -111,31 +111,25 @@ overflow:visible;   /* ✅ فقط هنا */
   box-shadow:0 8px 25px rgba(0,0,0,.08);  
 }  
  .card-header{
- padding:12px 14px 10px; 
   position:absolute;
-  overflow:visible;
-  z-index:10;
-
   top:-40px;
   left:16px;
   right:16px;
 
-  height:130px;                 /* 👈 مهم لتوسيط عمودي حقيقي */
-  padding:0 30px;              /* نحيد padding العمودي */
+  height:130px;
+  padding:14px 18px;
+
   background:rgba(255,255,255,.95);
   border-radius:22px;
-  padding:12px 14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
 
   display:flex;
-  align-items:center;
-    align-items:center;          /* توسيط عمودي */
-  justify-content:center; /* توسيط أفقي */
-   align-items:flex-end;   /* 👈 ينزل العناصر للأسفل */
-  padding-bottom:10px;    /* تحكم دقيق في النزول */
-  gap:12px;
+  align-items:flex-end;      /* ⬇️ أسفل الخيمة */
+  justify-content:flex-end;  /* ➡️ أقصى اليمين */
+  gap:14px;
 
-  box-shadow:0 6px 18px rgba(0,0,0,.18);
-} 
+  z-index:20;
+}
 .card-header img{  
   width:55px;  
   height:55px;  
@@ -400,11 +394,7 @@ header{
 
 /* =========================
    الهيدر
-========================= */
-.card-header{
-  position:relative;
-  z-index:10;
-}
+========================= *
    العنوان الطافي
 .offer-title-float{
   position:absolute;
@@ -477,11 +467,7 @@ header{
     font-size:11px;
     padding:3px 8px;
   }
-  .card-header small{
-    transform:none !important;
-    animation:none !important;
-    filter:none !important;
-  }
+  .
    شعار الوكالة – 3D طافي 
 .card-header img.agency-logo{
   position:absolute;
