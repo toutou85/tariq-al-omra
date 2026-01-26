@@ -512,6 +512,46 @@ header{
   }
 
 
+/* =========================
+   شعار الوكالة 3D
+========================= */
+.agency-logo{
+  width:95px;          /* 🔍 كبر الحجم */
+  height:70px;
+  object-fit:contain;
+
+  background:#fff;
+  padding:6px 8px;
+  border-radius:14px;
+
+  /* تأثير 3D */
+  box-shadow:
+    0 4px 0 #ddd,
+    0 10px 18px rgba(0,0,0,.35);
+
+  transform:perspective(600px) translateZ(0);
+  transition:.35s ease;
+}
+
+/* عند المرور */
+.agency-logo:hover{
+  transform:
+    perspective(600px)
+    translateY(-4px)
+    rotateX(8deg)
+    scale(1.06);
+
+  box-shadow:
+    0 6px 0 #ccc,
+    0 18px 28px rgba(0,0,0,.45);
+}
+@media (max-width:600px){
+  .agency-logo{
+    width:70px;
+    height:52px;
+    padding:4px 6px;
+  }
+
 
 </style> 
 
