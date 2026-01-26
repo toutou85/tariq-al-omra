@@ -693,6 +693,8 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
 <div class="card-header">
 
  
+  <!-- شعار الوكالة -->
+  <img src="${o.logo || ''}" class="agency-logo">
 
   <!-- اسم الوكالة + الموقع -->
   <div class="agency-box">
@@ -713,7 +715,9 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <div>⏱️ المدة: ${o.duration || "-"}</div>
     <div>✈️ الرحلة: ${o.flight || "-"}</div>
 
-    
+      <div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
+      ${o.airlineLogo ? `<img src="${o.airlineLogo}">` : ``}
+    </div>
     </div>
 
     <div class="price-box">
