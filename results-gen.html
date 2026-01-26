@@ -922,4 +922,62 @@ function confirmWhatsApp(){
         agencyPhone: agencyPhone,  
         clientName: clientName,  
         clientPhone: clientPhone  
-    
+    })  
+    }  
+  );  
+  
+  closeWaModal();  
+}    
+  
+fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {  
+  cache: "no-store"  
+})  
+.then(r => r.json())  
+.then(d => document.getElementById("visitors").textContent = d.count);  
+  
+function openWelcome(){
+  document.getElementById("welcomeModal").style.display="flex";
+}
+function closeWelcome(){
+  document.getElementById("welcomeModal").style.display="none";
+}
+
+
+ 
+</script>  
+
+
+<!-- نافذة واتساب -->
+<div id="waModal"
+     onclick="closeWaModal()"
+     style="
+     display:none;
+     position:fixed;
+     inset:0;
+     background:rgba(0,0,0,.6);
+     z-index:30000;
+     align-items:center;
+     justify-content:center;
+     ">
+
+  <div class="modal-box" onclick="event.stopPropagation()">
+
+    <h3>📲 تواصل عبر واتساب</h3>
+
+    <input id="waFirst" placeholder="الاسم">
+    <input id="waLast" placeholder="اللقب">
+    <input id="waPhone" placeholder="رقم الهاتف">
+
+    <button onclick="confirmWhatsApp()"
+      style="width:100%;padding:10px;margin-top:10px;background:#25D366;color:#fff;border:none;border-radius:10px">
+      إرسال عبر واتساب
+    </button>
+
+    <button onclick="closeWaModal()"
+      style="width:100%;padding:10px;margin-top:6px">
+      إلغاء
+    </button>
+
+  </div>
+</div>
+
