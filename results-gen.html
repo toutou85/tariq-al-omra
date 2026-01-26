@@ -461,7 +461,14 @@ header{
 /* =========================
    اسم الوكالة (تحكم منفرد)
 ========================= */
-.agency-name{
+.agency-box{
+  display:flex;
+  flex-direction:column;   /* 👈 الاسم فوق، الموقع تحت */
+  align-items:flex-end;    /* 👈 أقصى اليمين */
+  text-align:right;
+  gap:4px;
+}
+  .agency-name{
   font-size:30px;
   font-weight:900;
   color:#8b0000;
