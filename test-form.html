@@ -941,7 +941,10 @@ function closeWelcome(){
 
 
  
-</script>  <!-- نافذة واتساب -->
+</script>  
+
+
+<!-- نافذة واتساب -->
 <div id="waModal"
      onclick="closeWaModal()"
      style="
@@ -950,41 +953,21 @@ function closeWelcome(){
      inset:0;
      background:rgba(0,0,0,.6);
      z-index:30000;
-    
      align-items:center;
      justify-content:center;
      ">
 
-  <div onclick="event.stopPropagation()"
-       style="
-       background:#fff;
-       width:90%;
-       max-width:420px;
-       padding:20px;
-       border-radius:18px;
-       ">
+  <div class="modal-box" onclick="event.stopPropagation()">
 
-    <h3>👤 بيانات المعتمر</h3>
+    <h3>📲 تواصل عبر واتساب</h3>
 
-    <input id="waFirst" placeholder="الاسم"
-      style="width:100%;padding:10px;margin:6px 0">
-
-    <input id="waLast" placeholder="اللقب"
-      style="width:100%;padding:10px;margin:6px 0">
-
-    <input id="waPhone" placeholder="رقم الهاتف"
-      style="width:100%;padding:10px;margin:6px 0">
+    <input id="waFirst" placeholder="الاسم">
+    <input id="waLast" placeholder="اللقب">
+    <input id="waPhone" placeholder="رقم الهاتف">
 
     <button onclick="confirmWhatsApp()"
-      style="
-      width:100%;
-      padding:12px;
-      background:#25D366;
-      color:#fff;
-      border:none;
-      border-radius:10px;
-      margin-top:10px">
-      <i class="fab fa-whatsapp"></i> إرسال
+      style="width:100%;padding:10px;margin-top:10px;background:#25D366;color:#fff;border:none;border-radius:10px">
+      إرسال عبر واتساب
     </button>
 
     <button onclick="closeWaModal()"
@@ -994,6 +977,14 @@ function closeWelcome(){
 
   </div>
 </div>
+
+
+
+
+
+
+
+
 <div id="welcomeModal" style="
   display:none;
   position:fixed;
