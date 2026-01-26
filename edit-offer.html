@@ -169,7 +169,13 @@ function loadOffers(){
   const phone=phoneInput.value.trim();
   box.innerHTML=""; msg.textContent="";
 
-  const offers=allOffers.filter(o=>o.agency===agency && o.phone==phone);
+  const cleanInputPhone = phone.replace(/\D/g,"");
+
+const offers = allOffers.filter(o => {
+  const sheetPhone = String(o.phone || "").replace(/\D/g,"");
+  return o.agency === agency && sheetPhone === cleanInputPhone;
+});
+
   if(!offers.length){msg.textContent="❌ لا توجد عروض";return;}
 
   offers.forEach(o=>{
