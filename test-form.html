@@ -411,6 +411,9 @@ header{
 
 /* العنوان الطافي (الحل القاطع) */
 .offer-title-float{
+
+  contain: layout paint;   /* 👈 عزل تام */
+
   position:absolute;
   top:10px;
   left:50%;
@@ -475,7 +478,15 @@ header{
     top:-26px;
   }
 
-
+.card-header small,
+.agency-name,
+.location{
+  transform:none !important;
+  animation:none !important;
+  text-shadow:none !important;
+  filter:none !important;
+  opacity:1 !important;
+}
 
 .agency-name{
   font-size:26px;
