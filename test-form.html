@@ -490,70 +490,62 @@ color:#000 !important;
   white-space:normal;   /* يسمح بالتمدد
 }
 
-
- /* =========================
-   نسخة الحاسوب فقط
+/* =========================
+   نسخة الحاسوب فقط – صحيحة
 ========================= */
 @media (min-width: 992px){
 
-  /* الكارد أعرض */
   .card{
-    min-width:360px;
+    min-width:380px;
   }
 
-  /* الغيمة */
   .card-header{
-    height:150px;
-    padding:20px 26px;
-    border-radius:32px;
-  }
-
-  /* توزيع أفقي مريح */
-  .card-header{
+    height:160px;
+    padding:22px 28px;
+    border-radius:34px;
     display:flex;
-    align-items:center;
+    align-items:flex-end;
     justify-content:space-between;
   }
 
-  /* صندوق اسم الوكالة */
+  /* صندوق الوكالة */
   .agency-box{
     flex:1;
     min-width:0;
     align-items:flex-start;
   }
 
-  /* اسم الوكالة – ياخذ راحته */
+  /* اسم الوكالة */
   .agency-name{
-    font-size:2px;
+    font-size:22px;
     font-weight:900;
-    color:#000;
-    line-height:1.35;
-    white-space:normal;   /* يسمح بسطرين */
+    color:#000 !important;
+    line-height:1.4;
+    white-space:normal;
   }
 
   /* الموقع */
   .agency-location{
-    font-size:1px;
+    font-size:14px;
     padding:6px 14px;
     margin-top:6px;
   }
 
   /* شعار الوكالة */
   .agency-logo{
-    width:11px;
+    width:110px;
     margin-left:24px;
     flex-shrink:0;
-    transform:translateX(0);
   }
 
   /* عنوان العرض */
   .offer-title{
-    font-size:5px;
+    font-size:22px;
     top:8px;
-    min-width:320px;
+    min-width:340px;
   }
-
 }
+
 
 </style> 
 </head>  
