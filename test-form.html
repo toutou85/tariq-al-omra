@@ -3,7 +3,19 @@
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <!-- Open Graph -->
+<meta property="og:title" content="العروض العامة للعمرة – طريق العمرة">
+<meta property="og:description" content="اكتشف أفضل عروض العمرة من مختلف الوكالات، تسجيل سهل ومباشر">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tariq-al-omra.netlify.app/results-gen.html">
+
+<meta property="og:image" content="https://tariq-al-omra.netlify.app/preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
 <title>العروض العامة للعمرة</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
+
+
 <style>  
 body{  
   font-family:Tajawal,Arial;  
@@ -88,6 +100,114 @@ overflow-x:auto;
 overflow-y:visible; /* 👈 الحل */
 }
   
+
+.visitor-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  position:absolute;
+  left:15px;          /* أقصى اليسار */
+  top:50%;
+  transform:translateY(-50%);
+
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(6px);
+  padding:12px 18px;
+  border-radius:14px;
+  font-family:Tajawal,Arial;
+  width:max-content;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+ 
+  
+.visitor-box i{  
+  font-size:20px;  
+  color:#1e90ff;  
+}  
+  
+.visitor-box span{  
+color:#fff;  
+  font-size:18px;  
+  font-weight:700;  
+}  
+  
+.visitor-box small{  
+color:#fff;  
+  font-size:13px;  
+  opacity:.85;  
+}  
+header{  
+  height:60px;  
+  background:#8b0000;  
+  color:#fff;  
+  display:flex;  
+  align-items:center;  
+  gap:10px;  
+  padding:0 15px;  
+}  
+  
+header h1{  
+  flex:1;  
+  text-align:center;  
+  font-size:18px;  
+  margin:0;  
+} 
+
+ .modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:20000;
+  align-items:center;
+  justify-content:center;
+}
+header{
+  position:relative;
+}
+/* اللوقو */
+.site-logo{
+  position:absolute;
+  left:62%;
+  top:6px;                     /* ينزل قليلاً داخل الشريط */
+  transform:translateX(-50%);
+  
+  height:58px;
+  width:auto;
+  cursor:pointer;
+
+  /* 3D effect */
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.45));
+  transform-style:preserve-3d;
+
+  transition:transform .25s ease, filter .25s ease;
+}
+/* 3D عند المرور */
+.site-logo:hover{
+  transform:
+    translateX(-50%)
+    translateY(-3px)
+    rotateX(10deg)
+    rotateY(-6deg);
+  filter:drop-shadow(0 10px 18px rgba(0,0,0,.55));
+}
+
+/* عند الضغط */
+.site-logo:active{
+  transform:
+    translateX(-50%)
+    translateY(1px)
+    rotateX(0deg);
+}@media (max-width:600px){
+  .site-logo{
+    height:90px;
+    top:4px;
+  }
+
+
+
+
 .card{  
     display:flex;
   flex-direction:column;
@@ -100,42 +220,7 @@ overflow:visible;   /* ✅ فقط هنا */
   padding:10px;  
   box-shadow:0 8px 25px rgba(0,0,0,.08);  
 }  
- .card-header{
- padding:12px 14px 10px; 
-  position:absolute;
-  overflow:visible;
-  z-index:10;
-
-  top:-40px;
-  left:16px;
-  right:16px;
-
-  height:130px;                 /* 👈 مهم لتوسيط عمودي حقيقي */
-  padding:0 30px;              /* نحيد padding العمودي */
-  background:rgba(255,255,255,.95);
-  border-radius:22px;
-  padding:12px 14px;
-
-  display:flex;
-  align-items:center;
-    align-items:center;          /* توسيط عمودي */
-  justify-content:center; /* توسيط أفقي */
-   align-items:flex-end;   /* 👈 ينزل العناصر للأسفل */
-  padding-bottom:10px;    /* تحكم دقيق في النزول */
-  gap:12px;
-
-  box-shadow:0 6px 18px rgba(0,0,0,.18);
-} 
-
  
-.card-header img{  
-  width:55px;  
-  height:55px;  
-  object-fit:contain;  
-}  
-  
-
-  
 .card-actions{  
   margin-top:auto;   /* 👈 ينزل الأزرار للقاع */
   display:flex;  
@@ -226,127 +311,17 @@ overflow:visible;   /* ✅ فقط هنا */
   border:1px solid #ccc;  
 }  
 .card-info{  
-  margin-top:-10px;  
+  margin-top:150px;  
   font-size:19px;  
   line-height:1.6;  
 }  
   
-.visitor-box{
-  display:flex;
-  align-items:center;
-  gap:10px;
-
-  position:absolute;
-  left:15px;          /* أقصى اليسار */
-  top:50%;
-  transform:translateY(-50%);
-
-  background:rgba(255,255,255,.15);
-  backdrop-filter:blur(6px);
-  padding:12px 18px;
-  border-radius:14px;
-  font-family:Tajawal,Arial;
-  width:max-content;
-  box-shadow:0 8px 20px rgba(0,0,0,.15);
-}
- 
-  
-.visitor-box i{  
-  font-size:20px;  
-  color:#1e90ff;  
-}  
-  
-.visitor-box span{  
-color:#fff;  
-  font-size:18px;  
-  font-weight:700;  
-}  
-  
-.visitor-box small{  
-color:#fff;  
-  font-size:13px;  
-  opacity:.85;  
-}  
-header{  
-  height:60px;  
-  background:#8b0000;  
-  color:#fff;  
-  display:flex;  
-  align-items:center;  
-  gap:10px;  
-  padding:0 15px;  
-}  
-  
-header h1{  
-  flex:1;  
-  text-align:center;  
-  font-size:18px;  
-  margin:0;  
-} 
-
- .modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:20000;
-  align-items:center;
-  justify-content:center;
-}
-
-header{
-  position:relative;
-}
-
-/* اللوقو */
-.site-logo{
-  position:absolute;
-  left:62%;
-  top:6px;                     /* ينزل قليلاً داخل الشريط */
-  transform:translateX(-50%);
-  
-  height:58px;
-  width:auto;
-  cursor:pointer;
-
-  /* 3D effect */
-  filter:drop-shadow(0 6px 10px rgba(0,0,0,.45));
-  transform-style:preserve-3d;
-
-  transition:transform .25s ease, filter .25s ease;
-}
-
-/* 3D عند المرور */
-.site-logo:hover{
-  transform:
-    translateX(-50%)
-    translateY(-3px)
-    rotateX(10deg)
-    rotateY(-6deg);
-
-  filter:drop-shadow(0 10px 18px rgba(0,0,0,.55));
-}
-
-/* عند الضغط */
-.site-logo:active{
-  transform:
-    translateX(-50%)
-    translateY(1px)
-    rotateX(0deg);
-}@media (max-width:600px){
-  .site-logo{
-    height:90px;
-    top:4px;
-  }
-
-
 .price-box{
   display:flex;
   align-items:stretch;
   gap:6px;
   margin-top:6px;
 }
-
 /* صندوق السعر */
 .price{
   flex:1;
@@ -390,11 +365,7 @@ header{
 
 .wa-price:active{
   transform:scale(.95);
-}
-
-
-
-  
+}  
 /* =========================
    الكارد
 ========================= */
@@ -404,201 +375,185 @@ header{
   z-index:10;
 }
 
-/* =========================
-   الهيدر
-========================= */
+
+
 .card-header{
-  position:relative;
+  position:absolute;
+  top:-40px;
+  left:16px;
+  right:16px;
+
+  height:170px;
+  padding:14px 18px;
+
+  background:#fff;
+  border-radius:30px;
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
+
+  display:flex;
+  align-items:flex-end;
+  justify-content:flex-end;
+  gap:12px;
+ justify-content:space-between; /* 👈 المفتاح */
   z-index:10;
 }
-
-/* =========================
-   العنوان الطافي
-========================= */
-.offer-title-float{
+.offer-title{
   position:absolute;
   top:6px;
   left:50%;
   transform:translateX(-50%);
-  z-index:9999;
 
-  font-size:18px;
-  font-weight:900;
-  white-space:nowrap;
-  color:#8b0000;
-
-  background:none;
-  border:none;
-  box-shadow:none;
-
-  text-shadow:
-    0 2px 0 #fff,
-    0 6px 12px rgba(0,0,0,.25);
-
-  animation:title3DPulse 2.6s ease-in-out infinite;
-  pointer-events:none;
-}
-
-@keyframes title3DPulse{
-  0%   { transform:translateX(-50%) scale(1); }
-  50%  { transform:translateX(-50%) scale(1.1); }
-  100% { transform:translateX(-50%) scale(1); }
-}
-
-/* =========================
-   اسم الوكالة (تحكم منفرد)
-========================= */
-.agency-name{
-  font-size:30px;
+  font-size:20px;
   font-weight:900;
   color:#8b0000;
-  letter-spacing:.4px;
-  text-shadow:0 1px 2px rgba(0,0,0,.15);
+
+  min-width:220px;           /* عرض أدنى (عدّل الرقم) */
+  z-index:20;
+
+  animation:offerPulse 2.6s ease-in-out infinite;
+  transform-style:preserve-3d;
 }
 
-/* =========================
-   الموقع (تحكم منفرد)
-========================= */
-.location{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  font-size:12px;
-  font-weight:600;
-  color:#8b0000;
-  background:rgba(139,0,0,.08);
-  border:1.5px solid rgba(139,0,0,.25);
-  padding:3px 10px;
-  border-radius:999px;
-  line-height:1;
+@keyframes offerPulse{
+  0%{
+    transform:translateX(-50%) scale(1);
+  }
+  50%{
+    transform:translateX(-50%) scale(1.08);
+  }
+  100%{
+    transform:translateX(-50%) scale(1);
+  }
 }
 
-.location i{
-  font-size:12px;
-  color:#8b0000;
+.agency-box{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;   /* النص يبدأ طبيعي */
+  flex:1;                   /* ⬅️ هذا هو المفتاح */
+  min-width:0;              /* يمنع الانكسار الغريب */
 }
-
-/* =========================
-   الهاتف فقط
-========================= */
-@media (max-width:600px){
-
-  .offer-title-float{
-    font-size:15px;
-    top:6px;
-  }
-
-  .agency-name{
-    font-size:20px;
-  }
-
-  .location{
-    font-size:11px;
-    padding:3px 8px;
-  }
-
-  .card-header small{
-    transform:none !important;
-    animation:none !important;
-    filter:none !important;
-  }
-
-
-/* =========================
-   شعار الوكالة – 3D طافي
-========================= */
-.card-header img.agency-logo{
-  position:absolute;
-  right:5px;   /* 👈 تحكم دقيق */
-  width:100px;
-    bottom:10px;
-
+.agency-logo{
+margin-left:2px;   /* ⬅️ يدفعه يمين */
+margin-left:auto;          /* أقصى اليمين */
+  transform:translateX(10px);/* ضبط دقيق */
+  width:70px;
   height:auto;
-
   object-fit:contain;
 
-  background:none !important;
-  padding:0 !important;
-  border:none !important;
-
-  /* إحساس الخروج */
-  filter:
-    drop-shadow(0 6px 0 rgba(255,255,255,.65))
-    drop-shadow(0 10px 18px rgba(0,0,0,.45));
-
-  transform:
-    perspective(900px)
-    translateZ(25px);
-
+  transform-style:preserve-3d;
   transition:.35s ease;
+
+  filter:
+    drop-shadow(0 6px 0 rgba(255,255,255,.7))
+    drop-shadow(0 10px 18px rgba(0,0,0,.35));
 }
 
-/* طفو خفيف */
 .agency-logo:hover{
   transform:
-    perspective(900px)
+    perspective(800px)
     translateY(-4px)
-    translateZ(35px)
+    translateZ(30px)
     rotateX(6deg)
     rotateY(-6deg);
 
   filter:
-    drop-shadow(0 6px 0 rgba(255,255,255,.75))
+    drop-shadow(0 6px 0 rgba(255,255,255,.85))
     drop-shadow(0 18px 30px rgba(0,0,0,.55));
 }
-@media (max-width:600px){
+.agency-location{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+
+  font-size:13px;
+  font-weight:700;
+  color:#8b0000;
+
+  background:rgba(139,0,0,.08);
+  border:1.5px solid rgba(139,0,0,.25);
+  padding:4px 12px;
+  border-radius:999px;   /* 👈 شكل البويضة */
+
+  line-height:1;
+}
+
+.agency-location i{
+  font-size:12px;
+  color:#8b0000;
+}
+.agency-name{
+  font-size:18px;
+ justify-content:space-between; /* يوزّع المساحة
+  font-weight:900;
+color:#000 !important;
+  white-space:normal;   /* يسمح بالتمدد
+}
+
+
+ /* =========================
+   نسخة الحاسوب فقط
+========================= */
+@media (min-width: 992px){
+
+  /* الكارد أعرض */
+  .card{
+    min-width:360px;
+  }
+
+  /* الغيمة */
+  .card-header{
+    height:150px;
+    padding:20px 26px;
+    border-radius:32px;
+  }
+
+  /* توزيع أفقي مريح */
+  .card-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  /* صندوق اسم الوكالة */
+  .agency-box{
+    flex:1;
+    min-width:0;
+    align-items:flex-start;
+  }
+
+  /* اسم الوكالة – ياخذ راحته */
+  .agency-name{
+    font-size:22px;
+    font-weight:900;
+    color:#000;
+    line-height:1.35;
+    white-space:normal;   /* يسمح بسطرين */
+  }
+
+  /* الموقع */
+  .agency-location{
+    font-size:14px;
+    padding:6px 14px;
+    margin-top:6px;
+  }
+
+  /* شعار الوكالة */
   .agency-logo{
-    width:80px;
-  }
-  /* =========================
-   نسخة الحاسوب (Desktop)
-========================= */
-@media (min-width: 992px){
-  /* الحاوية العامة */
-  .container{
-    max-width:1400px;
-    padding:30px;
-  }
-  /* الفلاتر في صف واحد */
-  .filters{
-    grid-template-columns:repeat(3, 1fr);
-    gap:16px;
-  }
-  select{
-    font-size:16px;
-    padding:10px;
-  }
-  /* صف المطار */
-  .airport-row{
-    gap:22px;
-    padding-bottom:20px;
-  }
-  /* الكارد */
-  .card{
-    min-width:340px;
-    padding:16px;
-  }
-  /* رأس الكارد */
-  .card-header/* =========================
-   نفس ستايل الهاتف – لكن بطاقات أكثر في الحاسوب
-========================= */
-/* =========================
-   الحاسوب: نفس كارد الهاتف + عدد أكثر
-========================= */
-@media (min-width: 992px){
-
-  .airport-row{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
-    gap:20px;
-    overflow-x:visible;
+    width:110px;
+    margin-left:24px;
+    flex-shrink:0;
+    transform:translateX(0);
   }
 
-  .card{
-    min-width:300px;   /* نفس الهاتف */
-    max-width:100%;
+  /* عنوان العرض */
+  .offer-title{
+    font-size:22px;
+    top:8px;
+    min-width:320px;
   }
 
+}
 
 </style> 
 </head>  
@@ -612,7 +567,7 @@ header{
   <!-- الشعار (وسط) -->
   <div class="logo-center" onclick="openWelcome()">
  <img
-  src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769337506/ei_1769337332026-removebg-preview_1_y2xsij.png"
+  src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769426692/ei_1769426620917-removebg-preview_yuws6p.png"
   alt="طريق العمرة"
   class="logo site-logo"
   onclick="openWelcome()">
@@ -737,21 +692,28 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
       const c=document.createElement("div");  
       c.className="card";        
   c.innerHTML = `
-  <!-- رأس البطاقة -->
-<div class="offer-title-float">
-    🕋 ${o.offer}
+  <!-- عنوان العرض -->
+<div class="offer-title">
+  🕋 ${o.offer}
 </div>
-  <div class="card-header">
 
-   <img src="${o.logo || ''}" alt="logo" class="agency-logo">
-</div>
-   <div class="agency-box">
-  <div class="agency-name">${o.agency}</div>
-  <div class="location">
-    <i class="fa-solid fa-location-dot"></i>
-    ${o.state}
+<!-- الغيمة -->
+<div class="card-header">
+
+  <!-- شعار الوكالة -->
+  <img src="${o.logo || ''}" class="agency-logo">
+
+  <!-- اسم الوكالة + الموقع -->
+  <div class="agency-box">
+    <div class="agency-name">${o.agency}</div>
+    <div class="agency-location">
+      <i class="fa-solid fa-location-dot"></i>
+      ${o.state}
+    </div>
   </div>
+
 </div>
+
 
 
   <div class="card-info">
