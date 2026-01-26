@@ -284,9 +284,6 @@ header h1{
   margin:0;  
 } 
 
-
-
-
  .modal{
   display:none;
   position:fixed;
@@ -469,11 +466,9 @@ header{
   display:inline-flex;
   align-items:center;
   gap:6px;
-
   font-size:12px;
   font-weight:600;
   color:#8b0000;
-
   background:rgba(139,0,0,.08);
   border:1.5px solid rgba(139,0,0,.25);
   padding:3px 10px;
@@ -515,9 +510,10 @@ header{
 /* =========================
    شعار الوكالة – 3D طافي
 ========================= */
-.agency-logo{
-  width:78px;
+.card-header img.agency-logo{
+  width:100px;
   height:auto;
+
   object-fit:contain;
 
   background:none !important;
@@ -526,7 +522,7 @@ header{
 
   /* إحساس الخروج */
   filter:
-    drop-shadow(0 3px 0 rgba(255,255,255,.65))
+    drop-shadow(0 6px 0 rgba(255,255,255,.65))
     drop-shadow(0 10px 18px rgba(0,0,0,.45));
 
   transform:
@@ -551,39 +547,25 @@ header{
 }
 @media (max-width:600px){
   .agency-logo{
-    width:64px;
+    width:80px;
   }
-
-
-
 </style> 
-
-
-
 </head>  
 <body>  
 <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
 <i class="fab fa-whatsapp"></i>  
 </a>  
-
- 
-
 <header class="top-bar">
   <!-- القائمة الجانبية (يمين) -->
   <div class="menu-btn" onclick="openMenu()">☰</div>
-
   <!-- الشعار (وسط) -->
   <div class="logo-center" onclick="openWelcome()">
  <img
   src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769337506/ei_1769337332026-removebg-preview_1_y2xsij.png"
   alt="طريق العمرة"
   class="logo site-logo"
-  onclick="openWelcome()"
->
-
-
+  onclick="openWelcome()">
   </div>
-
   <!-- عداد الزوار (يسار) -->
   <div class="visitor-box">
     <i class="fa-solid fa-users"></i>
@@ -683,8 +665,6 @@ function render(){
   if(fAgency.value) list=list.filter(o=>o.agency===fAgency.value);  
   if(fState.value) list=list.filter(o=>o.state===fState.value);  
   if(fDate.value) list=list.filter(o=>formatDate(o.date)===fDate.value);  
-  
-  
   const grouped={};  
   list.forEach(o=>{  
     const ap=o.airport||"غير محدد";  
@@ -704,17 +684,12 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   
     grouped[ap].forEach(o=>{  
       const c=document.createElement("div");  
-      c.className="card";  
-          
+      c.className="card";        
   c.innerHTML = `
-  
   <!-- رأس البطاقة -->
-
-  
 <div class="offer-title-float">
     🕋 ${o.offer}
 </div>
-  
   <div class="card-header">
 
    <img src="${o.logo || ''}" alt="logo" class="agency-logo">
@@ -810,9 +785,6 @@ ${o.offer}
     ? navigator.share({text})  
     : window.open("https://wa.me/?text="+encodeURIComponent(text));  
 }  
-  
-
-
   function openRegister(o){
   selectedOffer = o;
   document.getElementById("registerModal").style.display = "flex";
@@ -840,11 +812,8 @@ function sendRegister(){
   
   location.href="results-fenal.html";  
 }  
-  
 function openMenu(){sideMenu.style.right="0";overlay.style.display="block"}  
-function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}  
-  
-  
+function closeMenu(){sideMenu.style.right="-260px";overlay.style.display="none"}   
 let waOffer = null;  
   
 // فتح النافذة  
@@ -869,7 +838,6 @@ function confirmWhatsApp(){
     alert("يرجى ملء جميع الحقول");  
     return;  
   }  
-  
   const clientName  = first + " " + last;  
   const clientPhone = phone;  
   
@@ -922,7 +890,18 @@ function confirmWhatsApp(){
         agencyPhone: agencyPhone,  
         clientName: clientName,  
         clientPhone: clientPhone  
-  .then(d => document.getElementById("visitors").textContent = d.count);  
+      })  
+    }  
+  );  
+  
+  closeWaModal();  
+}    
+  
+fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {  
+  cache: "no-store"  
+})  
+.then(r => r.json())  
+.then(d => document.getElementById("visitors").textContent = d.count);  
   
 function openWelcome(){
   document.getElementById("welcomeModal").style.display="flex";
@@ -930,10 +909,8 @@ function openWelcome(){
 function closeWelcome(){
   document.getElementById("welcomeModal").style.display="none";
 }
-
-
- 
-</script>  <!-- نافذة واتساب -->
+</script>  
+<!-- نافذة واتساب -->
 <div id="waModal"
      onclick="closeWaModal()"
      style="
@@ -942,41 +919,21 @@ function closeWelcome(){
      inset:0;
      background:rgba(0,0,0,.6);
      z-index:30000;
-    
      align-items:center;
      justify-content:center;
      ">
 
-  <div onclick="event.stopPropagation()"
-       style="
-       background:#fff;
-       width:90%;
-       max-width:420px;
-       padding:20px;
-       border-radius:18px;
-       ">
+  <div class="modal-box" onclick="event.stopPropagation()">
 
-    <h3>👤 بيانات المعتمر</h3>
+    <h3>📲 تواصل عبر واتساب</h3>
 
-    <input id="waFirst" placeholder="الاسم"
-      style="width:100%;padding:10px;margin:6px 0">
-
-    <input id="waLast" placeholder="اللقب"
-      style="width:100%;padding:10px;margin:6px 0">
-
-    <input id="waPhone" placeholder="رقم الهاتف"
-      style="width:100%;padding:10px;margin:6px 0">
+    <input id="waFirst" placeholder="الاسم">
+    <input id="waLast" placeholder="اللقب">
+    <input id="waPhone" placeholder="رقم الهاتف">
 
     <button onclick="confirmWhatsApp()"
-      style="
-      width:100%;
-      padding:12px;
-      background:#25D366;
-      color:#fff;
-      border:none;
-      border-radius:10px;
-      margin-top:10px">
-      <i class="fab fa-whatsapp"></i> إرسال
+      style="width:100%;padding:10px;margin-top:10px;background:#25D366;color:#fff;border:none;border-radius:10px">
+      إرسال عبر واتساب
     </button>
 
     <button onclick="closeWaModal()"
@@ -995,7 +952,6 @@ function closeWelcome(){
   align-items:center;
   justify-content:center;
 " onclick="closeWelcome()">
-
   <div style="
     background:#fff;
     padding:25px;
