@@ -226,7 +226,7 @@ overflow:visible;   /* ✅ فقط هنا */
   border:1px solid #ccc;  
 }  
 .card-info{  
-  margin-top:30px;  
+  margin-top:15px;  
   font-size:19px;  
   line-height:1.6;  
 }  
@@ -414,35 +414,24 @@ header{
   position:absolute;
   top:-32px;                 /* 👈 فوق الغيمة مباشرة */
   left:50%;
-  transform:translateX(-50%);
+  .card-header{
+  z-index:10;
 
-  z-index:9999;              /* 👈 فوق الجميع */
-  isolation:isolate;         /* 👈 يكسر أي stacking context */
 
-  background:#fff;
-  color:#8b0000;
-
-  font-size:10px;
+  font-size:20px;
   font-weight:900;
+  letter-spacing:.8px;
   white-space:nowrap;
+  color:#fff;
 
-  padding:6px 16px;
-  border-radius:999px;
+  -webkit-text-stroke:2px #8b0000;
+  text-shadow:
+    0 0 6px rgba(255,255,255,.9),
+    0 4px 10px rgba(139,0,0,.55);
 
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-  border:2px solid rgba(139,0,0,.25);
-
+  animation:titlePulse 2.2s ease-in-out infinite;
   pointer-events:none;
 }
-
-/* العنوان الطافي */
-.offer-title-float{
-  position:absolute;
-  top:-10px;          /* 👈 فوق الغيمة */
-  left:50%;
-  transform:translateX(-50%);
-  z-index:190;         /* 👈 أعلى من الغيمة */
-
   
   
 
