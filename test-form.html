@@ -570,8 +570,8 @@ color:#000 !important;
   }
 
   .airline-card img{
-    max-width:80px;
-    max-height:40px;
+    max-width:8px;
+    max-height:4px;
   }
 
   /* ===== أزرار البطاقة ===== */
@@ -753,8 +753,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <div>⏱️ المدة: ${o.duration || "-"}</div>
     <div>✈️ الرحلة: ${o.flight || "-"}</div>
 
-    <div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
-      ${o.airlineLogo ? `<img src="${o.airlineLogo}">` : ``}
+    
     </div>
 
     <div class="price-box">
