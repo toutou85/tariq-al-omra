@@ -310,11 +310,92 @@ overflow:visible;   /* ✅ فقط هنا */
   border-radius:8px;  
   border:1px solid #ccc;  
 }  
-.card-info{  
-  margin-top:150px;  
-  font-size:19px;  
-  line-height:1.6;  
-}  
+.travel-date{
+  margin-top:150px;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+/* قريب جدًا */
+.travel-date.soon{
+  background:linear-gradient(135deg,#ffeaea,#ffd1d1);
+  color:#8b0000;
+}
+
+/* متوسط */
+.travel-date.mid{
+  background:linear-gradient(135deg,#fff7e0,#ffe4a3);
+  color:#6b4a00;
+}
+
+/* بعيد */
+.travel-date.far{
+  background:linear-gradient(135deg,#e9f7ef,#c9f0db);
+  color:#0b5f3c;
+}
+
+.travel-date i{
+  font-size:18px;
+}
+/* === FORCE DATE COLORS === */
+.card .travel-date.soon{
+  background:linear-gradient(135deg,#ffeaea,#ffd1d1) !important;
+  color:#8b0000 !important;
+}
+
+.card .travel-date.mid{
+  background:linear-gradient(135deg,#fff7e0,#ffe4a3) !important;
+  color:#6b4a00 !important;
+}
+
+.card .travel-date.far{
+  background:linear-gradient(135deg,#e9f7ef,#c9f0db) !important;
+  color:#0b5f3c !important;
+}
+/* اليوم */
+.travel-date.soon .remain{
+  animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+  100%{transform:scale(1)}
+}
+.date-color{
+  padding:4px 10px;
+  border-radius:999px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* قريب */
+.date-color.soon{
+  background:#ffe1e1;
+  color:#8b0000;
+}
+
+/* متوسط */
+.date-color.mid{
+  background:#fff2cc;
+  color:#7a5200;
+}
+
+/* بعيد */
+.date-color.far{
+  background:#e6f7ef;
+  color:#0b5f3c;
+}
+
+
   
 .price-box{
   display:flex;
@@ -548,90 +629,7 @@ color:#000 !important;
 }
 
 
-.travel-date{
-  margin-top:150px;
-  padding:10px 14px;
-  border-radius:14px;
-  font-size:15px;
-  font-weight:600;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
 
-/* قريب جدًا */
-.travel-date.soon{
-  background:linear-gradient(135deg,#ffeaea,#ffd1d1);
-  color:#8b0000;
-}
-
-/* متوسط */
-.travel-date.mid{
-  background:linear-gradient(135deg,#fff7e0,#ffe4a3);
-  color:#6b4a00;
-}
-
-/* بعيد */
-.travel-date.far{
-  background:linear-gradient(135deg,#e9f7ef,#c9f0db);
-  color:#0b5f3c;
-}
-
-.travel-date i{
-  font-size:18px;
-}
-/* === FORCE DATE COLORS === */
-.card .travel-date.soon{
-  background:linear-gradient(135deg,#ffeaea,#ffd1d1) !important;
-  color:#8b0000 !important;
-}
-
-.card .travel-date.mid{
-  background:linear-gradient(135deg,#fff7e0,#ffe4a3) !important;
-  color:#6b4a00 !important;
-}
-
-.card .travel-date.far{
-  background:linear-gradient(135deg,#e9f7ef,#c9f0db) !important;
-  color:#0b5f3c !important;
-}
-/* اليوم */
-.travel-date.soon .remain{
-  animation:pulse 1.6s infinite;
-}
-
-@keyframes pulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.08)}
-  100%{transform:scale(1)}
-}
-.date-color{
-  padding:4px 10px;
-  border-radius:999px;
-  font-weight:700;
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-}
-
-/* قريب */
-.date-color.soon{
-  background:#ffe1e1;
-  color:#8b0000;
-}
-
-/* متوسط */
-.date-color.mid{
-  background:#fff2cc;
-  color:#7a5200;
-}
-
-/* بعيد */
-.date-color.far{
-  background:#e6f7ef;
-  color:#0b5f3c;
-}
  
 </style> 
 </head>  
