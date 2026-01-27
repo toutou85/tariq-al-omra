@@ -581,6 +581,31 @@ color:#000 !important;
 .travel-date i{
   font-size:18px;
 }
+/* === FORCE DATE COLORS === */
+.card .travel-date.soon{
+  background:linear-gradient(135deg,#ffeaea,#ffd1d1) !important;
+  color:#8b0000 !important;
+}
+
+.card .travel-date.mid{
+  background:linear-gradient(135deg,#fff7e0,#ffe4a3) !important;
+  color:#6b4a00 !important;
+}
+
+.card .travel-date.far{
+  background:linear-gradient(135deg,#e9f7ef,#c9f0db) !important;
+  color:#0b5f3c !important;
+}
+/* اليوم */
+.travel-date.soon .remain{
+  animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+  100%{transform:scale(1)}
+}
  
 </style> 
 </head>  
@@ -786,6 +811,11 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   <i class="fa-regular fa-calendar-days"></i>
   الانطلاق:
   <strong>${formatDateArabicFull(o.date)}</strong>
+</div>
+
+  <span class="remain">
+    ${getRemainingText(o.date)}
+  </span>
 </div>
     <div>🏨 الفندق: ${o.hotel || "-"}</div>
     <div>⏱️ المدة: ${o.duration || "-"}</div>
