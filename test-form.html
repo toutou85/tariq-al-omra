@@ -690,7 +690,33 @@ function fillFilters(){
   S.forEach(v=>fState.add(new Option(v,v)));  
   D.forEach(v=>fDate.add(new Option(v,v)));  
 }  
-  
+  function formatDateArabicFull(dateStr){
+  if(!dateStr) return "-";
+
+  const days = [
+    "الأحد","الاثنين","الثلاثاء",
+    "الأربعاء","الخميس","الجمعة","السبت"
+  ];
+
+  const months = [
+    "جانفي","فيفري","مارس","أفريل","ماي","جوان",
+    "جويلية","أوت","سبتمبر","أكتوبر","نوفمبر","ديسمبر"
+  ];
+
+  const d = new Date(dateStr);
+  return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+function getDateStatus(dateStr){
+  if(!dateStr) return "far";
+
+  const today = new Date();
+  const travel = new Date(dateStr);
+  const diffDays = Math.ceil((travel - today) / (1000*60*60*24));
+
+  if(diffDays <= 15) return "soon";
+  if(diffDays <= 40) return "mid";
+  return "far";
+}
 function render(){  
   offers.innerHTML="";  
   let list=[...offersData];  
@@ -957,33 +983,6 @@ function closeWelcome(){
 
 
 
-function formatDateArabicFull(dateStr){
-  const days = [
-    "الأحد","الاثنين","الثلاثاء",
-    "الأربعاء","الخميس","الجمعة","السبت"
-  ];
-
-  const months = [
-    "جانفي","فيفري","مارس","أفريل","ماي","جوان",
-    "جويلية","أوت","سبتمبر","أكتوبر","نوفمبر","ديسمبر"
-  ];
-
-  const d = new Date(dateStr);
-  const dayName = days[d.getDay()];
-  const day = d.getDate();
-  const month = months[d.getMonth()];
-  const year = d.getFullYear();
-
-  return `${dayName} ${day} ${month} ${year}`;
-}function getDateStatus(dateStr){
-  const today = new Date();
-  const travel = new Date(dateStr);
-  const diffDays = Math.ceil((travel - today) / (1000 * 60 * 60 * 24));
-
-  if(diffDays <= 15) return "soon";
-  if(diffDays <= 40) return "mid";
-  return "far";
-}
 </script>  
 <!-- نافذة واتساب -->
 <div id="waModal"
