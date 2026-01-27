@@ -241,7 +241,7 @@ overflow:visible;   /* ✅ فقط هنا */
 
 .airline-card{
   position:absolute;
-  top:220px;           /* 👈 تحكم في المسافة تحت الغيمة */
+  top:265px;           /* 👈 تحكم في المسافة تحت الغيمة */
   left:15px;
 
   width:92px;
@@ -310,11 +310,89 @@ overflow:visible;   /* ✅ فقط هنا */
   border-radius:8px;  
   border:1px solid #ccc;  
 }  
-.card-info{  
-  margin-top:150px;  
-  font-size:19px;  
-  line-height:1.6;  
-}  
+.travel-date{
+  margin-top:140px;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:17px;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+/* قريب جدًا */
+.travel-date.soon{
+  background:linear-gradient(135deg,#ffeaea,#ffd1d1);
+  color:#8b0000;
+}
+
+/* متوسط */
+.travel-date.mid{
+  background:linear-gradient(135deg,#fff7e0,#ffe4a3);
+  color:#6b4a00;
+}
+
+/* بعيد */
+.travel-date.far{
+  background:linear-gradient(135deg,#e9f7ef,#c9f0db);
+  color:#0b5f3c;
+}
+
+.travel-date i{
+  font-size:20px;
+}
+/* === FORCE DATE COLORS === */
+.card .travel-date.soon{
+  background:linear-gradient(135deg,#ffeaea,#ffd1d1) !important;
+  color:#8b0000 !important;
+}
+
+.card .travel-date.mid{
+  background:linear-gradient(135deg,#fff7e0,#ffe4a3) !important;
+  color:#6b4a00 !important;
+}
+
+.card .travel-date.far{
+  background:linear-gradient(135deg,#e9f7ef,#c9f0db) !important;
+  color:#0b5f3c !important;
+}
+/* اليوم */
+.travel-date.soon .remain{
+  animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+  100%{transform:scale(1)}
+}
+.date-color{
+  padding:4px 10px;
+  border-radius:999px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* قريب */
+.date-color.soon{
+  color:#8b0000;
+}
+
+/* متوسط */
+.date-color.mid{
+  color:#7a5200;
+}
+
+/* بعيد */
+.date-color.far{
+  color:#0b5f3c;
+}
+
+
   
 .price-box{
   display:flex;
@@ -383,7 +461,7 @@ overflow:visible;   /* ✅ فقط هنا */
   left:16px;
   right:16px;
 
-  height:170px;
+  height:155px;
   padding:14px 18px;
 
   background:#fff;
@@ -546,6 +624,9 @@ color:#000 !important;
   }
 
 }
+
+
+
  
 </style> 
 </head>  
@@ -655,7 +736,59 @@ function fillFilters(){
   S.forEach(v=>fState.add(new Option(v,v)));  
   D.forEach(v=>fDate.add(new Option(v,v)));  
 }  
-  
+  function formatDateArabicFull(dateStr){
+  if(!dateStr) return "-";
+
+  const days = [
+    "الأحد","الاثنين","الثلاثاء",
+    "الأربعاء","الخميس","الجمعة","السبت"
+  ];
+
+  const months = [
+    "جانفي","فيفري","مارس","أفريل","ماي","جوان",
+    "جويلية","أوت","سبتمبر","أكتوبر","نوفمبر","ديسمبر"
+  ];
+
+  const d = new Date(dateStr);
+  return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+function getDateStatus(dateStr){
+  if(!dateStr) return "far";
+
+  const travel = new Date(dateStr);
+  if(isNaN(travel)) return "far";
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  travel.setHours(0,0,0,0);
+
+  const diffDays = Math.round(
+    (travel - today) / (1000 * 60 * 60 * 24)
+  );
+
+  if(diffDays <= 15) return "soon";
+  if(diffDays <= 40) return "mid";
+  return "far";
+}
+
+  function getRemainingText(dateStr){
+  if(!dateStr) return "";
+
+  const travel = new Date(dateStr);
+  if(isNaN(travel)) return "";
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  travel.setHours(0,0,0,0);
+
+  const diff = Math.round((travel - today) / (1000*60*60*24));
+
+  if(diff === 0) return "🚀 اليوم موعد الرحلة";
+  if(diff === 1) return "⚠️ غدًا الانطلاق";
+  if(diff > 1)  return `⏳ متبقي ${diff} يوم`;
+  return "⛔ تاريخ منقضي";
+}
+
 function render(){  
   offers.innerHTML="";  
   let list=[...offersData];  
@@ -705,11 +838,17 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   </div>
 
 </div>
+<div class="travel-date">
+  <i class="fa-regular fa-calendar-days"></i>
+  <span>الانطلاق:</span>
 
+  <span class="date-color ${getDateStatus(o.date)}">
+    <strong>${formatDateArabicFull(o.date)}</strong>
+    <span class="remain">${getRemainingText(o.date)}</span>
+  </span>
+</div>
+</div>
 
-
-  <div class="card-info">
-    <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>
     <div>🏨 الفندق: ${o.hotel || "-"}</div>
     <div>⏱️ المدة: ${o.duration || "-"}</div>
     <div>✈️ الرحلة: ${o.flight || "-"}</div>
@@ -915,6 +1054,9 @@ function openWelcome(){
 function closeWelcome(){
   document.getElementById("welcomeModal").style.display="none";
 }
+
+
+
 </script>  
 <!-- نافذة واتساب -->
 <div id="waModal"
