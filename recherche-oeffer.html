@@ -15,14 +15,28 @@ body{
     linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
     url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
     center/cover fixed no-repeat;
-}
+
 header{
-  height:60px;
-  background:#8b0000;
+  position:relative;
+}
+
+.home-btn{
+  position:absolute;
+  left:15px;
+  font-size:22px;
   color:#fff;
-  display:flex;
-  align-items:center;
-  padding:0 15px;
+  text-decoration:none;
+}
+
+.home-btn:hover{
+  opacity:.8;
+}
+
+/* تثبيت العنوان في الوسط مهما كان */
+header h1{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
 }
 .menu-btn{font-size:26px;cursor:pointer}
 header h1{flex:1;text-align:center;font-size:18px;margin:0}
@@ -187,7 +201,10 @@ top:60px;
   onclick="openWelcome()">
   </div>
   <h1>🕋 طلب عرض عمرة</h1>
-  <a href="results-gen.html">📢تصفح العروض🗓️</a>
+
+<a href="results-gen.html" class="home-btn" title="الرئيسية">
+  <i class="fas fa-house"></i>
+</a>
 </header>
 
 <nav id="sideMenu">
