@@ -606,6 +606,32 @@ color:#000 !important;
   50%{transform:scale(1.08)}
   100%{transform:scale(1)}
 }
+.date-color{
+  padding:4px 10px;
+  border-radius:999px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* قريب */
+.date-color.soon{
+  background:#ffe1e1;
+  color:#8b0000;
+}
+
+/* متوسط */
+.date-color.mid{
+  background:#fff2cc;
+  color:#7a5200;
+}
+
+/* بعيد */
+.date-color.far{
+  background:#e6f7ef;
+  color:#0b5f3c;
+}
  
 </style> 
 </head>  
@@ -817,17 +843,15 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   </div>
 
 </div>
+<div class="travel-date">
+  <i class="fa-regular fa-calendar-days"></i>
+  <span>الانطلاق:</span>
 
-<div class="card-info">
-  <div class="travel-date ${getDateStatus(o.date)}">
-    <i class="fa-regular fa-calendar-days"></i>
-    <span>الانطلاق:</span>
+  <span class="date-color ${getDateStatus(o.date)}">
     <strong>${formatDateArabicFull(o.date)}</strong>
-
-    <span class="remain">
-      ${getRemainingText(o.date)}
-    </span>
-  </div>
+    <span class="remain">${getRemainingText(o.date)}</span>
+  </span>
+</div>
 </div>
 
     <div>🏨 الفندق: ${o.hotel || "-"}</div>
