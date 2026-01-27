@@ -734,13 +734,8 @@ function fillFilters(){
 function getDateStatus(dateStr){
   if(!dateStr) return "far";
 
-  // تحويل التاريخ بشكل آمن
-  const parts = dateStr.split("-");
-  const travel = new Date(
-    Number(parts[0]),        // السنة
-    Number(parts[1]) - 1,    // الشهر
-    Number(parts[2])         // اليوم
-  );
+  const travel = new Date(dateStr);
+  if(isNaN(travel)) return "far";
 
   const today = new Date();
   today.setHours(0,0,0,0);
@@ -754,15 +749,12 @@ function getDateStatus(dateStr){
   if(diffDays <= 40) return "mid";
   return "far";
 }
+
   function getRemainingText(dateStr){
   if(!dateStr) return "";
 
-  const parts = dateStr.split("-");
-  const travel = new Date(
-    Number(parts[0]),
-    Number(parts[1]) - 1,
-    Number(parts[2])
-  );
+  const travel = new Date(dateStr);
+  if(isNaN(travel)) return "";
 
   const today = new Date();
   today.setHours(0,0,0,0);
