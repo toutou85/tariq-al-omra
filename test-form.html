@@ -709,9 +709,21 @@ function fillFilters(){
 function getDateStatus(dateStr){
   if(!dateStr) return "far";
 
+  // تحويل التاريخ بشكل آمن
+  const parts = dateStr.split("-");
+  const travel = new Date(
+    Number(parts[0]),        // السنة
+    Number(parts[1]) - 1,    // الشهر
+    Number(parts[2])         // اليوم
+  );
+
   const today = new Date();
-  const travel = new Date(dateStr);
-  const diffDays = Math.ceil((travel - today) / (1000*60*60*24));
+  today.setHours(0,0,0,0);
+  travel.setHours(0,0,0,0);
+
+  const diffDays = Math.round(
+    (travel - today) / (1000 * 60 * 60 * 24)
+  );
 
   if(diffDays <= 15) return "soon";
   if(diffDays <= 40) return "mid";
