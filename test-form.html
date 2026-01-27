@@ -205,7 +205,7 @@ header{
     top:4px;
   }
 
-  }
+}
 
 
 .card{  
@@ -330,7 +330,7 @@ overflow:visible;   /* ✅ فقط هنا */
   border-radius:14px;
   text-align:center;
   font-weight:700;
-  font-size:17px;
+  font-size:20px;
   color:#8b0000;
   box-shadow:0 6px 16px rgba(0,0,0,.08);
   border:1px solid rgba(139,0,0,.15);
@@ -489,6 +489,7 @@ margin-left:auto;          /* أقصى اليمين */
 color:#000 !important;
   white-space:normal;   /* يسمح بالتمدد
 }
+
 /* =========================
    DESKTOP CARD CONTROL
    التحكم الكامل في البطاقة – حاسوب فقط
@@ -545,8 +546,7 @@ color:#000 !important;
   }
 
 }
-  
-
+ 
 </style> 
 </head>  
 <body>  
@@ -692,7 +692,6 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
 <!-- الغيمة -->
 <div class="card-header">
 
- 
   <!-- شعار الوكالة -->
   <img src="${o.logo || ''}" class="agency-logo">
 
@@ -715,9 +714,8 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <div>⏱️ المدة: ${o.duration || "-"}</div>
     <div>✈️ الرحلة: ${o.flight || "-"}</div>
 
-      <div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
+    <div class="airline-card ${!o.airlineLogo ? 'empty' : ''}">
       ${o.airlineLogo ? `<img src="${o.airlineLogo}">` : ``}
-    </div>
     </div>
 
     <div class="price-box">
