@@ -754,6 +754,28 @@ function getDateStatus(dateStr){
   if(diffDays <= 40) return "mid";
   return "far";
 }
+  function getRemainingText(dateStr){
+  if(!dateStr) return "";
+
+  const parts = dateStr.split("-");
+  const travel = new Date(
+    Number(parts[0]),
+    Number(parts[1]) - 1,
+    Number(parts[2])
+  );
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  travel.setHours(0,0,0,0);
+
+  const diff = Math.round((travel - today) / (1000*60*60*24));
+
+  if(diff === 0) return "🚀 اليوم موعد الرحلة";
+  if(diff === 1) return "⚠️ غدًا الانطلاق";
+  if(diff > 1)  return `⏳ متبقي ${diff} يوم`;
+  return "⛔ تاريخ منقضي";
+}
+
 function render(){  
   offers.innerHTML="";  
   let list=[...offersData];  
@@ -804,19 +826,18 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
 
 </div>
 
+<div class="card-info">
+  <div class="travel-date ${getDateStatus(o.date)}">
+    <i class="fa-regular fa-calendar-days"></i>
+    <span>الانطلاق:</span>
+    <strong>${formatDateArabicFull(o.date)}</strong>
 
-
-  <div class="card-info">
-<div class="travel-date ${getDateStatus(o.date)}">
-  <i class="fa-regular fa-calendar-days"></i>
-  الانطلاق:
-  <strong>${formatDateArabicFull(o.date)}</strong>
+    <span class="remain">
+      ${getRemainingText(o.date)}
+    </span>
+  </div>
 </div>
 
-  <span class="remain">
-    ${getRemainingText(o.date)}
-  </span>
-</div>
     <div>🏨 الفندق: ${o.hotel || "-"}</div>
     <div>⏱️ المدة: ${o.duration || "-"}</div>
     <div>✈️ الرحلة: ${o.flight || "-"}</div>
