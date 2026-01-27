@@ -546,6 +546,41 @@ color:#000 !important;
   }
 
 }
+
+
+.travel-date{
+  margin-top:10px;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+/* قريب جدًا */
+.travel-date.soon{
+  background:linear-gradient(135deg,#ffeaea,#ffd1d1);
+  color:#8b0000;
+}
+
+/* متوسط */
+.travel-date.mid{
+  background:linear-gradient(135deg,#fff7e0,#ffe4a3);
+  color:#6b4a00;
+}
+
+/* بعيد */
+.travel-date.far{
+  background:linear-gradient(135deg,#e9f7ef,#c9f0db);
+  color:#0b5f3c;
+}
+
+.travel-date i{
+  font-size:18px;
+}
  
 </style> 
 </head>  
@@ -709,7 +744,11 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
 
 
   <div class="card-info">
-    <div>📅 الانطلاق بتاريخ ${formatDate(o.date)}</div>
+<div class="travel-date ${getDateStatus(o.date)}">
+  <i class="fa-regular fa-calendar-days"></i>
+  الانطلاق:
+  <strong>${formatDateArabicFull(o.date)}</strong>
+</div>
     <div>🏨 الفندق: ${o.hotel || "-"}</div>
     <div>⏱️ المدة: ${o.duration || "-"}</div>
     <div>✈️ الرحلة: ${o.flight || "-"}</div>
@@ -914,6 +953,36 @@ function openWelcome(){
 }
 function closeWelcome(){
   document.getElementById("welcomeModal").style.display="none";
+}
+
+
+
+function formatDateArabicFull(dateStr){
+  const days = [
+    "الأحد","الاثنين","الثلاثاء",
+    "الأربعاء","الخميس","الجمعة","السبت"
+  ];
+
+  const months = [
+    "جانفي","فيفري","مارس","أفريل","ماي","جوان",
+    "جويلية","أوت","سبتمبر","أكتوبر","نوفمبر","ديسمبر"
+  ];
+
+  const d = new Date(dateStr);
+  const dayName = days[d.getDay()];
+  const day = d.getDate();
+  const month = months[d.getMonth()];
+  const year = d.getFullYear();
+
+  return `${dayName} ${day} ${month} ${year}`;
+}function getDateStatus(dateStr){
+  const today = new Date();
+  const travel = new Date(dateStr);
+  const diffDays = Math.ceil((travel - today) / (1000 * 60 * 60 * 24));
+
+  if(diffDays <= 15) return "soon";
+  if(diffDays <= 40) return "mid";
+  return "far";
 }
 </script>  
 <!-- نافذة واتساب -->
