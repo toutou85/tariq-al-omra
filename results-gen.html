@@ -670,6 +670,7 @@ color:#000 !important;
 <select id="fAgency"><option value="">🏢 كل الوكالات</option></select>  
 <select id="fState"><option value="">📍 كل الولايات</option></select>  
 <select id="fDate"><option value="">📅 كل التواريخ</option></select>  
+<select id="fAirport"><option value="">✈️ كل المطارات</option></select>
 </div> 
   <div id="offers">⏳ جارٍ تحميل العروض...</div>  
 </div>  <!-- نافذة التفاصيل --> 
@@ -721,7 +722,8 @@ const fAgency=document.getElementById("fAgency");
 const fState=document.getElementById("fState");  
 const fDate=document.getElementById("fDate");  
 const offers=document.getElementById("offers");  
-  
+  const fAirport = document.getElementById("fAirport");
+
 function formatDate(d){  
   return d ? new Date(d).toLocaleDateString("ar-DZ") : "-";  
 }  
@@ -733,15 +735,17 @@ fetch(OFFERS_API).then(r=>r.json()).then(data=>{
 });  
   
 function fillFilters(){  
-  const A=new Set(),S=new Set(),D=new Set();  
+  const A=new Set(),S=new Set(),D=new Set(), P=new Set();  
   offersData.forEach(o=>{  
     if(o.agency) A.add(o.agency);  
     if(o.state) S.add(o.state);  
     if(o.date) D.add(formatDate(o.date));  
+     if(o.airport) P.add(o.airport);  
   });  
   A.forEach(v=>fAgency.add(new Option(v,v)));  
   S.forEach(v=>fState.add(new Option(v,v)));  
   D.forEach(v=>fDate.add(new Option(v,v)));  
+P.forEach(v=>fAirport.add(new Option(v,v))); 
 }  
   function formatDateArabicFull(dateStr){
   if(!dateStr) return "-";
@@ -802,7 +806,9 @@ function render(){
   
   if(fAgency.value) list=list.filter(o=>o.agency===fAgency.value);  
   if(fState.value) list=list.filter(o=>o.state===fState.value);  
-  if(fDate.value) list=list.filter(o=>formatDate(o.date)===fDate.value);  
+  if(fDate.value) list=list.filter(o=>formatDate(o.date)===fDate.value); 
+  if(fAirport.value) list = list.filter(o => o.airport === fAirport.value);
+
   const grouped={};  
   list.forEach(o=>{  
     const ap=o.airport||"غير محدد";  
@@ -889,7 +895,8 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
 fAgency.onchange=render;  
 fState.onchange=render;  
 fDate.onchange=render;  
-  
+  fAirport.onchange = render;
+
 function openDetails(o){  
 detailsContent.innerHTML = `  
   <p>🕋 <strong>اسم العرض:</strong> ${o.offer || "-"}</p>  
