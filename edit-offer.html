@@ -351,10 +351,13 @@ button{
 const API="https://script.google.com/macros/s/AKfycbz-uqNculXyfWmLik8OY6gRYIr75cswjomrJRjs25JFZccIkulsiRslXw3woZ6SPDEiMA/exec";
 
 
-const agencySelect = document.getElementById("agencySelect");
-const licenseInput = document.getElementById("licenseInput");
-const box = document.getElementById("offersBox");
-const msg = document.getElementById("msg");
+const agencyLogo = document.getElementById("agencyLogo");
+const agencyLogoPreview = document.getElementById("agencyLogoPreview");
+
+const airlineEdit = document.getElementById("airlineEdit");
+const airlineLogoEdit = document.getElementById("airlineLogoEdit");
+const airlineLogoPreview = document.getElementById("airlineLogoPreview");
+
 
 let allOffers=[];
 
@@ -424,20 +427,46 @@ function loadOffers(){
 
 /* فتح نافذة التعديل */
 function openEdit(o){
-  editRow.value = o.row;
+  // رقم الصف
+  editRow.value = o.row || "";
+
+  // بيانات العرض
   offer.value = o.offer || "";
   date.value = o.date || "";
   duration.value = o.duration || "";
   flightType.value = o.flightType || "";
   airport.value = o.airport || "";
-  airline.value = o.airline || "";
   group.value = o.group || "";
   four.value = o.four || "";
   three.value = o.three || "";
   two.value = o.two || "";
   hotel.value = o.hotel || "";
+
+  /* ===== شعار الوكالة ===== */
+  agencyLogo.value = o.agencyLogo || "";
+
+  if (o.agencyLogo) {
+    agencyLogoPreview.src = o.agencyLogo;
+    agencyLogoPreview.style.display = "block";
+  } else {
+    agencyLogoPreview.style.display = "none";
+  }
+
+  /* ===== شركة الطيران + شعارها ===== */
+  airlineEdit.value = o.airline || "";
+  airlineLogoEdit.value = o.airlineLogo || "";
+
+  if (o.airlineLogo) {
+    airlineLogoPreview.src = o.airlineLogo;
+    airlineLogoPreview.style.display = "block";
+  } else {
+    airlineLogoPreview.style.display = "none";
+  }
+
+  // فتح المودال في الأخير
   editModal.style.display = "flex";
 }
+
 
 function closeModal(){
   editModal.style.display = "none";
@@ -470,6 +499,8 @@ function deleteOffer(row){
   fd.append("action","delete");
   fd.append("row", row);
   fd.append("license", licenseInput.value);
+fd.append("agencyLogo", agencyLogo.value);
+fd.append("airlineLogo", airlineLogoEdit.value);
 
   fetch(API,{method:"POST",body:fd})
     .then(r=>r.text())
@@ -486,6 +517,32 @@ function openWelcome(){
 function closeWelcome(){
   document.getElementById("welcomeModal").style.display="none";
 }
+	// معاينة شعار الوكالة عند الكتابة
+
+
+agencyLogoInput.addEventListener("input", () => {
+  if (agencyLogoInput.value.trim()) {
+    agencyLogoPreview.src = agencyLogoInput.value.trim();
+    agencyLogoPreview.style.display = "block";
+  } else {
+    agencyLogoPreview.style.display = "none";
+  }
+});
+	
+
+airlineEdit.addEventListener("change", () => {
+  const opt = airlineEdit.selectedOptions[0];
+  const logo = opt.getAttribute("data-logo");
+
+  if (logo) {
+    airlineLogoEdit.value = logo;
+    airlineLogoPreview.src = logo;
+    airlineLogoPreview.style.display = "block";
+  } else {
+    airlineLogoPreview.style.display = "none";
+  }
+});
+
 </script>
 
 	<div id="welcomeModal" style="
