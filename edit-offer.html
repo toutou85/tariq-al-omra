@@ -357,10 +357,11 @@ button{
 <script>
 const API="https://script.google.com/macros/s/AKfycbz-uqNculXyfWmLik8OY6gRYIr75cswjomrJRjs25JFZccIkulsiRslXw3woZ6SPDEiMA/exec";
 
-const agencySelect=document.getElementById("agencySelect");
-const phoneInput=document.getElementById("phoneInput");
-const box=document.getElementById("offersBox");
-const msg=document.getElementById("msg");
+
+const agencySelect = document.getElementById("agencySelect");
+const licenseInput = document.getElementById("licenseInput");
+const box = document.getElementById("offersBox");
+const msg = document.getElementById("msg");
 
 let allOffers=[];
 
@@ -375,36 +376,32 @@ fetch(API).then(r=>r.json()).then(data=>{
 /* عرض العروض */
 function loadOffers(){
   const agency = agencySelect.value.trim();
-  const phone  = phoneInput.value.trim();
+  const inputLicense = licenseInput.value.trim();
 
   box.innerHTML = "";
   msg.textContent = "";
 
-  if(!agency || !license){
+  if(!agency || !inputLicense){
     msg.textContent = "⚠️ يرجى اختيار الوكالة وإدخال رقم رخصة الوكالة";
     return;
   }
 
-const inputLicense = document.getElementById("licenseInput").value.trim();
+  const agencyRow = allOffers.find(o =>
+    String(o.agency || "").trim() === agency
+  );
 
-const agencyRow = allOffers.find(o =>
-  String(o.agency || "").trim() === agency
-);
+  if(!agencyRow){
+    msg.textContent = "❌ الوكالة غير موجودة";
+    return;
+  }
 
-if(!agencyRow){
-  msg.textContent = "❌ الوكالة غير موجودة";
-  return;
-}
+  const sheetLicense = String(agencyRow.license || "").trim();
 
-// الرقم الموجود في الـ Sheet
-const sheetLicense = String(agencyRow.license || "").trim();
+  if(sheetLicense !== inputLicense){
+    msg.textContent = "❌ رقم الرخصة غير صحيح";
+    return;
+  }
 
-if(sheetLicense !== inputLicense){
-  msg.textContent = "❌ رقم الرخصة غير صحيح";
-  return;
-}
-
-  // ✅ الفلترة بالوكالة فقط
   const offers = allOffers.filter(o =>
     String(o.agency || "").trim() === agency
   );
@@ -414,7 +411,6 @@ if(sheetLicense !== inputLicense){
     return;
   }
 
-  // عرض العروض
   offers.forEach(o=>{
     box.innerHTML += `
       <div class="offer">
@@ -441,9 +437,23 @@ function openEdit(o){ editRow.value=o.row; offer.value=o.offer||""; date.value=o
  
 						["offer","date","duration","flightType","airport","airline", "group","four","three","two","hotel"] .forEach(id=>fd.append(id,document.getElementById(id).value)); fetch(API,{method:"POST",body:fd})
 	.then(r=>r.text())
-  .then(res=>{ alert(res); location.reload(); }); } function deleteOffer(row){ if(!confirm("هل أنت متأكد؟"))return; const
-	fd=new FormData(); fd.append("action","delete"); fd.append("row",row); fd.append("phone",phoneInput.value); 
-																																							fetch(API,{method:"POST",body:fd}) 
+  .then(res=>{ alert(res); location.reload(); }); }
+	function deleteOffer(row){
+  if(!confirm("هل أنت متأكد؟")) return;
+
+  const fd = new FormData();
+  fd.append("action","delete");
+  fd.append("row", row);
+  fd.append("license", licenseInput.value);
+
+  fetch(API,{method:"POST",body:fd})
+    .then(r=>r.text())
+    .then(res=>{
+      alert(res);
+      location.reload();
+    });
+}
+																																	fetch(API,{method:"POST",body:fd}) 
 																																								.then(r=>r.text()) .then(res=>{ 
 	function openWelcome(){
   document.getElementById("welcomeModal").style.display="flex";
