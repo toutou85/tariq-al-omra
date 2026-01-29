@@ -1025,39 +1025,40 @@ function confirmWhatsApp() {
 
   const message = `السلام عليكم 🌿\n\nأنا ${clientName}\nرقم هاتفي: ${clientPhone}\nأرغب في التسجيل في عرض عمرة: ${waOffer.offer} من الوكالة ${waOffer.agency}\nتاريخ الإقلاع: ${formatDate(waOffer.date)}\nالفندق: ${waOffer.hotel || "-"}\nالسعر: ${waOffer.group} دج`;
 
-  // أولاً إرسال البيانات إلى Google Sheets
-  fetch("https://script.google.com/macros/s/AKfycbz8tQ_SGiPkawL3qZgnh7OZMucmbQeBsz2LjIult2V2jrIZqq8bQiykX1uhd-xP0x0g/exec", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      agency: waOffer.agency,
-      offer: waOffer.offer,
-      date: waOffer.date,
-      hotel: waOffer.hotel,
-      price: waOffer.group,
-      agencyPhone: agencyPhone,
-      clientName: clientName,
-      clientPhone: clientPhone
-    })
+// إرسال البيانات إلى Google Sheets
+fetch("https://script.google.com/macros/s/AKfycby2vkrXWjS48B_ByL7rS_SJurMK1HuNP-oMj6ih2gk-2ZBorxO9aDRDTmeDjoSsNtY/exec", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    agency: waOffer.agency,
+    offer: waOffer.offer,
+    date: waOffer.date,
+    hotel: waOffer.hotel,
+    price: waOffer.group,
+    agencyPhone: agencyPhone,
+    clientName: clientName,
+    clientPhone: clientPhone
   })
-  .then(res => res.text())
-  .then(data => {
-    console.log("تم الإرسال إلى Google Sheets:", data);
+})
+.then(res => res.text()) // لأن Apps Script يرجع نص
+.then(data => {
+  console.log("تم الحفظ:", data);
 
-    // بعد التأكيد، فتح واتساب
-    window.open(
-      "https://wa.me/" + agencyPhone + "?text=" + encodeURIComponent(message),
-      "_blank"
-    );
+  // فتح واتساب بعد نجاح الحفظ
+  window.open(
+    "https://wa.me/" + agencyPhone + "?text=" + encodeURIComponent(message),
+    "_blank"
+  );
 
-    alert("تم حفظ بياناتك وفتح واتساب. اضغط إرسال داخل واتساب لإتمام العملية.");
-    closeWaModal();
-  })
-  .catch(err => {
-    console.error("خطأ في إرسال البيانات:", err);
-    alert("حدث خطأ أثناء إرسال بياناتك. يرجى المحاولة لاحقًا.");
-  });
-}
+  alert("✅ تم حفظ بياناتك بنجاح، سيتم الآن فتح واتساب");
+  closeWaModal();
+})
+.catch(err => {
+  console.error("خطأ:", err);
+  alert("❌ حدث خطأ أثناء الإرسال، حاول لاحقًا");
+});
 
  
 fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {  
