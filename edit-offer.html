@@ -354,7 +354,12 @@ button{
 </div>
 
 <button class="save" onclick="saveEdit()">💾 حفظ التعديلات</button> <button class="close" onclick="closeModal()">إلغاء</button> </div> </div>
-<script>
+
+	
+	
+	
+	
+	<script>
 const API="https://script.google.com/macros/s/AKfycbz-uqNculXyfWmLik8OY6gRYIr75cswjomrJRjs25JFZccIkulsiRslXw3woZ6SPDEiMA/exec";
 
 
@@ -427,25 +432,6 @@ function loadOffers(){
 }
 
 
-const agencySelect = document.getElementById("agencySelect");
-const licenseInput = document.getElementById("licenseInput");
-const box = document.getElementById("offersBox");
-const msg = document.getElementById("msg");
-
-let allOffers = [];
-
-/* تحميل البيانات */
-fetch(API)
-  .then(r => r.json())
-  .then(data => {
-    allOffers = data;
-    [...new Set(data.map(o => o.agency))].forEach(a => {
-      if (a) agencySelect.innerHTML += `<option>${a}</option>`;
-    });
-  });
-
-/* عرض العروض */
-function loadOffers(){
   const agency = agencySelect.value.trim();
   const inputLicense = licenseInput.value.trim();
 
