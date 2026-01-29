@@ -860,7 +860,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <span class="remain">${getRemainingText(o.date)}</span>
   </span>
 </div>
-</div>
+
 
     <div>🏨 الفندق: ${o.hotel || "-"}</div>
     <div>⏱️ المدة: ${o.duration || "-"}</div>
@@ -873,7 +873,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
     <div class="price-box">
       <div class="price">💰 ${o.group} دج</div>
       
-...
+
     <button class="wa-price" onclick="openWaModalByIndex(${offersData.indexOf(o)})">
       <i class="fab fa-whatsapp"></i>
     </button>
