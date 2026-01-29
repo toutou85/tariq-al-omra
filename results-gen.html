@@ -1002,55 +1002,54 @@ function closeWaModal(){
   
 // تأكيد الإرسال  
 function confirmWhatsApp(){  
-  
-  const first = waFirst.value.trim();  
-  const last  = waLast.value.trim();  
-  const phone = waPhone.value.trim();  
-  
-  if(!first || !last || !phone){  
+  // اقرأ القيم مباشرة من DOM عند كل مرة
+  const waFirst = document.getElementById("waFirst").value.trim();
+  const waLast  = document.getElementById("waLast").value.trim();
+  const waPhone = document.getElementById("waPhone").value.trim();
+
+  if(!waFirst || !waLast || !waPhone){  
     alert("يرجى ملء جميع الحقول");  
     return;  
   }  
-  const clientName  = first + " " + last;  
-  const clientPhone = phone;  
-  
-  // 📞 رقم الوكالة من Google Sheets  
+
+  const clientName  = waFirst + " " + waLast;  
+  const clientPhone = waPhone;  
+
   let agencyPhone = String(waOffer.phone || "").replace(/\D/g,"");  
-  
+
   if(!agencyPhone){  
     alert("رقم هاتف الوكالة غير متوفر");  
     return;  
   }  
-  
+
   if(!agencyPhone.startsWith("213")){  
     agencyPhone = "213" + agencyPhone;  
   }  
-  
-  // 📩 رسالة واتساب  
+
   const message = `  
 السلام عليكم ورحمة الله وبركاته 🌿  
-  
+
 أنا ${clientName}  
 رقم هاتفي: ${clientPhone}  
-  
+
 أرغب في التسجيل في عرض عمرة من موقع *طريق العمرة* 🕋  
-  
+
 ▪️ الوكالة: ${waOffer.agency}  
 ▪️ العرض: ${waOffer.offer}  
 ▪️ تاريخ الإقلاع: ${formatDate(waOffer.date)}  
 ▪️ الفندق: ${waOffer.hotel || "-"}  
 ▪️ السعر: ${waOffer.group} دج  
 `;  
-  
-  // 1️⃣ فتح واتساب  
-  window.open(  
-    "https://wa.me/" + agencyPhone + "?text=" + encodeURIComponent(message),  
-    "_blank"  
+
+  // فتح واتساب
+  window.open(
+    "https://wa.me/" + agencyPhone + "?text=" + encodeURIComponent(message),
+    "_blank"
   );  
-  
-  // 2️⃣ إرسال إلى Google Sheets + Email  
-  fetch(  
-    "https://script.google.com/macros/s/AKfycbzvVAO9qu-bwwJxg9jOJZyzwhRQdZf-FcJCZ0Uw1FcvqFD25JT978PPerBo7EuCk2_L/exec",  
+
+  // إرسال إلى Google Sheets
+  fetch(
+    "https://script.google.com/macros/s/AKfycbzvVAO9qu-bwwJxg9jOJZyzwhRQdZf-FcJCZ0Uw1FcvqFD25JT978PPerBo7EuCk2_L/exec",
     {  
       method: "POST",  
       headers: { "Content-Type": "application/json" },  
@@ -1066,10 +1065,11 @@ function confirmWhatsApp(){
       })  
     }  
   );  
-  
+
   closeWaModal();  
-}    
-  
+}
+
+ 
 fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {  
   cache: "no-store"  
 })  
