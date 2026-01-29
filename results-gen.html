@@ -714,17 +714,17 @@ color:#000 !important;
 </div>
 
 </div> 
-  function openWaModalByIndex(i){
-  const o = offersData[i];
-  if(!o) return;
-  openWaModal(o);
-}
+ 
 
   <script>  
 const OFFERS_API="https://script.google.com/macros/s/AKfycbwN-Mgn61HDqdCD2_shOx3nRAcW-O8GxquhSpxaSX0Az00W1W_48lVFCowDqF41ZN_7dQ/exec";  
   
 let offersData=[], selectedOffer=null;  
-  
+   function openWaModalByIndex(i){
+  const o = offersData[i];
+  if(!o) return;
+  openWaModal(o);
+}
 const fAgency=document.getElementById("fAgency");  
 const fState=document.getElementById("fState");  
 const fDate=document.getElementById("fDate");  
