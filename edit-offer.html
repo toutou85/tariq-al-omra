@@ -343,13 +343,26 @@ button{
 
 <button class="save" onclick="saveEdit()">💾 حفظ التعديلات</button> <button class="close" onclick="closeModal()">إلغاء</button> </div> </div>
 
-	
-	
-	
-	
 	<script>
-const API="https://script.google.com/macros/s/AKfycbz-uqNculXyfWmLik8OY6gRYIr75cswjomrJRjs25JFZccIkulsiRslXw3woZ6SPDEiMA/exec";
+const API = "https://script.google.com/macros/s/AKfycbz-uqNculXyfWmLik8OY6gRYIr75cswjomrJRjs25JFZccIkulsiRslXw3woZ6SPDEiMA/exec";
 
+// عناصر الصفحة
+const agencySelect = document.getElementById("agencySelect");
+const licenseInput = document.getElementById("licenseInput");
+const box = document.getElementById("offersBox");
+const msg = document.getElementById("msg");
+const editRow = document.getElementById("editRow");
+const offer = document.getElementById("offer");
+const date = document.getElementById("date");
+const duration = document.getElementById("duration");
+const flightType = document.getElementById("flightType");
+const airport = document.getElementById("airport");
+const group = document.getElementById("group");
+const four = document.getElementById("four");
+const three = document.getElementById("three");
+const two = document.getElementById("two");
+const hotel = document.getElementById("hotel");
+const editModal = document.getElementById("editModal");
 
 const agencyLogo = document.getElementById("agencyLogo");
 const agencyLogoPreview = document.getElementById("agencyLogoPreview");
@@ -358,79 +371,75 @@ const airlineEdit = document.getElementById("airlineEdit");
 const airlineLogoEdit = document.getElementById("airlineLogoEdit");
 const airlineLogoPreview = document.getElementById("airlineLogoPreview");
 
-
-let allOffers=[];
+let allOffers = [];
 
 /* تحميل البيانات */
-fetch(API).then(r=>r.json()).then(data=>{
-  allOffers=data;
-  [...new Set(data.map(o=>o.agency))].forEach(a=>{
-    if(a) agencySelect.innerHTML+=`<option>${a}</option>`;
+fetch(API)
+  .then(r => r.json())
+  .then(data => {
+    allOffers = data;
+    [...new Set(data.map(o => o.agency))].forEach(a => {
+      if (a) agencySelect.innerHTML += `<option>${a}</option>`;
+    });
   });
-});
 
 /* عرض العروض */
-function loadOffers(){
+function loadOffers() {
   const agency = agencySelect.value.trim();
   const inputLicense = licenseInput.value.trim();
 
   box.innerHTML = "";
   msg.textContent = "";
 
-  if(!agency || !inputLicense){
+  if (!agency || !inputLicense) {
     msg.textContent = "⚠️ يرجى اختيار الوكالة وإدخال رقم رخصة الوكالة";
     return;
   }
 
-  const agencyRow = allOffers.find(o =>
-    String(o.agency || "").trim() === agency
-  );
+  const agencyRow = allOffers.find(o => String(o.agency || "").trim() === agency);
 
-  if(!agencyRow){
+  if (!agencyRow) {
     msg.textContent = "❌ الوكالة غير موجودة";
     return;
   }
 
   const sheetLicense = String(agencyRow.license || "").trim();
-
-  if(sheetLicense !== inputLicense){
+  if (sheetLicense !== inputLicense) {
     msg.textContent = "❌ رقم الرخصة غير صحيح";
     return;
   }
 
-  const offers = allOffers.filter(o =>
-    String(o.agency || "").trim() === agency
-  );
-
-  if(!offers.length){
+  const offers = allOffers.filter(o => String(o.agency || "").trim() === agency);
+  if (!offers.length) {
     msg.textContent = "❌ لا توجد عروض";
     return;
   }
 
-  offers.forEach(o=>{
-    box.innerHTML += `
-      <div class="offer">
-        <b>${o.offer}</b><br>
-        <small>📅 ${o.date} | ⏱ ${o.duration}</small><br>
-        <small>🏨 ${o.hotel}</small>
-        <div class="actions">
-          <button class="edit" onclick='openEdit(${JSON.stringify(o)})'>✏️ تعديل</button>
-          <button class="delete" onclick="deleteOffer(${o.row})">🗑️ حذف</button>
-        </div>
+  offers.forEach(o => {
+    const div = document.createElement("div");
+    div.className = "offer";
+    div.innerHTML = `
+      <b>${o.offer}</b><br>
+      <small>📅 ${o.date} | ⏱ ${o.duration}</small><br>
+      <small>🏨 ${o.hotel}</small>
+      <div class="actions">
+        <button class="edit">✏️ تعديل</button>
+        <button class="delete">🗑️ حذف</button>
       </div>
     `;
+    // زر التعديل
+    div.querySelector(".edit").addEventListener("click", () => openEdit(o));
+    // زر الحذف
+    div.querySelector(".delete").addEventListener("click", () => deleteOffer(o.row));
+
+    box.appendChild(div);
   });
 }
 
-
-  
-
 /* فتح نافذة التعديل */
-function openEdit(o){
-  // رقم الصف
+function openEdit(o) {
   editRow.value = o.row || "";
 
-  // بيانات العرض
   offer.value = o.offer || "";
   date.value = o.date || "";
   duration.value = o.duration || "";
@@ -442,98 +451,81 @@ function openEdit(o){
   two.value = o.two || "";
   hotel.value = o.hotel || "";
 
-  /* ===== شعار الوكالة ===== */
+  // شعار الوكالة
   agencyLogo.value = o.agencyLogo || "";
+  agencyLogoPreview.src = o.agencyLogo || "";
+  agencyLogoPreview.style.display = o.agencyLogo ? "block" : "none";
 
-  if (o.agencyLogo) {
-    agencyLogoPreview.src = o.agencyLogo;
-    agencyLogoPreview.style.display = "block";
-  } else {
-    agencyLogoPreview.style.display = "none";
-  }
-
-  /* ===== شركة الطيران + شعارها ===== */
+  // شركة الطيران + شعارها
   airlineEdit.value = o.airline || "";
   airlineLogoEdit.value = o.airlineLogo || "";
+  airlineLogoPreview.src = o.airlineLogo || "";
+  airlineLogoPreview.style.display = o.airlineLogo ? "block" : "none";
 
-  if (o.airlineLogo) {
-    airlineLogoPreview.src = o.airlineLogo;
-    airlineLogoPreview.style.display = "block";
-  } else {
-    airlineLogoPreview.style.display = "none";
-  }
-
-  // فتح المودال في الأخير
   editModal.style.display = "flex";
 }
 
-
-function closeModal(){
+/* إغلاق المودال */
+function closeModal() {
   editModal.style.display = "none";
 }
 
 /* حفظ التعديلات */
-function saveEdit(){
+function saveEdit() {
   const fd = new FormData();
-  fd.append("action","update");
+  fd.append("action", "update");
   fd.append("row", editRow.value);
   fd.append("license", licenseInput.value);
 
-  ["offer","date","duration","flightType","airport","airline",
-   "group","four","three","two","hotel"]
-  .forEach(id => fd.append(id, document.getElementById(id).value));
+  ["offer","date","duration","flightType","airport",
+   "group","four","three","two","hotel"].forEach(id =>
+    fd.append(id, document.getElementById(id).value)
+  );
 
-  fetch(API,{method:"POST",body:fd})
-    .then(r=>r.text())
-    .then(res=>{
+  // إضافة شعارات
+  fd.append("agencyLogo", agencyLogo.value);
+  fd.append("airline", airlineEdit.value);
+  fd.append("airlineLogo", airlineLogoEdit.value);
+
+  fetch(API, { method: "POST", body: fd })
+    .then(r => r.text())
+    .then(res => {
       alert(res);
       location.reload();
     });
 }
 
 /* حذف العرض */
-function deleteOffer(row){
-  if(!confirm("هل أنت متأكد؟")) return;
+function deleteOffer(row) {
+  if (!confirm("هل أنت متأكد؟")) return;
 
   const fd = new FormData();
-  fd.append("action","delete");
+  fd.append("action", "delete");
   fd.append("row", row);
   fd.append("license", licenseInput.value);
-fd.append("agencyLogo", agencyLogo.value);
-fd.append("airlineLogo", airlineLogoEdit.value);
 
-  fetch(API,{method:"POST",body:fd})
-    .then(r=>r.text())
-    .then(res=>{
+  fetch(API, { method: "POST", body: fd })
+    .then(r => r.text())
+    .then(res => {
       alert(res);
       location.reload();
     });
 }
 
-/* نافذة الترحيب */
-function openWelcome(){
-  document.getElementById("welcomeModal").style.display="flex";
-}
-function closeWelcome(){
-  document.getElementById("welcomeModal").style.display="none";
-}
-	// معاينة شعار الوكالة عند الكتابة
-
-
-agencyLogoInput.addEventListener("input", () => {
-  if (agencyLogoInput.value.trim()) {
-    agencyLogoPreview.src = agencyLogoInput.value.trim();
+/* معاينة شعار الوكالة عند الكتابة */
+agencyLogo.addEventListener("input", () => {
+  if (agencyLogo.value.trim()) {
+    agencyLogoPreview.src = agencyLogo.value.trim();
     agencyLogoPreview.style.display = "block";
   } else {
     agencyLogoPreview.style.display = "none";
   }
 });
-	
 
+/* تغيير شعار شركة الطيران عند اختيار شركة */
 airlineEdit.addEventListener("change", () => {
   const opt = airlineEdit.selectedOptions[0];
   const logo = opt.getAttribute("data-logo");
-
   if (logo) {
     airlineLogoEdit.value = logo;
     airlineLogoPreview.src = logo;
@@ -543,7 +535,19 @@ airlineEdit.addEventListener("change", () => {
   }
 });
 
+/* نافذة الترحيب */
+function openWelcome() {
+  document.getElementById("welcomeModal").style.display = "flex";
+}
+function closeWelcome() {
+  document.getElementById("welcomeModal").style.display = "none";
+}
 </script>
+
+	
+	
+	
+	
 
 	<div id="welcomeModal" style="
   display:none;
