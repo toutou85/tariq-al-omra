@@ -432,54 +432,7 @@ function loadOffers(){
 }
 
 
-  const agency = agencySelect.value.trim();
-  const inputLicense = licenseInput.value.trim();
-
-  box.innerHTML = "";
-  msg.textContent = "";
-
-  if(!agency || !inputLicense){
-    msg.textContent = "⚠️ يرجى اختيار الوكالة وإدخال رقم الرخصة";
-    return;
-  }
-
-  const agencyRow = allOffers.find(o =>
-    String(o.agency || "").trim() === agency
-  );
-
-  if(!agencyRow){
-    msg.textContent = "❌ الوكالة غير موجودة";
-    return;
-  }
-
-  if(String(agencyRow.license || "").trim() !== inputLicense){
-    msg.textContent = "❌ رقم الرخصة غير صحيح";
-    return;
-  }
-
-  const offers = allOffers.filter(o =>
-    String(o.agency || "").trim() === agency
-  );
-
-  if(!offers.length){
-    msg.textContent = "❌ لا توجد عروض";
-    return;
-  }
-
-  offers.forEach(o=>{
-    box.innerHTML += `
-      <div class="offer">
-        <b>${o.offer}</b><br>
-        <small>📅 ${o.date} | ⏱ ${o.duration}</small><br>
-        <small>🏨 ${o.hotel}</small>
-        <div class="actions">
-          <button class="edit" onclick='openEdit(${JSON.stringify(o)})'>✏️ تعديل</button>
-          <button class="delete" onclick="deleteOffer(${o.row})">🗑️ حذف</button>
-        </div>
-      </div>
-    `;
-  });
-}
+  
 
 /* فتح نافذة التعديل */
 function openEdit(o){
