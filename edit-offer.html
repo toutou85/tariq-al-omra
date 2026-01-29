@@ -427,9 +427,22 @@ function loadOffers(){
 }
 
 
-function openEdit(o){ editRow.value=o.row; offer.value=o.offer||""; date.value=o.date||""; 
-										 duration.value=o.duration||""; flightType.value=o.flightType||""; airport.value=o.airport||"";
-										 airline.value=o.airline||""; group.value=o.group||""; four.value=o.four||""; three.value=o.three||""; two.value=o.two||""; hotel.value=o.hotel||""; editModal.style.display="flex"; } function closeModal(){editModal.style.display="none";}
+function openEdit(o){
+  editRow.value = o.row;
+  offer.value = o.offer || "";
+  date.value = o.date || "";
+  duration.value = o.duration || "";
+  flightType.value = o.flightType || "";
+  airport.value = o.airport || "";
+  airline.value = o.airline || "";
+  group.value = o.group || "";
+  four.value = o.four || "";
+  three.value = o.three || "";
+  two.value = o.two || "";
+  hotel.value = o.hotel || "";
+
+  editModal.style.display = "flex";
+}
 	function saveEdit(){ const fd=new FormData();
 						fd.append("action","update");
 						fd.append("row",editRow.value); 
@@ -446,13 +459,7 @@ function openEdit(o){ editRow.value=o.row; offer.value=o.offer||""; date.value=o
   fd.append("row", row);
   fd.append("license", licenseInput.value);
 
-  fetch(API,{method:"POST",body:fd})
-    .then(r=>r.text())
-    .then(res=>{
-      alert(res);
-      location.reload();
-    });
-}
+ 
 																																	fetch(API,{method:"POST",body:fd}) 
 																																								.then(r=>r.text()) .then(res=>{ 
 	function openWelcome(){
