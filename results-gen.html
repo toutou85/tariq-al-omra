@@ -1026,7 +1026,8 @@ function confirmWhatsApp() {
   const message = `السلام عليكم 🌿\n\nأنا ${clientName}\nرقم هاتفي: ${clientPhone}\nأرغب في التسجيل في عرض عمرة: ${waOffer.offer} من الوكالة ${waOffer.agency}\nتاريخ الإقلاع: ${formatDate(waOffer.date)}\nالفندق: ${waOffer.hotel || "-"}\nالسعر: ${waOffer.group} دج`;
 
 // إرسال البيانات إلى Google Sheets
-fetch("https://script.google.com/macros/s/AKfycby2vkrXWjS48B_ByL7rS_SJurMK1HuNP-oMj6ih2gk-2ZBorxO9aDRDTmeDjoSsNtY/exec", {
+// إرسال البيانات إلى Google Sheets + Email
+fetch("https://script.google.com/macros/s/AKfycbxwSqMkAfsX8lFz3OvO_y8ANKQLNPtXvBq9c-CDx9-GBJfxCa-3S6jYKN4uPMW520Qt/exec", {
   method: "POST",
   headers: {
     "Content-Type": "application/json"
@@ -1044,20 +1045,23 @@ fetch("https://script.google.com/macros/s/AKfycby2vkrXWjS48B_ByL7rS_SJurMK1HuNP-
 })
 .then(res => res.text()) // لأن Apps Script يرجع نص
 .then(data => {
+
   console.log("تم الحفظ:", data);
 
-  // فتح واتساب بعد نجاح الحفظ
-  window.open(
-    "https://wa.me/" + agencyPhone + "?text=" + encodeURIComponent(message),
-    "_blank"
-  );
+  // بعد النجاح ➜ فتح واتساب
+  const waURL =
+    "https://wa.me/" +
+    agencyPhone +
+    "?text=" +
+    encodeURIComponent(message);
 
-  alert("✅ تم حفظ بياناتك بنجاح، سيتم الآن فتح واتساب");
+  window.open(waURL, "_blank");
+
   closeWaModal();
 })
 .catch(err => {
   console.error("خطأ:", err);
-  alert("❌ حدث خطأ أثناء الإرسال، حاول لاحقًا");
+  alert("❌ حدث خطأ أثناء إرسال الطلب، حاول لاحقًا");
 });
 
  
