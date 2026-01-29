@@ -734,11 +734,19 @@ function formatDate(d){
   return d ? new Date(d).toLocaleDateString("ar-DZ") : "-";  
 }  
   
-fetch(OFFERS_API).then(r=>r.json()).then(data=>{  
-  offersData=data;  
-  fillFilters();  
-  render();  
-});  
+fetch(OFFERS_API)
+  .then(r => r.text())
+  .then(txt => {
+    const data = JSON.parse(txt);
+    offersData = data;
+    fillFilters();
+    render();
+  })
+  .catch(err => {
+    console.error("خطأ تحميل العروض:", err);
+    offers.innerHTML = "❌ فشل تحميل العروض";
+  });
+
   
 function fillFilters(){  
   const A=new Set(),S=new Set(),D=new Set(), P=new Set();  
