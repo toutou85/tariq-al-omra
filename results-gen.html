@@ -734,19 +734,11 @@ function formatDate(d){
   return d ? new Date(d).toLocaleDateString("ar-DZ") : "-";  
 }  
   
-fetch(OFFERS_API)
-  .then(r => r.text())
-  .then(txt => {
-    const data = JSON.parse(txt);
-    offersData = data;
-    fillFilters();
-    render();
-  })
-  .catch(err => {
-    console.error("خطأ تحميل العروض:", err);
-    offers.innerHTML = "❌ فشل تحميل العروض";
-  });
-
+fetch(OFFERS_API).then(r=>r.json()).then(data=>{  
+  offersData=data;  
+  fillFilters();  
+  render();  
+});  
   
 function fillFilters(){  
   const A=new Set(),S=new Set(),D=new Set(), P=new Set();  
@@ -1032,44 +1024,15 @@ function confirmWhatsApp() {
 
   const message = `السلام عليكم 🌿\n\nأنا ${clientName}\nرقم هاتفي: ${clientPhone}\nأرغب في التسجيل في عرض عمرة: ${waOffer.offer} من الوكالة ${waOffer.agency}\nتاريخ الإقلاع: ${formatDate(waOffer.date)}\nالفندق: ${waOffer.hotel || "-"}\nالسعر: ${waOffer.group} دج`;
 
-// إرسال البيانات إلى Google Sheets
-// إرسال البيانات إلى Google Sheets + Email
-fetch("https://script.google.com/macros/s/AKfycbxwSqMkAfsX8lFz3OvO_y8ANKQLNPtXvBq9c-CDx9-GBJfxCa-3S6jYKN4uPMW520Qt/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    agency: waOffer.agency,
-    offer: waOffer.offer,
-    date: waOffer.date,
-    hotel: waOffer.hotel,
-    price: waOffer.group,
-    agencyPhone: agencyPhone,
-    clientName: clientName,
-    clientPhone: clientPhone
-  })
-})
-.then(res => res.text()) // لأن Apps Script يرجع نص
-.then(data => {
 
-  console.log("تم الحفظ:", data);
 
-  // بعد النجاح ➜ فتح واتساب
-  const waURL =
-    "https://wa.me/" +
-    agencyPhone +
-    "?text=" +
-    encodeURIComponent(message);
 
-  window.open(waURL, "_blank");
 
-  closeWaModal();
-})
-.catch(err => {
-  console.error("خطأ:", err);
-  alert("❌ حدث خطأ أثناء إرسال الطلب، حاول لاحقًا");
-});
+
+
+
+
+    
 
  
 fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {  
