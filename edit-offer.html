@@ -355,7 +355,7 @@ button{
 
 <button class="save" onclick="saveEdit()">💾 حفظ التعديلات</button> <button class="close" onclick="closeModal()">إلغاء</button> </div> </div>
 <script>
-const API="https://script.google.com/macros/s/AKfycbzn8J1EVx6qduv_okNTSWA6G5yQHgCDAUIiEjN6ySKYflNafH1Why7Hh0pCdBsB-MG9tg/exec";
+const API="https://script.google.com/macros/s/AKfycbz-uqNculXyfWmLik8OY6gRYIr75cswjomrJRjs25JFZccIkulsiRslXw3woZ6SPDEiMA/exec";
 
 const agencySelect=document.getElementById("agencySelect");
 const phoneInput=document.getElementById("phoneInput");
@@ -380,8 +380,8 @@ function loadOffers(){
   box.innerHTML = "";
   msg.textContent = "";
 
-  if(!agency || !phone){
-    msg.textContent = "⚠️ يرجى اختيار الوكالة وإدخال رقم الهاتف";
+  if(!agency || !license){
+    msg.textContent = "⚠️ يرجى اختيار الوكالة وإدخال رقم رخصة الوكالة";
     return;
   }
 
