@@ -889,9 +889,10 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
   </div>
 
   <div class="card-actions">
-    <button onclick='openDetails(${JSON.stringify(o)})'>ℹ️ التفاصيل</button>
-    <button onclick='shareOffer(${JSON.stringify(o)})'>📤 مشاركة</button>
-    <button onclick='openRegister(${JSON.stringify(o)})'>📩 تسجيل</button>
+ <button onclick="openDetailsByIndex(${offersData.indexOf(o)})">ℹ️ التفاصيل</button>
+<button onclick="shareOfferByIndex(${offersData.indexOf(o)})">📤 مشاركة</button>
+<button onclick="openRegisterByIndex(${offersData.indexOf(o)})">📩 تسجيل</button>
+
   </div>
 `;
       r.appendChild(c);  
