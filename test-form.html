@@ -1049,23 +1049,25 @@ function confirmWhatsApp(){
   );  
   
   // 2️⃣ إرسال إلى Google Sheets + Email  
-  fetch(  
-    "https://script.google.com/macros/s/AKfycbzvVAO9qu-bwwJxg9jOJZyzwhRQdZf-FcJCZ0Uw1FcvqFD25JT978PPerBo7EuCk2_L/exec",  
-    {  
-      method: "POST",  
-      headers: { "Content-Type": "application/json" },  
-      body: JSON.stringify({  
-        agency: waOffer.agency,  
-        offer: waOffer.offer,  
-        date: waOffer.date,  
-        hotel: waOffer.hotel,  
-        price: waOffer.group,  
-        agencyPhone: agencyPhone,  
-        clientName: clientName,  
-        clientPhone: clientPhone  
-      })  
-    }  
-  );  
+const formData = new URLSearchParams({
+  agency: waOffer.agency || "",
+  offer: waOffer.offer || "",
+  date: waOffer.date || "",
+  hotel: waOffer.hotel || "",
+  price: waOffer.group || "",
+  agencyPhone: agencyPhone || "",
+  clientName: clientName,
+  clientPhone: clientPhone
+});
+
+fetch(
+  "https://script.google.com/macros/s/AKfycbwi8qM7A9JJMq93IzsC6-m10w0XE53IFyPWpTeJ2nPHwGOUVCqJVT6A23dUqEpnG9X_/exec",
+  {
+    method: "POST",
+    body: formData
+  }
+);
+
   
   closeWaModal();  
 }    
