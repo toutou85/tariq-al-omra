@@ -200,8 +200,9 @@ button{
 <label>اختر الوكالة</label>
 <select id="agencySelect"><option value="">-- اختر --</option></select>
 
-<label>رقم هاتف الوكالة</label>
-<input id="phoneInput" placeholder="رقم الهاتف">
+<label>رقم الرخصة</label>
+<input id="licenseInput" placeholder="رقم الرخصة">
+
 
 <button class="main" onclick="loadOffers()">🔐 دخول</button>
 <p class="msg" id="msg"></p>
@@ -384,26 +385,24 @@ function loadOffers(){
     return;
   }
 
-  // توحيد رقم الهاتف
-  const inputPhone = phone.replace(/\D/g, "");
+const inputLicense = document.getElementById("licenseInput").value.trim();
 
-  // استخراج أول رقم هاتف مرتبط بهذه الوكالة من البيانات
-  const agencyRow = allOffers.find(o =>
-    String(o.agency || "").trim() === agency
-  );
+const agencyRow = allOffers.find(o =>
+  String(o.agency || "").trim() === agency
+);
 
-  if(!agencyRow){
-    msg.textContent = "❌ الوكالة غير موجودة";
-    return;
-  }
+if(!agencyRow){
+  msg.textContent = "❌ الوكالة غير موجودة";
+  return;
+}
 
-  const sheetPhone = String(agencyRow.phone || "").replace(/\D/g, "");
+// الرقم الموجود في الـ Sheet
+const sheetLicense = String(agencyRow.license || "").trim();
 
-  // التحقق فقط
-  if(sheetPhone !== inputPhone){
-    msg.textContent = "❌ رقم الهاتف غير صحيح";
-    return;
-  }
+if(sheetLicense !== inputLicense){
+  msg.textContent = "❌ رقم الرخصة غير صحيح";
+  return;
+}
 
   // ✅ الفلترة بالوكالة فقط
   const offers = allOffers.filter(o =>
@@ -434,7 +433,13 @@ function loadOffers(){
 
 function openEdit(o){ editRow.value=o.row; offer.value=o.offer||""; date.value=o.date||""; 
 										 duration.value=o.duration||""; flightType.value=o.flightType||""; airport.value=o.airport||"";
-										 airline.value=o.airline||""; group.value=o.group||""; four.value=o.four||""; three.value=o.three||""; two.value=o.two||""; hotel.value=o.hotel||""; editModal.style.display="flex"; } function closeModal(){editModal.style.display="none";} function saveEdit(){ const fd=new FormData(); fd.append("action","update"); fd.append("row",editRow.value); fd.append("phone",phoneInput.value); ["offer","date","duration","flightType","airport","airline", "group","four","three","two","hotel"] .forEach(id=>fd.append(id,document.getElementById(id).value)); fetch(API,{method:"POST",body:fd})
+										 airline.value=o.airline||""; group.value=o.group||""; four.value=o.four||""; three.value=o.three||""; two.value=o.two||""; hotel.value=o.hotel||""; editModal.style.display="flex"; } function closeModal(){editModal.style.display="none";}
+	function saveEdit(){ const fd=new FormData();
+						fd.append("action","update");
+						fd.append("row",editRow.value); 
+					fd.append("license", licenseInput.value);
+ 
+						["offer","date","duration","flightType","airport","airline", "group","four","three","two","hotel"] .forEach(id=>fd.append(id,document.getElementById(id).value)); fetch(API,{method:"POST",body:fd})
 	.then(r=>r.text())
   .then(res=>{ alert(res); location.reload(); }); } function deleteOffer(row){ if(!confirm("هل أنت متأكد؟"))return; const
 	fd=new FormData(); fd.append("action","delete"); fd.append("row",row); fd.append("phone",phoneInput.value); 
