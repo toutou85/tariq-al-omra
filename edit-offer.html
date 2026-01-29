@@ -428,6 +428,79 @@ function loadOffers(){
 
 
 function openEdit(o){
+  editRow.value<script>
+const API="https://script.google.com/macros/s/AKfycbz-uqNculXyfWmLik8OY6gRYIr75cswjomrJRjs25JFZccIkulsiRslXw3woZ6SPDEiMA/exec";
+
+const agencySelect = document.getElementById("agencySelect");
+const licenseInput = document.getElementById("licenseInput");
+const box = document.getElementById("offersBox");
+const msg = document.getElementById("msg");
+
+let allOffers = [];
+
+/* تحميل البيانات */
+fetch(API)
+  .then(r => r.json())
+  .then(data => {
+    allOffers = data;
+    [...new Set(data.map(o => o.agency))].forEach(a => {
+      if (a) agencySelect.innerHTML += `<option>${a}</option>`;
+    });
+  });
+
+/* عرض العروض */
+function loadOffers(){
+  const agency = agencySelect.value.trim();
+  const inputLicense = licenseInput.value.trim();
+
+  box.innerHTML = "";
+  msg.textContent = "";
+
+  if(!agency || !inputLicense){
+    msg.textContent = "⚠️ يرجى اختيار الوكالة وإدخال رقم الرخصة";
+    return;
+  }
+
+  const agencyRow = allOffers.find(o =>
+    String(o.agency || "").trim() === agency
+  );
+
+  if(!agencyRow){
+    msg.textContent = "❌ الوكالة غير موجودة";
+    return;
+  }
+
+  if(String(agencyRow.license || "").trim() !== inputLicense){
+    msg.textContent = "❌ رقم الرخصة غير صحيح";
+    return;
+  }
+
+  const offers = allOffers.filter(o =>
+    String(o.agency || "").trim() === agency
+  );
+
+  if(!offers.length){
+    msg.textContent = "❌ لا توجد عروض";
+    return;
+  }
+
+  offers.forEach(o=>{
+    box.innerHTML += `
+      <div class="offer">
+        <b>${o.offer}</b><br>
+        <small>📅 ${o.date} | ⏱ ${o.duration}</small><br>
+        <small>🏨 ${o.hotel}</small>
+        <div class="actions">
+          <button class="edit" onclick='openEdit(${JSON.stringify(o)})'>✏️ تعديل</button>
+          <button class="delete" onclick="deleteOffer(${o.row})">🗑️ حذف</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+/* فتح نافذة التعديل */
+function openEdit(o){
   editRow.value = o.row;
   offer.value = o.offer || "";
   date.value = o.date || "";
@@ -440,18 +513,34 @@ function openEdit(o){
   three.value = o.three || "";
   two.value = o.two || "";
   hotel.value = o.hotel || "";
-
   editModal.style.display = "flex";
 }
-	function saveEdit(){ const fd=new FormData();
-						fd.append("action","update");
-						fd.append("row",editRow.value); 
-					fd.append("license", licenseInput.value);
- 
-						["offer","date","duration","flightType","airport","airline", "group","four","three","two","hotel"] .forEach(id=>fd.append(id,document.getElementById(id).value)); fetch(API,{method:"POST",body:fd})
-	.then(r=>r.text())
-  .then(res=>{ alert(res); location.reload(); }); }
-	function deleteOffer(row){
+
+function closeModal(){
+  editModal.style.display = "none";
+}
+
+/* حفظ التعديلات */
+function saveEdit(){
+  const fd = new FormData();
+  fd.append("action","update");
+  fd.append("row", editRow.value);
+  fd.append("license", licenseInput.value);
+
+  ["offer","date","duration","flightType","airport","airline",
+   "group","four","three","two","hotel"]
+  .forEach(id => fd.append(id, document.getElementById(id).value));
+
+  fetch(API,{method:"POST",body:fd})
+    .then(r=>r.text())
+    .then(res=>{
+      alert(res);
+      location.reload();
+    });
+}
+
+/* حذف العرض */
+function deleteOffer(row){
   if(!confirm("هل أنت متأكد؟")) return;
 
   const fd = new FormData();
@@ -459,16 +548,23 @@ function openEdit(o){
   fd.append("row", row);
   fd.append("license", licenseInput.value);
 
- 
-																																	fetch(API,{method:"POST",body:fd}) 
-																																								.then(r=>r.text()) .then(res=>{ 
-	function openWelcome(){
+  fetch(API,{method:"POST",body:fd})
+    .then(r=>r.text())
+    .then(res=>{
+      alert(res);
+      location.reload();
+    });
+}
+
+/* نافذة الترحيب */
+function openWelcome(){
   document.getElementById("welcomeModal").style.display="flex";
 }
 function closeWelcome(){
   document.getElementById("welcomeModal").style.display="none";
-}																																								alert(res); location.reload(); }); } 
-</script> 
+}
+</script>
+
 	<div id="welcomeModal" style="
   display:none;
   position:fixed;
