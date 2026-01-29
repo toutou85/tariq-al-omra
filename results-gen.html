@@ -1026,7 +1026,7 @@ function confirmWhatsApp() {
   const message = `السلام عليكم 🌿\n\nأنا ${clientName}\nرقم هاتفي: ${clientPhone}\nأرغب في التسجيل في عرض عمرة: ${waOffer.offer} من الوكالة ${waOffer.agency}\nتاريخ الإقلاع: ${formatDate(waOffer.date)}\nالفندق: ${waOffer.hotel || "-"}\nالسعر: ${waOffer.group} دج`;
 
   // أولاً إرسال البيانات إلى Google Sheets
-  fetch("https://script.google.com/macros/s/AKfycbw0sTZo-ZgdI6s0heL41yRVN85hj47xNKDtZOITE-oFkW58_8MCruiPjV61p5KwNvf5/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbz8tQ_SGiPkawL3qZgnh7OZMucmbQeBsz2LjIult2V2jrIZqq8bQiykX1uhd-xP0x0g/exec", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
