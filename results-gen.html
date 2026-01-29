@@ -713,7 +713,14 @@ color:#000 !important;
   </div>
 </div>
 
-</div>  <script>  
+</div> 
+  function openWaModalByIndex(i){
+  const o = offersData[i];
+  if(!o) return;
+  openWaModal(o);
+}
+
+  <script>  
 const OFFERS_API="https://script.google.com/macros/s/AKfycbwN-Mgn61HDqdCD2_shOx3nRAcW-O8GxquhSpxaSX0Az00W1W_48lVFCowDqF41ZN_7dQ/exec";  
   
 let offersData=[], selectedOffer=null;  
@@ -878,7 +885,7 @@ grouped[ap].sort((a, b) => new Date(a.date) - new Date(b.date));
       <i class="fab fa-whatsapp"></i>
     </button>
    
-    </div>
+
   </div>
 
   <div class="card-actions">
