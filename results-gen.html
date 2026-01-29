@@ -1001,8 +1001,7 @@ function closeWaModal(){
 }  
   
 // تأكيد الإرسال  
-function confirmWhatsApp(){  
-  // اقرأ القيم مباشرة من DOM عند كل مرة
+function confirmWhatsApp() {
   const waFirst = document.getElementById("waFirst").value.trim();
   const waLast  = document.getElementById("waLast").value.trim();
   const waPhone = document.getElementById("waPhone").value.trim();
@@ -1014,59 +1013,50 @@ function confirmWhatsApp(){
 
   const clientName  = waFirst + " " + waLast;  
   const clientPhone = waPhone;  
-
   let agencyPhone = String(waOffer.phone || "").replace(/\D/g,"");  
 
   if(!agencyPhone){  
     alert("رقم هاتف الوكالة غير متوفر");  
     return;  
   }  
-
   if(!agencyPhone.startsWith("213")){  
     agencyPhone = "213" + agencyPhone;  
   }  
 
-  const message = `  
-السلام عليكم ورحمة الله وبركاته 🌿  
+  const message = `السلام عليكم 🌿\n\nأنا ${clientName}\nرقم هاتفي: ${clientPhone}\nأرغب في التسجيل في عرض عمرة: ${waOffer.offer} من الوكالة ${waOffer.agency}\nتاريخ الإقلاع: ${formatDate(waOffer.date)}\nالفندق: ${waOffer.hotel || "-"}\nالسعر: ${waOffer.group} دج`;
 
-أنا ${clientName}  
-رقم هاتفي: ${clientPhone}  
+  // أولاً إرسال البيانات إلى Google Sheets
+  fetch("https://script.google.com/macros/s/AKfycbw0sTZo-ZgdI6s0heL41yRVN85hj47xNKDtZOITE-oFkW58_8MCruiPjV61p5KwNvf5/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      agency: waOffer.agency,
+      offer: waOffer.offer,
+      date: waOffer.date,
+      hotel: waOffer.hotel,
+      price: waOffer.group,
+      agencyPhone: agencyPhone,
+      clientName: clientName,
+      clientPhone: clientPhone
+    })
+  })
+  .then(res => res.text())
+  .then(data => {
+    console.log("تم الإرسال إلى Google Sheets:", data);
 
-أرغب في التسجيل في عرض عمرة من موقع *طريق العمرة* 🕋  
+    // بعد التأكيد، فتح واتساب
+    window.open(
+      "https://wa.me/" + agencyPhone + "?text=" + encodeURIComponent(message),
+      "_blank"
+    );
 
-▪️ الوكالة: ${waOffer.agency}  
-▪️ العرض: ${waOffer.offer}  
-▪️ تاريخ الإقلاع: ${formatDate(waOffer.date)}  
-▪️ الفندق: ${waOffer.hotel || "-"}  
-▪️ السعر: ${waOffer.group} دج  
-`;  
-
-  // فتح واتساب
-  window.open(
-    "https://wa.me/" + agencyPhone + "?text=" + encodeURIComponent(message),
-    "_blank"
-  );  
-
-  // إرسال إلى Google Sheets
-  fetch(
-    "https://script.google.com/macros/s/AKfycbw0sTZo-ZgdI6s0heL41yRVN85hj47xNKDtZOITE-oFkW58_8MCruiPjV61p5KwNvf5/exec",
-    {  
-      method: "POST",  
-      headers: { "Content-Type": "application/json" },  
-      body: JSON.stringify({  
-        agency: waOffer.agency,  
-        offer: waOffer.offer,  
-        date: waOffer.date,  
-        hotel: waOffer.hotel,  
-        price: waOffer.group,  
-        agencyPhone: agencyPhone,  
-        clientName: clientName,  
-        clientPhone: clientPhone  
-      })  
-    }  
-  );  
-
-  closeWaModal();  
+    alert("تم حفظ بياناتك وفتح واتساب. اضغط إرسال داخل واتساب لإتمام العملية.");
+    closeWaModal();
+  })
+  .catch(err => {
+    console.error("خطأ في إرسال البيانات:", err);
+    alert("حدث خطأ أثناء إرسال بياناتك. يرجى المحاولة لاحقًا.");
+  });
 }
 
  
