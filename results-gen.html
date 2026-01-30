@@ -806,6 +806,17 @@ function getDateStatus(dateStr){
   if(diff > 1)  return `⏳ متبقي ${diff} يوم`;
   return "⛔ تاريخ منقضي";
 }
+function openDetailsByIndex(i) {
+  openDetails(offersData[i]);
+}
+
+function shareOfferByIndex(i) {
+  shareOffer(offersData[i]);
+}
+
+function openRegisterByIndex(i) {
+  openRegister(offersData[i]);
+}
 
 function render(){  
   offers.innerHTML="";  
