@@ -624,7 +624,26 @@ color:#000 !important;
 
 }
 
+/* === FIX MODAL MOBILE === */
+#detailsModal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  z-index:99999; /* ⬅️ أعلى من كل شيء */
+}
 
+#detailsModal .modal-box{
+  max-height:85vh;        /* ⬅️ مهم للهاتف */
+  overflow-y:auto;        /* ⬅️ سكرول */
+  -webkit-overflow-scrolling:touch;
+}
+@media (max-width:768px){
+  .airport-row,
+  .card{
+    overflow:hidden !important;
+  }
+}
 
  
 </style> 
