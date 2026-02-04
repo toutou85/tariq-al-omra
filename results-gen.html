@@ -306,11 +306,17 @@ overflow:visible;   /* ✅ فقط هنا */
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
 }
-  @media (max-width:768px){
-  .airport-row,
-  .card{
-    overflow:hidden !important;
+  
+@media (max-width:768px){
+  .airport-row{
+  scroll-snap-type:x mandatory;
+    overflow-y:visible !important;
   }
+
+  
+.card{
+  scroll-snap-align:start;
+}
 
 .modal-box input{  
   width:100%;  
