@@ -47,7 +47,7 @@
       color: white;
     }
 
-    .btn-primary {
+    .btn-primary, .btn-primary:focus {
       display: inline-block;
       margin: 20px auto 10px;
       background: #0b6b61;
@@ -58,6 +58,8 @@
       font-size: 1.1rem;
       font-weight: bold;
       width: 70%;
+      border: none;
+      cursor: pointer;
     }
     .btn-primary:hover { background: #094c45; }
 
@@ -101,6 +103,9 @@
       border-radius: 8px;  
       box-shadow: 0 3px 8px rgba(0,0,0,0.05);  
     }  
+
+    form label { display: block; margin: 10px 0; text-align: right; }
+    form input, form select { width: 95%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; }
   </style>  
 </head>  
 <body>  
@@ -113,7 +118,6 @@
   <div class="card">  
     <h2>✅ تسجيلات في رحلة الحج هجري / 2026 ميلادي</h2>  
     <p class="emoji">🤲✈️🇩🇿🕋</p>  
-
     <p><strong>اللهم بلغ الجميع مقاصدهم</strong></p>
 
     <h3>🕋 برنامج الحج لعام 2025</h3>
@@ -126,7 +130,6 @@
     <p><strong>📍 المسافة عن الحرم: حوالي 400 متر فقط</strong></p>
 
     <h3>💰 أسعار باقات الحج</h3>
-
     <table>
       <tr>
         <th>نوع الغرفة</th>
@@ -154,10 +157,27 @@
       </tr>
     </table>
 
-    <!-- زر الحجز -->
-    <a href="Hadj.html" class="btn-primary">📝 أحجز الآن</a>
+    <!-- نموذج الحجز -->
+    <form id="bookingForm" style="margin-top:20px;">
+      <label>الاسم الكامل:
+        <input type="text" name="name" required>
+      </label>
+      <label>رقم الهاتف:
+        <input type="text" name="phone" required>
+      </label>
+      <label>نوع الغرفة:
+        <select name="roomType" required>
+          <option value="الغرفة الجماعية">الغرفة الجماعية</option>
+          <option value="الثلاثية - مكة">الثلاثية - مكة</option>
+          <option value="الثلاثية - المدينة">الثلاثية - المدينة</option>
+          <option value="الثنائية - مكة">الثنائية - مكة</option>
+          <option value="الثنائية - المدينة">الثنائية - المدينة</option>
+        </select>
+      </label>
+      <button type="submit" class="btn-primary">📩 إرسال الحجز</button>
+    </form>
 
-    <div style="margin-top:20px;">
+    <div style="margin-top:15px;">
       <a href="index.html" class="btn">🏠 الصفحة الرئيسية</a>  
       <a href="offers.html" class="btn">🕋 تصفح عروض العمرة</a>  
     </div>
@@ -178,6 +198,25 @@
 <footer>  
   © 2025 طريق العمرة — جميع الحقوق محفوظة.  
 </footer>  
+
+<script>
+document.getElementById("bookingForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  var formData = new FormData(this);
+  fetch("https://script.google.com/macros/s/AKfycbzBbvzllSiPJiOyCsDxmphCiVPS5-e83hQ2-NoqRGWSR0sIq4ZGAuLzgg0av_Dac5IG5Q/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(response => response.text())
+  .then(msg => {
+    alert(msg);
+    document.getElementById("bookingForm").reset();
+  })
+  .catch(err => {
+    alert("❌ حدث خطأ، حاول لاحقًا");
+  });
+});
+</script>
 
 </body>  
 </html>
