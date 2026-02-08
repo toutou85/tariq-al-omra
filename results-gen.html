@@ -240,7 +240,7 @@ overflow:visible;   /* ✅ فقط هنا */
 
 .airline-card{
   position:absolute;
-  top:265px;           /* 👈 تحكم في المسافة تحت الغيمة */
+  top:250px;           /* 👈 تحكم في المسافة تحت الغيمة */
   left:15px;
 
   width:92px;
@@ -629,6 +629,12 @@ color:#000 !important;
     margin-bottom:14px;
     text-align:right;
   }
+@media (min-width:992px){
+  .agency-logo{
+    width:50px;      /* ⬅️ الحجم الجديد (عدّل الرقم براحتك) */
+    transform:translateX(6px);
+  }
+
 
   /* شعار الطيران */
   .airline-card{
