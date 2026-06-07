@@ -791,6 +791,372 @@
 
     .bottom-nav a .nav-icon { font-size: 1.4em; }
 
-    /* ===== Flag ===== */
     .flag {
-      position
+      position: fixed;
+      bottom: 85px;
+      left: 16px;
+      width: 50px;
+      z-index: 999;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+      animation: flagWave 3s ease-in-out infinite;
+      transform-origin: right center;
+    }
+
+    @keyframes flagWave {
+      0%,100% { transform: rotate(0deg); }
+      25%      { transform: rotate(4deg); }
+      75%      { transform: rotate(-3deg); }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+      .stat-item { padding: 12px 20px; }
+      .stat-num  { font-size: 1.5em; }
+      .section   { padding: 60px 16px; }
+      .cta-banner { padding: 32px 20px; margin: 0 16px; }
+      .quick-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Sidebar Overlay ===== -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <!-- ===== Sidebar ===== -->
+  <aside class="sidebar" id="mySidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">🕋 القائمة الرئيسية</span>
+      <button class="close-btn" onclick="closeSidebar()">×</button>
+    </div>
+    <nav>
+      <a href="index.html"><span class="icon">🏠</span> الرئيسية</a>
+      <a href="offers.html"><span class="icon">🛫</span> عروض العمرة</a>
+      <a href="form.html"><span class="icon">📝</span> سجل في رحلة</a>
+      <a href="upload.html"><span class="icon">📤</span> جواز السفر</a>
+      <a href="hajj-space.html"><span class="icon">🕋</span> فضاء الحج 1447</a>
+      <a href="space.html"><span class="icon">🧾</span> فضاء المعتمر</a>
+      <a href="reviews.html"><span class="icon">💬</span> آراء المعتمرين</a>
+      <a href="achievements.html"><span class="icon">🏅</span> إنجازاتنا</a>
+      <a href="manha.html"><span class="icon">💶</span> منحة سفر</a>
+      <a href="contact.html"><span class="icon">📞</span> اتصل بنا</a>
+      <a href="about.html"><span class="icon">❔</span> من نحن</a>
+    </nav>
+  </aside>
+
+  <!-- ===== Top Bar ===== -->
+  <header class="top-bar" id="topBar">
+    <div class="logo-wrap">
+      <img src="https://res.cloudinary.com/dmc36nijl/image/upload/v1780784017/file_000000007a4871f496e95d1042fe2349_jt6lsc.png" alt="طريق العمرة">
+      <div class="logo-text">
+        طريق العمرة
+        <small>المرشد طه برقيقة</small>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <div class="datetime-pill" id="datetime"></div>
+
+      <a href="notifications.html" style="position:relative; display:inline-block;">
+        <button class="notif-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/1827/1827392.png" alt="إشعارات">
+          <span id="notif-badge">0</span>
+        </button>
+      </a>
+
+      <button class="menu-btn" onclick="openSidebar()">☰</button>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Decorative ring -->
+    <div class="kaaba-ring"></div>
+
+    <!-- Content -->
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        متاح الحجز الآن • موسم 1447هـ
+      </div>
+
+      <h1 class="hero-title">
+        مرحباً بكم في<br>
+        <span>طريق العمرة</span> 🕋
+      </h1>
+
+      <p class="hero-name">مع <strong>المرشد طه برقيقة</strong> — رحلتك المباركة بيدٍ أمينة</p>
+
+      <p class="hero-desc">
+        احجز رحلتك الروحانية بكل سهولة وراحة.<br>
+        خدمة متكاملة من الجزائر إلى البقاع المقدسة.
+      </p>
+
+      <div class="hero-cta">
+        <a href="offers.html" class="btn-primary">
+          🛫 تصفح العروض المتوفرة
+        </a>
+        <a href="form.html" class="btn-secondary">
+          📝 سجل في الرحلات القادمة
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-strip">
+        <div class="stat-item">
+          <div class="stat-num">+500</div>
+          <div class="stat-label">معتمر سعيد</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">سنوات خبرة</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">رضا العملاء</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint">
+      <div class="scroll-arrow"></div>
+      اكتشف المزيد
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ===== Features ===== -->
+  <div class="section">
+    <div class="section-label">لماذا تختارنا</div>
+    <h2 class="section-title">خدماتنا <span>المتميزة</span></h2>
+    <p class="section-sub">نقدم لك تجربة عمرة لا تُنسى مع رعاية كاملة في كل خطوة</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">✈️</div>
+        <div class="feature-title">حجوزات الرحلات</div>
+        <div class="feature-desc">تذاكر طيران مباشرة من الجزائر مع أفضل الأسعار وأريح المواعيد لرحلتك المباركة.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏨</div>
+        <div class="feature-title">إقامة فاخرة</div>
+        <div class="feature-desc">فنادق قريبة من الحرمين الشريفين بأسعار مناسبة لجميع الميزانيات مع خدمة ممتازة.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧭</div>
+        <div class="feature-title">إرشاد ومرافقة</div>
+        <div class="feature-desc">مرشد متخصص يرافقك طوال رحلتك، يشرح المناسك ويضمن لك أداء العمرة بشكل صحيح وكامل.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <div class="feature-title">التأشيرة والأوراق</div>
+        <div class="feature-desc">نتكفل بجميع إجراءات التأشيرة والوثائق الرسمية لضمان سفر سلس وبلا عقبات.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚌</div>
+        <div class="feature-title">التنقل الداخلي</div>
+        <div class="feature-desc">نقل مريح بين مكة المكرمة والمدينة المنورة والمشاعر المقدسة مع سيارات مكيفة.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📞</div>
+        <div class="feature-title">دعم 24/7</div>
+        <div class="feature-desc">فريق دعم متواصل على مدار الساعة قبل وأثناء وبعد رحلتك لطمأنينتك الكاملة.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ===== Quick Access ===== -->
+  <div class="section">
+    <div class="section-label">وصول سريع</div>
+    <h2 class="section-title">كل ما <span>تحتاجه</span></h2>
+    <p class="section-sub">خدماتنا الرئيسية في متناول يدك</p>
+
+    <div class="quick-grid">
+      <a href="upload.html" class="quick-card">
+        <span class="q-icon">📤</span>
+        <span class="q-label">رفع جواز السفر</span>
+        <span class="q-desc">إرسال وثائقك بأمان</span>
+      </a>
+      <a href="reviews.html" class="quick-card">
+        <span class="q-icon">⭐</span>
+        <span class="q-label">آراء المعتمرين</span>
+        <span class="q-desc">تجارب حقيقية</span>
+      </a>
+      <a href="hajj-space.html" class="quick-card">
+        <span class="q-icon">🕋</span>
+        <span class="q-label">فضاء الحج 1447</span>
+        <span class="q-desc">معلومات موسم الحج</span>
+      </a>
+      <a href="manha.html" class="quick-card">
+        <span class="q-icon">💶</span>
+        <span class="q-label">منحة السفر</span>
+        <span class="q-desc">تعرف على شروطها</span>
+      </a>
+      <a href="achievements.html" class="quick-card">
+        <span class="q-icon">🏅</span>
+        <span class="q-label">إنجازاتنا</span>
+        <span class="q-desc">مسيرتنا الموثوقة</span>
+      </a>
+      <a href="contact.html" class="quick-card">
+        <span class="q-icon">📞</span>
+        <span class="q-label">تواصل معنا</span>
+        <span class="q-desc">نحن هنا لمساعدتك</span>
+      </a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ===== CTA Banner ===== -->
+  <div style="padding: 60px 0;">
+    <div class="cta-banner">
+      <h2>🌙 ابدأ رحلتك الروحانية اليوم</h2>
+      <p>لا تفوّت فرصة أداء العمرة مع أفضل خدمة ومرافقة متخصصة من الجزائر</p>
+      <div class="cta-btns">
+        <a href="offers.html" class="btn-primary">🛫 عروض العمرة</a>
+        <a href="contact.html" class="btn-secondary">📞 تواصل معنا</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <p>© 2025 جميع الحقوق محفوظة | <strong>طريق العمرة</strong> — المرشد طه برقيقة</p>
+    <p style="margin-top:6px;">
+      <a href="about.html">من نحن</a> &nbsp;•&nbsp;
+      <a href="contact.html">اتصل بنا</a> &nbsp;•&nbsp;
+      <a href="reviews.html">تعليقاتكم</a>
+    </p>
+  </footer>
+
+  <!-- ===== Bottom Nav ===== -->
+  <nav class="bottom-nav">
+    <a href="upload.html">
+      <span class="nav-icon">📤</span>
+      <span>جواز السفر</span>
+    </a>
+    <a href="reviews.html">
+      <span class="nav-icon">💬</span>
+      <span>تعليقاتكم</span>
+    </a>
+    <a href="index.html" class="active">
+      <span class="nav-icon">🕋</span>
+      <span>الرئيسية</span>
+    </a>
+    <a href="contact.html">
+      <span class="nav-icon">📞</span>
+      <span>اتصل بنا</span>
+    </a>
+    <a href="about.html">
+      <span class="nav-icon">❔</span>
+      <span>من نحن</span>
+    </a>
+  </nav>
+
+  <!-- ===== Flag ===== -->
+  <img src="https://i.postimg.cc/NMYFtQcr/IMG-20250609-WA0000.jpg" class="flag" alt="علم">
+
+  <!-- ===== Scripts ===== -->
+  <script>
+    /* DateTime */
+    function updateDateTime() {
+      const now = new Date();
+      const opts = { weekday:'short', year:'numeric', month:'short', day:'numeric' };
+      document.getElementById("datetime").textContent =
+        now.toLocaleDateString('ar-DZ', opts) + ' ' + now.toLocaleTimeString('ar-DZ');
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    /* Scroll effect on top bar */
+    window.addEventListener('scroll', () => {
+      document.getElementById('topBar').classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    /* Sidebar */
+    function openSidebar() {
+      document.getElementById("mySidebar").classList.add("open");
+      document.getElementById("sidebarOverlay").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function closeSidebar() {
+      document.getElementById("mySidebar").classList.remove("open");
+      document.getElementById("sidebarOverlay").classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    /* Particle generator */
+    (function generateParticles() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 60; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.cssText = `
+          left: ${Math.random() * 100}%;
+          top: ${Math.random() * 100}%;
+          --dur: ${3 + Math.random() * 5}s;
+          --delay: ${Math.random() * 6}s;
+          width: ${1 + Math.random() * 2}px;
+          height: ${1 + Math.random() * 2}px;
+        `;
+        container.appendChild(p);
+      }
+    })();
+
+    /* Notifications */
+    const userEmail = localStorage.getItem("userEmail");
+    if (userEmail) {
+      fetch(`https://script.google.com/macros/s/AKfycbzr9XTABt-6PkmU2WzqhRAzB5e2NpwBfxwribjz5wZSm6v4QqOJ5FH563IfqGZpznZV6A/exec?email=${encodeURIComponent(userEmail)}&unread=true`)
+        .then(r => r.json())
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            const badge = document.getElementById("notif-badge");
+            badge.textContent = data.length;
+            badge.style.display = "inline-block";
+          }
+        })
+        .catch(e => console.error("خطأ في الإشعارات:", e));
+    }
+
+    /* Visit tracker */
+    const TRACKER_URL = "https://script.google.com/macros/s/AKfycbyT0Euxqsi7wvMdVwN1M56sP8r_3V8HIjqaS3i7sDy_nTad7catfjnRcYLHdZVPKf20/exec";
+    window.addEventListener("load", () => {
+      if (!localStorage.getItem("visitedOnce")) {
+        fetch(TRACKER_URL, { method: "POST" })
+          .then(() => { localStorage.setItem("visitedOnce", "true"); })
+          .catch(e => console.error("خطأ في تتبع الزيارة:", e));
+      }
+    });
+
+    /* Animate feature cards on scroll */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }, i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.feature-card, .quick-card').forEach(el => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(20px)";
+      el.style.transition = "opacity 0.5s ease, transform 0.5s ease, border-color 0.35s ease, box-shadow 0.35s ease";
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
