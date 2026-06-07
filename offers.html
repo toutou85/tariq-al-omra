@@ -758,7 +758,7 @@ footer span { color: var(--gold); }
 </footer>
 
 <script>
-const SHEET_URL = "AKfycbzu_D4Gy4PL5NLfHXsFBOQD8Se8W1kJDH3rEEGna5WDZ0uTNUcgLsUGcrUIQlIzXZgj";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzu_D4Gy4PL5NLfHXsFBOQD8Se8W1kJDH3rEEGna5WDZ0uTNUcgLsUGcrUIQlIzXZgj/exec";
 let offersData = [];
 
 /* ===== SIDEBAR ===== */
@@ -853,10 +853,7 @@ function buildCard(o) {
           <div class="info-icon">⏳</div>
           <div class="info-text">المدة: <strong>${duration}</strong></div>
         </div>` : ''}
-
-
-
-${tripDate ? `
+        ${tripDate ? `
         <div class="info-row">
           <div class="info-icon">📅</div>
           <div class="info-text">تاريخ الرحلة: <strong>${tripDate}</strong></div>
@@ -967,3 +964,6 @@ fetch(SHEET_URL)
 </script>
 </body>
 </html>
+
+
+
