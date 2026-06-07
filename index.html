@@ -1,458 +1,926 @@
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="موقع طريق العمرة يقدم معلومات وخدمات للمعتمرين من الجزائر.">
-<meta name="keywords" content="العمرة, طريق العمرة, تسجيل العمرة, خدمات العمرة, الجزائر, التأشيرة, التنقل, الرحلات">
-<meta name="author" content="Tariq Al Omra">
-<meta name="robots" content="index, follow">
-<meta property="og:image" content="https://tariq-al-omra.netlify.app/og-image.png" />
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-
+  <meta name="keywords" content="العمرة, طريق العمرة, تسجيل العمرة, خدمات العمرة, الجزائر">
+  <meta name="author" content="Tariq Al Omra">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="طريق العمرة | احجز رحلتك المباركة">
+  <meta property="og:description" content="احجز رحلتك المباركة الآن بكل سهولة وراحة مع طريق العمرة">
+  <meta property="og:image" content="https://tariq-al-omra.netlify.app/logo-new.png">
+  <meta property="og:url" content="https://tariq-al-omra.netlify.app/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
   <title>طريق العمرة | احجز رحلتك المباركة</title>
-  <link rel="icon" type="image/png" href="favicon.png?v=20250811">
-<!-- ✅ وسوم Open Graph لتحديث صورة المعاينة -->
-<meta property="og:title" content="طريق العمرة | احجز رحلتك المباركة">
-<meta property="og:description" content="احجز رحلتك المباركة الآن بكل سهولة وراحة مع طريق العمرة">
-<meta property="og:image" content="https://tariq-al-omra.netlify.app/logo-new.png?v=20250813">
-<meta property="og:url" content="https://tariq-al-omra.netlify.app/">
-<meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 
-<!-- ✅ وسوم Twitter Card (تعمل أحياناً في واتساب) -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="طريق العمرة | احجز رحلتك المباركة">
-<meta name="twitter:description" content="احجز رحلتك المباركة الآن بكل سهولة وراحة مع طريق العمرة">
-<meta name="twitter:image" content="https://tariq-al-omra.netlify.app/logo-new.png?v=20250813">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
-<meta name="google-site-verification" content="spf23nLz7eWtSsCizgdPDoOx5pshgdg9Dnexu-EKlpc" />
-  <!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1520503049118519');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1520503049118519&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','1520503049118519');fbq('track','PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1520503049118519&ev=PageView&noscript=1"/></noscript>
+
   <style>
-.btn {
-  display: inline-block;
-  margin: 10px; /* أو margin-right فقط إن كنت تريد فراغ أفقي */
-}
-    * {
-      box-sizing: border-box;
+    :root {
+      --gold:        #B8860B;
+      --gold-mid:    #D4A017;
+      --gold-bright: #F5C518;
+      --blue-deep:   #1A3A5C;
+      --blue-med:    #2563A8;
+      --blue-light:  #EAF2FF;
+      --bg:          #F7F4EE;
+      --bg2:         #FFFFFF;
+      --bg3:         #EEF4FB;
+      --text:        #1C2A3A;
+      --text-soft:   #4A5E72;
+      --text-muted:  #8899AA;
+      --border:      #D6E4F0;
+      --border-gold: rgba(184,134,11,0.3);
+      --shadow:      0 4px 24px rgba(26,58,92,0.10);
+      --shadow-lg:   0 10px 48px rgba(26,58,92,0.16);
     }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Tajawal', sans-serif;
-      height: 100%;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      font-family: 'Tajawal', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
     }
 
-    .hero {
-      position: relative;
-      background-image: url('https://travilia.com/uploads/0000/8/2024/09/26/hajj-rituals-makkah-accorhotels.jpg');
-      background-size: cover;
-      background-position: center;
-      flex-grow: 1;
-      color: white;
-      display: flex;
-      flex-direction: column;
-    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-mid); border-radius: 4px; }
 
-    .overlay {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 1;
-    }
-
+    /* ===== TOP BAR ===== */
     .top-bar {
-      background: #FFD700;
-      padding: 10px 20px;
+      position: fixed;
+      top: 0; right: 0; left: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 3;
+      box-shadow: 0 2px 12px rgba(26,58,92,0.08);
+      transition: padding 0.3s;
+    }
+    .top-bar.scrolled { padding: 8px 28px; }
+
+    .logo-wrap { display: flex; align-items: center; gap: 12px; }
+    .logo-wrap img {
+      height: 44px;
+      filter: drop-shadow(0 2px 6px rgba(184,134,11,0.25));
+    }
+    .logo-text { line-height: 1.3; }
+    .logo-text strong {
+      display: block;
+      font-size: 1.05em;
+      font-weight: 800;
+      color: var(--blue-deep);
+    }
+    .logo-text small {
+      font-size: 0.75em;
+      color: var(--gold);
+      font-weight: 500;
     }
 
-    .logo-container {
-      display: flex;
-      align-items: center;
-    }
+    .top-actions { display: flex; align-items: center; gap: 14px; }
 
-    .logo-container img {
-      max-height: 40px;
-      margin-left: 10px;
-    }
-
-    .btn-join {
-      background: white;
-      color: #000;
-      padding: 8px 16px;
-      font-weight: bold;
+    .datetime-pill {
+      background: var(--blue-light);
+      border: 1px solid var(--border);
       border-radius: 20px;
-      text-decoration: none;
-      margin-right: 10px;
+      padding: 5px 14px;
+      font-size: 0.77em;
+      color: var(--blue-med);
+      font-weight: 500;
+      display: none;
     }
+    @media(min-width:640px){ .datetime-pill { display: block; } }
 
-    .datetime {
-      font-size: 0.9em;
-      background: rgba(255, 255, 255, 0.8);
-      padding: 5px 10px;
-      border-radius: 5px;
-      color: #000;
-    }
-
-    .main-content {
-      padding: 60px 20px;
-      background-color: rgba(0,0,0,0.6);
-      text-align: center;
+    .notif-btn {
       position: relative;
-      z-index: 2;
-      flex-grow: 1;
+      background: var(--blue-light);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .notif-btn:hover { background: #D6E8FF; }
+    .notif-btn img { width: 20px; height: 20px; opacity: 0.7; }
+    #notif-badge {
+      position: absolute; top: -3px; right: -3px;
+      background: #E53E3E; color: white;
+      font-size: 10px; font-weight: 700;
+      padding: 2px 5px; border-radius: 10px;
+      display: none;
     }
 
-    h1 {
-      font-size: 3em;
-      margin-bottom: 20px;
-      color: #FFD700;
-    }
-
-    p {
-      font-size: 1.5em;
-      margin-bottom: 30px;
-    }
-
-    .btn {
-      background-color: #FFD700;
-      color: #000;
-      padding: 15px 30px;
-      font-size: 1.2em;
+    .menu-btn {
+      background: var(--blue-deep);
       border: none;
       border-radius: 10px;
-      text-decoration: none;
+      padding: 8px 12px;
       cursor: pointer;
-      transition: 0.3s;
-      margin: 5px;
+      color: white;
+      font-size: 18px;
+      line-height: 1;
+      transition: background 0.2s;
     }
+    .menu-btn:hover { background: var(--blue-med); }
 
-    .btn:hover {
-      background-color: #fff;
-      color: #000;
+    /* ===== SIDEBAR ===== */
+    .sidebar-overlay {
+      position: fixed; inset: 0;
+      background: rgba(26,58,92,0.45);
+      z-index: 1999;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s;
     }
-
-    footer {
-      background: #222;
-      color: #ccc;
-      text-align: center;
-      padding: 15px;
-      font-size: 0.9em;
-    }
+    .sidebar-overlay.open { opacity: 1; pointer-events: all; }
 
     .sidebar {
-      height: 100%;
-      width: 0;
-      position: fixed;
-      z-index: 100;
-      top: 0;
-      right: 0;
-      background-color: #222;
-      overflow-x: hidden;
-      transition: 0.3s;
-      padding-top: 60px;
+      position: fixed; top: 0; right: 0;
+      width: 290px; height: 100%;
+      background: var(--bg2);
+      border-left: 1px solid var(--border);
+      z-index: 2000;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      overflow-y: auto;
+      padding-bottom: 80px;
+      box-shadow: -8px 0 32px rgba(26,58,92,0.12);
     }
+    .sidebar.open { transform: translateX(0); }
 
-    .sidebar a {
-      padding: 10px 25px;
+    .sidebar-header {
+      padding: 18px 20px;
+      border-bottom: 2px solid var(--gold-bright);
+      background: var(--blue-deep);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .sidebar-title { font-size: 1em; font-weight: 700; color: white; }
+    .close-btn {
+      background: rgba(255,255,255,0.15);
+      border: none; color: white;
+      font-size: 22px; cursor: pointer;
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .close-btn:hover { background: rgba(255,255,255,0.3); }
+
+    .sidebar nav a {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 20px;
+      color: var(--text);
       text-decoration: none;
-      font-size: 1.2em;
-      color: #fff;
-      display: block;
-      transition: 0.3s;
+      font-size: 0.95em; font-weight: 500;
+      border-bottom: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .sidebar nav a:hover {
+      background: var(--blue-light);
+      color: var(--blue-deep);
+      padding-right: 28px;
+    }
+    .sidebar nav a .icon { font-size: 1.2em; }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden;
+      padding: 100px 20px 110px;
     }
 
-    .sidebar a:hover {
-      background-color: #444;
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://travilia.com/uploads/0000/8/2024/09/26/hajj-rituals-makkah-accorhotels.jpg');
+      background-size: cover;
+      background-position: center top;
+      animation: heroZoom 20s ease-in-out infinite alternate;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.04); }
+      to   { transform: scale(1.10); }
     }
 
-    .sidebar .closebtn {
+    /* Light overlay — bright and clear */
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(255,255,255,0.70) 0%,
+        rgba(234,242,255,0.55) 35%,
+        rgba(26,58,92,0.60) 100%
+      );
+    }
+
+    /* Decorative arch pattern */
+    .hero-arch {
       position: absolute;
-      top: 10px;
-      left: 15px;
-      font-size: 30px;
-      cursor: pointer;
+      bottom: -2px; left: 0; right: 0;
+      height: 90px;
+      z-index: 3;
+    }
+    .hero-arch svg { width: 100%; height: 100%; }
+
+    .hero-content {
+      position: relative; z-index: 5;
+      text-align: center;
+      max-width: 800px;
+      animation: fadeUp 1s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(28px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.90);
+      border: 1.5px solid var(--gold-mid);
+      border-radius: 30px;
+      padding: 7px 20px;
+      font-size: 0.85em; font-weight: 600;
+      color: var(--blue-deep);
+      margin-bottom: 22px;
+      box-shadow: 0 2px 12px rgba(184,134,11,0.15);
+      animation: fadeUp 1s 0.15s ease both;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #22C55E;
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink {
+      0%,100%{ opacity:1; } 50%{ opacity:0.3; }
+    }
+
+    .hero-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2.2em, 6vw, 4.2em);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--blue-deep);
+      margin-bottom: 10px;
+      text-shadow: 0 2px 12px rgba(255,255,255,0.7);
+      animation: fadeUp 1s 0.25s ease both;
+    }
+    .hero-title span {
+      color: var(--gold);
+      position: relative;
+    }
+    .hero-title span::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; right: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(to left, var(--gold-bright), var(--gold));
+      border-radius: 2px;
+    }
+
+    .hero-name {
+      font-size: clamp(0.9em, 2vw, 1.1em);
+      color: var(--blue-med);
+      margin-bottom: 22px;
+      font-weight: 500;
+      animation: fadeUp 1s 0.35s ease both;
+    }
+    .hero-name strong { color: var(--gold); font-weight: 700; }
+
+    .hero-desc {
+      font-size: clamp(1em, 2.2vw, 1.2em);
+      color: var(--text-soft);
+      line-height: 1.9;
+      margin-bottom: 36px;
+      animation: fadeUp 1s 0.45s ease both;
+    }
+
+    .hero-cta {
+      display: flex; gap: 14px;
+      justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 1s 0.55s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue-med));
       color: white;
+      padding: 15px 32px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.05em; font-weight: 700;
+      border-radius: 50px;
+      text-decoration: none; border: none; cursor: pointer;
+      box-shadow: 0 6px 28px rgba(26,58,92,0.30);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(26,58,92,0.40);
+      background: linear-gradient(135deg, #15304E, var(--blue-deep));
     }
 
-    .openbtn {
-      font-size: 26px;
-      cursor: pointer;
-      background-color: transparent;
-      border: none;
-      color: black;
-      padding: 5px 15px;
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold-mid));
+      color: var(--blue-deep);
+      padding: 14px 30px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.05em; font-weight: 700;
+      border-radius: 50px;
+      text-decoration: none; border: none; cursor: pointer;
+      box-shadow: 0 6px 24px rgba(184,134,11,0.30);
+      transition: all 0.3s ease;
+    }
+    .btn-gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(184,134,11,0.40);
     }
 
-    @media (max-width: 768px) {
-      .top-bar .nav-links {
-        display: none;
-      }
-      .openbtn {
-        display: inline;
-      }
+    /* Stats strip */
+    .stats-strip {
+      display: flex; justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 52px;
+      animation: fadeUp 1s 0.7s ease both;
+    }
+    .stat-item {
+      padding: 14px 32px;
+      text-align: center;
+      border-right: 1px solid rgba(26,58,92,0.2);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-size: 2em; font-weight: 900;
+      color: var(--blue-deep);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.8em; color: var(--text-soft);
+      margin-top: 4px;
     }
 
-/* الحركة الموجية */
-@keyframes wave {
-  0%   { transform: rotate(2deg) translateY(0px); }
-  25%  { transform: rotate(-2deg) translateY(2px); }
-  50%  { transform: rotate(3deg) translateY(0px); }
-  75%  { transform: rotate(-3deg) translateY(-2px); }
-  100% { transform: rotate(2deg) translateY(0px); }
-}
-.flag {
-  position: fixed;
-  top: 20%;
-  left: 30%;
-  width: 60px;
-z-index: 999; /* لإظهار العلم فوق جميع الطبقات */
-  animation: wave 2.5s infinite ease-in-out;
-  transform: translate(-10%, -10%);
-}
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute; bottom: 95px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--blue-med); font-size: 0.78em;
+      animation: floatY 2s ease-in-out infinite;
+    }
+    @keyframes floatY {
+      0%,100%{ transform: translateX(-50%) translateY(0); }
+      50%    { transform: translateX(-50%) translateY(7px); }
+    }
+    .scroll-arrow {
+      width: 22px; height: 22px;
+      border-right: 2px solid var(--gold);
+      border-bottom: 2px solid var(--gold);
+      transform: rotate(45deg);
+    }
 
-.flag.right {
-  right: 20px;
-}
+    /* ===== WAVE DIVIDER ===== */
+    .wave-divider { display: block; width: 100%; line-height: 0; }
+    .wave-divider svg { display: block; }
 
-.flag.left {
-  left: 20px;
-}
+    /* ===== SECTION ===== */
+    .section {
+      padding: 72px 28px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
 
-@keyframes wave {
-  0%   { transform: rotate(3deg); }
-  50%  { transform: rotate(-3deg); }
-  100% { transform: rotate(3deg); }
-}
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background-color: #222;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0;
-  z-index: 1000;
-  border-top: 2px solid #FFD700;
-}
-.main-content {
-  padding: 60px 20px;
-  background-color: rgba(0,0,0,0.6);
-  text-align: center;
-  position: relative;
-  z-index: 2;
-  flex-grow: 1;
-  margin-bottom: 60px; /* يمنع تغطية المحتوى بالقائمة السفلية */
-}
+    .section-label {
+      display: inline-block;
+      background: var(--blue-light);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 5px 16px;
+      font-size: 0.8em; font-weight: 600;
+      color: var(--blue-med);
+      margin-bottom: 14px;
+      letter-spacing: 0.04em;
+    }
 
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background-color: #222;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 0;
-  z-index: 9999;
-  border-top: 2px solid #FFD700;
-}
+    .section-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.8em, 4vw, 2.8em);
+      font-weight: 700;
+      color: var(--blue-deep);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .section-title span { color: var(--gold); }
 
-.bottom-nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 0.9em;
-  display: flex;
-  flex-direction: column; /* أيقونة فوق والنص تحت */
-  align-items: center;
-}
+    .section-sub {
+      font-size: 1em; color: var(--text-muted);
+      margin-bottom: 44px; max-width: 480px;
+      line-height: 1.7;
+    }
 
-.bottom-nav a span {
-  margin-top: 5px;
-  font-size: 0.8em;
-}
+    /* Features grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
 
-.bottom-nav a:hover {
-  color: #FFD700;
-}
+    .feature-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 4px; height: 0;
+      background: linear-gradient(to bottom, var(--gold-bright), var(--gold));
+      border-radius: 0 20px 0 0;
+      transition: height 0.35s ease;
+    }
+    .feature-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .feature-card:hover::after { height: 100%; }
 
+    .feature-icon {
+      width: 54px; height: 54px;
+      background: var(--blue-light);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5em;
+      margin-bottom: 18px;
+    }
+    .feature-title {
+      font-size: 1.05em; font-weight: 700;
+      color: var(--blue-deep); margin-bottom: 10px;
+    }
+    .feature-desc {
+      font-size: 0.9em; color: var(--text-soft);
+      line-height: 1.75;
+    }
+
+    /* BG section */
+    .bg-section {
+      background: var(--blue-deep);
+      padding: 72px 28px;
+    }
+    .bg-section .section-title { color: white; }
+    .bg-section .section-sub { color: rgba(255,255,255,0.6); }
+    .bg-section .section-label {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+      color: var(--gold-bright);
+    }
+
+    /* Quick Access */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .quick-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 22px 16px;
+      text-decoration: none;
+      text-align: center;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+      transition: all 0.3s ease;
+    }
+    .quick-card:hover {
+      background: rgba(245,197,24,0.12);
+      border-color: rgba(245,197,24,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.2);
+    }
+    .quick-card .q-icon { font-size: 2em; }
+    .quick-card .q-label {
+      font-size: 0.9em; font-weight: 700; color: white;
+    }
+    .quick-card .q-desc {
+      font-size: 0.75em; color: rgba(255,255,255,0.5);
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, #EAF2FF, #FEFBF0);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--gold-mid);
+      border-radius: 24px;
+      padding: 52px 36px;
+      text-align: center;
+      margin: 60px 28px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '🕋';
+      position: absolute;
+      font-size: 200px; opacity: 0.035;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+    }
+    .cta-banner h2 {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.5em,3.5vw,2.3em);
+      color: var(--blue-deep); margin-bottom: 14px;
+    }
+    .cta-banner p {
+      color: var(--text-soft); margin-bottom: 30px; font-size: 1.05em;
+      line-height: 1.7;
+    }
+    .cta-btns {
+      display: flex; gap: 14px;
+      justify-content: center; flex-wrap: wrap;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--blue-deep);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 0.87em;
+      margin-bottom: 68px;
+      border-top: 3px solid var(--gold-mid);
+    }
+    footer strong { color: var(--gold-bright); }
+    footer a { color: var(--gold-bright); text-decoration: none; }
+    footer p + p { margin-top: 8px; }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed; bottom: 0; right: 0; left: 0;
+      z-index: 1000;
+      background: white;
+      border-top: 2px solid var(--gold-mid);
+      display: flex; justify-content: space-around;
+      padding: 8px 0 12px;
+      box-shadow: 0 -4px 20px rgba(26,58,92,0.10);
+    }
+    .bottom-nav a {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 3px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.68em; font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 10px;
+      transition: color 0.2s;
+    }
+    .bottom-nav a .nav-icon { font-size: 1.45em; }
+    .bottom-nav a:hover, .bottom-nav a.active { color: var(--blue-deep); }
+    .bottom-nav a.active .nav-icon {
+      filter: drop-shadow(0 0 4px rgba(26,58,92,0.3));
+    }
+
+    /* Flag */
+    .flag {
+      position: fixed; bottom: 80px; left: 14px;
+      width: 48px; z-index: 999;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25));
+      animation: flagWave 3s ease-in-out infinite;
+      transform-origin: right center;
+    }
+    @keyframes flagWave {
+      0%,100%{ transform: rotate(0deg); }
+      30%    { transform: rotate(5deg); }
+      70%    { transform: rotate(-4deg); }
+    }
+
+    /* Animate on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media(max-width:600px){
+      .stat-item { padding: 10px 18px; }
+      .stat-num  { font-size: 1.7em; }
+      .section   { padding: 52px 16px; }
+      .cta-banner{ padding: 32px 18px; margin: 40px 16px; }
+      .quick-grid{ grid-template-columns: repeat(2,1fr); }
+    }
   </style>
 </head>
+
 <body>
-<!-- ✅ القائمة السفلية -->
 
-  
- <div class="bottom-nav">
-  <a href="upload.html">📤<span>جواز السفر</span></a>
-  <a href="reviews.html">💬<span>تعليقاتكم</span></a>
-  <a href="contact.html">📞<span>اتصل بنا</span></a>
-  <a href="about.html">❔<span>من نحن</span></a>
+  <!-- Sidebar overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
-</div>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="mySidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">🕋 القائمة الرئيسية</span>
+      <button class="close-btn" onclick="closeSidebar()">×</button>
+    </div>
+    <nav>
+      <a href="index.html"><span class="icon">🏠</span> الرئيسية</a>
+      <a href="offers.html"><span class="icon">🛫</span> عروض العمرة</a>
+      <a href="form.html"><span class="icon">📝</span> سجل في رحلة</a>
+      <a href="upload.html"><span class="icon">📤</span> جواز السفر</a>
+      <a href="hajj-space.html"><span class="icon">🕋</span> فضاء الحج 1447</a>
+      <a href="space.html"><span class="icon">🧾</span> فضاء المعتمر</a>
+      <a href="reviews.html"><span class="icon">💬</span> آراء المعتمرين</a>
+      <a href="achievements.html"><span class="icon">🏅</span> إنجازاتنا</a>
+      <a href="manha.html"><span class="icon">💶</span> منحة سفر</a>
+      <a href="contact.html"><span class="icon">📞</span> اتصل بنا</a>
+      <a href="about.html"><span class="icon">❔</span> من نحن</a>
+    </nav>
+  </aside>
 
-  <!-- ✅ القائمة الجانبية -->
-  <div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
-    <a href="index.html">🏠 الرئيسية</a>
-    <a href="offers.html">🎁 عروض العمرة</a>
-    <a href="contact.html">📞 اتصل بنا</a>
-    <a href="about.html">❔ من نحن </a>
-    <a href="hajj-space.html"> 🕋 فضاء الحج 1447</a>
-     class="upload-button">📤🪪 تحميل جواز السفر</a>
-<a href="reviews.html">💬 آراء المعتمرين</a>
-a>
-<a href="manha.html">💶 منحة سفر </a>
-<a href="achievements.html">🏅 إنجازاتنا</a>
-<a href="space.html">🧾 فضاء المعتمر</a>
- 
-  </div>
-
-  <!-- ✅ رأس الصفحة -->
-  <div class="top-bar">
-    <div class="logo-container">
+  <!-- Top Bar -->
+  <header class="top-bar" id="topBar">
+    <div class="logo-wrap">
       <img src="https://res.cloudinary.com/dmc36nijl/image/upload/v1780784017/file_000000007a4871f496e95d1042fe2349_jt6lsc.png" alt="طريق العمرة">
-      <strong>🕋 طريق العمرة المرشد طه برقيقة</strong>
+      <div class="logo-text">
+        <strong>طريق العمرة</strong>
+        <small>المرشد طه برقيقة</small>
+      </div>
+    </div>
+    <div class="top-actions">
+      <div class="datetime-pill" id="datetime"></div>
+      <a href="notifications.html" class="notif-btn">
+        <img src="https://cdn-icons-png.flaticon.com/512/1827/1827392.png" alt="إشعارات">
+        <span id="notif-badge">0</span>
+      </a>
+      <button class="menu-btn" onclick="openSidebar()">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        الحجز متاح الآن • موسم العمرة 1447هـ
+      </div>
+
+      <h1 class="hero-title">
+        مرحباً بكم في<br>
+        <span>طريق العمرة</span> 🕋
+      </h1>
+
+      <p class="hero-name">مع <strong>المرشد طه برقيقة</strong> — رحلتك المباركة بيدٍ أمينة</p>
+
+      <p class="hero-desc">
+        احجز رحلتك الروحانية بكل سهولة وراحة.<br>
+        خدمة متكاملة من الجزائر إلى البقاع المقدسة.
+      </p>
+
+      <div class="hero-cta">
+        <a href="offers.html" class="btn-primary">🛫 تصفح العروض المتوفرة</a>
+        <a href="form.html" class="btn-gold">📝 سجل في الرحلات القادمة</a>
+      </div>
+
+      <div class="stats-strip">
+        <div class="stat-item">
+          <div class="stat-num">+500</div>
+          <div class="stat-label">معتمر سعيد</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">سنوات خبرة</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">رضا العملاء</div>
+        </div>
+      </div>
     </div>
 
-   
-    <button class="openbtn" onclick="openSidebar()">☰</button>
-     <a href="notifications.html" id="notif-icon" title="إشعارات" style="position: relative; display: inline-block;">
-    <img src="https://cdn-icons-png.flaticon.com/512/1827/1827392.png" alt="جرس الإشعارات" width="28" height="28" />
-    <span id="notif-badge" style="
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background-color: red;
-      color: white;
-      font-size: 11px;
-      padding: 2px 6px;
-      border-radius: 50%;
-      display: none;
-      font-family: Arial, sans-serif;
-    ">0</span>
-  </a>
+    <div class="scroll-hint">
+      <div class="scroll-arrow"></div>
+      اكتشف المزيد
+    </div>
 
-    <div class="datetime" id="datetime"></div>
-  </div>
+    <!-- Wave bottom -->
+    <div class="hero-arch">
+      <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,60 C360,100 1080,20 1440,60 L1440,90 L0,90 Z" fill="#F7F4EE"/>
+      </svg>
+    </div>
+  </section>
 
+  <!-- Features -->
+  <div class="section">
+    <div class="section-label">لماذا تختارنا</div>
+    <h2 class="section-title">خدماتنا <span>المتميزة</span></h2>
+    <p class="section-sub">نقدم لك تجربة عمرة لا تُنسى مع رعاية كاملة في كل خطوة من خطوات رحلتك</p>
 
-  <!-- ✅ القسم الرئيسي -->
-  <div class="hero">
-    <div class="overlay"></div>
-    <div class="main-content">
-      <h1>مرحبا بكم في موقع طريق العمرة 🕋 مع المرشد طه برقيقة </h1>
-      <p>احجز رحلتك المباركة الآن بكل سهولة وراحة</p>
-      <a href="offers.html" class="btn">🛫🕋 تصفح العروض المتوفرة</a>
-
-<a href="form.html" class="btn">📝سجل في رحلات  القادمة</a>
-   
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">✈️</div>
+        <div class="feature-title">حجوزات الرحلات</div>
+        <div class="feature-desc">تذاكر طيران مباشرة من الجزائر مع أفضل الأسعار وأريح المواعيد لرحلتك المباركة.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🏨</div>
+        <div class="feature-title">إقامة مريحة</div>
+        <div class="feature-desc">فنادق قريبة من الحرمين الشريفين بأسعار مناسبة لجميع الميزانيات مع خدمة ممتازة.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🧭</div>
+        <div class="feature-title">إرشاد ومرافقة</div>
+        <div class="feature-desc">مرشد متخصص يرافقك طوال رحلتك، يشرح المناسك ويضمن لك أداء العمرة بشكل صحيح.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">📋</div>
+        <div class="feature-title">التأشيرة والأوراق</div>
+        <div class="feature-desc">نتكفل بجميع إجراءات التأشيرة والوثائق الرسمية لضمان سفر سلس وبلا عقبات.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🚌</div>
+        <div class="feature-title">التنقل الداخلي</div>
+        <div class="feature-desc">نقل مريح بين مكة المكرمة والمدينة المنورة والمشاعر المقدسة بسيارات مكيفة.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">📞</div>
+        <div class="feature-title">دعم 24/7</div>
+        <div class="feature-desc">فريق دعم متواصل على مدار الساعة قبل وأثناء وبعد رحلتك لطمأنينتك الكاملة.</div>
+      </div>
     </div>
   </div>
 
+  <!-- Quick Access (dark blue bg) -->
+  <div class="bg-section">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div class="section-label">وصول سريع</div>
+      <h2 class="section-title" style="color:white;">كل ما <span>تحتاجه</span></h2>
+      <p class="section-sub" style="color:rgba(255,255,255,0.55);">خدماتنا الرئيسية في متناول يدك</p>
+      <div class="quick-grid">
+        <a href="upload.html" class="quick-card reveal">
+          <span class="q-icon">📤</span>
+          <span class="q-label">رفع جواز السفر</span>
+          <span class="q-desc">إرسال وثائقك بأمان</span>
+        </a>
+        <a href="reviews.html" class="quick-card reveal">
+          <span class="q-icon">⭐</span>
+          <span class="q-label">آراء المعتمرين</span>
+          <span class="q-desc">تجارب حقيقية</span>
+        </a>
+        <a href="hajj-space.html" class="quick-card reveal">
+          <span class="q-icon">🕋</span>
+          <span class="q-label">فضاء الحج 1447</span>
+          <span class="q-desc">معلومات موسم الحج</span>
+        </a>
+        <a href="manha.html" class="quick-card reveal">
+          <span class="q-icon">💶</span>
+          <span class="q-label">منحة السفر</span>
+          <span class="q-desc">تعرف على شروطها</span>
+        </a>
+        <a href="achievements.html" class="quick-card reveal">
+          <span class="q-icon">🏅</span>
+          <span class="q-label">إنجازاتنا</span>
+          <span class="q-desc">مسيرتنا الموثوقة</span>
+        </a>
+        <a href="contact.html" class="quick-card reveal">
+          <span class="q-icon">📞</span>
+          <span class="q-label">تواصل معنا</span>
+          <span class="q-desc">نحن هنا لمساعدتك</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner reveal">
+    <h2>🌙 ابدأ رحلتك الروحانية اليوم</h2>
+    <p>لا تفوّت فرصة أداء العمرة مع أفضل خدمة ومرافقة متخصصة من الجزائر</p>
+    <div class="cta-btns">
+      <a href="offers.html" class="btn-primary">🛫 عروض العمرة</a>
+      <a href="contact.html" class="btn-gold">📞 تواصل معنا</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
   <footer>
-    &copy; 2025 جميع الحقوق محفوظة | طريق العمرة
+    <p>© 2025 جميع الحقوق محفوظة | <strong>طريق العمرة</strong> — المرشد طه برقيقة</p>
+    <p>
+      <a href="about.html">من نحن</a> &nbsp;•&nbsp;
+      <a href="contact.html">اتصل بنا</a> &nbsp;•&nbsp;
+      <a href="reviews.html">تعليقاتكم</a>
+    </p>
   </footer>
 
-  <!-- ✅ سكربتات -->
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <a href="upload.html"><span class="nav-icon">📤</span><span>جواز السفر</span></a>
+    <a href="reviews.html"><span class="nav-icon">💬</span><span>تعليقاتكم</span></a>
+    <a href="index.html" class="active"><span class="nav-icon">🕋</span><span>الرئيسية</span></a>
+    <a href="contact.html"><span class="nav-icon">📞</span><span>اتصل بنا</span></a>
+    <a href="about.html"><span class="nav-icon">❔</span><span>من نحن</span></a>
+  </nav>
+
+  <!-- Flag -->
+  <img src="https://i.postimg.cc/NMYFtQcr/IMG-20250609-WA0000.jpg" class="flag" alt="علم">
+
   <script>
+    /* DateTime */
     function updateDateTime() {
       const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById("datetime").textContent = now.toLocaleDateString('ar-DZ', options) + ' - ' + now.toLocaleTimeString('ar-DZ');
+      const opts = { weekday:'short', month:'short', day:'numeric' };
+      document.getElementById("datetime").textContent =
+        now.toLocaleDateString('ar-DZ', opts) + ' ' + now.toLocaleTimeString('ar-DZ');
     }
     setInterval(updateDateTime, 1000);
     updateDateTime();
-  </script>
 
- 
+    /* Scroll topbar */
+    window.addEventListener('scroll', () => {
+      document.getElementById('topBar').classList.toggle('scrolled', window.scrollY > 40);
+    });
 
-  <script>
+    /* Sidebar */
     function openSidebar() {
-      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("mySidebar").classList.add("open");
+      document.getElementById("sidebarOverlay").classList.add("open");
+      document.body.style.overflow = "hidden";
     }
-
     function closeSidebar() {
-      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("mySidebar").classList.remove("open");
+      document.getElementById("sidebarOverlay").classList.remove("open");
+      document.body.style.overflow = "";
     }
-  </script>
-  <script>
-function updateBadge(count) {
-  const badge = document.getElementById("notif-badge");
-  badge.textContent = count;
-  badge.style.display = count > 0 ? "inline-block" : "none";
-}
-</script>
- <script>
-  const userEmail = localStorage.getItem("userEmail");
 
-  if (userEmail) {
-    fetch(`https://script.google.com/macros/s/AKfycbzr9XTABt-6PkmU2WzqhRAzB5e2NpwBfxwribjz5wZSm6v4QqOJ5FH563IfqGZpznZV6A/exec?email=${encodeURIComponent(userEmail)}&unread=true`)
-      .then(response => response.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          const badge = document.getElementById("notif-badge");
-          badge.textContent = data.length;
-          badge.style.display = "inline-block";
+    /* Reveal on scroll */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 90);
+          revealObserver.unobserve(entry.target);
         }
-      })
-      .catch(error => {
-        console.error("حدث خطأ أثناء تحميل الإشعارات:", error);
       });
-  }
-</script>
-<script>
-  const URL = "https://script.google.com/macros/s/AKfycbyT0Euxqsi7wvMdVwN1M56sP8r_3V8HIjqaS3i7sDy_nTad7catfjnRcYLHdZVPKf20/exec";
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  window.addEventListener("load", () => {
-    if (!localStorage.getItem("visitedOnce")) {
-      fetch(URL, { method: "POST" })
-        .then(() => {
-          localStorage.setItem("visitedOnce", "true");
-          console.log("✅ زيارة مسجلة");
-        })
-        .catch((e) => console.error("⚠️ خطأ في التسجيل", e));
-    } else {
-      console.log("⛔ تم تسجيل هذه الزيارة من قبل");
+    /* Notifications */
+    const userEmail = localStorage.getItem("userEmail");
+    if (userEmail) {
+      fetch(`https://script.google.com/macros/s/AKfycbzr9XTABt-6PkmU2WzqhRAzB5e2NpwBfxwribjz5wZSm6v4QqOJ5FH563IfqGZpznZV6A/exec?email=${encodeURIComponent(userEmail)}&unread=true`)
+        .then(r => r.json())
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            const b = document.getElementById("notif-badge");
+            b.textContent = data.length; b.style.display = "inline-block";
+          }
+        }).catch(() => {});
     }
-  });
-</script>
-  
-<img src="https://i.postimg.cc/NMYFtQcr/IMG-20250609-WA0000.jpg" class="flag left">
 
+    /* Visit tracker */
+    window.addEventListener("load", () => {
+      if (!localStorage.getItem("visitedOnce")) {
+        fetch("https://script.google.com/macros/s/AKfycbyT0Euxqsi7wvMdVwN1M56sP8r_3V8HIjqaS3i7sDy_nTad7catfjnRcYLHdZVPKf20/exec", { method: "POST" })
+          .then(() => localStorage.setItem("visitedOnce","true")).catch(()=>{});
+      }
+    });
+  </script>
 </body>
-</html>
+</html> 
