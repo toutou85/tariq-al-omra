@@ -8,53 +8,62 @@
 <meta property="og:description" content="اكتشف أحدث عروض العمرة من مختلف مطارات الجزائر مع وكالات معتمدة.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-
 <style>
 :root {
-  --gold: #C9A84C;
-  --gold-light: #E8C97A;
-  --gold-dark: #8B6914;
-  --deep: #0A0E1A;
-  --deep2: #111827;
-  --deep3: #1C2333;
-  --text: #F4ECD8;
-  --text-muted: #9A8C78;
-  --accent: #2A6B4E;
-  --accent2: #1D4F39;
-  --white: #FFFFFF;
-  --card-bg: rgba(28, 35, 51, 0.85);
-  --border: rgba(201, 168, 76, 0.25);
+  --sand:     #FDF6EC;
+  --sand2:    #F5EDD8;
+  --sand3:    #EDE0C4;
+  --gold:     #B07D2A;
+  --gold2:    #D4A035;
+  --gold3:    #F0C060;
+  --teal:     #1B6B5A;
+  --teal2:    #248A72;
+  --teal3:    #D6F0EA;
+  --rose:     #C0392B;
+  --rose-bg:  #FDECEA;
+  --ink:      #1A1209;
+  --ink2:     #3D2E14;
+  --muted:    #7A6545;
+  --white:    #FFFFFF;
+  --border:   #DFD0B0;
+  --shadow:   rgba(100, 70, 20, 0.12);
+  --card-bg:  #FFFFFF;
+  --page-bg:  #FDF6EC;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { scroll-behavior: smooth; }
+
 body {
   font-family: 'Tajawal', sans-serif;
-  background: var(--deep);
-  color: var(--text);
+  background: var(--page-bg);
+  color: var(--ink);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* ===== BACKGROUND ===== */
-.bg-layer {
+/* ===== DECORATIVE BACKGROUND ===== */
+body::before {
+  content: "";
   position: fixed;
   inset: 0;
+  pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(42,107,78,0.10) 0%, transparent 60%),
-    linear-gradient(160deg, #0A0E1A 0%, #111827 50%, #0d1520 100%);
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(176,125,42,0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 90% 90%, rgba(27,107,90,0.08) 0%, transparent 60%),
+    linear-gradient(180deg, #FDF6EC 0%, #F8EFD8 60%, #F0E6CC 100%);
 }
 
-.bg-pattern {
+/* Geometric ornament top */
+body::after {
+  content: "";
   position: fixed;
-  inset: 0;
-  z-index: 0;
-  opacity: 0.04;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(201,168,76,0.5) 40px, rgba(201,168,76,0.5) 41px),
-    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(201,168,76,0.5) 40px, rgba(201,168,76,0.5) 41px);
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--teal), var(--gold2), var(--teal2), var(--gold3), var(--teal));
+  z-index: 2000;
 }
 
 /* ===== NAV ===== */
@@ -62,14 +71,15 @@ nav {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(10, 14, 26, 0.92);
-  backdrop-filter: blur(20px);
+  background: rgba(253, 246, 236, 0.94);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
-  padding: 0 20px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 68px;
+  height: 66px;
+  box-shadow: 0 1px 16px rgba(100,70,20,0.07);
 }
 
 .nav-logo {
@@ -77,42 +87,41 @@ nav {
   align-items: center;
   gap: 10px;
   font-family: 'Amiri', serif;
-  font-size: 20px;
-  color: var(--gold);
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--teal);
   text-decoration: none;
+  letter-spacing: 0.3px;
 }
 
-.nav-logo .kaaba-icon {
-  font-size: 28px;
-}
+.nav-logo .kaaba-icon { font-size: 26px; }
 
 .nav-links {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   list-style: none;
 }
 
 .nav-links a {
-  color: var(--text-muted);
+  color: var(--muted);
   text-decoration: none;
   font-size: 14px;
-  padding: 7px 14px;
-  border-radius: 8px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 100px;
   transition: all 0.2s;
 }
 
-.nav-links a:hover, .nav-links a.active {
-  color: var(--gold);
-  background: rgba(201,168,76,0.1);
-}
+.nav-links a:hover { background: var(--sand3); color: var(--teal); }
+.nav-links a.active { background: var(--teal3); color: var(--teal); }
 
 .menu-btn {
   display: none;
-  background: none;
+  background: var(--sand2);
   border: 1px solid var(--border);
-  color: var(--gold);
-  font-size: 22px;
-  width: 42px; height: 42px;
+  color: var(--teal);
+  font-size: 20px;
+  width: 40px; height: 40px;
   border-radius: 10px;
   cursor: pointer;
   align-items: center;
@@ -122,57 +131,59 @@ nav {
 /* ===== SIDEBAR ===== */
 .sidebar {
   position: fixed;
-  top: 0; right: -280px;
-  width: 280px;
+  top: 0; right: -290px;
+  width: 290px;
   height: 100%;
-  background: var(--deep2);
+  background: var(--white);
   border-left: 1px solid var(--border);
+  box-shadow: -8px 0 40px var(--shadow);
   z-index: 9999;
   transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
-  padding-top: 80px;
+  padding-top: 72px;
 }
 
 .sidebar.open { right: 0; }
 
 .sidebar-close {
   position: absolute;
-  top: 20px; left: 20px;
-  background: none;
+  top: 18px; left: 18px;
+  background: var(--sand2);
   border: 1px solid var(--border);
-  color: var(--text);
-  font-size: 20px;
-  width: 38px; height: 38px;
-  border-radius: 8px;
+  color: var(--ink2);
+  font-size: 18px;
+  width: 36px; height: 36px;
+  border-radius: 9px;
   cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
 }
 
 .sidebar a {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 24px;
-  color: var(--text-muted);
+  padding: 13px 22px;
+  color: var(--muted);
   text-decoration: none;
   font-size: 15px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  transition: all 0.2s;
+  font-weight: 600;
+  border-bottom: 1px solid var(--sand2);
+  transition: all 0.18s;
 }
 
 .sidebar a:hover {
-  color: var(--gold);
-  background: rgba(201,168,76,0.06);
-  padding-right: 30px;
+  color: var(--teal);
+  background: var(--teal3);
+  padding-right: 28px;
 }
 
 .sidebar-overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 9998;
+  background: rgba(26, 18, 9, 0.35);
   backdrop-filter: blur(2px);
+  z-index: 9998;
 }
-
 .sidebar-overlay.show { display: block; }
 
 /* ===== HERO ===== */
@@ -180,197 +191,207 @@ nav {
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: 60px 20px 40px;
+  padding: 56px 20px 36px;
 }
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(201,168,76,0.12);
-  border: 1px solid rgba(201,168,76,0.35);
-  color: var(--gold-light);
+  gap: 7px;
+  background: var(--teal3);
+  border: 1px solid rgba(27,107,90,0.25);
+  color: var(--teal);
   font-size: 13px;
+  font-weight: 700;
   padding: 6px 18px;
   border-radius: 100px;
   margin-bottom: 20px;
-  letter-spacing: 0.5px;
 }
 
 .hero h1 {
   font-family: 'Amiri', serif;
-  font-size: clamp(28px, 5vw, 48px);
-  color: var(--white);
-  line-height: 1.4;
+  font-size: clamp(30px, 5vw, 52px);
+  color: var(--ink);
+  line-height: 1.45;
   margin-bottom: 14px;
 }
 
-.hero h1 span {
-  color: var(--gold);
-}
+.hero h1 span { color: var(--teal); }
+.hero h1 em { color: var(--gold); font-style: normal; }
 
 .hero p {
-  color: var(--text-muted);
+  color: var(--muted);
   font-size: 16px;
-  max-width: 500px;
-  margin: 0 auto 30px;
-  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto 28px;
+  line-height: 1.75;
 }
 
-/* ===== GOLD DIVIDER ===== */
-.gold-divider {
+/* Gold ornamental divider */
+.ornament {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 12px;
   margin-bottom: 40px;
 }
-
-.gold-divider .line {
+.ornament .arm {
   height: 1px;
-  width: 80px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  width: 90px;
+  background: linear-gradient(90deg, transparent, var(--gold2));
 }
-
-.gold-divider .diamond {
-  width: 10px; height: 10px;
-  background: var(--gold);
+.ornament .arm.left { background: linear-gradient(90deg, var(--gold2), transparent); }
+.ornament .gems {
+  display: flex;
+  gap: 5px;
+}
+.ornament .gem {
+  width: 8px; height: 8px;
+  background: var(--gold2);
   transform: rotate(45deg);
 }
+.ornament .gem.big { width: 11px; height: 11px; background: var(--teal); }
 
 /* ===== FILTER ===== */
-.filter-section {
+.filter-wrap {
   position: relative;
   z-index: 1;
-  padding: 0 20px 30px;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1180px;
+  margin: 0 auto 32px;
+  padding: 0 20px;
 }
 
-.filter-inner {
-  background: var(--card-bg);
+.filter-card {
+  background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px 24px;
+  border-radius: 18px;
+  padding: 18px 24px;
   display: flex;
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 20px var(--shadow);
 }
 
 .filter-label {
-  color: var(--gold);
+  color: var(--teal);
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 800;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.filter-label::before {
+  content: "";
+  display: block;
+  width: 4px; height: 20px;
+  background: linear-gradient(var(--teal), var(--gold2));
+  border-radius: 4px;
 }
 
 .filter-select {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid var(--border);
-  color: var(--text);
+  background: var(--sand);
+  border: 1.5px solid var(--border);
+  color: var(--ink);
   font-family: 'Tajawal', sans-serif;
   font-size: 14px;
-  padding: 10px 18px;
-  border-radius: 10px;
+  font-weight: 600;
+  padding: 10px 20px 10px 40px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
-  min-width: 160px;
+  min-width: 170px;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23C9A84C' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%231B6B5A' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: left 14px center;
-  padding-left: 36px;
 }
 
-.filter-select:hover, .filter-select:focus {
-  border-color: rgba(201,168,76,0.6);
+.filter-select:focus, .filter-select:hover {
+  border-color: var(--teal2);
   outline: none;
-  background-color: rgba(255,255,255,0.09);
+  background-color: var(--teal3);
 }
 
-.filter-select option {
-  background: var(--deep2);
-}
+.filter-select option { background: #fff; }
 
-.stats-chips {
+.badge-count {
   margin-right: auto;
-  display: flex;
-  gap: 10px;
-}
-
-.chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.2);
-  color: var(--gold-light);
+  background: linear-gradient(135deg, var(--teal3), #C8EBE2);
+  border: 1px solid rgba(27,107,90,0.2);
+  color: var(--teal);
   font-size: 13px;
-  padding: 6px 14px;
+  font-weight: 800;
+  padding: 7px 18px;
   border-radius: 100px;
 }
 
-/* ===== OFFERS CONTAINER ===== */
+/* ===== PAGE BODY ===== */
 .page-body {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 0 20px 80px;
 }
 
 /* ===== AIRPORT SECTION ===== */
 .airport-section {
-  margin-bottom: 48px;
+  margin-bottom: 52px;
   animation: fadeUp 0.5s ease both;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .airport-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding: 16px 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px var(--shadow);
 }
 
-.airport-icon {
-  width: 48px; height: 48px;
-  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-  border-radius: 12px;
+.airport-icon-wrap {
+  width: 50px; height: 50px;
+  background: linear-gradient(135deg, var(--teal), var(--teal2));
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 24px;
   flex-shrink: 0;
-  box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+  box-shadow: 0 4px 16px rgba(27,107,90,0.25);
 }
 
 .airport-info h2 {
-  font-size: 20px;
-  color: var(--white);
-  font-weight: 700;
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--ink);
 }
 
 .airport-info p {
-  color: var(--text-muted);
+  color: var(--muted);
   font-size: 13px;
   margin-top: 2px;
 }
 
-.airport-count {
+.airport-count-badge {
   margin-right: auto;
-  background: rgba(201,168,76,0.12);
-  border: 1px solid rgba(201,168,76,0.25);
+  background: var(--sand2);
+  border: 1px solid var(--border);
   color: var(--gold);
   font-size: 13px;
-  font-weight: 700;
-  padding: 5px 14px;
+  font-weight: 800;
+  padding: 6px 16px;
   border-radius: 100px;
 }
 
@@ -380,17 +401,15 @@ nav {
   gap: 18px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-bottom: 16px;
+  padding-bottom: 14px;
   scrollbar-width: thin;
-  scrollbar-color: var(--gold-dark) transparent;
+  scrollbar-color: var(--sand3) transparent;
 }
 
-.scroll-track::-webkit-scrollbar {
-  height: 4px;
-}
+.scroll-track::-webkit-scrollbar { height: 4px; }
 .scroll-track::-webkit-scrollbar-track { background: transparent; }
 .scroll-track::-webkit-scrollbar-thumb {
-  background: var(--gold-dark);
+  background: var(--sand3);
   border-radius: 4px;
 }
 
@@ -398,161 +417,164 @@ nav {
 .card {
   min-width: 300px;
   max-width: 300px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
+  background: var(--white);
+  border: 1.5px solid var(--border);
   border-radius: 20px;
   overflow: hidden;
   scroll-snap-align: start;
   flex-shrink: 0;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-  backdrop-filter: blur(12px);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 20px var(--shadow);
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.3);
-  border-color: rgba(201,168,76,0.5);
+  transform: translateY(-7px);
+  box-shadow: 0 20px 48px rgba(100,70,20,0.18), 0 0 0 1.5px var(--teal2);
+  border-color: var(--teal2);
 }
 
-/* Card top accent */
-.card-accent {
-  height: 3px;
-  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+/* Top accent stripe */
+.card-stripe {
+  height: 5px;
+  background: linear-gradient(90deg, var(--teal), var(--teal2), var(--gold2), var(--gold3));
 }
 
 .card-body {
-  padding: 20px;
+  padding: 18px 18px 18px;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* Agency header */
+/* Agency row */
 .agency-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--border);
+  gap: 11px;
+  margin-bottom: 14px;
+  padding-bottom: 13px;
+  border-bottom: 1px dashed var(--sand3);
 }
 
 .agency-logo {
-  width: 52px; height: 52px;
-  border-radius: 10px;
+  width: 50px; height: 50px;
+  border-radius: 11px;
   object-fit: contain;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid var(--border);
+  background: var(--sand);
+  border: 1.5px solid var(--border);
   padding: 4px;
   flex-shrink: 0;
 }
 
 .agency-avatar {
-  width: 52px; height: 52px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--gold-dark), var(--accent));
+  width: 50px; height: 50px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--teal3), #B8E8DE);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 22px;
   flex-shrink: 0;
+  border: 1.5px solid rgba(27,107,90,0.2);
 }
 
 .agency-name {
   font-size: 15px;
-  font-weight: 700;
-  color: var(--white);
+  font-weight: 800;
+  color: var(--ink);
   line-height: 1.3;
 }
 
 .agency-verified {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   font-size: 11px;
-  color: var(--accent);
-  margin-top: 3px;
+  color: var(--teal);
+  font-weight: 600;
+  margin-top: 2px;
 }
 
+/* Offer title */
 .offer-title {
   font-family: 'Amiri', serif;
   font-size: 17px;
-  color: var(--gold-light);
-  margin-bottom: 14px;
-  line-height: 1.5;
+  color: var(--gold);
+  margin-bottom: 13px;
+  line-height: 1.6;
+  font-weight: 700;
 }
 
 /* Info rows */
 .info-list {
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  margin-bottom: 18px;
+  gap: 8px;
+  margin-bottom: 15px;
   flex: 1;
 }
 
 .info-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   font-size: 14px;
-  color: var(--text-muted);
+  color: var(--muted);
 }
 
 .info-icon {
   width: 30px; height: 30px;
-  background: rgba(255,255,255,0.05);
+  background: var(--sand);
+  border: 1px solid var(--border);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 14px;
   flex-shrink: 0;
 }
 
-.info-text strong {
-  color: var(--text);
-  font-weight: 600;
-}
+.info-text strong { color: var(--ink2); font-weight: 700; }
 
-/* Price */
+/* Price block */
 .price-block {
-  background: rgba(201,168,76,0.08);
-  border: 1px solid rgba(201,168,76,0.2);
-  border-radius: 12px;
-  padding: 14px 16px;
+  background: linear-gradient(135deg, #FFFBF0, #FFF3D0);
+  border: 1.5px solid #E8C97A;
+  border-radius: 14px;
+  padding: 13px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
 }
 
 .price-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 2px;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 3px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .price-value {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 900;
   color: var(--gold);
-  letter-spacing: -0.5px;
+  line-height: 1;
 }
 
-.price-unit {
-  font-size: 13px;
-  color: var(--text-muted);
-  font-weight: 400;
-}
+.price-unit { font-size: 14px; color: var(--muted); font-weight: 600; }
+
+.price-coin { font-size: 30px; }
 
 /* Buttons */
 .card-btns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 9px;
 }
 
 .btn {
@@ -560,7 +582,7 @@ nav {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 12px;
+  padding: 11px;
   border-radius: 12px;
   font-family: 'Tajawal', sans-serif;
   font-size: 14px;
@@ -572,30 +594,28 @@ nav {
 }
 
 .btn-details {
-  background: rgba(255,255,255,0.06);
-  color: var(--text);
-  border: 1px solid var(--border);
+  background: var(--sand2);
+  color: var(--ink2);
+  border: 1.5px solid var(--border);
 }
 
 .btn-details:hover {
-  background: rgba(255,255,255,0.10);
-  border-color: rgba(201,168,76,0.4);
-  color: var(--gold-light);
+  background: var(--teal3);
+  border-color: var(--teal2);
+  color: var(--teal);
 }
 
 .btn-like {
-  background: rgba(229, 57, 53, 0.08);
-  color: #ef5350;
-  border: 1px solid rgba(229, 57, 53, 0.25);
+  background: var(--rose-bg);
+  color: var(--rose);
+  border: 1.5px solid rgba(192,57,43,0.2);
 }
 
-.btn-like:hover {
-  background: rgba(229, 57, 53, 0.16);
-}
+.btn-like:hover { background: #FBDBD8; }
 
 .like-count {
-  background: rgba(229, 57, 53, 0.2);
-  color: #ef5350;
+  background: rgba(192,57,43,0.12);
+  color: var(--rose);
   font-size: 11px;
   padding: 1px 7px;
   border-radius: 100px;
@@ -603,38 +623,40 @@ nav {
 
 .btn-book {
   grid-column: 1 / 3;
-  background: linear-gradient(135deg, #1D6B4A, #28a745);
+  background: linear-gradient(135deg, var(--teal), var(--teal2));
   color: #fff;
   padding: 14px;
   font-size: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(40,167,69,0.3);
-  animation: bookPulse 2.5s infinite;
+  border-radius: 13px;
+  box-shadow: 0 4px 18px rgba(27,107,90,0.28);
+  animation: bookGlow 2.8s ease-in-out infinite;
+  letter-spacing: 0.3px;
 }
 
 .btn-book:hover {
+  background: linear-gradient(135deg, var(--teal2), #2FA88A);
   transform: scale(1.02);
-  box-shadow: 0 6px 28px rgba(40,167,69,0.5);
+  box-shadow: 0 6px 28px rgba(27,107,90,0.42);
 }
 
-@keyframes bookPulse {
-  0%, 100% { box-shadow: 0 4px 20px rgba(40,167,69,0.3); }
-  50% { box-shadow: 0 4px 30px rgba(40,167,69,0.6); }
+@keyframes bookGlow {
+  0%, 100% { box-shadow: 0 4px 18px rgba(27,107,90,0.28); }
+  50%       { box-shadow: 0 6px 30px rgba(27,107,90,0.50); }
 }
 
 /* ===== LOADER ===== */
 .loader {
   text-align: center;
   padding: 80px 20px;
-  color: var(--text-muted);
+  color: var(--muted);
 }
 
 .loader-spinner {
-  width: 50px; height: 50px;
-  border: 3px solid rgba(201,168,76,0.2);
-  border-top-color: var(--gold);
+  width: 48px; height: 48px;
+  border: 3px solid var(--sand3);
+  border-top-color: var(--teal);
   border-radius: 50%;
-  margin: 0 auto 20px;
+  margin: 0 auto 18px;
   animation: spin 0.8s linear infinite;
 }
 
@@ -644,11 +666,10 @@ nav {
 .empty-state {
   text-align: center;
   padding: 60px 20px;
-  color: var(--text-muted);
+  color: var(--muted);
 }
-
-.empty-state .icon { font-size: 48px; margin-bottom: 16px; }
-.empty-state h3 { color: var(--text); margin-bottom: 8px; }
+.empty-state .icon { font-size: 52px; margin-bottom: 16px; }
+.empty-state h3 { color: var(--ink); font-size: 20px; margin-bottom: 8px; }
 
 /* ===== FOOTER ===== */
 footer {
@@ -656,29 +677,27 @@ footer {
   z-index: 1;
   border-top: 1px solid var(--border);
   text-align: center;
-  padding: 24px;
-  color: var(--text-muted);
+  padding: 26px;
+  color: var(--muted);
   font-size: 13px;
+  background: var(--sand2);
 }
 
-footer span { color: var(--gold); }
+footer span { color: var(--teal); font-weight: 700; }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
   .nav-links { display: none; }
   .menu-btn { display: flex; }
-  .filter-inner { flex-direction: column; align-items: flex-start; }
-  .stats-chips { margin-right: 0; }
-  .hero { padding: 40px 16px 30px; }
-  .card { min-width: 260px; max-width: 260px; }
+  .filter-card { flex-direction: column; align-items: flex-start; }
+  .badge-count { margin-right: 0; }
+  .hero { padding: 36px 16px 28px; }
+  .card { min-width: 265px; max-width: 265px; }
+  .airport-header { padding: 12px 14px; }
 }
 </style>
 </head>
-
 <body>
-
-<div class="bg-layer"></div>
-<div class="bg-pattern"></div>
 
 <!-- NAV -->
 <nav>
@@ -696,10 +715,8 @@ footer span { color: var(--gold); }
   <button class="menu-btn" onclick="openSidebar()">☰</button>
 </nav>
 
-<!-- SIDEBAR OVERLAY -->
 <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
 
-<!-- SIDEBAR -->
 <div class="sidebar" id="mySidebar">
   <button class="sidebar-close" onclick="closeSidebar()">✕</button>
   <a href="index.html">🏠 الرئيسية</a>
@@ -715,20 +732,24 @@ footer span { color: var(--gold); }
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">✨ وكالات معتمدة ومعتمدة رسمياً</div>
-  <h1>أحدث عروض <span>العمرة</span><br>حسب مطار الانطلاق</h1>
-  <p>اكتشف باقات العمرة المميزة من مختلف مطارات الجزائر واحجز رحلتك الروحية بكل سهولة</p>
-  <div class="gold-divider">
-    <div class="line"></div>
-    <div class="diamond"></div>
-    <div class="line"></div>
+  <div class="hero-badge">✨ وكالات معتمدة رسمياً</div>
+  <h1>أحدث عروض <span>العمرة</span><br>حسب <em>مطار الانطلاق</em></h1>
+  <p>اكتشف باقات العمرة المميزة من مختلف مطارات الجزائر واحجز رحلتك الروحية بكل سهولة وأمان</p>
+  <div class="ornament">
+    <div class="arm"></div>
+    <div class="gems">
+      <div class="gem"></div>
+      <div class="gem big"></div>
+      <div class="gem"></div>
+    </div>
+    <div class="arm left"></div>
   </div>
 </section>
 
 <!-- FILTER -->
-<div class="filter-section">
-  <div class="filter-inner">
-    <span class="filter-label">✈️ فلترة حسب المطار</span>
+<div class="filter-wrap">
+  <div class="filter-card">
+    <div class="filter-label">فلترة حسب المطار</div>
     <select class="filter-select" id="airportFilter" onchange="renderFiltered()">
       <option value="all">🌍 جميع المطارات</option>
       <option value="الجزائر">🛫 مطار الجزائر</option>
@@ -738,9 +759,7 @@ footer span { color: var(--gold); }
       <option value="قسنطينة">🛫 مطار قسنطينة</option>
       <option value="تمنغست">🛫 مطار تمنغست</option>
     </select>
-    <div class="stats-chips">
-      <div class="chip" id="offerCount">⏳ جاري التحميل</div>
-    </div>
+    <div class="badge-count" id="offerCount">⏳ جاري التحميل...</div>
   </div>
 </div>
 
@@ -761,7 +780,6 @@ footer span { color: var(--gold); }
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbzu_D4Gy4PL5NLfHXsFBOQD8Se8W1kJDH3rEEGna5WDZ0uTNUcgLsUGcrUIQlIzXZgj/exec";
 let offersData = [];
 
-/* ===== SIDEBAR ===== */
 function openSidebar() {
   document.getElementById("mySidebar").classList.add("open");
   document.getElementById("overlay").classList.add("show");
@@ -773,56 +791,52 @@ function closeSidebar() {
   document.body.style.overflow = "";
 }
 
-/* ===== LOGO ===== */
 function normalizeArabic(t) {
   return String(t).toLowerCase()
-    .replace(/[إأآٱ]/g, "ا").replace(/ة/g, "ه")
-    .replace(/ى/g, "ي").replace(/ال/g, "")
-    .replace(/[^؀-ۿ\s]/g, "").trim();
+    .replace(/[إأآٱ]/g,"ا").replace(/ة/g,"ه")
+    .replace(/ى/g,"ي").replace(/ال/g,"")
+    .replace(/[^؀-ۿ\s]/g,"").trim();
 }
 
-function getAgencyLogo(name = "") {
+function getAgencyLogo(name="") {
   const n = normalizeArabic(name);
-  if (/تقرت/.test(n)) return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
+  if (/تقرت/.test(n))       return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
   if (/انسية|انسيه/.test(n)) return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
-  if (/سقيف/.test(n)) return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
+  if (/سقيف/.test(n))       return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
   return "";
 }
 
-/* ===== DATE PARSE ===== */
 function parseArabicDayMonth(text) {
   if (!text) return null;
-  const clean = text.split("_")[0].replace(/[-–]/g, " ").replace(/\s+/g, " ").trim();
+  const clean = text.split("_")[0].replace(/[-–]/g," ").replace(/\s+/g," ").trim();
   const match = clean.match(/(\d{1,2})\s*(جانفي|فيفري|مارس|أفريل|ماي|جوان|جويلية|أوت|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/);
   if (!match) return null;
-  const months = { "جانفي":0,"فيفري":1,"مارس":2,"أفريل":3,"ماي":4,"جوان":5,"جويلية":6,"أوت":7,"سبتمبر":8,"أكتوبر":9,"نوفمبر":10,"ديسمبر":11 };
+  const months = {"جانفي":0,"فيفري":1,"مارس":2,"أفريل":3,"ماي":4,"جوان":5,"جويلية":6,"أوت":7,"سبتمبر":8,"أكتوبر":9,"نوفمبر":10,"ديسمبر":11};
   return new Date(new Date().getFullYear(), months[match[2]], parseInt(match[1]));
 }
 
-/* ===== LIKE ===== */
 function toggleLike(id) {
-  if (localStorage.getItem("liked_" + id)) return;
-  fetch(SHEET_URL + "?action=like&id=" + id)
-    .then(r => r.json())
-    .then(r => {
-      if (r.success) {
-        document.getElementById("like-" + id).textContent = r.likes;
-        localStorage.setItem("liked_" + id, "1");
+  if (localStorage.getItem("liked_"+id)) return;
+  fetch(SHEET_URL+"?action=like&id="+id)
+    .then(r=>r.json())
+    .then(r=>{
+      if(r.success) {
+        document.getElementById("like-"+id).textContent = r.likes;
+        localStorage.setItem("liked_"+id,"1");
       }
-    }).catch(() => {});
+    }).catch(()=>{});
 }
 
-/* ===== CARD HTML ===== */
 function buildCard(o) {
-  const id = o["ID"] || Math.random().toString(36).substr(2, 9);
-  const agency = o["اسم الوكالة"] || o["الوكالة"] || "وكالة سياحية";
-  const logo = getAgencyLogo(agency);
-  const duration = o["المدة"] || "";
-  const tripDate = o["تاريخ الرحلة"] || "";
-  const hotel = o["الفندق"] || "";
-  const price = o["السعر الغرفة الجماعية (دج)"] || "";
-  const title = o["اسم العرض"] || "عرض عمرة مميز";
-  const likes = o["likes"] || 0;
+  const id = o["ID"] || Math.random().toString(36).substr(2,9);
+  const agency  = o["اسم الوكالة"] || o["الوكالة"] || "وكالة سياحية";
+  const logo    = getAgencyLogo(agency);
+  const duration= o["المدة"] || "";
+  const tripDate= o["تاريخ الرحلة"] || "";
+  const hotel   = o["الفندق"] || "";
+  const price   = o["السعر الغرفة الجماعية (دج)"] || "";
+  const title   = o["اسم العرض"] || "عرض عمرة مميز";
+  const likes   = o["likes"] || 0;
 
   const logoHtml = logo
     ? `<img class="agency-logo" src="${logo}" alt="${agency}" onerror="this.style.display='none'">`
@@ -830,8 +844,9 @@ function buildCard(o) {
 
   return `
   <div class="card">
-    <div class="card-accent"></div>
+    <div class="card-stripe"></div>
     <div class="card-body">
+
       <div class="agency-row">
         ${logoHtml}
         <div>
@@ -843,29 +858,17 @@ function buildCard(o) {
       <div class="offer-title">${title}</div>
 
       <div class="info-list">
-        ${hotel ? `
-        <div class="info-row">
-          <div class="info-icon">🏨</div>
-          <div class="info-text"><strong>${hotel}</strong></div>
-        </div>` : ''}
-        ${duration ? `
-        <div class="info-row">
-          <div class="info-icon">⏳</div>
-          <div class="info-text">المدة: <strong>${duration}</strong></div>
-        </div>` : ''}
-        ${tripDate ? `
-        <div class="info-row">
-          <div class="info-icon">📅</div>
-          <div class="info-text">تاريخ الرحلة: <strong>${tripDate}</strong></div>
-        </div>` : ''}
+        ${hotel    ? `<div class="info-row"><div class="info-icon">🏨</div><div class="info-text"><strong>${hotel}</strong></div></div>` : ''}
+        ${duration ? `<div class="info-row"><div class="info-icon">⏳</div><div class="info-text">المدة: <strong>${duration}</strong></div></div>` : ''}
+        ${tripDate ? `<div class="info-row"><div class="info-icon">📅</div><div class="info-text">تاريخ الرحلة: <strong>${tripDate}</strong></div></div>` : ''}
       </div>
 
       <div class="price-block">
         <div>
-          <div class="price-label">السعر الغرفة الجماعية</div>
+          <div class="price-label">السعر — غرفة جماعية</div>
           <div class="price-value">${price ? Number(price).toLocaleString('ar-DZ') : '—'} <span class="price-unit">دج</span></div>
         </div>
-        <div style="font-size:28px">💰</div>
+        <div class="price-coin">💰</div>
       </div>
 
       <div class="card-btns">
@@ -879,9 +882,8 @@ function buildCard(o) {
   </div>`;
 }
 
-/* ===== RENDER ===== */
-function renderOffers(data, filter = "all") {
-  data.sort((a, b) => {
+function renderOffers(data, filter="all") {
+  data.sort((a,b) => {
     const da = parseArabicDayMonth(a["تاريخ الرحلة"]);
     const db = parseArabicDayMonth(b["تاريخ الرحلة"]);
     if (!da && !db) return 0;
@@ -895,41 +897,38 @@ function renderOffers(data, filter = "all") {
 
   const grouped = {};
   data.forEach(o => {
-    const airport = (o["المطار"] || "غير محدد").trim();
-    if (!grouped[airport]) grouped[airport] = [];
-    grouped[airport].push(o);
+    const ap = (o["المطار"] || "غير محدد").trim();
+    if (!grouped[ap]) grouped[ap] = [];
+    grouped[ap].push(o);
   });
 
-  let totalVisible = 0;
-  let delay = 0;
+  let total = 0, delay = 0;
 
   Object.keys(grouped).forEach(airport => {
     if (filter !== "all" && filter !== airport) return;
-
     const offers = grouped[airport];
-    totalVisible += offers.length;
+    total += offers.length;
 
     const section = document.createElement("div");
     section.className = "airport-section";
     section.style.animationDelay = `${delay}s`;
-    delay += 0.1;
+    delay += 0.08;
 
     section.innerHTML = `
       <div class="airport-header">
-        <div class="airport-icon">🛫</div>
+        <div class="airport-icon-wrap">🛫</div>
         <div class="airport-info">
           <h2>مطار ${airport}</h2>
-          <p>عروض الرحلات المتاحة</p>
+          <p>عروض الرحلات المتاحة من هذا المطار</p>
         </div>
-        <div class="airport-count">${offers.length} عرض</div>
+        <div class="airport-count-badge">${offers.length} عرض</div>
       </div>
-      <div class="scroll-track">${offers.map(o => buildCard(o)).join('')}</div>
-    `;
+      <div class="scroll-track">${offers.map(o => buildCard(o)).join('')}</div>`;
 
     c.appendChild(section);
   });
 
-  if (totalVisible === 0) {
+  if (total === 0) {
     c.innerHTML = `
       <div class="empty-state">
         <div class="icon">🕌</div>
@@ -938,20 +937,16 @@ function renderOffers(data, filter = "all") {
       </div>`;
   }
 
-  document.getElementById("offerCount").textContent = `✈️ ${totalVisible} عرض متاح`;
+  document.getElementById("offerCount").textContent = `✈️ ${total} عرض متاح`;
 }
 
 function renderFiltered() {
   renderOffers(offersData, document.getElementById("airportFilter").value);
 }
 
-/* ===== FETCH ===== */
 fetch(SHEET_URL)
   .then(r => r.json())
-  .then(d => {
-    offersData = d;
-    renderOffers(d);
-  })
+  .then(d => { offersData = d; renderOffers(d); })
   .catch(() => {
     document.getElementById("offersContainer").innerHTML = `
       <div class="empty-state">
@@ -964,6 +959,3 @@ fetch(SHEET_URL)
 </script>
 </body>
 </html>
-
-
-
