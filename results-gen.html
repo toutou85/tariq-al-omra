@@ -11,20 +11,22 @@
 <style>
 /* ===== TOKENS ===== */
 :root {
-  --burgundy:   #6B0F1A;
-  --burgundy2:  #8B1220;
-  --gold:       #C9943A;
-  --gold-light: #F0D49A;
-  --sand:       #FAF4EA;
-  --sand2:      #F0E6D3;
-  --charcoal:   #1A1110;
+  --navy:       #0D1B2A;
+  --navy2:      #1B2E42;
+  --teal:       #0E7C86;
+  --teal2:      #12A0AD;
+  --gold:       #D4A017;
+  --gold-light: #F2D27A;
+  --sand:       #F4F7FA;
+  --sand2:      #E4EBF2;
+  --charcoal:   #0D1B2A;
   --white:      #FFFFFF;
-  --muted:      #7A6A60;
+  --muted:      #5A7184;
   --green-wa:   #25D366;
   --radius:     18px;
-  --shadow-sm:  0 2px 12px rgba(107,15,26,.10);
-  --shadow-md:  0 8px 32px rgba(107,15,26,.18);
-  --shadow-lg:  0 18px 50px rgba(107,15,26,.25);
+  --shadow-sm:  0 2px 12px rgba(13,27,42,.10);
+  --shadow-md:  0 8px 32px rgba(13,27,42,.18);
+  --shadow-lg:  0 18px 50px rgba(13,27,42,.28);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -42,12 +44,12 @@ body {
   top: 0;
   z-index: 9000;
   height: 64px;
-  background: var(--burgundy);
+  background: var(--navy);
   display: flex;
   align-items: center;
   padding: 0 20px;
   gap: 14px;
-  box-shadow: 0 4px 20px rgba(107,15,26,.45);
+  box-shadow: 0 4px 20px rgba(13,27,42,.45);
 }
 
 /* Islamic geo pattern overlay */
@@ -103,7 +105,7 @@ body {
   border-radius: 999px;
   z-index: 1;
 }
-.visitor-badge i { color: var(--gold-light); font-size: 16px; }
+.visitor-badge i { color: #7EEAF4; font-size: 16px; }
 .visitor-badge span { color: var(--white); font-size: 15px; font-weight: 800; }
 .visitor-badge small { color: rgba(255,255,255,.7); font-size: 12px; }
 
@@ -135,7 +137,7 @@ body {
   position: fixed;
   top: 0; right: -280px;
   width: 280px; height: 100%;
-  background: var(--burgundy);
+  background: var(--navy);
   padding-top: 80px;
   transition: right .3s cubic-bezier(.4,0,.2,1);
   z-index: 10000;
@@ -169,7 +171,7 @@ body {
 
 /* ===== HERO BANNER ===== */
 .hero {
-  background: linear-gradient(135deg, var(--burgundy) 0%, #3D0810 60%, #1A0308 100%);
+  background: linear-gradient(160deg, var(--navy) 0%, #0A2540 45%, #073748 100%);
   padding: 36px 20px 28px;
   text-align: center;
   position: relative;
@@ -179,14 +181,14 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23C9943A' fill-opacity='0.06'%3E%3Cpath d='M30 0l8.66 15H21.34L30 0zm0 60l-8.66-15h17.32L30 60zM0 30l15-8.66v17.32L0 30zm60 0l-15 8.66V21.34L60 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23D4A017' fill-opacity='0.07'%3E%3Cpath d='M30 0l8.66 15H21.34L30 0zm0 60l-8.66-15h17.32L30 60zM0 30l15-8.66v17.32L0 30zm60 0l-15 8.66V21.34L60 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 .hero-label {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(201,148,58,.2);
-  border: 1px solid rgba(201,148,58,.4);
+  background: rgba(14,124,134,.25);
+  border: 1px solid rgba(14,124,134,.5);
   color: var(--gold-light);
   font-size: 13px;
   font-weight: 700;
@@ -241,7 +243,7 @@ body {
 select {
   width: 100%;
   padding: 10px 34px 10px 14px;
-  border: 1.5px solid #E8DDD4;
+  border: 1.5px solid #CDD9E8;
   border-radius: 10px;
   font-family: 'Tajawal', Arial, sans-serif;
   font-size: 14px;
@@ -255,7 +257,7 @@ select {
 select:focus {
   outline: none;
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(201,148,58,.15);
+  box-shadow: 0 0 0 3px rgba(14,124,134,.18);
 }
 
 /* ===== MAIN CONTENT ===== */
@@ -287,7 +289,7 @@ select:focus {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, var(--burgundy), var(--burgundy2));
+  background: linear-gradient(135deg, var(--navy), var(--teal));
   color: var(--white);
   padding: 10px 22px;
   border-radius: 999px;
@@ -329,7 +331,7 @@ select:focus {
   flex-direction: column;
   transition: transform .3s, box-shadow .3s;
   position: relative;
-  border: 1px solid rgba(201,148,58,.15);
+  border: 1px solid rgba(14,124,134,.18);
 }
 .card:hover {
   transform: translateY(-5px);
@@ -342,14 +344,14 @@ select:focus {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--burgundy), var(--gold), var(--burgundy2));
+  background: linear-gradient(90deg, var(--navy), var(--teal), var(--gold));
 }
 
 /* ===== CARD HEADER ===== */
 .card-top {
   padding: 20px 16px 14px;
-  background: linear-gradient(145deg, #FFF8F0, #FAF0E4);
-  border-bottom: 1px solid rgba(201,148,58,.15);
+  background: linear-gradient(145deg, #EBF4F8, #DFF0F5);
+  border-bottom: 1px solid rgba(14,124,134,.15);
   position: relative;
 }
 
@@ -357,13 +359,7 @@ select:focus {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, var(--burgundy), var(--burgundy2));
-  color: var(--white);
-  font-size: 12px;
-  font-weight: 800;
-  padding: 4px 12px;
-  border-radius: 999px;
-  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--teal), var(--teal2));
 }
 
 .agency-row {
@@ -386,11 +382,11 @@ select:focus {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  color: var(--burgundy);
+  color: var(--teal);
   font-size: 12px;
   font-weight: 700;
   margin-top: 4px;
-  background: rgba(107,15,26,.07);
+  background: rgba(14,124,134,.08);
   padding: 3px 10px;
   border-radius: 999px;
 }
@@ -401,7 +397,7 @@ select:focus {
   height: 64px;
   border-radius: 12px;
   background: var(--white);
-  border: 1.5px solid rgba(201,148,58,.25);
+  border: 1.5px solid rgba(14,124,134,.25);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -432,8 +428,8 @@ select:focus {
 }
 .date-badge.soon {
   background: linear-gradient(135deg, #FFF0F0, #FFD6D6);
-  color: var(--burgundy);
-  border: 1.5px solid rgba(107,15,26,.2);
+  color: var(--navy);
+  border: 1.5px solid rgba(13,27,42,.2);
 }
 .date-badge.mid {
   background: linear-gradient(135deg, #FFFBEE, #FFF0C0);
@@ -503,10 +499,10 @@ select:focus {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy2) 100%);
+  background: linear-gradient(135deg, var(--teal) 0%, #065960 100%);
   border-radius: 14px;
   padding: 14px 16px;
-  box-shadow: 0 6px 20px rgba(107,15,26,.28);
+  box-shadow: 0 6px 20px rgba(13,27,42,.28);
 }
 .price-amount {
   flex: 1;
@@ -562,7 +558,7 @@ select:focus {
   font-family: 'Tajawal', Arial, sans-serif;
   font-size: 13px;
   font-weight: 700;
-  color: var(--burgundy);
+  color: var(--navy);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -575,9 +571,9 @@ select:focus {
 .action-btn:hover { background: var(--sand); }
 .action-btn.register {
   color: var(--white);
-  background: var(--burgundy);
+  background: var(--teal);
 }
-.action-btn.register:hover { background: var(--burgundy2); }
+.action-btn.register:hover { background: var(--teal2); }
 
 /* ===== MODALS ===== */
 .modal-overlay {
@@ -609,7 +605,7 @@ select:focus {
   to   { transform: scale(1)   translateY(0);    opacity: 1; }
 }
 .modal-header {
-  background: linear-gradient(135deg, var(--burgundy), var(--burgundy2));
+  background: linear-gradient(135deg, var(--navy), var(--teal));
   padding: 20px 22px;
   display: flex;
   align-items: center;
@@ -677,7 +673,7 @@ select:focus {
 .form-field input {
   width: 100%;
   padding: 12px 14px;
-  border: 1.5px solid #E0D8D0;
+  border: 1.5px solid #C8DCE8;
   border-radius: 10px;
   font-family: 'Tajawal', Arial, sans-serif;
   font-size: 15px;
@@ -689,12 +685,12 @@ select:focus {
 .form-field input:focus {
   outline: none;
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(201,148,58,.15);
+  box-shadow: 0 0 0 3px rgba(14,124,134,.18);
 }
 .btn-submit {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, var(--burgundy), var(--burgundy2));
+  background: linear-gradient(135deg, var(--teal), #065960);
   color: var(--white);
   border: none;
   border-radius: 12px;
@@ -703,12 +699,12 @@ select:focus {
   font-weight: 800;
   cursor: pointer;
   margin-top: 4px;
-  box-shadow: 0 6px 20px rgba(107,15,26,.28);
+  box-shadow: 0 6px 20px rgba(13,27,42,.28);
   transition: transform .2s, box-shadow .2s;
 }
 .btn-submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(107,15,26,.38);
+  box-shadow: 0 10px 28px rgba(13,27,42,.38);
 }
 .btn-cancel {
   width: 100%;
@@ -724,7 +720,7 @@ select:focus {
   margin-top: 8px;
   transition: background .2s;
 }
-.btn-cancel:hover { background: #E8DDD4; }
+.btn-cancel:hover { background: #D0E4EE; }
 
 /* Empty / error states */
 .empty-state {
@@ -908,20 +904,32 @@ const fAirport = document.getElementById("fAirport");
 const offersEl = document.getElementById("offers");
 
 /* ── helpers ── */
-function formatDate(d){ return d ? new Date(d).toLocaleDateString("ar-DZ") : "-"; }
+function formatDate(d){ const p = parseLocalDate(d); return p ? p.toLocaleDateString("ar-DZ") : "-"; }
+
+/* Parse date locally (avoids UTC timezone shift that adds 1 day) */
+function parseLocalDate(dateStr){
+  if(!dateStr) return null;
+  // Handle "YYYY-MM-DD" or "YYYY/MM/DD"
+  const parts = String(dateStr).split(/[-\/]/);
+  if(parts.length === 3){
+    return new Date(+parts[0], +parts[1]-1, +parts[2]);
+  }
+  return new Date(dateStr); // fallback
+}
 
 function formatDateArabicFull(dateStr){
   if(!dateStr) return "-";
   const days   = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
   const months = ["جانفي","فيفري","مارس","أفريل","ماي","جوان","جويلية","أوت","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
-  const d = new Date(dateStr);
+  const d = parseLocalDate(dateStr);
+  if(!d || isNaN(d)) return "-";
   return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 
 function getDateStatus(dateStr){
   if(!dateStr) return "far";
-  const travel = new Date(dateStr);
-  if(isNaN(travel)) return "far";
+  const travel = parseLocalDate(dateStr);
+  if(!travel || isNaN(travel)) return "far";
   const today = new Date(); today.setHours(0,0,0,0); travel.setHours(0,0,0,0);
   const diff = Math.round((travel - today)/(1000*60*60*24));
   if(diff <= 15) return "soon";
@@ -931,8 +939,8 @@ function getDateStatus(dateStr){
 
 function getRemainingText(dateStr){
   if(!dateStr) return "";
-  const travel = new Date(dateStr);
-  if(isNaN(travel)) return "";
+  const travel = parseLocalDate(dateStr);
+  if(!travel || isNaN(travel)) return "";
   const today = new Date(); today.setHours(0,0,0,0); travel.setHours(0,0,0,0);
   const diff = Math.round((travel - today)/(1000*60*60*24));
   if(diff === 0) return "🚀 اليوم موعد الرحلة";
@@ -1097,7 +1105,7 @@ function openDetailsByIdx(i){
     <div class="detail-row"><i class="fa-solid fa-hotel"></i><div><div class="dr-label">الفندق</div><div class="dr-val">${o.hotel||"—"}</div></div></div>
     <div class="detail-row"><i class="fa-regular fa-clock"></i><div><div class="dr-label">المدة</div><div class="dr-val">${o.duration||"—"}</div></div></div>
     <div class="detail-row"><i class="fa-solid fa-plane"></i><div><div class="dr-label">رقم الرحلة</div><div class="dr-val">${o.flight||"—"}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-tag"></i><div><div class="dr-label">السعر</div><div class="dr-val" style="color:var(--burgundy);font-size:20px">${Number(o.group).toLocaleString("ar-DZ")} دج</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-tag"></i><div><div class="dr-label">السعر</div><div class="dr-val" style="color:var(--teal);font-size:20px">${Number(o.group).toLocaleString("ar-DZ")} دج</div></div></div>
     ${o.notes ? `<div class="detail-row"><i class="fa-solid fa-note-sticky"></i><div><div class="dr-label">ملاحظات</div><div class="dr-val">${o.notes}</div></div></div>` : ''}
   `;
   document.getElementById("detailsModal").classList.add("open");
