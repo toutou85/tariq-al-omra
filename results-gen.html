@@ -906,15 +906,22 @@ const offersEl = document.getElementById("offers");
 /* ── helpers ── */
 function formatDate(d){ const p = parseLocalDate(d); return p ? p.toLocaleDateString("ar-DZ") : "-"; }
 
-/* Parse date locally (avoids UTC timezone shift that adds 1 day) */
+/* Parse date locally — handles YYYY-MM-DD and DD/MM/YYYY */
 function parseLocalDate(dateStr){
   if(!dateStr) return null;
-  // Handle "YYYY-MM-DD" or "YYYY/MM/DD"
-  const parts = String(dateStr).split(/[-\/]/);
-  if(parts.length === 3){
-    return new Date(+parts[0], +parts[1]-1, +parts[2]);
-  }
-  return new Date(dateStr); // fallback
+  const s = String(dateStr).trim();
+
+  // ISO: YYYY-MM-DD
+  const iso = s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
+  if(iso) return new Date(+iso[1], +iso[2]-1, +iso[3]);
+
+  // DD/MM/YYYY or DD-MM-YYYY
+  const dmy = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
+  if(dmy) return new Date(+dmy[3], +dmy[2]-1, +dmy[1]);
+
+  // Fallback (e.g. "January 15, 2026")
+  const d = new Date(s);
+  return isNaN(d) ? null : d;
 }
 
 function formatDateArabicFull(dateStr){
@@ -959,6 +966,8 @@ function showToast(msg, icon="✅"){
 /* ── fetch ── */
 fetch(OFFERS_API).then(r=>r.json()).then(data=>{
   offersData = data;
+  // Debug: log first offer's date to console
+  if(data[0]) console.log("🗓️ date sample:", JSON.stringify(data[0].date));
   fillFilters();
   render();
 }).catch(()=>{
