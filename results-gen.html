@@ -909,19 +909,36 @@ function parseLocalDate(dateStr) {
   if (!dateStr) return null;
   const s = String(dateStr).trim();
 
-  // ISO: YYYY-MM-DD أو YYYY/MM/DD
-  const iso = s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
-  if (iso) return new Date(+iso[1], +iso[2] - 1, +iso[3], 12, 0, 0);
+  // ISO: YYYY-MM-DD
+  const iso = s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+  if (iso) {
+    // نبني التاريخ يدوياً بدون أي UTC
+    const d = new Date();
+    d.setFullYear(+iso[1], +iso[2] - 1, +iso[3]);
+    d.setHours(12, 0, 0, 0);
+    return d;
+  }
 
-  // DD/MM/YYYY أو DD-MM-YYYY
-  const dmy = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
-  if (dmy) return new Date(+dmy[3], +dmy[2] - 1, +dmy[1], 12, 0, 0);
+  // DD/MM/YYYY
+  const dmy = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+  if (dmy) {
+    const d = new Date();
+    d.setFullYear(+dmy[3], +dmy[2] - 1, +dmy[1]);
+    d.setHours(12, 0, 0, 0);
+    return d;
+  }
 
-  // fallback
-  const d = new Date(s);
-  return isNaN(d) ? null : d;
+  // إذا كان رقم (Google Sheets serial number)
+  if (/^\d+$/.test(s)) {
+    // Google Sheets يحسب الأيام من 30 ديسمبر 1899
+    const base = new Date(1899, 11, 30);
+    base.setDate(base.getDate() + parseInt(s));
+    base.setHours(12, 0, 0, 0);
+    return base;
+  }
+
+  return null;
 }
-
 function formatDate(d) {
   const p = parseLocalDate(d);
   return p ? p.toLocaleDateString("ar-DZ") : "-";
