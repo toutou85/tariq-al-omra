@@ -912,29 +912,20 @@ function parseLocalDate(dateStr) {
   // ISO: YYYY-MM-DD
   const iso = s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
   if (iso) {
-    // نبني التاريخ يدوياً بدون أي UTC
-    const d = new Date();
-    d.setFullYear(+iso[1], +iso[2] - 1, +iso[3]);
-    d.setHours(12, 0, 0, 0);
-    return d;
+    // ✅ بناء التاريخ بـ UTC مباشرة بدون أي timezone
+    return new Date(Date.UTC(+iso[1], +iso[2] - 1, +iso[3], 12, 0, 0));
   }
 
   // DD/MM/YYYY
   const dmy = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
   if (dmy) {
-    const d = new Date();
-    d.setFullYear(+dmy[3], +dmy[2] - 1, +dmy[1]);
-    d.setHours(12, 0, 0, 0);
-    return d;
+    return new Date(Date.UTC(+dmy[3], +dmy[2] - 1, +dmy[1], 12, 0, 0));
   }
 
-  // إذا كان رقم (Google Sheets serial number)
+  // Google Sheets serial number
   if (/^\d+$/.test(s)) {
-    // Google Sheets يحسب الأيام من 30 ديسمبر 1899
-    const base = new Date(1899, 11, 30);
-    base.setDate(base.getDate() + parseInt(s));
-    base.setHours(12, 0, 0, 0);
-    return base;
+    const base = new Date(Date.UTC(1899, 11, 30));
+    return new Date(base.getTime() + parseInt(s) * 86400000);
   }
 
   return null;
@@ -950,16 +941,19 @@ function formatDateArabicFull(dateStr) {
   const months = ["جانفي","فيفري","مارس","أفريل","ماي","جوان","جويلية","أوت","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
   const d = parseLocalDate(dateStr);
   if (!d || isNaN(d)) return "-";
-  return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  // ✅ getUTC بدل get
+  return `${days[d.getUTCDay()]} ${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 
 function getDateStatus(dateStr) {
   if (!dateStr) return "far";
   const travel = parseLocalDate(dateStr);
   if (!travel || isNaN(travel)) return "far";
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  const t = new Date(travel); t.setHours(0, 0, 0, 0);
-  const diff = Math.round((t - today) / (1000 * 60 * 60 * 24));
+  const today = new Date();
+  // ✅ مقارنة UTC
+  const todayUTC = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+  const travelUTC = Date.UTC(travel.getUTCFullYear(), travel.getUTCMonth(), travel.getUTCDate());
+  const diff = Math.round((travelUTC - todayUTC) / (1000 * 60 * 60 * 24));
   if (diff <= 15) return "soon";
   if (diff <= 40) return "mid";
   return "far";
@@ -969,15 +963,15 @@ function getRemainingText(dateStr) {
   if (!dateStr) return "";
   const travel = parseLocalDate(dateStr);
   if (!travel || isNaN(travel)) return "";
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  const t = new Date(travel); t.setHours(0, 0, 0, 0);
-  const diff = Math.round((t - today) / (1000 * 60 * 60 * 24));
+  const today = new Date();
+  const todayUTC  = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+  const travelUTC = Date.UTC(travel.getUTCFullYear(), travel.getUTCMonth(), travel.getUTCDate());
+  const diff = Math.round((travelUTC - todayUTC) / (1000 * 60 * 60 * 24));
   if (diff === 0) return "🚀 اليوم موعد الرحلة";
   if (diff === 1) return "⚠️ غدًا الانطلاق";
   if (diff > 1)  return `⏳ بعد ${diff} يوم`;
   return "⛔ تاريخ منقضي";
 }
-
 function showToast(msg, icon = "✅") {
   const t = document.getElementById("toast");
   t.innerHTML = `${icon} ${msg}`;
