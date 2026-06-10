@@ -52,7 +52,6 @@ body {
   box-shadow: 0 4px 20px rgba(13,27,42,.45);
 }
 
-/* Islamic geo pattern overlay */
 .topbar::before {
   content: '';
   position: absolute;
@@ -338,7 +337,6 @@ select:focus {
   box-shadow: var(--shadow-md);
 }
 
-/* Gold slash accent */
 .card::before {
   content: '';
   position: absolute;
@@ -475,7 +473,6 @@ select:focus {
 }
 .info-row span { font-weight: 700; }
 
-/* Airline logo */
 .airline-wrap {
   display: flex;
   align-items: center;
@@ -746,7 +743,6 @@ select:focus {
   .card { flex: 0 0 272px; }
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
@@ -904,105 +900,112 @@ const fAirport = document.getElementById("fAirport");
 const offersEl = document.getElementById("offers");
 
 /* ── helpers ── */
-function formatDate(d){ const p = parseLocalDate(d); return p ? p.toLocaleDateString("ar-DZ") : "-"; }
 
-/* Parse date locally — handles YYYY-MM-DD and DD/MM/YYYY */
-function parseLocalDate(dateStr){
-  if(!dateStr) return null;
+/*
+  parseLocalDate — تحويل التاريخ دون تأثير UTC
+  الإصلاح: إضافة 12,0,0 (الظهر) يمنع إزاحة اليوم بسبب فارق التوقيت
+*/
+function parseLocalDate(dateStr) {
+  if (!dateStr) return null;
   const s = String(dateStr).trim();
 
-  // ISO: YYYY-MM-DD
+  // ISO: YYYY-MM-DD أو YYYY/MM/DD
   const iso = s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
-  if(iso) return new Date(+iso[1], +iso[2]-1, +iso[3]);
+  if (iso) return new Date(+iso[1], +iso[2] - 1, +iso[3], 12, 0, 0);
 
-  // DD/MM/YYYY or DD-MM-YYYY
+  // DD/MM/YYYY أو DD-MM-YYYY
   const dmy = s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
-  if(dmy) return new Date(+dmy[3], +dmy[2]-1, +dmy[1]);
+  if (dmy) return new Date(+dmy[3], +dmy[2] - 1, +dmy[1], 12, 0, 0);
 
-  // Fallback (e.g. "January 15, 2026")
+  // fallback
   const d = new Date(s);
   return isNaN(d) ? null : d;
 }
 
-function formatDateArabicFull(dateStr){
-  if(!dateStr) return "-";
+function formatDate(d) {
+  const p = parseLocalDate(d);
+  return p ? p.toLocaleDateString("ar-DZ") : "-";
+}
+
+function formatDateArabicFull(dateStr) {
+  if (!dateStr) return "-";
   const days   = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
   const months = ["جانفي","فيفري","مارس","أفريل","ماي","جوان","جويلية","أوت","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
   const d = parseLocalDate(dateStr);
-  if(!d || isNaN(d)) return "-";
+  if (!d || isNaN(d)) return "-";
   return `${days[d.getDay()]} ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 
-function getDateStatus(dateStr){
-  if(!dateStr) return "far";
+function getDateStatus(dateStr) {
+  if (!dateStr) return "far";
   const travel = parseLocalDate(dateStr);
-  if(!travel || isNaN(travel)) return "far";
-  const today = new Date(); today.setHours(0,0,0,0); travel.setHours(0,0,0,0);
-  const diff = Math.round((travel - today)/(1000*60*60*24));
-  if(diff <= 15) return "soon";
-  if(diff <= 40) return "mid";
+  if (!travel || isNaN(travel)) return "far";
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const t = new Date(travel); t.setHours(0, 0, 0, 0);
+  const diff = Math.round((t - today) / (1000 * 60 * 60 * 24));
+  if (diff <= 15) return "soon";
+  if (diff <= 40) return "mid";
   return "far";
 }
 
-function getRemainingText(dateStr){
-  if(!dateStr) return "";
+function getRemainingText(dateStr) {
+  if (!dateStr) return "";
   const travel = parseLocalDate(dateStr);
-  if(!travel || isNaN(travel)) return "";
-  const today = new Date(); today.setHours(0,0,0,0); travel.setHours(0,0,0,0);
-  const diff = Math.round((travel - today)/(1000*60*60*24));
-  if(diff === 0) return "🚀 اليوم موعد الرحلة";
-  if(diff === 1) return "⚠️ غدًا الانطلاق";
-  if(diff > 1)  return `⏳ بعد ${diff} يوم`;
+  if (!travel || isNaN(travel)) return "";
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const t = new Date(travel); t.setHours(0, 0, 0, 0);
+  const diff = Math.round((t - today) / (1000 * 60 * 60 * 24));
+  if (diff === 0) return "🚀 اليوم موعد الرحلة";
+  if (diff === 1) return "⚠️ غدًا الانطلاق";
+  if (diff > 1)  return `⏳ بعد ${diff} يوم`;
   return "⛔ تاريخ منقضي";
 }
 
-function showToast(msg, icon="✅"){
+function showToast(msg, icon = "✅") {
   const t = document.getElementById("toast");
   t.innerHTML = `${icon} ${msg}`;
   t.classList.add("show");
-  setTimeout(()=> t.classList.remove("show"), 2800);
+  setTimeout(() => t.classList.remove("show"), 2800);
 }
 
 /* ── fetch ── */
-fetch(OFFERS_API).then(r=>r.json()).then(data=>{
+fetch(OFFERS_API).then(r => r.json()).then(data => {
   offersData = data;
-  // Debug: log first offer's date to console
-  if(data[0]) console.log("🗓️ date sample:", JSON.stringify(data[0].date));
   fillFilters();
   render();
-}).catch(()=>{
+}).catch(() => {
   offersEl.innerHTML = `<div class="empty-state">
     <i class="fa-solid fa-triangle-exclamation"></i>
     <p>تعذّر تحميل العروض. تحقق من الاتصال وأعد المحاولة.</p>
   </div>`;
 });
 
-function fillFilters(){
-  const A=new Set(), S=new Set(), D=new Set(), P=new Set();
-  offersData.forEach(o=>{
-    if(o.agency)  A.add(o.agency);
-    if(o.state)   S.add(o.state);
-    if(o.date)    D.add(formatDate(o.date));
-    if(o.airport) P.add(o.airport);
+function fillFilters() {
+  const A = new Set(), S = new Set(), D = new Set(), P = new Set();
+  offersData.forEach(o => {
+    if (o.agency)  A.add(o.agency);
+    if (o.state)   S.add(o.state);
+    if (o.date)    D.add(formatDate(o.date));
+    if (o.airport) P.add(o.airport);
   });
-  A.forEach(v=> fAgency.add(new Option(v,v)));
-  S.forEach(v=> fState.add(new Option(v,v)));
-  D.forEach(v=> fDate.add(new Option(v,v)));
-  P.forEach(v=> fAirport.add(new Option(v,v)));
+  A.forEach(v => fAgency.add(new Option(v, v)));
+  S.forEach(v => fState.add(new Option(v, v)));
+  D.forEach(v => fDate.add(new Option(v, v)));
+  P.forEach(v => fAirport.add(new Option(v, v)));
 }
 
-[fAgency, fState, fDate, fAirport].forEach(s=> s.addEventListener("change", render));
+[fAgency, fState, fDate, fAirport].forEach(s => s.addEventListener("change", render));
 
 /* ── render ── */
-function render(){
+function render() {
   offersEl.innerHTML = "";
   let list = [...offersData];
-  if(fAgency.value)  list = list.filter(o=> o.agency === fAgency.value);
-  if(fState.value)   list = list.filter(o=> o.state  === fState.value);
-  if(fDate.value)    list = list.filter(o=> formatDate(o.date) === fDate.value);
-  if(fAirport.value) list = list.filter(o=> o.airport === fAirport.value);
+  if (fAgency.value)  list = list.filter(o => o.agency  === fAgency.value);
+  if (fState.value)   list = list.filter(o => o.state   === fState.value);
+  if (fDate.value)    list = list.filter(o => formatDate(o.date) === fDate.value);
+  if (fAirport.value) list = list.filter(o => o.airport === fAirport.value);
 
-  if(!list.length){
+  if (!list.length) {
     offersEl.innerHTML = `<div class="empty-state">
       <i class="fa-solid fa-magnifying-glass"></i>
       <p>لا توجد عروض تطابق الفلتر المحدد</p>
@@ -1011,14 +1014,14 @@ function render(){
   }
 
   const grouped = {};
-  list.forEach(o=>{
+  list.forEach(o => {
     const ap = o.airport || "غير محدد";
-    if(!grouped[ap]) grouped[ap]=[];
+    if (!grouped[ap]) grouped[ap] = [];
     grouped[ap].push(o);
   });
 
-  Object.keys(grouped).forEach(ap=>{
-    grouped[ap].sort((a,b)=> new Date(a.date)-new Date(b.date));
+  Object.keys(grouped).forEach(ap => {
+    grouped[ap].sort((a, b) => parseLocalDate(a.date) - parseLocalDate(b.date));
 
     const g = document.createElement("div");
     g.className = "airport-group";
@@ -1027,7 +1030,7 @@ function render(){
     const row = document.createElement("div");
     row.className = "airport-row";
 
-    grouped[ap].forEach(o=>{
+    grouped[ap].forEach(o => {
       const idx    = offersData.indexOf(o);
       const status = getDateStatus(o.date);
       const remain = getRemainingText(o.date);
@@ -1102,94 +1105,94 @@ function render(){
 }
 
 /* ── details ── */
-function openDetailsByIdx(i){
+function openDetailsByIdx(i) {
   const o = offersData[i];
-  if(!o) return;
+  if (!o) return;
   document.getElementById("detailsContent").innerHTML = `
-    <div class="detail-row"><i class="fa-solid fa-kaaba"></i><div><div class="dr-label">العرض</div><div class="dr-val">${o.offer||"—"}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-building"></i><div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency||"—"}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-location-dot"></i><div><div class="dr-label">الولاية</div><div class="dr-val">${o.state||"—"}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-plane-departure"></i><div><div class="dr-label">المطار</div><div class="dr-val">${o.airport||"—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-kaaba"></i><div><div class="dr-label">العرض</div><div class="dr-val">${o.offer || "—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-building"></i><div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency || "—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-location-dot"></i><div><div class="dr-label">الولاية</div><div class="dr-val">${o.state || "—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-plane-departure"></i><div><div class="dr-label">المطار</div><div class="dr-val">${o.airport || "—"}</div></div></div>
     <div class="detail-row"><i class="fa-regular fa-calendar-check"></i><div><div class="dr-label">تاريخ الانطلاق</div><div class="dr-val">${formatDateArabicFull(o.date)}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-hotel"></i><div><div class="dr-label">الفندق</div><div class="dr-val">${o.hotel||"—"}</div></div></div>
-    <div class="detail-row"><i class="fa-regular fa-clock"></i><div><div class="dr-label">المدة</div><div class="dr-val">${o.duration||"—"}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-plane"></i><div><div class="dr-label">رقم الرحلة</div><div class="dr-val">${o.flight||"—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-hotel"></i><div><div class="dr-label">الفندق</div><div class="dr-val">${o.hotel || "—"}</div></div></div>
+    <div class="detail-row"><i class="fa-regular fa-clock"></i><div><div class="dr-label">المدة</div><div class="dr-val">${o.duration || "—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-plane"></i><div><div class="dr-label">رقم الرحلة</div><div class="dr-val">${o.flight || "—"}</div></div></div>
     <div class="detail-row"><i class="fa-solid fa-tag"></i><div><div class="dr-label">السعر</div><div class="dr-val" style="color:var(--teal);font-size:20px">${Number(o.group).toLocaleString("ar-DZ")} دج</div></div></div>
     ${o.notes ? `<div class="detail-row"><i class="fa-solid fa-note-sticky"></i><div><div class="dr-label">ملاحظات</div><div class="dr-val">${o.notes}</div></div></div>` : ''}
   `;
   document.getElementById("detailsModal").classList.add("open");
 }
-function closeDetails(){ document.getElementById("detailsModal").classList.remove("open"); }
+function closeDetails() { document.getElementById("detailsModal").classList.remove("open"); }
 
 /* ── register ── */
-function openRegisterByIdx(i){
+function openRegisterByIdx(i) {
   selectedOffer = offersData[i];
   document.getElementById("cFirst").value = "";
   document.getElementById("cLast").value  = "";
   document.getElementById("cPhone").value = "";
   document.getElementById("registerModal").classList.add("open");
 }
-function closeRegisterModal(){ document.getElementById("registerModal").classList.remove("open"); }
+function closeRegisterModal() { document.getElementById("registerModal").classList.remove("open"); }
 
-function sendRegister(){
+function sendRegister() {
   const first = document.getElementById("cFirst").value.trim();
   const last  = document.getElementById("cLast").value.trim();
   const phone = document.getElementById("cPhone").value.trim();
-  if(!first||!last||!phone){ showToast("أكمل جميع الحقول","⚠️"); return; }
+  if (!first || !last || !phone) { showToast("أكمل جميع الحقول", "⚠️"); return; }
   const msg = encodeURIComponent(
-    `🕋 طلب تسجيل في عرض عمرة\n\n`+
-    `👤 الاسم: ${first} ${last}\n📞 الهاتف: ${phone}\n`+
-    `🏢 الوكالة: ${selectedOffer?.agency||"—"}\n`+
-    `📅 التاريخ: ${formatDateArabicFull(selectedOffer?.date)}\n`+
-    `💰 السعر: ${selectedOffer?.group||"—"} دج`
+    `🕋 طلب تسجيل في عرض عمرة\n\n` +
+    `👤 الاسم: ${first} ${last}\n📞 الهاتف: ${phone}\n` +
+    `🏢 الوكالة: ${selectedOffer?.agency || "—"}\n` +
+    `📅 التاريخ: ${formatDateArabicFull(selectedOffer?.date)}\n` +
+    `💰 السعر: ${selectedOffer?.group || "—"} دج`
   );
-  window.open(`https://wa.me/${selectedOffer?.phone||"213674141379"}?text=${msg}`, "_blank");
+  window.open(`https://wa.me/${selectedOffer?.phone || "213674141379"}?text=${msg}`, "_blank");
   closeRegisterModal();
   showToast("تم إرسال طلبك بنجاح");
 }
 
 /* ── whatsapp ── */
-function openWaByIdx(i){
+function openWaByIdx(i) {
   const o = offersData[i];
-  if(!o) return;
+  if (!o) return;
   const msg = encodeURIComponent(
-    `🕋 استفسار عن عرض عمرة\n\n`+
-    `🏢 الوكالة: ${o.agency||"—"}\n`+
-    `📅 التاريخ: ${formatDateArabicFull(o.date)}\n`+
-    `💰 السعر: ${o.group||"—"} دج\n`+
-    `✈️ المطار: ${o.airport||"—"}`
+    `🕋 استفسار عن عرض عمرة\n\n` +
+    `🏢 الوكالة: ${o.agency || "—"}\n` +
+    `📅 التاريخ: ${formatDateArabicFull(o.date)}\n` +
+    `💰 السعر: ${o.group || "—"} دج\n` +
+    `✈️ المطار: ${o.airport || "—"}`
   );
-  window.open(`https://wa.me/${o.phone||"213674141379"}?text=${msg}`, "_blank");
+  window.open(`https://wa.me/${o.phone || "213674141379"}?text=${msg}`, "_blank");
 }
 
 /* ── share ── */
-function shareByIdx(i){
+function shareByIdx(i) {
   const o = offersData[i];
-  if(!o) return;
-  const text = `🕋 عرض عمرة – ${o.agency}\n📅 ${formatDateArabicFull(o.date)}\n💰 ${o.group} دج\n✈️ ${o.airport||""}`;
-  if(navigator.share){
-    navigator.share({ title:"عرض عمرة", text });
+  if (!o) return;
+  const text = `🕋 عرض عمرة – ${o.agency}\n📅 ${formatDateArabicFull(o.date)}\n💰 ${o.group} دج\n✈️ ${o.airport || ""}`;
+  if (navigator.share) {
+    navigator.share({ title: "عرض عمرة", text });
   } else {
-    navigator.clipboard?.writeText(text).then(()=> showToast("تم نسخ العرض"));
+    navigator.clipboard?.writeText(text).then(() => showToast("تم نسخ العرض"));
   }
 }
 
 /* ── menu ── */
-function openMenu(){
+function openMenu() {
   document.getElementById("sideMenu").classList.add("open");
-  document.getElementById("overlay").style.display="block";
+  document.getElementById("overlay").style.display = "block";
 }
-function closeMenu(){
+function closeMenu() {
   document.getElementById("sideMenu").classList.remove("open");
-  document.getElementById("overlay").style.display="none";
+  document.getElementById("overlay").style.display = "none";
 }
 
-/* ── visitors (fake counter for demo) ── */
-let v = Math.floor(Math.random()*300)+120;
+/* ── visitors (fake counter) ── */
+let v = Math.floor(Math.random() * 300) + 120;
 document.getElementById("visitors").textContent = v;
-setInterval(()=>{
-  if(Math.random()<.3){ v++; document.getElementById("visitors").textContent = v; }
-},6000);
+setInterval(() => {
+  if (Math.random() < .3) { v++; document.getElementById("visitors").textContent = v; }
+}, 6000);
 </script>
 </body>
 </html>
