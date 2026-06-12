@@ -645,7 +645,10 @@ nav.topnav a.active{color:var(--gold-light);border-bottom-color:var(--gold)}
 </div>
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbyk4VkRLOjYTQ83j6vol2RWxashOdb5_iW7cs5aUhG4S3Ohx1VAeIrDDBKIWSxCbpOAjQ/exec";
+/* ====================================================
+   ✅ التصحيح الوحيد: استخدام نفس API الكود القديم
+   ==================================================== */
+const API = "https://script.google.com/macros/s/AKfycbx7sQEUTNhglETA_Irkc5UOvy62SvS-9ftS4v-Ugh8cnTQjDiNs6-kp-SdR8QsOnXE-zw/exec";
 
 let allOffers = [];
 let currentLicense = "";
@@ -660,19 +663,23 @@ const loginMsg          = document.getElementById("loginMsg");
 const editModal         = document.getElementById("editModal");
 
 /* ---- جلب الوكالات ---- */
-fetch(API)
+fetch(API + "?t=" + Date.now())
   .then(r => r.json())
   .then(data => {
     allOffers = data;
-    [...new Set(data.map(o => o.agency).filter(Boolean))].forEach(a => {
-      agencySelect.innerHTML += `<option value="${a}">${a}</option>`;
+    const agencies = [...new Set(data.map(o => (o.agency || "").trim()).filter(Boolean))];
+    agencies.forEach(a => {
+      const opt = document.createElement("option");
+      opt.value = a;
+      opt.textContent = a;
+      agencySelect.appendChild(opt);
     });
   })
   .catch(() => showMsg(loginMsg, "error", "تعذّر الاتصال بالخادم"));
 
 /* ---- دخول وعرض العروض ---- */
 function loadOffers() {
-  const agency = agencySelect.value.trim();
+  const agency  = agencySelect.value.trim();
   const license = licenseInput.value.trim();
   hideMsg(loginMsg);
 
@@ -680,15 +687,15 @@ function loadOffers() {
     showMsg(loginMsg, "warn", "يرجى اختيار الوكالة وإدخال رقم الرخصة");
     return;
   }
-  const agencyRow = allOffers.find(o => (o.agency||"").trim() === agency);
+  const agencyRow = allOffers.find(o => (o.agency || "").trim() === agency);
   if (!agencyRow) { showMsg(loginMsg, "error", "الوكالة غير موجودة"); return; }
-  if ((agencyRow.license||"").trim() !== license) {
+  if ((agencyRow.license || "").trim() !== license) {
     showMsg(loginMsg, "error", "رقم الرخصة غير صحيح");
     return;
   }
 
   currentLicense = license;
-  const offers = allOffers.filter(o => (o.agency||"").trim() === agency);
+  const offers = allOffers.filter(o => (o.agency || "").trim() === agency);
   offersBox.innerHTML = "";
 
   if (!offers.length) {
@@ -722,7 +729,7 @@ function loadOffers() {
         <button class="btn-delete"><i class="ti ti-trash"></i>حذف</button>
       </div>
     `;
-    div.querySelector(".btn-edit").onclick = () => openEdit(o);
+    div.querySelector(".btn-edit").onclick   = () => openEdit(o);
     div.querySelector(".btn-delete").onclick = () => deleteOffer(o.row);
     offersBox.appendChild(div);
   });
@@ -730,74 +737,76 @@ function loadOffers() {
 
 /* ---- فتح التعديل ---- */
 function openEdit(o) {
-  document.getElementById("editRow").value = o.row || "";
-  document.getElementById("m_offer").value    = o.offer || "";
-  document.getElementById("m_date").value     = o.date || "";
-  document.getElementById("m_duration").value = o.duration || "";
-  document.getElementById("m_flightType").value = o.flightType || "";
-  document.getElementById("m_airport").value  = o.airport || "";
-  document.getElementById("m_group").value    = o.group || "";
-  document.getElementById("m_four").value     = o.four || "";
-  document.getElementById("m_three").value    = o.three || "";
-  document.getElementById("m_two").value      = o.two || "";
-  document.getElementById("m_hotel").value    = o.hotel || "";
-  document.getElementById("m_agencyLogo").value = o.agencyLogo || "";
-  document.getElementById("m_airline").value  = o.airline || "";
-  document.getElementById("m_airlineLogo").value = o.airlineLogo || "";
+  document.getElementById("editRow").value        = o.row || "";
+  document.getElementById("m_offer").value        = o.offer || "";
+  document.getElementById("m_date").value         = o.date || "";
+  document.getElementById("m_duration").value     = o.duration || "";
+  document.getElementById("m_flightType").value   = o.flightType || "";
+  document.getElementById("m_airport").value      = o.airport || "";
+  document.getElementById("m_group").value        = o.group || "";
+  document.getElementById("m_four").value         = o.four || "";
+  document.getElementById("m_three").value        = o.three || "";
+  document.getElementById("m_two").value          = o.two || "";
+  document.getElementById("m_hotel").value        = o.hotel || "";
+  document.getElementById("m_agencyLogo").value   = o.agencyLogo || "";
+  document.getElementById("m_airline").value      = o.airline || "";
+  document.getElementById("m_airlineLogo").value  = o.airlineLogo || "";
 
-  setLogoPreview("agencyLogoPreview","agencyLogoImg", o.agencyLogo);
-  setLogoPreview("airlineLogoPreview","airlineLogoImg", o.airlineLogo);
+  setLogoPreview("agencyLogoPreview",  "agencyLogoImg",  o.agencyLogo);
+  setLogoPreview("airlineLogoPreview", "airlineLogoImg", o.airlineLogo);
 
   editModal.classList.add("open");
 }
 
-function closeModal(){
+function closeModal() {
   editModal.classList.remove("open");
 }
 
 /* ---- حفظ التعديلات ---- */
 function saveEdit() {
   const fd = new FormData();
-  fd.append("action","update");
-  fd.append("row", document.getElementById("editRow").value);
+  fd.append("action",  "update");
+  fd.append("row",     document.getElementById("editRow").value);
   fd.append("license", currentLicense);
+
   ["m_offer","m_date","m_duration","m_flightType","m_airport",
    "m_group","m_four","m_three","m_two","m_hotel",
    "m_agencyLogo","m_airlineLogo"].forEach(id => {
-    fd.append(id.replace("m_",""), document.getElementById(id).value);
+    fd.append(id.replace("m_", ""), document.getElementById(id).value);
   });
   fd.append("airline", document.getElementById("m_airline").value);
 
-  fetch(API,{method:"POST",body:fd})
-    .then(r=>r.text())
-    .then(res=>{alert(res);location.reload()})
-    .catch(()=>alert("خطأ في الاتصال"));
+  fetch(API, { method: "POST", body: fd })
+    .then(r => r.text())
+    .then(res => { alert(res); location.reload(); })
+    .catch(() => alert("خطأ في الاتصال"));
 }
 
 /* ---- حذف العرض ---- */
 function deleteOffer(row) {
   if (!confirm("هل أنت متأكد من حذف هذا العرض؟")) return;
   const fd = new FormData();
-  fd.append("action","delete");
-  fd.append("row", row);
+  fd.append("action",  "delete");
+  fd.append("row",     row);
   fd.append("license", currentLicense);
-  fetch(API,{method:"POST",body:fd})
-    .then(r=>r.text())
-    .then(res=>{alert(res);location.reload()})
-    .catch(()=>alert("خطأ في الاتصال"));
+
+  fetch(API, { method: "POST", body: fd })
+    .then(r => r.text())
+    .then(res => { alert(res); location.reload(); })
+    .catch(() => alert("خطأ في الاتصال"));
 }
 
 /* ---- شعار الوكالة (كتابة) ---- */
 document.getElementById("m_agencyLogo").addEventListener("input", e => {
-  setLogoPreview("agencyLogoPreview","agencyLogoImg", e.target.value.trim());
+  setLogoPreview("agencyLogoPreview", "agencyLogoImg", e.target.value.trim());
 });
 
 /* ---- شعار شركة الطيران (اختيار) ---- */
 document.getElementById("m_airline").addEventListener("change", () => {
-  const opt = document.getElementById("m_airline").selectedOptions[0];
+  const opt  = document.getElementById("m_airline").selectedOptions[0];
   const logo = opt.getAttribute("data-logo") || "";
   document.getElementById("m_airlineLogo").value = logo;
-  setLogoPreview("airlineLogoPreview","airlineLogoImg", logo);
+  setLogoPreview("airlineLogoPreview", "airlineLogoImg", logo);
 });
 
 /* ---- مساعد معاينة الشعار ---- */
@@ -815,24 +824,24 @@ function setLogoPreview(wrapId, imgId, url) {
 /* ---- رسائل الحالة ---- */
 function showMsg(el, type, text) {
   el.className = "status-msg " + type;
-  el.innerHTML = `<i class="ti ti-${type==='error'?'alert-circle':'alert-triangle'}"></i>${text}`;
+  el.innerHTML = `<i class="ti ti-${type === 'error' ? 'alert-circle' : 'alert-triangle'}"></i>${text}`;
   el.style.display = "flex";
 }
-function hideMsg(el){ el.style.display = "none" }
+function hideMsg(el) { el.style.display = "none"; }
 
 /* ---- Sidebar ---- */
-function openMenu(){
+function openMenu() {
   document.getElementById("sidebar").classList.add("open");
   document.getElementById("overlay").classList.add("open");
 }
-function closeMenu(){
+function closeMenu() {
   document.getElementById("sidebar").classList.remove("open");
   document.getElementById("overlay").classList.remove("open");
 }
 
 /* ---- Welcome Modal ---- */
-function openWelcome(){ document.getElementById("welcomeModal").classList.add("open") }
-function closeWelcome(){ document.getElementById("welcomeModal").classList.remove("open") }
+function openWelcome()  { document.getElementById("welcomeModal").classList.add("open");    }
+function closeWelcome() { document.getElementById("welcomeModal").classList.remove("open"); }
 </script>
 </body>
 </html>
