@@ -689,7 +689,7 @@ function loadOffers() {
   }
   const agencyRow = allOffers.find(o => (o.agency || "").trim() === agency);
   if (!agencyRow) { showMsg(loginMsg, "error", "الوكالة غير موجودة"); return; }
-  if ((agencyRow.license || "").trim() !== license) {
+ if ((agencyRow.phone || "").trim() !== license) {
     showMsg(loginMsg, "error", "رقم الرخصة غير صحيح");
     return;
   }
