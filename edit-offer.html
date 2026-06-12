@@ -3,595 +3,836 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تعديل عروض الوكالة</title>
-
+<title>إدارة عروض الوكالة</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-body{font-family:Tajawal,Arial;background:#f2f2f2;margin:0}
-.container{max-width:900px;margin:40px auto;background:#fff;padding:20px;border-radius:14px}
-h2{text-align:center;color:#8b0000}
-label{display:block;margin-top:12px;font-weight:bold}
-input,select{
-  width:100%;padding:10px;margin-top:5px;
-  border:1px solid #ccc;border-radius:8px
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#b8860b;
+  --gold-light:#f5e6a3;
+  --brown-dark:#1a0a00;
+  --brown-mid:#3d1a00;
+  --brown-light:#6b2f00;
+  --bg:#f4f2ee;
+  --card:#ffffff;
+  --border:#e5e2db;
+  --text:#1a1510;
+  --text-muted:#7a6f60;
+  --text-hint:#bbb0a0;
+  --input-bg:#faf9f7;
+  --focus-ring:rgba(184,134,11,.15);
+  --red:#8b0000;
+  --red-light:#fdeaea;
 }
-	header{  
-  height:60px;  
-  background:#8b0000;  
-  color:#fff;  
-  display:flex;  
-  align-items:center;  
-  padding:0 15px;  
-}  
-.menu-btn{font-size:26px;cursor:pointer}  
-header h1{flex:1;text-align:center;font-size:18px;margin:0}  
-  
-.whatsapp-top{  
-  position:fixed;  
-top:60px;                    
-  left:12px;  
-  width:48px;  
-  height:48px;  
-  background:#25D366;  
-  color:#fff;  
-  border-radius:50%;  
-  display:flex;  
-  align-items:center;  
-  justify-content:center;  
-  font-size:28px;  
-  z-index:13000;  
-}  
-  
-#sideMenu{  
-  position:fixed;  
-  top:0;right:-260px;  
-  width:260px;height:100%;  
-  background:#8b0000;  
-  padding-top:70px;  
-  transition:.3s;  
-  z-index:10000  
-}  
-#sideMenu a{  
-  display:block;  
-  padding:14px 18px;  
-  color:#fff;  
-  text-decoration:none;  
-}  
-#overlay{  
-  display:none;  
-  position:fixed;  
-  inset:0;  
-  background:rgba(0,0,0,.6);  
-  z-index:9000  
-}  
+body{
+  font-family:'Tajawal',Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
 
-	.visitor-box{
-  display:flex;
-  align-items:center;
-  gap:10px;
+/* ===== HEADER ===== */
+.header{
+  background:linear-gradient(135deg,var(--brown-dark) 0%,var(--brown-mid) 55%,var(--brown-light) 100%);
+  padding:0 24px;
+  height:64px;
+  display:flex;align-items:center;gap:14px;
+  position:relative;
+}
+.header-logo{height:50px;width:auto;cursor:pointer;filter:drop-shadow(0 3px 8px rgba(0,0,0,.4));transition:.2s}
+.header-logo:hover{transform:scale(1.05)}
+.header-title{
+  flex:1;text-align:center;
+  font-size:18px;font-weight:700;
+  color:var(--gold-light);letter-spacing:.4px;
+}
+.menu-btn{
+  background:none;border:none;color:var(--gold-light);
+  font-size:24px;cursor:pointer;padding:4px;
+  display:flex;align-items:center;
+}
+.visitor-box{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(245,230,163,.2);
+  padding:6px 12px;border-radius:10px;
+}
+.visitor-box i{font-size:16px;color:#5bc8f5}
+.visitor-box span{font-size:16px;font-weight:700;color:#fff}
+.visitor-box small{font-size:11px;color:rgba(255,255,255,.7)}
 
-  position:absolute;
-  left:15px;          /* أقصى اليسار */
-  top:50%;
-  transform:translateY(-50%);
+/* ===== NAV ===== */
+nav.topnav{
+  background:#2b1000;
+  display:flex;gap:4px;
+  padding:0 24px;
+  overflow-x:auto;
+}
+nav.topnav a{
+  display:flex;align-items:center;gap:6px;
+  padding:12px 16px;
+  color:rgba(245,230,163,.55);
+  font-size:13px;font-weight:500;
+  text-decoration:none;
+  border-bottom:2px solid transparent;
+  white-space:nowrap;
+  transition:.2s;
+}
+nav.topnav a:hover{color:var(--gold-light)}
+nav.topnav a.active{color:var(--gold-light);border-bottom-color:var(--gold)}
 
-  background:rgba(255,255,255,.15);
-  backdrop-filter:blur(6px);
-  padding:12px 18px;
+/* ===== SIDEBAR ===== */
+.overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.55);z-index:1000;
+}
+.overlay.open{display:block}
+.sidebar{
+  position:fixed;top:0;right:-280px;
+  width:265px;height:100%;
+  background:var(--brown-dark);
+  padding:80px 16px 24px;
+  transition:.3s;z-index:1001;
+  border-left:1px solid rgba(184,134,11,.2);
+}
+.sidebar.open{right:0}
+.sidebar a{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 16px;margin-bottom:6px;
+  color:rgba(245,230,163,.8);
+  font-size:14px;font-weight:500;
+  text-decoration:none;
+  border-radius:10px;
+  transition:.2s;
+}
+.sidebar a:hover{background:rgba(255,255,255,.08);color:var(--gold-light)}
+
+/* ===== BODY ===== */
+.body{
+  max-width:820px;
+  margin:0 auto;
+  padding:28px 20px 60px;
+  display:grid;gap:20px;
+}
+
+/* ===== CARD ===== */
+.card{
+  background:var(--card);
   border-radius:14px;
-  font-family:Tajawal,Arial;
-  width:max-content;
-  box-shadow:0 8px 20px rgba(0,0,0,.15);
+  border:1px solid var(--border);
+  overflow:hidden;
 }
- 
-  
-.visitor-box i{  
-  font-size:20px;  
-  color:#1e90ff;  
-}  
-  
-.visitor-box span{  
-color:#fff;  
-  font-size:18px;  
-  font-weight:700;  
-}  
-  
-.visitor-box small{  
-color:#fff;  
-  font-size:13px;  
-  opacity:.85;  
-}  
-header{  
-  height:60px;  
-  background:#8b0000;  
-  color:#fff;  
-  display:flex;  
-  align-items:center;  
-  gap:10px;  
-  padding:0 15px;  
-}  
-  
-header h1{  
-  flex:1;  
-  text-align:center;  
-  font-size:18px;  
-  margin:0;  
-} 
-.site-logo{
-  position:absolute;
-  left:62%;
-  top:6px;                     /* ينزل قليلاً داخل الشريط */
-  transform:translateX(-50%);
-  
-  height:58px;
-  width:auto;
+.card-head{
+  display:flex;align-items:center;gap:10px;
+  padding:15px 20px;
+  border-bottom:1px solid var(--border);
+  background:#faf9f7;
+}
+.card-head i{font-size:18px;color:var(--gold)}
+.card-head span{font-size:15px;font-weight:600;color:var(--text)}
+.card-body{padding:22px;display:grid;gap:14px}
+
+/* ===== FIELD ===== */
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:600;color:var(--text-muted);letter-spacing:.3px}
+.field input,
+.field select{
+  padding:10px 13px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-family:'Tajawal',Arial,sans-serif;
+  font-size:14px;
+  background:var(--input-bg);
+  color:var(--text);
+  transition:.2s;
+  -webkit-appearance:none;appearance:none;
+}
+.field input:focus,.field select:focus{
+  outline:none;border-color:var(--gold);
+  box-shadow:0 0 0 3px var(--focus-ring);
+}
+.field input::placeholder{color:var(--text-hint)}
+.field select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%237a6f60' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:left 12px center;
+  padding-left:32px;
+}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ===== LOGIN BTN ===== */
+.btn-login{
+  width:100%;padding:14px;
+  background:linear-gradient(135deg,var(--brown-mid),var(--brown-light));
+  color:var(--gold-light);
+  border:none;border-radius:10px;
+  font-family:'Tajawal',Arial,sans-serif;
+  font-size:15px;font-weight:700;
   cursor:pointer;
-	 /* 3D effect */
-  filter:drop-shadow(0 6px 10px rgba(0,0,0,.45));
-  transform-style:preserve-3d;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:.2s;
+}
+.btn-login:hover{opacity:.9;transform:translateY(-1px)}
 
-  transition:transform .25s ease, filter .25s ease;
+/* ===== MSG ===== */
+.status-msg{
+  display:none;
+  align-items:center;gap:8px;
+  padding:11px 16px;
+  border-radius:8px;
+  font-size:13px;font-weight:600;
 }
-button{
-  padding:12px;border:none;border-radius:10px;
-  cursor:pointer;font-size:15px
-}
-.main{width:100%;background:#8b0000;color:#fff;margin-top:12px}
-.offer{border:1px solid #ddd;border-radius:12px;padding:15px;margin-top:15px;background:#fafafa}
-.actions{display:flex;gap:10px;margin-top:10px}
-.actions button{flex:1}
-.edit{background:#0066cc;color:#fff}
-.delete{background:#b00000;color:#fff}
-.msg{text-align:center;margin-top:10px;font-weight:bold}
+.status-msg.warn{background:#fff8e1;color:#7a5c00;border:1px solid #f0d080}
+.status-msg.error{background:#fdeaea;color:#9b2020;border:1px solid #f5b3b3}
 
-/* modal */
-.modal{
-  position:fixed;inset:0;background:rgba(0,0,0,.6);
-  display:none;align-items:center;justify-content:center;z-index:9999
+/* ===== OFFERS LIST ===== */
+.offers-wrap{display:grid;gap:14px}
+.offer-card{
+  background:var(--card);
+  border-radius:12px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  transition:.2s;
 }
+.offer-card:hover{border-color:#c8bfb0;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.offer-top{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 18px;
+  border-bottom:1px solid var(--border);
+}
+.offer-icon{
+  width:42px;height:42px;flex-shrink:0;
+  border-radius:10px;
+  background:rgba(184,134,11,.1);
+  border:1px solid rgba(184,134,11,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;color:var(--gold);
+}
+.offer-name{font-size:15px;font-weight:700;color:var(--text)}
+.offer-sub{font-size:12px;color:var(--text-muted);margin-top:2px}
+.offer-meta{
+  display:flex;flex-wrap:wrap;gap:8px;
+  padding:12px 18px;
+  background:#faf9f7;
+}
+.meta-tag{
+  display:flex;align-items:center;gap:5px;
+  font-size:12px;color:var(--text-muted);
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:4px 10px;
+}
+.meta-tag i{font-size:13px;color:var(--gold)}
+.offer-actions{
+  display:flex;gap:10px;padding:14px 18px;
+}
+.btn-edit{
+  flex:1;padding:10px;
+  background:#e8f0fb;color:#1a4fa0;
+  border:1px solid #b8d0f5;border-radius:8px;
+  font-family:'Tajawal',Arial,sans-serif;
+  font-size:13px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:.2s;
+}
+.btn-edit:hover{background:#d0e2fa}
+.btn-delete{
+  flex:1;padding:10px;
+  background:var(--red-light);color:#9b2020;
+  border:1px solid #f5b3b3;border-radius:8px;
+  font-family:'Tajawal',Arial,sans-serif;
+  font-size:13px;font-weight:600;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:.2s;
+}
+.btn-delete:hover{background:#fad4d4}
+
+/* ===== ADD BTN ===== */
+.btn-add{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 20px;
+  background:rgba(14,100,40,.1);
+  color:#0b5f3c;
+  border:1px solid #8dcfad;
+  border-radius:10px;
+  font-family:'Tajawal',Arial,sans-serif;
+  font-size:14px;font-weight:600;
+  text-decoration:none;
+  transition:.2s;
+}
+.btn-add:hover{background:rgba(14,100,40,.15)}
+
+/* ===== MODAL ===== */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(20,10,0,.65);
+  z-index:5000;
+  align-items:center;justify-content:center;
+  padding:16px;
+  backdrop-filter:blur(2px);
+}
+.modal-overlay.open{display:flex}
 .modal-box{
-  background:#fff;width:95%;max-width:700px;
-  border-radius:14px;padding:20px;
-  max-height:90vh;overflow:auto
+  background:var(--card);
+  border-radius:16px;
+  width:100%;max-width:680px;
+  max-height:92vh;overflow-y:auto;
+  border:1px solid var(--border);
+  animation:scaleIn .25s ease;
 }
-.save{background:#008000;color:#fff;width:100%;margin-top:15px}
-.close{background:#ccc;width:100%;margin-top:10px}
-.row{display:flex;gap:10px}
-.row>div{flex:1}
-  .add-btn{
-  background:#008000;
-  color:#fff;
+@keyframes scaleIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 22px;
+  border-bottom:1px solid var(--border);
+  background:#faf9f7;
+  position:sticky;top:0;z-index:1;
+}
+.modal-head h3{font-size:16px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
+.modal-head h3 i{font-size:18px;color:var(--gold)}
+.btn-close-modal{
+  background:none;border:none;cursor:pointer;
+  color:var(--text-muted);font-size:22px;
+  display:flex;align-items:center;
+  transition:.2s;
+}
+.btn-close-modal:hover{color:var(--text)}
+.modal-body{padding:22px;display:grid;gap:16px}
+.modal-footer{
+  padding:16px 22px;
+  border-top:1px solid var(--border);
+  display:flex;gap:10px;
+  background:#faf9f7;
+  position:sticky;bottom:0;
+}
+.btn-save{
+  flex:1;padding:13px;
+  background:linear-gradient(135deg,#0b5f3c,#1a8f5c);
+  color:#fff;border:none;border-radius:10px;
+  font-family:'Tajawal',Arial,sans-serif;
+  font-size:14px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:.2s;
+}
+.btn-save:hover{opacity:.9}
+.btn-cancel{
+  padding:13px 20px;
+  background:none;
+  border:1px solid var(--border);
+  border-radius:10px;
+  font-family:'Tajawal',Arial,sans-serif;
+  font-size:14px;color:var(--text-muted);
+  cursor:pointer;transition:.2s;
+}
+.btn-cancel:hover{background:var(--bg)}
+
+/* ===== LOGO PREVIEW ===== */
+.logo-preview{
+  display:none;
+  align-items:center;gap:12px;
+  padding:10px 14px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:var(--input-bg);
+  margin-top:8px;
+}
+.logo-preview img{height:36px;max-width:100px;object-fit:contain}
+.logo-preview span{font-size:12px;color:var(--text-muted)}
+
+/* ===== SECTION DIVIDER ===== */
+.sec-label{
+  display:flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:600;
+  color:var(--text-muted);letter-spacing:.5px;
+  margin:4px 0;
+}
+.sec-label::after{
+  content:'';flex:1;height:1px;
+  background:var(--border);
 }
 
+/* ===== WHATSAPP ===== */
+.whatsapp-btn{
+  position:fixed;bottom:24px;left:20px;
+  width:50px;height:50px;
+  background:#25D366;color:#fff;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:26px;text-decoration:none;z-index:300;
+  box-shadow:0 4px 14px rgba(37,211,102,.4);
+  transition:.2s;
+}
+.whatsapp-btn:hover{transform:scale(1.08)}
+
+/* ===== WELCOME MODAL ===== */
+.welcome-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:30000;
+  align-items:center;justify-content:center;
+  padding:16px;
+}
+.welcome-overlay.open{display:flex}
+.welcome-box{
+  background:var(--card);
+  border-radius:18px;
+  max-width:420px;width:100%;
+  padding:30px 24px;text-align:center;
+  border:1px solid var(--border);
+  animation:scaleIn .3s ease;
+}
+.welcome-box h2{color:var(--red);font-size:20px;margin-bottom:12px}
+.welcome-box p{font-size:14px;line-height:1.8;color:var(--text-muted);margin-bottom:8px}
+.welcome-box .highlight{font-weight:700;color:#0b5f3c}
+.btn-welcome-close{
+  margin-top:18px;padding:11px 28px;
+  background:linear-gradient(135deg,var(--brown-mid),var(--brown-light));
+  color:var(--gold-light);border:none;border-radius:10px;
+  font-family:'Tajawal',Arial,sans-serif;
+  font-size:14px;font-weight:600;cursor:pointer;
+  transition:.2s;
+}
+.btn-welcome-close:hover{opacity:.9}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:580px){
+  .header{padding:0 14px}
+  .body{padding:16px 12px 50px}
+  .card-body{padding:16px}
+  .grid2{grid-template-columns:1fr}
+  .offer-actions{flex-direction:column}
+  .modal-body{padding:16px}
+}
 </style>
 </head>
-
 <body>
-<header class="top-bar">
-  <!-- القائمة الجانبية (يمين) -->
-  <div class="menu-btn" onclick="openMenu()">☰</div>
-  <!-- الشعار (وسط) -->
-  <div class="logo-center" onclick="openWelcome()">
- <img
-  src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769426692/ei_1769426620917-removebg-preview_yuws6p.png"
-  alt="طريق العمرة"
-  class="logo site-logo"
-  onclick="openWelcome()">
-  </div>
-  <!-- عداد الزوار (يسار) -->
+
+<!-- WhatsApp -->
+<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-btn" title="تواصل عبر واتساب">
+  <i class="ti ti-brand-whatsapp"></i>
+</a>
+
+<!-- Sidebar overlay -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+<div class="sidebar" id="sidebar">
+  <a href="results-gen.html"><i class="ti ti-kaaba"></i>العروض العامة</a>
+  <a href="recherche-oeffer.html"><i class="ti ti-send"></i>طلب عرض عمرة</a>
+  <a href="recherche-n.html"><i class="ti ti-user-circle"></i>صفحتي الخاصة</a>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <button class="menu-btn" onclick="openMenu()" aria-label="القائمة">
+    <i class="ti ti-menu-2"></i>
+  </button>
+  <div class="header-title">إدارة عروض الوكالة</div>
+  <img
+    src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769426692/ei_1769426620917-removebg-preview_yuws6p.png"
+    alt="طريق العمرة"
+    class="header-logo"
+    onclick="openWelcome()">
   <div class="visitor-box">
-    <i class="fa-solid fa-users"></i>
+    <i class="ti ti-users"></i>
     <div>
       <span id="visitors">0</span>
       <small>زائر</small>
     </div>
   </div>
-</header>
-	 <nav id="sideMenu">  
-<a href="results-gen.html">🕋 العروض العامة</a>  
-<a href="recherche-oeffer.html">📩 طلب عرض عمرة</a>  
-<a href="recherche-n.html">👤 صفحتي الخاصة</a>  
-</nav>  
-<div class="container">
-<h2>✏️ إدارة عروض الوكالة</h2>
-<a href="add-offer.html" class="nav-btn add-btn">
-  ➕ إضافة عرض جديد
-</a>
-
-<label>اختر الوكالة</label>
-<select id="agencySelect"><option value="">-- اختر --</option></select>
-
-<label>رقم الرخصة</label>
-<input id="licenseInput" placeholder="رقم الرخصة">
-
-
-<button class="main" onclick="loadOffers()">🔐 دخول</button>
-<p class="msg" id="msg"></p>
-
-<hr>
-<div id="offersBox"></div>
 </div>
 
-<!-- Modal -->
-<div class="modal" id="editModal">
-  <div class="modal-box">
+<!-- Top Nav -->
+<nav class="topnav">
+  <a href="results-gen.html"><i class="ti ti-home"></i>الرئيسية</a>
+  <a href="add-offer.html"><i class="ti ti-plus"></i>إضافة عرض</a>
+  <a href="edit-offer.html" class="active"><i class="ti ti-edit"></i>تعديل العروض</a>
+</nav>
 
-    <h3 style="text-align:center;color:#8b0000">✏️ تعديل العرض</h3>
+<!-- Main Body -->
+<div class="body">
+
+  <!-- بطاقة تسجيل الدخول -->
+  <div class="card">
+    <div class="card-head">
+      <i class="ti ti-lock"></i>
+      <span>دخول الوكالة</span>
+    </div>
+    <div class="card-body">
+      <div class="grid2">
+        <div class="field">
+          <label>الوكالة</label>
+          <select id="agencySelect">
+            <option value="">اختر الوكالة...</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>رقم الرخصة</label>
+          <input id="licenseInput" type="password" placeholder="أدخل رقم رخصة الوكالة">
+        </div>
+      </div>
+
+      <div class="status-msg" id="loginMsg"></div>
+
+      <div style="display:flex;align-items:center;gap:12px">
+        <a href="add-offer.html" class="btn-add">
+          <i class="ti ti-plus"></i>
+          إضافة عرض جديد
+        </a>
+        <button class="btn-login" onclick="loadOffers()">
+          <i class="ti ti-door-enter"></i>
+          دخول وعرض العروض
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- عروض الوكالة -->
+  <div id="offersSection" style="display:none">
+    <div class="card-head" style="background:var(--card);border-radius:14px 14px 0 0;border:1px solid var(--border);border-bottom:none">
+      <i class="ti ti-list" style="font-size:18px;color:var(--gold)"></i>
+      <span style="font-size:15px;font-weight:600;color:var(--text)">عروض الوكالة</span>
+      <span id="offersCount" style="margin-right:auto;font-size:12px;color:var(--text-muted)"></span>
+    </div>
+    <div class="offers-wrap" id="offersBox" style="border:1px solid var(--border);border-top:none;border-radius:0 0 14px 14px;overflow:hidden;padding:14px;background:var(--bg)">
+    </div>
+  </div>
+
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3><i class="ti ti-edit"></i>تعديل العرض</h3>
+      <button class="btn-close-modal" onclick="closeModal()">
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
     <input type="hidden" id="editRow">
 
-    <label>اسم العرض</label>
-    <input id="offer">
+    <div class="modal-body">
+      <!-- تفاصيل الرحلة -->
+      <div class="sec-label">تفاصيل الرحلة</div>
 
-    <div class="row">
-      <div>
-        <label>تاريخ الرحلة</label>
-        <input type="date" id="date">
+      <div class="field">
+        <label>اسم العرض</label>
+        <input id="m_offer" placeholder="اسم العرض">
       </div>
-      <div>
-        <label>المدة</label>
-        <input id="duration">
+      <div class="grid2">
+        <div class="field">
+          <label>تاريخ الرحلة</label>
+          <input type="date" id="m_date">
+        </div>
+        <div class="field">
+          <label>مدة الإقامة</label>
+          <input id="m_duration" placeholder="مثال: 14 يوم">
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>نوع الرحلة</label>
+          <select id="m_flightType">
+            <option value="مباشرة">مباشرة</option>
+            <option value="غير مباشرة">غير مباشرة</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>مطار الإقلاع</label>
+          <select id="m_airport">
+            <option>مطار الجزائر</option>
+            <option>مطار وهران</option>
+            <option>مطار قسنطينة</option>
+            <option>مطار عنابة</option>
+            <option>مطار جيجل</option>
+            <option>مطار باتنة</option>
+            <option>مطار ورقلة</option>
+            <option>مطار تمنغاست</option>
+            <option>مطار أدرار</option>
+            <option>مطار الوادي</option>
+            <option>مطار غرداية</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>اسم الفندق</label>
+        <input id="m_hotel" placeholder="اسم الفندق">
+      </div>
+
+      <!-- الأسعار -->
+      <div class="sec-label">الأسعار</div>
+      <div class="grid2">
+        <div class="field">
+          <label>جماعية</label>
+          <input id="m_group" type="number" placeholder="—">
+        </div>
+        <div class="field">
+          <label>رباعية</label>
+          <input id="m_four" type="number" placeholder="—">
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>ثلاثية</label>
+          <input id="m_three" type="number" placeholder="—">
+        </div>
+        <div class="field">
+          <label>ثنائية</label>
+          <input id="m_two" type="number" placeholder="—">
+        </div>
+      </div>
+
+      <!-- شعار الوكالة -->
+      <div class="sec-label">شعار الوكالة</div>
+      <div class="field">
+        <label>رابط الشعار</label>
+        <input id="m_agencyLogo" placeholder="https://...">
+      </div>
+      <div class="logo-preview" id="agencyLogoPreview">
+        <img id="agencyLogoImg" src="" alt="شعار الوكالة">
+        <span>معاينة الشعار</span>
+      </div>
+
+      <!-- شركة الطيران -->
+      <div class="sec-label">شركة الطيران</div>
+      <div class="field">
+        <label>شركة الطيران</label>
+        <select id="m_airline">
+          <option value="">اختر شركة الطيران...</option>
+          <option value="الخطوط الجوية الجزائرية" data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769278796/t%C3%A9l%C3%A9chargement_xi0dob.jpg">الخطوط الجوية الجزائرية</option>
+          <option value="الخطوط الجوية الأردنية" data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769285030/t%C3%A9l%C3%A9chargement_1_ocn0g5.jpg">الخطوط الجوية الأردنية</option>
+          <option value="الخطوط الجوية السعودية" data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769279850/250px-%D8%B4%D8%B9%D8%A7%D8%B1_%D8%A7%D9%84%D8%AE%D8%B7%D9%88%D8%B7_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9.svg_jmmkls.png">الخطوط الجوية السعودية</option>
+          <option value="الخطوط الجوية التركية" data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769279151/t%C3%A9l%C3%A9chargement_rwei2l.png">الخطوط الجوية التركية</option>
+          <option value="فلاي ناس" data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769281370/images_6_b0u8c9.jpg">فلاي ناس</option>
+          <option value="نوفلار" data-logo="https://i.supaimg.com/7c39556f-f3bb-4475-b7a7-bd278b555927.png">نوفلار</option>
+          <option value="الخطوط الجوية الإماراتية" data-logo="https://upload.wikimedia.org/wikipedia/commons/d/d0/Emirates_logo.svg">الخطوط الجوية الإماراتية</option>
+          <option value="الخطوط الجوية القطرية" data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769279819/images_3_afxklx.jpg">الخطوط الجوية القطرية</option>
+          <option value="الخطوط الجوية المصرية" data-logo="https://i.supaimg.com/7862dbb4-97fd-4a1d-aa23-ccb4eac316c8.png">الخطوط الجوية المصرية</option>
+          <option value="طيران أديل السعودي" data-logo="https://i.ibb.co/GzhC6vQ/t-l-chargement-removebg-preview.png">طيران أديل السعودي</option>
+        </select>
+        <input type="hidden" id="m_airlineLogo">
+      </div>
+      <div class="logo-preview" id="airlineLogoPreview">
+        <img id="airlineLogoImg" src="" alt="شعار شركة الطيران">
+        <span>معاينة الشعار</span>
       </div>
     </div>
 
-    <label>نوع الرحلة</label>
-    <select id="flightType">
-      <option value="مباشرة">مباشرة</option>
-      <option value="غير مباشرة">غير مباشرة</option>
-    </select>
-
-    <label>مطار الإقلاع</label>
-    <select id="airport">
-      <option>مطار الجزائر</option>
-      <option>مطار وهران</option>
-      <option>مطار قسنطينة</option>
-      <option>مطار عنابة</option>
-      <option>مطار جيجل</option>
-      <option>مطار باتنة</option>
-      <option>مطار ورقلة</option>
-      <option>مطار تمنغاست</option>
-      <option>مطار أدرار</option>
-      <option>مطار الوادي</option>
-      <option>مطار غرداية</option>
-    </select>
-
-
-
-    <label>جماعية</label>
-    <input id="group">
-
-    <div class="row">
-      <div><label>رباعية</label><input id="four"></div>
-      <div><label>ثلاثية</label><input id="three"></div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
+      <button class="btn-save" onclick="saveEdit()">
+        <i class="ti ti-device-floppy"></i>
+        حفظ التعديلات
+      </button>
     </div>
-
- <label>ثنائية</label>
-<input id="two">
-
-<label>اسم الفندق</label>
-<input id="hotel">
-
-<hr>
-
-<label>شعار الوكالة</label>
-<input id="agencyLogo" placeholder="رابط شعار الوكالة">
-
-<div style="text-align:center;margin:8px 0">
-  <img id="agencyLogoPreview" style="max-width:120px;display:none">
+  </div>
 </div>
 
-<hr>
-
-<label>شركة الطيران</label>
-<select id="airlineEdit">
-  <option value="">اختر شركة الطيران</option>
-
-  <option value="الخطوط الجوية الجزائرية"
-    data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769278796/t%C3%A9l%C3%A9chargement_xi0dob.jpg">
-    الخطوط الجوية الجزائرية
-  </option>
-
-  <option value="الخطوط الجوية الأردنية"
-    data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769285030/t%C3%A9l%C3%A9chargement_1_ocn0g5.jpg">
-    الخطوط الجوية الأردنية
-  </option>
-
-  <option value="الخطوط الجوية السعودية"
-    data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769279850/250px-%D8%B4%D8%B9%D8%A7%D8%B1_%D8%A7%D9%84%D8%AE%D8%B7%D9%88%D8%B7_%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A%D8%A9.svg_jmmkls.png">
-    الخطوط الجوية السعودية
-  </option>
-
-  <option value="الخطوط الجوية التركية"
-    data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769279151/t%C3%A9l%C3%A9chargement_rwei2l.png">
-    الخطوط الجوية التركية
-  </option>
-
-  <option value="فلاي ناس"
-    data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769281370/images_6_b0u8c9.jpg">
-    فلاي ناس
-  </option>
-
-  <option value="نوفلار"
-    data-logo="https://i.supaimg.com/7c39556f-f3bb-4475-b7a7-bd278b555927.png">
-    نوفلار
-  </option>
-
-  <option value="الخطوط الجوية الإماراتية"
-    data-logo="https://upload.wikimedia.org/wikipedia/commons/d/d0/Emirates_logo.svg">
-    الخطوط الجوية الإماراتية
-  </option>
-
-  <option value="الخطوط الجوية القطرية"
-    data-logo="https://res.cloudinary.com/dmc36nijl/image/upload/v1769279819/images_3_afxklx.jpg">
-    الخطوط الجوية القطرية
-  </option>
-
-  <option value="الخطوط الجوية المصرية"
-    data-logo="https://i.supaimg.com/7862dbb4-97fd-4a1d-aa23-ccb4eac316c8.png">
-    الخطوط الجوية المصرية
-  </option>
-
-  <option value="طيران أديل السعودي"
-    data-logo="https://i.ibb.co/GzhC6vQ/t-l-chargement-removebg-preview.png">
-    طيران أديل السعودي
-  </option>
-</select>
-
-<input type="hidden" id="airlineLogoEdit">
-
-<div style="text-align:center;margin-top:8px">
-  <img id="airlineLogoPreview" style="max-width:140px;display:none">
+<!-- Welcome Modal -->
+<div class="welcome-overlay" id="welcomeModal" onclick="closeWelcome()">
+  <div class="welcome-box" onclick="event.stopPropagation()">
+    <h2>مرحبًا بكم في طريق العمرة 🕋</h2>
+    <p>
+      موقع <strong>طريق العمرة</strong> يسهّل عليكم تصفح
+      أفضل عروض العمرة من وكالات <strong>مرخصة ومعتمدة</strong>،
+      مع تسجيل سهل ومعلومات واضحة.
+    </p>
+    <p class="highlight">نيتك صادقة… والطريق علينا بإذن الله 🤲</p>
+    <button class="btn-welcome-close" onclick="closeWelcome()">
+      <i class="ti ti-check"></i> إغلاق
+    </button>
+  </div>
 </div>
 
-<button class="save" onclick="saveEdit()">💾 حفظ التعديلات</button> <button class="close" onclick="closeModal()">إلغاء</button> </div> </div>
-
-	<script>
+<script>
 const API = "https://script.google.com/macros/s/AKfycbyk4VkRLOjYTQ83j6vol2RWxashOdb5_iW7cs5aUhG4S3Ohx1VAeIrDDBKIWSxCbpOAjQ/exec";
 
-// عناصر الصفحة
-const agencySelect = document.getElementById("agencySelect");
-const licenseInput = document.getElementById("licenseInput");
-const box = document.getElementById("offersBox");
-const msg = document.getElementById("msg");
-const editRow = document.getElementById("editRow");
-const offer = document.getElementById("offer");
-const date = document.getElementById("date");
-const duration = document.getElementById("duration");
-const flightType = document.getElementById("flightType");
-const airport = document.getElementById("airport");
-const group = document.getElementById("group");
-const four = document.getElementById("four");
-const three = document.getElementById("three");
-const two = document.getElementById("two");
-const hotel = document.getElementById("hotel");
-const editModal = document.getElementById("editModal");
-
-const agencyLogo = document.getElementById("agencyLogo");
-const agencyLogoPreview = document.getElementById("agencyLogoPreview");
-
-const airlineEdit = document.getElementById("airlineEdit");
-const airlineLogoEdit = document.getElementById("airlineLogoEdit");
-const airlineLogoPreview = document.getElementById("airlineLogoPreview");
-
 let allOffers = [];
+let currentLicense = "";
 
-/* تحميل البيانات */
+/* ---- عناصر ---- */
+const agencySelect      = document.getElementById("agencySelect");
+const licenseInput      = document.getElementById("licenseInput");
+const offersBox         = document.getElementById("offersBox");
+const offersSection     = document.getElementById("offersSection");
+const offersCount       = document.getElementById("offersCount");
+const loginMsg          = document.getElementById("loginMsg");
+const editModal         = document.getElementById("editModal");
+
+/* ---- جلب الوكالات ---- */
 fetch(API)
   .then(r => r.json())
   .then(data => {
     allOffers = data;
-    [...new Set(data.map(o => o.agency))].forEach(a => {
-      if (a) agencySelect.innerHTML += `<option>${a}</option>`;
+    [...new Set(data.map(o => o.agency).filter(Boolean))].forEach(a => {
+      agencySelect.innerHTML += `<option value="${a}">${a}</option>`;
     });
-  });
+  })
+  .catch(() => showMsg(loginMsg, "error", "تعذّر الاتصال بالخادم"));
 
-/* عرض العروض */
+/* ---- دخول وعرض العروض ---- */
 function loadOffers() {
   const agency = agencySelect.value.trim();
-  const inputLicense = licenseInput.value.trim();
+  const license = licenseInput.value.trim();
+  hideMsg(loginMsg);
 
-  box.innerHTML = "";
-  msg.textContent = "";
-
-  if (!agency || !inputLicense) {
-    msg.textContent = "⚠️ يرجى اختيار الوكالة وإدخال رقم رخصة الوكالة";
+  if (!agency || !license) {
+    showMsg(loginMsg, "warn", "يرجى اختيار الوكالة وإدخال رقم الرخصة");
+    return;
+  }
+  const agencyRow = allOffers.find(o => (o.agency||"").trim() === agency);
+  if (!agencyRow) { showMsg(loginMsg, "error", "الوكالة غير موجودة"); return; }
+  if ((agencyRow.license||"").trim() !== license) {
+    showMsg(loginMsg, "error", "رقم الرخصة غير صحيح");
     return;
   }
 
-  const agencyRow = allOffers.find(o => String(o.agency || "").trim() === agency);
+  currentLicense = license;
+  const offers = allOffers.filter(o => (o.agency||"").trim() === agency);
+  offersBox.innerHTML = "";
 
-  if (!agencyRow) {
-    msg.textContent = "❌ الوكالة غير موجودة";
-    return;
-  }
-
-  const sheetLicense = String(agencyRow.license || "").trim();
-  if (sheetLicense !== inputLicense) {
-    msg.textContent = "❌ رقم الرخصة غير صحيح";
-    return;
-  }
-
-  const offers = allOffers.filter(o => String(o.agency || "").trim() === agency);
   if (!offers.length) {
-    msg.textContent = "❌ لا توجد عروض";
+    offersSection.style.display = "none";
+    showMsg(loginMsg, "warn", "لا توجد عروض مسجلة لهذه الوكالة");
     return;
   }
+
+  offersSection.style.display = "block";
+  offersCount.textContent = `${offers.length} عرض`;
 
   offers.forEach(o => {
     const div = document.createElement("div");
-    div.className = "offer";
+    div.className = "offer-card";
     div.innerHTML = `
-      <b>${o.offer}</b><br>
-      <small>📅 ${o.date} | ⏱ ${o.duration}</small><br>
-      <small>🏨 ${o.hotel}</small>
-      <div class="actions">
-        <button class="edit">✏️ تعديل</button>
-        <button class="delete">🗑️ حذف</button>
+      <div class="offer-top">
+        <div class="offer-icon"><i class="ti ti-package"></i></div>
+        <div>
+          <div class="offer-name">${o.offer || "—"}</div>
+          <div class="offer-sub">${o.hotel || ""}</div>
+        </div>
+      </div>
+      <div class="offer-meta">
+        <div class="meta-tag"><i class="ti ti-calendar"></i>${o.date || "—"}</div>
+        <div class="meta-tag"><i class="ti ti-clock"></i>${o.duration || "—"}</div>
+        <div class="meta-tag"><i class="ti ti-plane"></i>${o.flightType || "—"}</div>
+        <div class="meta-tag"><i class="ti ti-map-pin"></i>${o.airport || "—"}</div>
+      </div>
+      <div class="offer-actions">
+        <button class="btn-edit"><i class="ti ti-edit"></i>تعديل</button>
+        <button class="btn-delete"><i class="ti ti-trash"></i>حذف</button>
       </div>
     `;
-    // زر التعديل
-    div.querySelector(".edit").addEventListener("click", () => openEdit(o));
-    // زر الحذف
-    div.querySelector(".delete").addEventListener("click", () => deleteOffer(o.row));
-
-    box.appendChild(div);
+    div.querySelector(".btn-edit").onclick = () => openEdit(o);
+    div.querySelector(".btn-delete").onclick = () => deleteOffer(o.row);
+    offersBox.appendChild(div);
   });
 }
 
-/* فتح نافذة التعديل */
+/* ---- فتح التعديل ---- */
 function openEdit(o) {
-  editRow.value = o.row || "";
+  document.getElementById("editRow").value = o.row || "";
+  document.getElementById("m_offer").value    = o.offer || "";
+  document.getElementById("m_date").value     = o.date || "";
+  document.getElementById("m_duration").value = o.duration || "";
+  document.getElementById("m_flightType").value = o.flightType || "";
+  document.getElementById("m_airport").value  = o.airport || "";
+  document.getElementById("m_group").value    = o.group || "";
+  document.getElementById("m_four").value     = o.four || "";
+  document.getElementById("m_three").value    = o.three || "";
+  document.getElementById("m_two").value      = o.two || "";
+  document.getElementById("m_hotel").value    = o.hotel || "";
+  document.getElementById("m_agencyLogo").value = o.agencyLogo || "";
+  document.getElementById("m_airline").value  = o.airline || "";
+  document.getElementById("m_airlineLogo").value = o.airlineLogo || "";
 
-  offer.value = o.offer || "";
-  date.value = o.date || "";
-  duration.value = o.duration || "";
-  flightType.value = o.flightType || "";
-  airport.value = o.airport || "";
-  group.value = o.group || "";
-  four.value = o.four || "";
-  three.value = o.three || "";
-  two.value = o.two || "";
-  hotel.value = o.hotel || "";
+  setLogoPreview("agencyLogoPreview","agencyLogoImg", o.agencyLogo);
+  setLogoPreview("airlineLogoPreview","airlineLogoImg", o.airlineLogo);
 
-  // شعار الوكالة
-  agencyLogo.value = o.agencyLogo || "";
-  agencyLogoPreview.src = o.agencyLogo || "";
-  agencyLogoPreview.style.display = o.agencyLogo ? "block" : "none";
-
-  // شركة الطيران + شعارها
-  airlineEdit.value = o.airline || "";
-  airlineLogoEdit.value = o.airlineLogo || "";
-  airlineLogoPreview.src = o.airlineLogo || "";
-  airlineLogoPreview.style.display = o.airlineLogo ? "block" : "none";
-
-  editModal.style.display = "flex";
+  editModal.classList.add("open");
 }
 
-/* إغلاق المودال */
-function closeModal() {
-  editModal.style.display = "none";
+function closeModal(){
+  editModal.classList.remove("open");
 }
 
-/* حفظ التعديلات */
+/* ---- حفظ التعديلات ---- */
 function saveEdit() {
   const fd = new FormData();
-  fd.append("action", "update");
-  fd.append("row", editRow.value);
-  fd.append("license", licenseInput.value);
+  fd.append("action","update");
+  fd.append("row", document.getElementById("editRow").value);
+  fd.append("license", currentLicense);
+  ["m_offer","m_date","m_duration","m_flightType","m_airport",
+   "m_group","m_four","m_three","m_two","m_hotel",
+   "m_agencyLogo","m_airlineLogo"].forEach(id => {
+    fd.append(id.replace("m_",""), document.getElementById(id).value);
+  });
+  fd.append("airline", document.getElementById("m_airline").value);
 
-  ["offer","date","duration","flightType","airport",
-   "group","four","three","two","hotel"].forEach(id =>
-    fd.append(id, document.getElementById(id).value)
-  );
-
-  // إضافة شعارات
-  fd.append("agencyLogo", agencyLogo.value);
-  fd.append("airline", airlineEdit.value);
-  fd.append("airlineLogo", airlineLogoEdit.value);
-
-  fetch(API, { method: "POST", body: fd })
-    .then(r => r.text())
-    .then(res => {
-      alert(res);
-      location.reload();
-    });
+  fetch(API,{method:"POST",body:fd})
+    .then(r=>r.text())
+    .then(res=>{alert(res);location.reload()})
+    .catch(()=>alert("خطأ في الاتصال"));
 }
 
-/* حذف العرض */
+/* ---- حذف العرض ---- */
 function deleteOffer(row) {
-  if (!confirm("هل أنت متأكد؟")) return;
-
+  if (!confirm("هل أنت متأكد من حذف هذا العرض؟")) return;
   const fd = new FormData();
-  fd.append("action", "delete");
+  fd.append("action","delete");
   fd.append("row", row);
-  fd.append("license", licenseInput.value);
-
-  fetch(API, { method: "POST", body: fd })
-    .then(r => r.text())
-    .then(res => {
-      alert(res);
-      location.reload();
-    });
+  fd.append("license", currentLicense);
+  fetch(API,{method:"POST",body:fd})
+    .then(r=>r.text())
+    .then(res=>{alert(res);location.reload()})
+    .catch(()=>alert("خطأ في الاتصال"));
 }
 
-/* معاينة شعار الوكالة عند الكتابة */
-agencyLogo.addEventListener("input", () => {
-  if (agencyLogo.value.trim()) {
-    agencyLogoPreview.src = agencyLogo.value.trim();
-    agencyLogoPreview.style.display = "block";
-  } else {
-    agencyLogoPreview.style.display = "none";
-  }
+/* ---- شعار الوكالة (كتابة) ---- */
+document.getElementById("m_agencyLogo").addEventListener("input", e => {
+  setLogoPreview("agencyLogoPreview","agencyLogoImg", e.target.value.trim());
 });
 
-/* تغيير شعار شركة الطيران عند اختيار شركة */
-airlineEdit.addEventListener("change", () => {
-  const opt = airlineEdit.selectedOptions[0];
-  const logo = opt.getAttribute("data-logo");
-  if (logo) {
-    airlineLogoEdit.value = logo;
-    airlineLogoPreview.src = logo;
-    airlineLogoPreview.style.display = "block";
-  } else {
-    airlineLogoPreview.style.display = "none";
-  }
+/* ---- شعار شركة الطيران (اختيار) ---- */
+document.getElementById("m_airline").addEventListener("change", () => {
+  const opt = document.getElementById("m_airline").selectedOptions[0];
+  const logo = opt.getAttribute("data-logo") || "";
+  document.getElementById("m_airlineLogo").value = logo;
+  setLogoPreview("airlineLogoPreview","airlineLogoImg", logo);
 });
 
-/* نافذة الترحيب */
-function openWelcome() {
-  document.getElementById("welcomeModal").style.display = "flex";
+/* ---- مساعد معاينة الشعار ---- */
+function setLogoPreview(wrapId, imgId, url) {
+  const wrap = document.getElementById(wrapId);
+  const img  = document.getElementById(imgId);
+  if (url) {
+    img.src = url;
+    wrap.style.display = "flex";
+  } else {
+    wrap.style.display = "none";
+  }
 }
-function closeWelcome() {
-  document.getElementById("welcomeModal").style.display = "none";
+
+/* ---- رسائل الحالة ---- */
+function showMsg(el, type, text) {
+  el.className = "status-msg " + type;
+  el.innerHTML = `<i class="ti ti-${type==='error'?'alert-circle':'alert-triangle'}"></i>${text}`;
+  el.style.display = "flex";
 }
+function hideMsg(el){ el.style.display = "none" }
+
+/* ---- Sidebar ---- */
+function openMenu(){
+  document.getElementById("sidebar").classList.add("open");
+  document.getElementById("overlay").classList.add("open");
+}
+function closeMenu(){
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("overlay").classList.remove("open");
+}
+
+/* ---- Welcome Modal ---- */
+function openWelcome(){ document.getElementById("welcomeModal").classList.add("open") }
+function closeWelcome(){ document.getElementById("welcomeModal").classList.remove("open") }
 </script>
-
-	
-	
-	
-	
-
-	<div id="welcomeModal" style="
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:30000;
-  align-items:center;
-  justify-content:center;
-" onclick="closeWelcome()">
-  <div style="
-    background:#fff;
-    padding:25px;
-    border-radius:18px;
-    max-width:420px;
-    width:90%;
-    text-align:center;
-    font-family:Tajawal,Arial;
-  " onclick="event.stopPropagation()">
-
-    <h2 style="color:#8b0000;margin-top:0">
-      مرحبًا بكم في طريق العمرة 🕋
-    </h2>
-
-    <p>
-      موقع <b>طريق العمرة</b> يسهّل عليكم تصفح
-      أفضل عروض العمرة من وكالات <b>مرخصة ومعتمدة</b>،
-      مع تسجيل سهل ومعلومات واضحة.
-    </p>
-
-    <p style="font-weight:bold;color:#0b5f3c">
-      نيتك صادقة… والطريق علينا بإذن الله 🤲
-    </p>
-
-    <button onclick="closeWelcome()" style="
-      margin-top:15px;
-      padding:10px 20px;
-      border:none;
-      background:#8b0000;
-      color:#fff;
-      border-radius:10px;
-      cursor:pointer;
-    ">
-      إغلاق
-    </button>
 </body>
 </html>
