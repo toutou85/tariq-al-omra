@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* ===== TOKENS ===== */
 :root {
   --navy:       #0D1B2A;
   --navy2:      #1B2E42;
@@ -38,7 +37,6 @@ body {
   min-height: 100vh;
 }
 
-/* ===== HEADER ===== */
 .topbar {
   position: sticky;
   top: 0;
@@ -108,7 +106,6 @@ body {
 .visitor-badge span { color: var(--white); font-size: 15px; font-weight: 800; }
 .visitor-badge small { color: rgba(255,255,255,.7); font-size: 12px; }
 
-/* WhatsApp float */
 .wa-float {
   position: fixed;
   top: 74px;
@@ -131,7 +128,6 @@ body {
   box-shadow: 0 10px 28px rgba(37,211,102,.6);
 }
 
-/* ===== SIDE MENU ===== */
 #sideMenu {
   position: fixed;
   top: 0; right: -280px;
@@ -168,7 +164,6 @@ body {
   backdrop-filter: blur(2px);
 }
 
-/* ===== HERO BANNER ===== */
 .hero {
   background: linear-gradient(160deg, var(--navy) 0%, #0A2540 45%, #073748 100%);
   padding: 36px 20px 28px;
@@ -211,7 +206,6 @@ body {
   position: relative;
 }
 
-/* ===== FILTERS ===== */
 .filters-bar {
   background: var(--white);
   padding: 18px 20px;
@@ -259,7 +253,6 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(14,124,134,.18);
 }
 
-/* ===== MAIN CONTENT ===== */
 .content {
   max-width: 1280px;
   margin: 28px auto;
@@ -281,7 +274,6 @@ select:focus {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ===== AIRPORT GROUP ===== */
 .airport-group { margin-bottom: 44px; }
 
 .airport-heading {
@@ -318,7 +310,6 @@ select:focus {
 .airport-row::-webkit-scrollbar-track { background: var(--sand2); border-radius: 4px; }
 .airport-row::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
 
-/* ===== CARD ===== */
 .card {
   scroll-snap-align: start;
   flex: 0 0 300px;
@@ -336,7 +327,6 @@ select:focus {
   transform: translateY(-5px);
   box-shadow: var(--shadow-md);
 }
-
 .card::before {
   content: '';
   position: absolute;
@@ -345,7 +335,6 @@ select:focus {
   background: linear-gradient(90deg, var(--navy), var(--teal), var(--gold));
 }
 
-/* ===== CARD HEADER ===== */
 .card-top {
   padding: 20px 16px 14px;
   background: linear-gradient(145deg, #EBF4F8, #DFF0F5);
@@ -358,6 +347,12 @@ select:focus {
   align-items: center;
   gap: 6px;
   background: linear-gradient(135deg, var(--teal), var(--teal2));
+  color: var(--white);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
 .agency-row {
@@ -366,7 +361,6 @@ select:focus {
   gap: 12px;
   justify-content: space-between;
 }
-
 .agency-info { flex: 1; min-width: 0; }
 .agency-name {
   font-size: 16px;
@@ -413,7 +407,6 @@ select:focus {
   font-size: 26px;
 }
 
-/* ===== DATE BADGE ===== */
 .date-badge {
   display: flex;
   align-items: center;
@@ -446,7 +439,6 @@ select:focus {
 .date-badge.soon .date-remain { animation: pulse 1.8s ease-in-out infinite; display: inline-block; }
 @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
 
-/* ===== CARD BODY ===== */
 .card-body {
   padding: 14px 16px;
   flex: 1;
@@ -488,7 +480,6 @@ select:focus {
 }
 .airline-wrap span { font-size: 13px; font-weight: 600; color: var(--muted); }
 
-/* ===== PRICE ===== */
 .price-section {
   padding: 0 16px 14px;
 }
@@ -542,28 +533,27 @@ select:focus {
 }
 .wa-btn:active { transform: scale(.94); }
 
-/* ===== CARD ACTIONS ===== */
 .card-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   border-top: 1px solid var(--sand2);
 }
 .action-btn {
-  padding: 12px 6px;
+  padding: 10px 4px;
   border: none;
   background: transparent;
   font-family: 'Tajawal', Arial, sans-serif;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--navy);
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   transition: background .2s, color .2s;
 }
-.action-btn i { font-size: 16px; }
+.action-btn i { font-size: 15px; }
 .action-btn:not(:last-child) { border-left: 1px solid var(--sand2); }
 .action-btn:hover { background: var(--sand); }
 .action-btn.register {
@@ -571,6 +561,10 @@ select:focus {
   background: var(--teal);
 }
 .action-btn.register:hover { background: var(--teal2); }
+.action-btn.branches-btn {
+  color: var(--gold);
+}
+.action-btn.branches-btn:hover { background: #FFF8E8; }
 
 /* ===== MODALS ===== */
 .modal-overlay {
@@ -588,8 +582,8 @@ select:focus {
 
 .modal-box {
   width: 100%;
-  max-width: 420px;
-  max-height: 85vh;
+  max-width: 460px;
+  max-height: 88vh;
   background: var(--white);
   border-radius: 22px;
   overflow-y: auto;
@@ -608,6 +602,9 @@ select:focus {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 .modal-title {
   color: var(--white);
@@ -635,10 +632,9 @@ select:focus {
 .modal-close:hover { background: rgba(255,255,255,.18); }
 .modal-body { padding: 22px; }
 
-/* Detail rows */
 .detail-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   padding: 12px 14px;
   border-radius: 12px;
@@ -652,11 +648,65 @@ select:focus {
   width: 22px;
   text-align: center;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 .detail-row .dr-label { color: var(--muted); font-size: 12px; }
 .detail-row .dr-val { font-weight: 800; color: var(--charcoal); }
 
-/* Form */
+.section-title {
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--navy);
+  margin: 16px 0 8px;
+  padding: 8px 14px;
+  background: linear-gradient(135deg, var(--navy), var(--teal));
+  color: var(--white);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.price-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.price-item {
+  background: linear-gradient(135deg, #EBF4F8, #DFF0F5);
+  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(14,124,134,.15);
+}
+.price-item .pi-label { font-size: 11px; color: var(--muted); font-weight: 700; }
+.price-item .pi-val { font-size: 16px; font-weight: 900; color: var(--teal); margin-top: 2px; }
+
+.features-box {
+  background: linear-gradient(135deg, #FFFBEE, #FFF3CC);
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid rgba(212,160,23,.25);
+  white-space: pre-line;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--charcoal);
+  line-height: 1.8;
+}
+
+.branch-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--sand);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(14,124,134,.12);
+}
+.branch-item i { color: var(--teal); font-size: 18px; flex-shrink: 0; }
+.branch-item .br-text { font-size: 14px; font-weight: 700; color: var(--charcoal); }
+
 .form-field {
   margin-bottom: 12px;
 }
@@ -667,7 +717,7 @@ select:focus {
   color: var(--muted);
   margin-bottom: 6px;
 }
-.form-field input {
+.form-field input, .form-field textarea {
   width: 100%;
   padding: 12px 14px;
   border: 1.5px solid #C8DCE8;
@@ -678,8 +728,9 @@ select:focus {
   color: var(--charcoal);
   background: var(--sand);
   transition: border-color .2s, box-shadow .2s;
+  resize: none;
 }
-.form-field input:focus {
+.form-field input:focus, .form-field textarea:focus {
   outline: none;
   border-color: var(--gold);
   box-shadow: 0 0 0 3px rgba(14,124,134,.18);
@@ -719,7 +770,6 @@ select:focus {
 }
 .btn-cancel:hover { background: #D0E4EE; }
 
-/* Empty / error states */
 .empty-state {
   text-align: center;
   padding: 60px 20px;
@@ -732,10 +782,9 @@ select:focus {
   display: block;
 }
 
-/* ===== RESPONSIVE ===== */
 @media (min-width: 768px) {
   .card { flex: 0 0 320px; }
-  .modal-box { max-width: 460px; }
+  .modal-box { max-width: 480px; }
 }
 @media (max-width: 600px) {
   .hero { padding: 24px 16px 20px; }
@@ -747,7 +796,6 @@ select:focus {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
 
-/* ===== TOAST ===== */
 .toast {
   position: fixed;
   bottom: 24px;
@@ -775,21 +823,17 @@ select:focus {
 </head>
 <body>
 
-<!-- WhatsApp Float -->
 <a href="https://wa.me/213674141379" target="_blank" class="wa-float">
   <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- HEADER -->
 <header class="topbar">
   <div class="menu-btn" onclick="openMenu()" aria-label="القائمة">
     <i class="fa-solid fa-bars"></i>
   </div>
-
   <div class="topbar-logo" onclick="location.reload()">
     <img src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769426692/ei_1769426620917-removebg-preview_yuws6p.png" alt="طريق العمرة">
   </div>
-
   <div class="visitor-badge">
     <i class="fa-solid fa-users"></i>
     <div>
@@ -799,7 +843,6 @@ select:focus {
   </div>
 </header>
 
-<!-- SIDE MENU -->
 <nav id="sideMenu">
   <a href="results-gen.html"><i class="fa-solid fa-kaaba"></i> العروض العامة</a>
   <a href="recherche-oeffer.html"><i class="fa-solid fa-paper-plane"></i> طلب عرض عمرة</a>
@@ -807,14 +850,12 @@ select:focus {
 </nav>
 <div id="overlay" onclick="closeMenu()"></div>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-label"><i class="fa-solid fa-star"></i> العروض المعتمدة</div>
   <h2>🕋 اكتشف <span>أفضل عروض</span> العمرة</h2>
   <p>وكالات معتمدة · أسعار شفافة · تسجيل فوري</p>
 </section>
 
-<!-- FILTERS -->
 <div class="filters-bar">
   <div class="filters-inner">
     <div class="filter-wrap">
@@ -836,7 +877,6 @@ select:focus {
   </div>
 </div>
 
-<!-- MAIN -->
 <main class="content">
   <div id="offers">
     <div class="loading-state">
@@ -857,6 +897,17 @@ select:focus {
   </div>
 </div>
 
+<!-- BRANCHES MODAL -->
+<div class="modal-overlay" id="branchesModal" onclick="closeBranches()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title"><i class="fa-solid fa-map-marker-alt"></i> فروع الوكالة</div>
+      <button class="modal-close" onclick="closeBranches()">×</button>
+    </div>
+    <div class="modal-body" id="branchesContent"></div>
+  </div>
+</div>
+
 <!-- REGISTER MODAL -->
 <div class="modal-overlay" id="registerModal" onclick="closeRegisterModal()">
   <div class="modal-box" onclick="event.stopPropagation()">
@@ -865,6 +916,7 @@ select:focus {
       <button class="modal-close" onclick="closeRegisterModal()">×</button>
     </div>
     <div class="modal-body">
+      <div id="registerOfferInfo" style="margin-bottom:16px; padding:12px 14px; background:linear-gradient(135deg,#EBF4F8,#DFF0F5); border-radius:12px; font-size:13px; font-weight:700; color:var(--navy); border:1px solid rgba(14,124,134,.2);"></div>
       <div class="form-field">
         <label>الاسم</label>
         <input id="cFirst" placeholder="أدخل اسمك">
@@ -885,11 +937,11 @@ select:focus {
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
 const OFFERS_API = "https://script.google.com/macros/s/AKfycbxZeaLAA7j9TaWwe4PRl3TqS1JxJuFpEHDprLAfT2F-ctrXMvvM3HgkTF8583AnpdEBMA/exec";
+const REGISTER_API = "https://script.google.com/macros/s/AKfycbwi8qM7A9JJMq93IzsC6-m10w0XE53IFyPWpTeJ2nPHwGOUVCqJVT6A23dUqEpnG9X_/exec";
 
 let offersData = [], selectedOffer = null;
 
@@ -899,37 +951,25 @@ const fDate    = document.getElementById("fDate");
 const fAirport = document.getElementById("fAirport");
 const offersEl = document.getElementById("offers");
 
-/* ── helpers ── */
-
-/*
-  parseLocalDate — تحويل التاريخ دون تأثير UTC
-  الإصلاح: إضافة 12,0,0 (الظهر) يمنع إزاحة اليوم بسبب فارق التوقيت
-*/
 function parseLocalDate(dateStr) {
   if (!dateStr) return null;
   const s = String(dateStr).trim();
-
-  // ✅ "Mon Jul 13" أو "Sat Jul 18"
-  const months = {
-    Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5,
-    Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11
-  };
+  const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
   const short = s.match(/^[A-Za-z]{3}\s+([A-Za-z]{3})\s+(\d{1,2})$/);
   if (short) {
     return new Date(Date.UTC(2026, months[short[1]], +short[2], 12, 0, 0));
   }
-
-  // ✅ YYYY-MM-DD
   const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (iso) {
     return new Date(Date.UTC(+iso[1], +iso[2]-1, +iso[3], 12, 0, 0));
   }
-
   return null;
 }
+
 function formatDate(d) {
   const p = parseLocalDate(d);
-  return p ? p.toLocaleDateString("ar-DZ") : "-";
+  if (!p) return "-";
+  return `${p.getUTCDate()}/${p.getUTCMonth()+1}/${p.getUTCFullYear()}`;
 }
 
 function formatDateArabicFull(dateStr) {
@@ -968,11 +1008,6 @@ function getRemainingText(dateStr) {
   return "⛔ تاريخ منقضي";
 }
 
-function formatDate(d) {
-  const p = parseLocalDate(d);
-  if (!p) return "-";
-  return `${p.getUTCDate()}/${p.getUTCMonth()+1}/${p.getUTCFullYear()}`;
-}
 function showToast(msg, icon = "✅") {
   const t = document.getElementById("toast");
   t.innerHTML = `${icon} ${msg}`;
@@ -980,7 +1015,11 @@ function showToast(msg, icon = "✅") {
   setTimeout(() => t.classList.remove("show"), 2800);
 }
 
-/* ── fetch ── */
+function priceRow(label, val) {
+  if (!val || val === "" || val === "-") return "";
+  return `<div class="price-item"><div class="pi-label">${label}</div><div class="pi-val">${Number(val).toLocaleString("ar-DZ")} دج</div></div>`;
+}
+
 fetch(OFFERS_API).then(r => r.json()).then(data => {
   offersData = data;
   fillFilters();
@@ -1008,7 +1047,6 @@ function fillFilters() {
 
 [fAgency, fState, fDate, fAirport].forEach(s => s.addEventListener("change", render));
 
-/* ── render ── */
 function render() {
   offersEl.innerHTML = "";
   let list = [...offersData];
@@ -1046,10 +1084,10 @@ function render() {
       const idx    = offersData.indexOf(o);
       const status = getDateStatus(o.date);
       const remain = getRemainingText(o.date);
+      const hasBranches = o.branches && String(o.branches).trim() !== "";
       const c = document.createElement("div");
       c.className = "card";
       c.innerHTML = `
-        <!-- TOP -->
         <div class="card-top">
           <div class="offer-badge"><i class="fa-solid fa-kaaba"></i> ${o.offer || "عرض عمرة"}</div>
           <div class="agency-row">
@@ -1063,7 +1101,6 @@ function render() {
           </div>
         </div>
 
-        <!-- DATE -->
         <div class="date-badge ${status}">
           <span class="date-icon"><i class="fa-regular fa-calendar-check"></i></span>
           <div class="date-text">
@@ -1072,7 +1109,6 @@ function render() {
           </div>
         </div>
 
-        <!-- BODY -->
         <div class="card-body">
           <div class="info-row"><i class="fa-solid fa-hotel"></i><span>الفندق:</span> ${o.hotel || "—"}</div>
           <div class="info-row"><i class="fa-regular fa-clock"></i><span>المدة:</span> ${o.duration || "—"}</div>
@@ -1082,7 +1118,6 @@ function render() {
           </div>
         </div>
 
-        <!-- PRICE -->
         <div class="price-section">
           <div class="price-row">
             <div class="price-amount">
@@ -1095,14 +1130,18 @@ function render() {
           </div>
         </div>
 
-        <!-- ACTIONS -->
         <div class="card-actions">
           <button class="action-btn" onclick="openDetailsByIdx(${idx})">
             <i class="fa-solid fa-circle-info"></i> التفاصيل
           </button>
-          <button class="action-btn" onclick="shareByIdx(${idx})">
+          ${hasBranches ? `<button class="action-btn branches-btn" onclick="openBranchesByIdx(${idx})">
+            <i class="fa-solid fa-map-marker-alt"></i> الفروع
+          </button>` : `<button class="action-btn" onclick="shareByIdx(${idx})">
             <i class="fa-solid fa-share-nodes"></i> مشاركة
-          </button>
+          </button>`}
+          ${hasBranches ? `<button class="action-btn" onclick="shareByIdx(${idx})">
+            <i class="fa-solid fa-share-nodes"></i> مشاركة
+          </button>` : ''}
           <button class="action-btn register" onclick="openRegisterByIdx(${idx})">
             <i class="fa-solid fa-paper-plane"></i> تسجيل
           </button>
@@ -1120,21 +1159,64 @@ function render() {
 function openDetailsByIdx(i) {
   const o = offersData[i];
   if (!o) return;
+
+  const hasPrices = [o.five, o.four, o.three, o.two].some(p => p && p !== "" && p !== "-");
+  const hasFeatures = o.features && String(o.features).trim() !== "";
+
   document.getElementById("detailsContent").innerHTML = `
     <div class="detail-row"><i class="fa-solid fa-kaaba"></i><div><div class="dr-label">العرض</div><div class="dr-val">${o.offer || "—"}</div></div></div>
     <div class="detail-row"><i class="fa-solid fa-building"></i><div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency || "—"}</div></div></div>
     <div class="detail-row"><i class="fa-solid fa-location-dot"></i><div><div class="dr-label">الولاية</div><div class="dr-val">${o.state || "—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-city"></i><div><div class="dr-label">البلدية</div><div class="dr-val">${o.city || "—"}</div></div></div>
     <div class="detail-row"><i class="fa-solid fa-plane-departure"></i><div><div class="dr-label">المطار</div><div class="dr-val">${o.airport || "—"}</div></div></div>
     <div class="detail-row"><i class="fa-regular fa-calendar-check"></i><div><div class="dr-label">تاريخ الانطلاق</div><div class="dr-val">${formatDateArabicFull(o.date)}</div></div></div>
     <div class="detail-row"><i class="fa-solid fa-hotel"></i><div><div class="dr-label">الفندق</div><div class="dr-val">${o.hotel || "—"}</div></div></div>
     <div class="detail-row"><i class="fa-regular fa-clock"></i><div><div class="dr-label">المدة</div><div class="dr-val">${o.duration || "—"}</div></div></div>
     <div class="detail-row"><i class="fa-solid fa-plane"></i><div><div class="dr-label">رقم الرحلة</div><div class="dr-val">${o.flight || "—"}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-tag"></i><div><div class="dr-label">السعر</div><div class="dr-val" style="color:var(--teal);font-size:20px">${Number(o.group).toLocaleString("ar-DZ")} دج</div></div></div>
-    ${o.notes ? `<div class="detail-row"><i class="fa-solid fa-note-sticky"></i><div><div class="dr-label">ملاحظات</div><div class="dr-val">${o.notes}</div></div></div>` : ''}
+
+    <div class="section-title"><i class="fa-solid fa-tag"></i> الأسعار التفصيلية</div>
+    <div class="price-grid">
+      ${priceRow("جماعية", o.group)}
+      ${priceRow("خماسية", o.five)}
+      ${priceRow("رباعية", o.four)}
+      ${priceRow("ثلاثية", o.three)}
+      ${priceRow("ثنائية", o.two)}
+    </div>
+
+    ${hasFeatures ? `
+    <div class="section-title"><i class="fa-solid fa-gift"></i> مميزات العرض</div>
+    <div class="features-box">${o.features}</div>
+    ` : ''}
+
+    <button class="btn-submit" style="margin-top:16px" onclick="closeDetails(); openRegisterByIdx(${i})">
+      <i class="fa-solid fa-paper-plane"></i> سجّل الآن في هذا العرض
+    </button>
   `;
   document.getElementById("detailsModal").classList.add("open");
 }
 function closeDetails() { document.getElementById("detailsModal").classList.remove("open"); }
+
+/* ── branches ── */
+function openBranchesByIdx(i) {
+  const o = offersData[i];
+  if (!o) return;
+  const raw = String(o.branches || "").trim();
+  const lines = raw.split(/[\n،,]+/).map(l => l.trim()).filter(l => l);
+
+  let html = `<div class="detail-row" style="margin-bottom:16px"><i class="fa-solid fa-building"></i><div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency || "—"}</div></div></div>`;
+
+  if (lines.length === 0) {
+    html += `<div class="empty-state" style="padding:30px 0"><i class="fa-solid fa-map-marker-alt"></i><p>لا توجد فروع مضافة</p></div>`;
+  } else {
+    lines.forEach(br => {
+      html += `<div class="branch-item"><i class="fa-solid fa-location-dot"></i><div class="br-text">${br}</div></div>`;
+    });
+  }
+
+  document.getElementById("branchesContent").innerHTML = html;
+  document.getElementById("branchesModal").classList.add("open");
+}
+function closeBranches() { document.getElementById("branchesModal").classList.remove("open"); }
 
 /* ── register ── */
 function openRegisterByIdx(i) {
@@ -1142,6 +1224,14 @@ function openRegisterByIdx(i) {
   document.getElementById("cFirst").value = "";
   document.getElementById("cLast").value  = "";
   document.getElementById("cPhone").value = "";
+
+  document.getElementById("registerOfferInfo").innerHTML = `
+    🕋 <strong>${selectedOffer?.offer || "عرض عمرة"}</strong> &nbsp;|&nbsp;
+    🏢 ${selectedOffer?.agency || ""} &nbsp;|&nbsp;
+    📅 ${formatDateArabicFull(selectedOffer?.date)} &nbsp;|&nbsp;
+    💰 ${Number(selectedOffer?.group).toLocaleString("ar-DZ")} دج
+  `;
+
   document.getElementById("registerModal").classList.add("open");
 }
 function closeRegisterModal() { document.getElementById("registerModal").classList.remove("open"); }
@@ -1151,39 +1241,82 @@ function sendRegister() {
   const last  = document.getElementById("cLast").value.trim();
   const phone = document.getElementById("cPhone").value.trim();
   if (!first || !last || !phone) { showToast("أكمل جميع الحقول", "⚠️"); return; }
-  const msg = encodeURIComponent(
-    `🕋 طلب تسجيل في عرض عمرة\n\n` +
-    `👤 الاسم: ${first} ${last}\n📞 الهاتف: ${phone}\n` +
-    `🏢 الوكالة: ${selectedOffer?.agency || "—"}\n` +
-    `📅 التاريخ: ${formatDateArabicFull(selectedOffer?.date)}\n` +
-    `💰 السعر: ${selectedOffer?.group || "—"} دج`
+
+  const o = selectedOffer;
+
+  const waMsg = encodeURIComponent(
+    `السلام عليكم ورحمة الله وبركاته 🌿\n\n` +
+    `*طلب تسجيل من موقع طريق العمرة* 🕋\n\n` +
+    `👤 الاسم: ${first} ${last}\n` +
+    `📞 الهاتف: ${phone}\n\n` +
+    `──────────────\n` +
+    `🏢 الوكالة: ${o?.agency || "—"}\n` +
+    `🕋 العرض: ${o?.offer || "—"}\n` +
+    `📅 تاريخ الرحلة: ${formatDateArabicFull(o?.date)}\n` +
+    `✈️ المطار: ${o?.airport || "—"}\n` +
+    `🏨 الفندق: ${o?.hotel || "—"}\n` +
+    `⏱️ المدة: ${o?.duration || "—"}\n` +
+    `💰 السعر: ${o?.group || "—"} دج\n` +
+    `──────────────\n` +
+    `*المصدر: موقع طريق العمرة*`
   );
-  window.open(`https://wa.me/${selectedOffer?.phone || "213674141379"}?text=${msg}`, "_blank");
+
+  let agencyPhone = String(o?.phone || "213674141379").replace(/\D/g, "");
+  if (!agencyPhone.startsWith("213")) agencyPhone = "213" + agencyPhone;
+
+  window.open(`https://wa.me/${agencyPhone}?text=${waMsg}`, "_blank");
+
+  const formData = new URLSearchParams({
+    source:       "موقع طريق العمرة",
+    clientName:   `${first} ${last}`,
+    clientPhone:  phone,
+    agency:       o?.agency   || "",
+    offer:        o?.offer    || "",
+    date:         o?.date     || "",
+    airport:      o?.airport  || "",
+    hotel:        o?.hotel    || "",
+    duration:     o?.duration || "",
+    price:        o?.group    || "",
+    agencyPhone:  agencyPhone,
+    notifyEmail:  "tgtmhb99@gmail.com"
+  });
+
+  fetch(REGISTER_API, { method: "POST", body: formData }).catch(() => {});
+
   closeRegisterModal();
   showToast("تم إرسال طلبك بنجاح");
 }
 
-/* ── whatsapp ── */
+/* ── whatsapp direct ── */
 function openWaByIdx(i) {
   const o = offersData[i];
   if (!o) return;
   const msg = encodeURIComponent(
-    `🕋 استفسار عن عرض عمرة\n\n` +
+    `السلام عليكم ورحمة الله 🌿\n\n` +
+    `*استفسار من موقع طريق العمرة* 🕋\n\n` +
     `🏢 الوكالة: ${o.agency || "—"}\n` +
+    `🕋 العرض: ${o.offer || "—"}\n` +
     `📅 التاريخ: ${formatDateArabicFull(o.date)}\n` +
     `💰 السعر: ${o.group || "—"} دج\n` +
     `✈️ المطار: ${o.airport || "—"}`
   );
-  window.open(`https://wa.me/${o.phone || "213674141379"}?text=${msg}`, "_blank");
+  let agencyPhone = String(o.phone || "213674141379").replace(/\D/g, "");
+  if (!agencyPhone.startsWith("213")) agencyPhone = "213" + agencyPhone;
+  window.open(`https://wa.me/${agencyPhone}?text=${msg}`, "_blank");
 }
 
 /* ── share ── */
 function shareByIdx(i) {
   const o = offersData[i];
   if (!o) return;
-  const text = `🕋 عرض عمرة – ${o.agency}\n📅 ${formatDateArabicFull(o.date)}\n💰 ${o.group} دج\n✈️ ${o.airport || ""}`;
+  const text =
+    `🕋 عرض عمرة – ${o.agency}\n` +
+    `📅 ${formatDateArabicFull(o.date)}\n` +
+    `💰 ${o.group} دج\n` +
+    `✈️ ${o.airport || ""}\n` +
+    `🌐 موقع طريق العمرة`;
   if (navigator.share) {
-    navigator.share({ title: "عرض عمرة", text });
+    navigator.share({ title: "عرض عمرة – طريق العمرة", text });
   } else {
     navigator.clipboard?.writeText(text).then(() => showToast("تم نسخ العرض"));
   }
@@ -1199,7 +1332,7 @@ function closeMenu() {
   document.getElementById("overlay").style.display = "none";
 }
 
-/* ── visitors (fake counter) ── */
+/* ── visitors ── */
 let v = Math.floor(Math.random() * 300) + 120;
 document.getElementById("visitors").textContent = v;
 setInterval(() => {
