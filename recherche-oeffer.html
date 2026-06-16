@@ -3,453 +3,492 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>طلب عرض عمرة</title>
-
+<title>طلب عرض عمرة – طريق العمرة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body{
-  font-family:Tajawal,Arial;
-  margin:0;
-  background:
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+:root {
+  --navy:     #0D1B2A;
+  --teal:     #0E7C86;
+  --teal2:    #12A0AD;
+  --gold:     #D4A017;
+  --gold-l:   #F2D27A;
+  --sand:     #F4F7FA;
+  --sand2:    #E4EBF2;
+  --white:    #FFFFFF;
+  --muted:    #5A7184;
+  --green-wa: #25D366;
+  --shadow-sm: 0 2px 12px rgba(13,27,42,.10);
+  --shadow-md: 0 8px 32px rgba(13,27,42,.18);
+  --shadow-lg: 0 18px 50px rgba(13,27,42,.28);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Tajawal', Arial, sans-serif;
+  background: linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),
     url("https://i.supaimg.com/c5d71aa9-c2b3-4263-8bd6-2f800145c063.jpg")
     center/cover fixed no-repeat;
-}
-header{
-  position:relative;
-
-  height:60px;  
-  background:#8b0000;  
-  color:#fff;  
-  display:flex;  
-  align-items:center;  
-  padding:0 15px;  
-}  
-
-.home-btn{
-  position:absolute;
-  left:15px;
-  font-size:22px;
-  color:#fff;
-  text-decoration:none;
+  min-height: 100vh;
 }
 
-.home-btn:hover{
-  opacity:.8;
+/* TOPBAR */
+.topbar {
+  position: sticky; top: 0; z-index: 9000;
+  height: 64px; background: var(--navy);
+  display: flex; align-items: center; padding: 0 20px; gap: 14px;
+  box-shadow: 0 4px 20px rgba(13,27,42,.45);
+}
+.topbar::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M20 20l10-10v20L20 20zm0 0L10 10v20l10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.menu-btn {
+  font-size: 22px; color: var(--white); cursor: pointer; z-index: 1;
+  width: 36px; height: 36px; display: flex; align-items: center;
+  justify-content: center; border-radius: 8px; transition: background .2s;
+}
+.menu-btn:hover { background: rgba(255,255,255,.12); }
+
+.topbar-logo {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; cursor: pointer;
+}
+.topbar-logo img {
+  height: 52px; width: auto;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,.4));
+  transition: transform .3s;
+}
+.topbar-logo img:hover { transform: scale(1.06); }
+
+.home-btn {
+  margin-right: auto; z-index: 1;
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 6px 14px; border-radius: 999px;
+  color: var(--white); text-decoration: none;
+  font-size: 14px; font-weight: 700; transition: background .2s;
+}
+.home-btn:hover { background: rgba(255,255,255,.2); }
+
+/* WA FLOAT */
+.wa-float {
+  position: fixed; top: 74px; left: 16px;
+  width: 50px; height: 50px; background: var(--green-wa);
+  color: var(--white); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; z-index: 8000;
+  box-shadow: 0 6px 20px rgba(37,211,102,.45);
+  transition: transform .25s, box-shadow .25s;
+}
+.wa-float:hover { transform: scale(1.1); box-shadow: 0 10px 28px rgba(37,211,102,.6); }
+
+/* SIDE MENU */
+#sideMenu {
+  position: fixed; top: 0; right: -280px;
+  width: 280px; height: 100%; background: var(--navy);
+  padding-top: 80px; transition: right .3s cubic-bezier(.4,0,.2,1);
+  z-index: 10000; box-shadow: -6px 0 30px rgba(0,0,0,.3);
+}
+#sideMenu.open { right: 0; }
+#sideMenu a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 24px; color: var(--white); text-decoration: none;
+  font-size: 16px; font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  transition: background .2s, padding-right .2s;
+}
+#sideMenu a:hover { background: rgba(255,255,255,.1); padding-right: 32px; }
+#overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.5); z-index: 9000; backdrop-filter: blur(2px);
 }
 
-/* تثبيت العنوان في الوسط مهما كان */
-header h1{
-  position:absolute;
-  left:40%;
-  transform:translateX(-50%);
-  font-size:18px;
-  margin:0;
+/* HERO */
+.hero { padding: 32px 20px 24px; text-align: center; }
+.hero-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(14,124,134,.3); border: 1px solid rgba(14,124,134,.6);
+  color: var(--gold-l); font-size: 13px; font-weight: 700;
+  padding: 5px 16px; border-radius: 999px; margin-bottom: 12px;
 }
-.menu-btn{font-size:26px;cursor:pointer}
+.hero h2 {
+  font-size: clamp(20px,5vw,32px); font-weight: 900;
+  color: var(--white); line-height: 1.3;
+}
+.hero h2 span { color: var(--gold); }
+.hero p { color: rgba(255,255,255,.7); font-size: 14px; margin-top: 8px; }
 
-.whatsapp-top{
-  position:fixed;
-top:60px;                  
-  left:12px;
-  width:48px;
-  height:48px;
-  background:#25D366;
-  color:#fff;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  z-index:13000;
-}
-#sideMenu{
-  position:fixed;
-  top:0;right:-260px;
-  width:260px;height:100%;
-  background:#8b0000;
-  padding-top:70px;
-  transition:.3s;
-  z-index:10000;
-}
-#sideMenu a{
-  display:block;
-  padding:14px 18px;
-  color:#fff;
-  text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.15);
-}
-#sideMenu a:hover{background:rgba(255,255,255,.15)}
-
-#overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:9000;
+/* FORM CARD */
+.form-card {
+  max-width: 680px; margin: 0 auto 40px;
+  background: rgba(255,255,255,.97);
+  border-radius: 24px; overflow: hidden;
+  box-shadow: var(--shadow-lg);
 }
 
-.container{
-  max-width:650px;
-  background:rgba(255,255,255,.95);
-  margin:25px auto;
-  padding:22px;
-  border-radius:18px;
-}
-h2{text-align:center;color:#8b0000;margin-top:0}
-
-label{display:block;margin-top:12px;font-weight:700}
-input,select,textarea,button{
-  width:100%;
-  padding:10px;
-  margin-top:6px;
-  border-radius:8px;
-  border:1px solid #ccc;
-  font-family:inherit;
-}
-button{
-  background:#8b0000;
-  color:#fff;
-  font-size:16px;
-  margin-top:20px;
-  cursor:pointer;
+.form-section {
+  padding: 10px 22px;
+  background: linear-gradient(135deg, var(--navy), var(--teal));
+  color: var(--white); font-size: 14px; font-weight: 800;
+  display: flex; align-items: center; gap: 8px;
 }
 
-#popup{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:12000;
-  align-items:center;
-  justify-content:center;
-}
-#popupBox{
-  background:#fff;
-  padding:26px;
-  border-radius:16px;
-  text-align:center;
-  max-width:320px;
-}
-  
-  /* اللوقو */
-.site-logo{
-  position:absolute;
-  left:70%;
-  top:6px;                     /* ينزل قليلاً داخل الشريط */
-  transform:translateX(-50%);
-  
-  height:65px;
-  width:auto;
-  cursor:pointer;
+.form-body { padding: 24px 22px; }
 
-  /* 3D effect */
-  filter:drop-shadow(0 6px 10px rgba(0,0,0,.45));
-  transform-style:preserve-3d;
-
-  transition:transform .25s ease, filter .25s ease;
+.field-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  margin-bottom: 14px;
 }
-/* 3D عند المرور */
-.site-logo:hover{
-  transform:
-    translateX(-50%)
-    translateY(-3px)
-    rotateX(10deg)
-    rotateY(-6deg);
-  filter:drop-shadow(0 10px 18px rgba(0,0,0,.55));
+@media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+
+.field { margin-bottom: 14px; }
+.field label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 800; color: var(--muted); margin-bottom: 6px;
+}
+.field label i { color: var(--gold); font-size: 13px; }
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid #CDD9E8; border-radius: 10px;
+  font-family: 'Tajawal', Arial, sans-serif;
+  font-size: 14px; font-weight: 600; color: var(--navy);
+  background: var(--sand); transition: border-color .2s, box-shadow .2s;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none; border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(14,124,134,.18);
+}
+.field textarea { resize: vertical; min-height: 90px; }
+
+.divider { height: 1px; background: var(--sand2); margin: 4px 0 18px; }
+
+.btn-submit {
+  width: 100%; padding: 16px;
+  background: linear-gradient(135deg, var(--teal), #065960);
+  color: var(--white); border: none; border-radius: 12px;
+  font-family: 'Tajawal', Arial, sans-serif;
+  font-size: 17px; font-weight: 900; cursor: pointer;
+  box-shadow: 0 6px 20px rgba(13,27,42,.3);
+  transition: transform .2s, box-shadow .2s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(13,27,42,.4); }
+.btn-submit:active { transform: scale(.98); }
+
+/* POPUP */
+.popup-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.65); z-index: 20000;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.popup-overlay.open { display: flex; }
+.popup-box {
+  background: var(--white); padding: 36px 28px;
+  border-radius: 22px; text-align: center;
+  max-width: 320px; width: 90%;
+  box-shadow: var(--shadow-lg);
+  animation: popIn .35s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes popIn {
+  from { transform: scale(.85) translateY(20px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+.popup-icon {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), #065960);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px; font-size: 32px;
+}
+.popup-box h3 { font-size: 20px; font-weight: 900; color: var(--navy); margin-bottom: 8px; }
+.popup-box p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+/* WELCOME MODAL */
+.welcome-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.65); z-index: 30000;
+  align-items: center; justify-content: center;
+}
+.welcome-overlay.open { display: flex; }
+.welcome-box {
+  background: var(--white); padding: 30px 24px;
+  border-radius: 22px; max-width: 400px; width: 90%;
+  text-align: center; box-shadow: var(--shadow-lg);
+}
+.welcome-box h2 { color: var(--navy); margin-bottom: 12px; font-size: 20px; }
+.welcome-box p { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+.welcome-box .green { font-weight: 800; color: #0b5f3c; }
+.welcome-close {
+  margin-top: 16px; padding: 10px 28px;
+  background: linear-gradient(135deg, var(--navy), var(--teal));
+  color: var(--white); border: none; border-radius: 10px;
+  font-family: 'Tajawal', Arial, sans-serif;
+  font-size: 15px; font-weight: 700; cursor: pointer;
 }
 
-/* عند الضغط */
-.site-logo:active{
-  transform:
-    translateX(-50%)
-    translateY(1px)
-    rotateX(0deg);
-}@media (max-width:600px){
-  .site-logo{
-    height:100px;
-    top:4px;
-  }
-
+@media (max-width: 600px) {
+  .topbar-logo img { height: 46px; }
+  .form-body { padding: 18px 14px; }
 }
-
 </style>
 </head>
-  
 <body>
-   <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">  
-<i class="fab fa-whatsapp"></i>  
-</a>  
-<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-top">
-<i class="fab fa-whatsapp"></i>
-</a>
-<header>
-  <div class="menu-btn" onclick="openMenu()">☰</div>
-    <!-- الشعار (وسط) -->
-  <div class="logo-center" onclick="openWelcome()">
- <img
-  src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769426692/ei_1769426620917-removebg-preview_yuws6p.png"
-  alt="طريق العمرة"
-  class="logo site-logo"
-  onclick="openWelcome()">
-  </div>
-  <h1>🕋 طلب عرض عمرة</h1>
 
-<a href="results-gen.html" class="home-btn" title="الرئيسية">
-  <i class="fas fa-house"></i>
+<a href="https://wa.me/213674141379" target="_blank" class="wa-float">
+  <i class="fab fa-whatsapp"></i>
 </a>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="menu-btn" onclick="openMenu()"><i class="fa-solid fa-bars"></i></div>
+  <div class="topbar-logo" onclick="openWelcome()">
+    <img src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769426692/ei_1769426620917-removebg-preview_yuws6p.png" alt="طريق العمرة">
+  </div>
+  <a href="results-gen.html" class="home-btn">
+    <i class="fa-solid fa-house"></i> الرئيسية
+  </a>
 </header>
 
+<!-- SIDE MENU -->
 <nav id="sideMenu">
-  <a href="results-gen.html">🕋 العروض العامة</a>
-  <a href="recherche-oeffer.html">📩 طلب عرض عمرة</a>
-  <a href="results-fenal.html">👤 صفحتي الخاصة</a>
+  <a href="results-gen.html"><i class="fa-solid fa-kaaba"></i> العروض العامة</a>
+  <a href="recherche-oeffer.html"><i class="fa-solid fa-paper-plane"></i> طلب عرض عمرة</a>
+  <a href="recherche-n.html"><i class="fa-solid fa-user-circle"></i> صفحتي الخاصة</a>
 </nav>
 <div id="overlay" onclick="closeMenu()"></div>
 
-<div class="container">
-<h2>أدخل بياناتك للحصول على أفضل العروض التي تناسبك</h2>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label"><i class="fa-solid fa-star"></i> خدمة مجانية</div>
+  <h2>🕋 اطلب <span>عرض عمرة</span> يناسبك</h2>
+  <p>أدخل بياناتك وسنبحث لك عن أفضل العروض المتاحة</p>
+</section>
 
-<form id="umrahForm">
+<!-- FORM -->
+<div class="form-card">
 
-<label>الاسم</label>
-<input type="text" name="name" required>
+  <div class="form-section"><i class="fa-solid fa-user"></i> معلوماتك الشخصية</div>
+  <div class="form-body">
+    <form id="umrahForm">
 
-<label>اللقب</label>
-<input type="text" name="lastname" required>
+      <div class="field-row">
+        <div class="field">
+          <label><i class="fa-solid fa-user"></i> الاسم</label>
+          <input type="text" name="name" placeholder="محمد" required>
+        </div>
+        <div class="field">
+          <label><i class="fa-solid fa-user"></i> اللقب</label>
+          <input type="text" name="lastname" placeholder="بن علي" required>
+        </div>
+      </div>
 
-<label>رقم الهاتف</label>
-<input type="tel" name="phone" required>
+      <div class="field-row">
+        <div class="field">
+          <label><i class="fa-solid fa-phone"></i> رقم الهاتف</label>
+          <input type="tel" name="phone" placeholder="05xxxxxxxx" required>
+        </div>
+        <div class="field">
+          <label><i class="fa-solid fa-location-dot"></i> مكان الإقامة</label>
+          <select name="residence" required>
+            <option value="">اختر الولاية</option>
+            <option>أدرار</option><option>الشلف</option><option>الأغواط</option>
+            <option>أم البواقي</option><option>باتنة</option><option>بجاية</option>
+            <option>بسكرة</option><option>بشار</option><option>البليدة</option>
+            <option>البويرة</option><option>تمنراست</option><option>تبسة</option>
+            <option>تلمسان</option><option>تيارت</option><option>تيزي وزو</option>
+            <option>الجزائر</option><option>الجلفة</option><option>جيجل</option>
+            <option>سطيف</option><option>سعيدة</option><option>سكيكدة</option>
+            <option>سيدي بلعباس</option><option>عنابة</option><option>قالمة</option>
+            <option>قسنطينة</option><option>المدية</option><option>مستغانم</option>
+            <option>المسيلة</option><option>معسكر</option><option>ورقلة</option>
+            <option>وهران</option><option>البيض</option><option>إليزي</option>
+            <option>برج بوعريريج</option><option>بومرداس</option><option>الطارف</option>
+            <option>تندوف</option><option>تيسمسيلت</option><option>الوادي</option>
+            <option>خنشلة</option><option>سوق أهراس</option><option>تيبازة</option>
+            <option>ميلة</option><option>عين الدفلى</option><option>النعامة</option>
+            <option>عين تموشنت</option><option>غرداية</option><option>غليزان</option>
+            <option>تيميمون</option><option>برج باجي مختار</option><option>أولاد جلال</option>
+            <option>بني عباس</option><option>عين صالح</option><option>عين قزام</option>
+            <option>تقرت</option><option>جانت</option><option>المغير</option><option>المنيعة</option>
+          </select>
+        </div>
+      </div>
 
-<label>المطار المختار</label>
-<select name="airport" required>
-  <option value="">اختر</option>
-  <option>الجزائر</option>
-  <option>وهران</option>
-  <option>قسنطينة</option>
-  <option>عنابة</option>
-<option>ورقلة</option>
-  <option>جيجل</option>
-  <option>تامنغست</option>
-  <option>الوادي</option>
-<option>غرداية</option>
-  <option>باتنة</option>
-</select>
+      <div class="divider"></div>
+      <div class="form-section" style="margin: 0 -22px 18px; border-radius: 0;">
+        <i class="fa-solid fa-plane"></i> تفاصيل الرحلة
+      </div>
 
-<label>نوع الفندق</label>
-<select name="hotel">
-  <option>اقتصادي</option>
-  <option>عادي</option>
-  <option>VIP</option>
-</select>
+      <div class="field-row">
+        <div class="field">
+          <label><i class="fa-solid fa-plane-departure"></i> المطار المختار</label>
+          <select name="airport" required>
+            <option value="">اختر المطار</option>
+            <option>الجزائر</option><option>وهران</option><option>قسنطينة</option>
+            <option>عنابة</option><option>ورقلة</option><option>جيجل</option>
+            <option>تامنغست</option><option>الوادي</option><option>غرداية</option><option>باتنة</option>
+          </select>
+        </div>
+        <div class="field">
+          <label><i class="fa-regular fa-calendar"></i> تاريخ الانطلاق</label>
+          <input type="date" name="travel_date" required>
+        </div>
+      </div>
 
-<label>مدة الرحلة</label>
-<select name="duration">
-  <option>12 يوم</option>
-<option>12 يوم</option>
-  <option>15 يوم</option>
-  <option>16 يوم</option>
-  <option>20 يوم</option>
-  <option>30 يوم</option>
-<option>40 يوم</option>
-  <option>50 يوم</option>
-  <option>60 يوم</option>
-</select>
+      <div class="field-row">
+        <div class="field">
+          <label><i class="fa-regular fa-clock"></i> مدة الرحلة</label>
+          <select name="duration">
+            <option>12 يوم</option><option>15 يوم</option><option>16 يوم</option>
+            <option>20 يوم</option><option>30 يوم</option><option>40 يوم</option>
+            <option>50 يوم</option><option>60 يوم</option>
+          </select>
+        </div>
+        <div class="field">
+          <label><i class="fa-solid fa-plane"></i> نوع الرحلة</label>
+          <select name="flight">
+            <option>مباشرة</option>
+            <option>غير مباشرة</option>
+          </select>
+        </div>
+      </div>
 
-<label>نوع الغرفة</label>
-<select name="room">
-<option>جماعية</option>
-<option>رباعية</option>
-  <option>ثلاثية</option>
-  <option>ثنائية</option>
-  
-</select>
+      <div class="field-row">
+        <div class="field">
+          <label><i class="fa-solid fa-hotel"></i> نوع الفندق</label>
+          <select name="hotel">
+            <option>اقتصادي</option>
+            <option>عادي</option>
+            <option>VIP</option>
+          </select>
+        </div>
+        <div class="field">
+          <label><i class="fa-solid fa-bed"></i> نوع الغرفة</label>
+          <select name="room">
+            <option>جماعية</option>
+            <option>رباعية</option>
+            <option>ثلاثية</option>
+            <option>ثنائية</option>
+          </select>
+        </div>
+      </div>
 
-<label>مسار الرحلة</label>
-<select name="route">
-  <option>دخول جدة – خروج المدينة</option>
-  <option>دخول المدينة – خروج جدة</option>
-</select>
+      <div class="field">
+        <label><i class="fa-solid fa-route"></i> مسار الرحلة</label>
+        <select name="route">
+          <option>دخول جدة – خروج المدينة</option>
+          <option>دخول المدينة – خروج جدة</option>
+        </select>
+      </div>
 
-<label>نوع الرحلة</label>
-<select name="flight">
-  <option>مباشرة</option>
-  <option>غير مباشرة</option>
-</select>
+      <div class="divider"></div>
 
-<label>مكان الإقامة</label>
-<select name="residence" required>
-  <option value="">اختر مكان الإقامة</option>
-  <option>أدرار</option>
-  <option>الشلف</option>
-  <option>الأغواط</option>
-  <option>أم البواقي</option>
-  <option>باتنة</option>
-  <option>بجاية</option>
-  <option>بسكرة</option>
-  <option>بشار</option>
-  <option>البليدة</option>
-  <option>البويرة</option>
-  <option>تمنراست</option>
-  <option>تبسة</option>
-  <option>تلمسان</option>
-  <option>تيارت</option>
-  <option>تيزي وزو</option>
-  <option>الجزائر</option>
-  <option>الجلفة</option>
-  <option>جيجل</option>
-  <option>سطيف</option>
-  <option>سعيدة</option>
-  <option>سكيكدة</option>
-  <option>سيدي بلعباس</option>
-  <option>عنابة</option>
-  <option>قالمة</option>
-  <option>قسنطينة</option>
-  <option>المدية</option>
-  <option>مستغانم</option>
-  <option>المسيلة</option>
-  <option>معسكر</option>
-  <option>ورقلة</option>
-  <option>وهران</option>
-  <option>البيض</option>
-  <option>إليزي</option>
-  <option>برج بوعريريج</option>
-  <option>بومرداس</option>
-  <option>الطارف</option>
-  <option>تندوف</option>
-  <option>تيسمسيلت</option>
-  <option>الوادي</option>
-  <option>خنشلة</option>
-  <option>سوق أهراس</option>
-  <option>تيبازة</option>
-  <option>ميلة</option>
-  <option>عين الدفلى</option>
-  <option>النعامة</option>
-  <option>عين تموشنت</option>
-  <option>غرداية</option>
-  <option>غليزان</option>
-  <option>تيميمون</option>
-  <option>برج باجي مختار</option>
-  <option>أولاد جلال</option>
-  <option>بني عباس</option>
-  <option>عين صالح</option>
-  <option>عين قزام</option>
-  <option>تقرت</option>
-  <option>جانت</option>
-  <option>المغير</option>
-  <option>المنيعة</option>
-</select>
+      <div class="field">
+        <label><i class="fa-solid fa-note-sticky"></i> ملاحظة / طريقة التواصل</label>
+        <textarea name="note" placeholder="مثال: تواصلوا معي برسالة واتساب في المساء…" required></textarea>
+      </div>
 
+      <button type="submit" class="btn-submit">
+        <i class="fa-solid fa-paper-plane"></i> إرسال الطلب
+      </button>
 
-<label>تاريخ انطلاق الرحلة</label>
-<input type="date" name="travel_date" required>
-
-<label>ملاحظة</label>
-<textarea 
-  name="note" 
-  required 
-  placeholder="كيف يتم التواصل معكم (رسالة أو واتساب أو مكالمة)">
-</textarea>
-
-<button type="submit">📩 إرسال الطلب</button>
-</form>
+    </form>
+  </div>
 </div>
 
-<div id="popup">
-  <div id="popupBox">
-    <h3>⏳ جارٍ إرسال طلبك</h3>
-    <p>استغفر الله العظيم 🤍</p>
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <div class="popup-icon">🕋</div>
+    <h3>جارٍ إرسال طلبك…</h3>
+    <p>استغفر الله العظيم 🤍<br>سيتم التواصل معك قريباً بإذن الله</p>
+  </div>
+</div>
+
+<!-- WELCOME MODAL -->
+<div class="welcome-overlay" id="welcomeModal" onclick="closeWelcome()">
+  <div class="welcome-box" onclick="event.stopPropagation()">
+    <h2>مرحبًا بكم في طريق العمرة 🕋</h2>
+    <p>موقع <b>طريق العمرة</b> يسهّل عليكم تصفح أفضل عروض العمرة من وكالات <b>مرخصة ومعتمدة</b>، مع تسجيل سهل ومعلومات واضحة.</p>
+    <p class="green">نيتك صادقة… والطريق علينا بإذن الله 🤲</p>
+    <button class="welcome-close" onclick="closeWelcome()">إغلاق</button>
   </div>
 </div>
 
 <script>
-const scriptURL="https://script.google.com/macros/s/AKfycbwPmNnhFCL9NR2XcWdERYKPNKr1ubdwV9IqBR6JGvHldOTLgJHPKaRjRzmus47T0UJGKg/exec";
+const SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbwPmNnhFCL9NR2XcWdERYKPNKr1ubdwV9IqBR6JGvHldOTLgJHPKaRjRzmus47T0UJGKg/exec";
+const VISITORS_URL = "https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec";
+const NOTIFY_WA    = "213656450486";
 
-const form=document.getElementById("umrahForm");
-const popup=document.getElementById("popup");
+const form  = document.getElementById("umrahForm");
+const popup = document.getElementById("popup");
 
-form.addEventListener("submit",e=>{
+form.addEventListener("submit", e => {
   e.preventDefault();
-  const phone=form.phone.value;
-  popup.style.display="flex";
 
-  fetch(scriptURL,{
-    method:"POST",
-    body:new FormData(form),
-    mode:"no-cors"
-  }).then(()=>{
-    setTimeout(()=>{
-      window.location.href="recherche-n.html?phone="+encodeURIComponent(phone);
-    },2500);
-  });
+  const name      = form.name.value.trim();
+  const lastname  = form.lastname.value.trim();
+  const phone     = form.phone.value.trim();
+  const residence = form.residence.value;
+  const airport   = form.airport.value;
+  const tdate     = form.travel_date.value;
+  const duration  = form.duration.value;
+  const flight    = form.flight.value;
+  const hotel     = form.hotel.value;
+  const room      = form.room.value;
+  const route     = form.route.value;
+  const note      = form.note.value.trim();
+
+  // 1 — show popup
+  popup.classList.add("open");
+
+  // 2 — send WhatsApp notification
+  const waMsg = encodeURIComponent(
+    `🕋 *طلب عرض عمرة جديد – موقع طريق العمرة*\n\n` +
+    `👤 الاسم: ${name} ${lastname}\n` +
+    `📞 الهاتف: ${phone}\n` +
+    `📍 الولاية: ${residence}\n\n` +
+    `──────────────\n` +
+    `✈️ المطار: ${airport}\n` +
+    `📅 تاريخ الانطلاق: ${tdate}\n` +
+    `⏱️ المدة: ${duration}\n` +
+    `🛫 نوع الرحلة: ${flight}\n` +
+    `🗺️ المسار: ${route}\n` +
+    `🏨 الفندق: ${hotel}\n` +
+    `🛏️ الغرفة: ${room}\n\n` +
+    `📝 ملاحظة: ${note}\n` +
+    `──────────────\n` +
+    `*المصدر: موقع طريق العمرة*`
+  );
+  window.open(`https://wa.me/${NOTIFY_WA}?text=${waMsg}`, "_blank");
+
+  // 3 — send to Google Sheets
+  const fd = new FormData(form);
+  fd.append("source", "موقع طريق العمرة");
+
+  fetch(SCRIPT_URL, { method: "POST", body: fd, mode: "no-cors" })
+    .finally(() => {
+      setTimeout(() => {
+        window.location.href = "recherche-n.html?phone=" + encodeURIComponent(phone);
+      }, 2500);
+    });
 });
 
-function openMenu(){
-  sideMenu.style.right="0";
-  overlay.style.display="block";
-}
-function closeMenu(){
-  sideMenu.style.right="-260px";
-  overlay.style.display="none";
-}
+function openMenu()    { document.getElementById("sideMenu").classList.add("open"); document.getElementById("overlay").style.display = "block"; }
+function closeMenu()   { document.getElementById("sideMenu").classList.remove("open"); document.getElementById("overlay").style.display = "none"; }
+function openWelcome() { document.getElementById("welcomeModal").classList.add("open"); }
+function closeWelcome(){ document.getElementById("welcomeModal").classList.remove("open"); }
 
-
-
-fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {
-  method: "POST",
-  cache: "no-store"
-});
-function openWelcome(){
-  document.getElementById("welcomeModal").style.display="flex";
-}
-function closeWelcome(){
-  document.getElementById("welcomeModal").style.display="none";
-}
+fetch(VISITORS_URL, { method: "POST", cache: "no-store" });
 </script>
-<div id="welcomeModal" style="
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:30000;
-  align-items:center;
-  justify-content:center;
-" onclick="closeWelcome()">
-  <div style="
-    background:#fff;
-    padding:25px;
-    border-radius:18px;
-    max-width:420px;
-    width:90%;
-    text-align:center;
-    font-family:Tajawal,Arial;
-  " onclick="event.stopPropagation()">
-
-    <h2 style="color:#8b0000;margin-top:0">
-      مرحبًا بكم في طريق العمرة 🕋
-    </h2>
-
-    <p>
-      موقع <b>طريق العمرة</b> يسهّل عليكم تصفح
-      أفضل عروض العمرة من وكالات <b>مرخصة ومعتمدة</b>،
-      مع تسجيل سهل ومعلومات واضحة.
-    </p>
-
-    <p style="font-weight:bold;color:#0b5f3c">
-      نيتك صادقة… والطريق علينا بإذن الله 🤲
-    </p>
-
-    <button onclick="closeWelcome()" style="
-      margin-top:15px;
-      padding:10px 20px;
-      border:none;
-      background:#8b0000;
-      color:#fff;
-      border-radius:10px;
-      cursor:pointer;
-    ">
-      إغلاق
-    </button>
 </body>
 </html>
