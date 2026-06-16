@@ -754,6 +754,32 @@ select:focus {
   transform: translateY(-2px);
   box-shadow: 0 10px 28px rgba(13,27,42,.38);
 }
+
+/* زر الواتساب الأخضر في النافذة */
+.btn-wa-submit {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #25D366, #1aad52);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-family: 'Tajawal', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 4px;
+  box-shadow: 0 6px 20px rgba(37,211,102,.35);
+  transition: transform .2s, box-shadow .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-wa-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(37,211,102,.5);
+}
+
 .btn-cancel {
   width: 100%;
   padding: 12px;
@@ -781,6 +807,23 @@ select:focus {
   margin-bottom: 14px;
   display: block;
 }
+
+/* بادج مميزات الوكالة في الكارد */
+.features-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #FFFBEE, #FFF3CC);
+  border: 1px solid rgba(212,160,23,.3);
+  color: #7A5200;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.features-tag:hover { background: #FFE99A; }
 
 @media (min-width: 768px) {
   .card { flex: 0 0 320px; }
@@ -937,13 +980,50 @@ select:focus {
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════════════════
+     WHATSAPP CONTACT MODAL  (جديد)
+     نافذة واتساب الوكالة – إدخال البيانات قبل الانتقال
+     ══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="waContactModal" onclick="closeWaModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header" style="background: linear-gradient(135deg,#075E54,#25D366);">
+      <div class="modal-title">
+        <i class="fab fa-whatsapp"></i> تواصل مع الوكالة
+      </div>
+      <button class="modal-close" onclick="closeWaModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <!-- معلومات العرض -->
+      <div id="waOfferInfo" style="margin-bottom:16px; padding:12px 14px; background:linear-gradient(135deg,#EBF4F8,#DFF0F5); border-radius:12px; font-size:13px; font-weight:700; color:var(--navy); border:1px solid rgba(14,124,134,.2); line-height:1.8;"></div>
+      <!-- حقول البيانات -->
+      <div class="form-field">
+        <label>الاسم</label>
+        <input id="waFirst" placeholder="أدخل اسمك">
+      </div>
+      <div class="form-field">
+        <label>اللقب</label>
+        <input id="waLast" placeholder="أدخل لقبك">
+      </div>
+      <div class="form-field">
+        <label>رقم الهاتف</label>
+        <input id="waPhone" placeholder="05xxxxxxxx" type="tel">
+      </div>
+      <button class="btn-wa-submit" onclick="sendWaContact()">
+        <i class="fab fa-whatsapp" style="font-size:20px"></i>
+        انتقل إلى واتساب الوكالة
+      </button>
+      <button class="btn-cancel" onclick="closeWaModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-const OFFERS_API = "https://script.google.com/macros/s/AKfycbwtWouXEaRJRGIEFaUP1ZruBDFp6U3sC2I91XGk_75gr81cXCOeToy5rS8LqYAWWFO1TQ/exec";
+const OFFERS_API   = "https://script.google.com/macros/s/AKfycbwtWouXEaRJRGIEFaUP1ZruBDFp6U3sC2I91XGk_75gr81cXCOeToy5rS8LqYAWWFO1TQ/exec";
 const REGISTER_API = "https://script.google.com/macros/s/AKfycbxESUUBeW6x-B-h4GWYutaXUjj4Ll_ohF6whfrSTaOKKB50FhNjufJ5eYDG_hoyELz3/exec";
 
-let offersData = [], selectedOffer = null;
+let offersData = [], selectedOffer = null, waOffer = null;
 
 const fAgency  = document.getElementById("fAgency");
 const fState   = document.getElementById("fState");
@@ -951,27 +1031,22 @@ const fDate    = document.getElementById("fDate");
 const fAirport = document.getElementById("fAirport");
 const offersEl = document.getElementById("offers");
 
+/* ── date helpers ── */
 function parseLocalDate(dateStr) {
   if (!dateStr) return null;
   const s = String(dateStr).trim();
   const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
   const short = s.match(/^[A-Za-z]{3}\s+([A-Za-z]{3})\s+(\d{1,2})$/);
-  if (short) {
-    return new Date(Date.UTC(2026, months[short[1]], +short[2], 12, 0, 0));
-  }
+  if (short) return new Date(Date.UTC(2026, months[short[1]], +short[2], 12, 0, 0));
   const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (iso) {
-    return new Date(Date.UTC(+iso[1], +iso[2]-1, +iso[3], 12, 0, 0));
-  }
+  if (iso)   return new Date(Date.UTC(+iso[1], +iso[2]-1, +iso[3], 12, 0, 0));
   return null;
 }
-
 function formatDate(d) {
   const p = parseLocalDate(d);
   if (!p) return "-";
   return `${p.getUTCDate()}/${p.getUTCMonth()+1}/${p.getUTCFullYear()}`;
 }
-
 function formatDateArabicFull(dateStr) {
   if (!dateStr) return "-";
   const days   = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
@@ -980,7 +1055,6 @@ function formatDateArabicFull(dateStr) {
   if (!d || isNaN(d)) return "-";
   return `${days[d.getUTCDay()]} ${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
-
 function getDateStatus(dateStr) {
   if (!dateStr) return "far";
   const travel = parseLocalDate(dateStr);
@@ -993,21 +1067,22 @@ function getDateStatus(dateStr) {
   if (diff <= 40) return "mid";
   return "far";
 }
-
 function getRemainingText(dateStr) {
   if (!dateStr) return "";
   const travel = parseLocalDate(dateStr);
   if (!travel || isNaN(travel)) return "";
   const today = new Date();
-  const todayUTC  = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
-  const travelUTC = Date.UTC(travel.getUTCFullYear(), travel.getUTCMonth(), travel.getUTCDate());
-  const diff = Math.round((travelUTC - todayUTC) / 86400000);
+  const diff = Math.round(
+    (Date.UTC(travel.getUTCFullYear(), travel.getUTCMonth(), travel.getUTCDate()) -
+     Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())) / 86400000
+  );
   if (diff === 0) return "🚀 اليوم موعد الرحلة";
   if (diff === 1) return "⚠️ غدًا الانطلاق";
   if (diff > 1)  return `⏳ بعد ${diff} يوم`;
   return "⛔ تاريخ منقضي";
 }
 
+/* ── toast ── */
 function showToast(msg, icon = "✅") {
   const t = document.getElementById("toast");
   t.innerHTML = `${icon} ${msg}`;
@@ -1015,11 +1090,20 @@ function showToast(msg, icon = "✅") {
   setTimeout(() => t.classList.remove("show"), 2800);
 }
 
+/* ── price row helper ── */
 function priceRow(label, val) {
   if (!val || val === "" || val === "-") return "";
   return `<div class="price-item"><div class="pi-label">${label}</div><div class="pi-val">${Number(val).toLocaleString("ar-DZ")} دج</div></div>`;
 }
 
+/* ── agency phone helper ── */
+function agencyWaPhone(o) {
+  let p = String(o?.phone || "213674141379").replace(/\D/g, "");
+  if (!p.startsWith("213")) p = "213" + p;
+  return p;
+}
+
+/* ── fetch offers ── */
 fetch(OFFERS_API).then(r => r.json()).then(data => {
   offersData = data;
   fillFilters();
@@ -1031,6 +1115,7 @@ fetch(OFFERS_API).then(r => r.json()).then(data => {
   </div>`;
 });
 
+/* ── filters ── */
 function fillFilters() {
   const A = new Set(), S = new Set(), D = new Set(), P = new Set();
   offersData.forEach(o => {
@@ -1044,9 +1129,9 @@ function fillFilters() {
   D.forEach(v => fDate.add(new Option(v, v)));
   P.forEach(v => fAirport.add(new Option(v, v)));
 }
-
 [fAgency, fState, fDate, fAirport].forEach(s => s.addEventListener("change", render));
 
+/* ── render ── */
 function render() {
   offersEl.innerHTML = "";
   let list = [...offersData];
@@ -1084,7 +1169,23 @@ function render() {
       const idx    = offersData.indexOf(o);
       const status = getDateStatus(o.date);
       const remain = getRemainingText(o.date);
-      const hasBranches = o.branches && String(o.branches).trim() !== "";
+
+      // ── حساب وجود مميزات وفروع ──
+      const hasFeatures = o.features && String(o.features).trim() !== "" && String(o.features).trim() !== "-";
+      const hasBranches = o.branches && String(o.branches).trim() !== "" && String(o.branches).trim() !== "-";
+
+      // ── بناء أزرار الكارد ──
+      // دائماً 4 أعمدة: تفاصيل | فروع أو مشاركة | مميزات أو مشاركة | تسجيل
+      let btn2 = hasBranches
+        ? `<button class="action-btn branches-btn" onclick="openBranchesByIdx(${idx})"><i class="fa-solid fa-map-marker-alt"></i> الفروع</button>`
+        : `<button class="action-btn" onclick="shareByIdx(${idx})"><i class="fa-solid fa-share-nodes"></i> مشاركة</button>`;
+
+      let btn3 = hasFeatures
+        ? `<button class="action-btn" style="color:var(--gold)" onclick="openFeaturesByIdx(${idx})"><i class="fa-solid fa-gift"></i> مميزات</button>`
+        : (hasBranches
+            ? `<button class="action-btn" onclick="shareByIdx(${idx})"><i class="fa-solid fa-share-nodes"></i> مشاركة</button>`
+            : `<span class="action-btn"></span>`);
+
       const c = document.createElement("div");
       c.className = "card";
       c.innerHTML = `
@@ -1124,7 +1225,8 @@ function render() {
               ${Number(o.group).toLocaleString("ar-DZ")}
               <span class="currency">دج</span>
             </div>
-            <button class="wa-btn" onclick="openWaByIdx(${idx})" title="واتساب">
+            <!-- زر واتساب يفتح النافذة بدلاً من الانتقال المباشر -->
+            <button class="wa-btn" onclick="openWaModal(${idx})" title="واتساب الوكالة">
               <i class="fab fa-whatsapp"></i>
             </button>
           </div>
@@ -1134,14 +1236,8 @@ function render() {
           <button class="action-btn" onclick="openDetailsByIdx(${idx})">
             <i class="fa-solid fa-circle-info"></i> التفاصيل
           </button>
-          ${hasBranches ? `<button class="action-btn branches-btn" onclick="openBranchesByIdx(${idx})">
-            <i class="fa-solid fa-map-marker-alt"></i> الفروع
-          </button>` : `<button class="action-btn" onclick="shareByIdx(${idx})">
-            <i class="fa-solid fa-share-nodes"></i> مشاركة
-          </button>`}
-          ${hasBranches ? `<button class="action-btn" onclick="shareByIdx(${idx})">
-            <i class="fa-solid fa-share-nodes"></i> مشاركة
-          </button>` : ''}
+          ${btn2}
+          ${btn3}
           <button class="action-btn register" onclick="openRegisterByIdx(${idx})">
             <i class="fa-solid fa-paper-plane"></i> تسجيل
           </button>
@@ -1155,13 +1251,16 @@ function render() {
   });
 }
 
-/* ── details ── */
+/* ══════════════════════════════════════
+   DETAILS MODAL
+══════════════════════════════════════ */
 function openDetailsByIdx(i) {
   const o = offersData[i];
   if (!o) return;
 
-  const hasPrices = [o.five, o.four, o.three, o.two].some(p => p && p !== "" && p !== "-");
-  const hasFeatures = o.features && String(o.features).trim() !== "";
+  const hasPrices   = [o.five, o.four, o.three, o.two].some(p => p && p !== "" && p !== "-");
+  const hasFeatures = o.features && String(o.features).trim() !== "" && String(o.features).trim() !== "-";
+  const hasBranches = o.branches && String(o.branches).trim() !== "" && String(o.branches).trim() !== "-";
 
   document.getElementById("detailsContent").innerHTML = `
     <div class="detail-row"><i class="fa-solid fa-kaaba"></i><div><div class="dr-label">العرض</div><div class="dr-val">${o.offer || "—"}</div></div></div>
@@ -1188,6 +1287,13 @@ function openDetailsByIdx(i) {
     <div class="features-box">${o.features}</div>
     ` : ''}
 
+    ${hasBranches ? `
+    <div class="section-title"><i class="fa-solid fa-map-marker-alt"></i> فروع الوكالة</div>
+    ${String(o.branches).split(/[\n،,]+/).map(l => l.trim()).filter(l => l).map(br =>
+      `<div class="branch-item"><i class="fa-solid fa-location-dot"></i><div class="br-text">${br}</div></div>`
+    ).join('')}
+    ` : ''}
+
     <button class="btn-submit" style="margin-top:16px" onclick="closeDetails(); openRegisterByIdx(${i})">
       <i class="fa-solid fa-paper-plane"></i> سجّل الآن في هذا العرض
     </button>
@@ -1196,11 +1302,13 @@ function openDetailsByIdx(i) {
 }
 function closeDetails() { document.getElementById("detailsModal").classList.remove("open"); }
 
-/* ── branches ── */
+/* ══════════════════════════════════════
+   BRANCHES MODAL
+══════════════════════════════════════ */
 function openBranchesByIdx(i) {
   const o = offersData[i];
   if (!o) return;
-  const raw = String(o.branches || "").trim();
+  const raw   = String(o.branches || "").trim();
   const lines = raw.split(/[\n،,]+/).map(l => l.trim()).filter(l => l);
 
   let html = `<div class="detail-row" style="margin-bottom:16px"><i class="fa-solid fa-building"></i><div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency || "—"}</div></div></div>`;
@@ -1218,7 +1326,26 @@ function openBranchesByIdx(i) {
 }
 function closeBranches() { document.getElementById("branchesModal").classList.remove("open"); }
 
-/* ── register ── */
+/* ══════════════════════════════════════
+   FEATURES MODAL  (نافذة مستقلة للمميزات)
+══════════════════════════════════════ */
+function openFeaturesByIdx(i) {
+  const o = offersData[i];
+  if (!o) return;
+  // نعيد استخدام nافذة التفاصيل لكن بمحتوى مختلف
+  document.getElementById("detailsContent").innerHTML = `
+    <div class="detail-row" style="margin-bottom:4px"><i class="fa-solid fa-building"></i><div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency || "—"}</div></div></div>
+    <div class="detail-row" style="margin-bottom:16px"><i class="fa-solid fa-kaaba"></i><div><div class="dr-label">العرض</div><div class="dr-val">${o.offer || "—"}</div></div></div>
+    <div class="section-title"><i class="fa-solid fa-gift"></i> مميزات العرض</div>
+    <div class="features-box" style="margin-top:0">${o.features || "—"}</div>
+    <button class="btn-cancel" style="margin-top:16px" onclick="closeDetails()">إغلاق</button>
+  `;
+  document.getElementById("detailsModal").classList.add("open");
+}
+
+/* ══════════════════════════════════════
+   REGISTER MODAL
+══════════════════════════════════════ */
 function openRegisterByIdx(i) {
   selectedOffer = offersData[i];
   document.getElementById("cFirst").value = "";
@@ -1231,7 +1358,6 @@ function openRegisterByIdx(i) {
     📅 ${formatDateArabicFull(selectedOffer?.date)} &nbsp;|&nbsp;
     💰 ${Number(selectedOffer?.group).toLocaleString("ar-DZ")} دج
   `;
-
   document.getElementById("registerModal").classList.add("open");
 }
 function closeRegisterModal() { document.getElementById("registerModal").classList.remove("open"); }
@@ -1261,10 +1387,8 @@ function sendRegister() {
     `*المصدر: موقع طريق العمرة*`
   );
 
-  let agencyPhone = String(o?.phone || "213674141379").replace(/\D/g, "");
-  if (!agencyPhone.startsWith("213")) agencyPhone = "213" + agencyPhone;
-
-  window.open(`https://wa.me/${agencyPhone}?text=${waMsg}`, "_blank");
+  const ap = agencyWaPhone(o);
+  window.open(`https://wa.me/${ap}?text=${waMsg}`, "_blank");
 
   const formData = new URLSearchParams({
     source:       "موقع طريق العمرة",
@@ -1277,32 +1401,84 @@ function sendRegister() {
     hotel:        o?.hotel    || "",
     duration:     o?.duration || "",
     price:        o?.group    || "",
-    agencyPhone:  agencyPhone,
+    agencyPhone:  ap,
     notifyEmail:  "tgtmhb99@gmail.com"
   });
-
   fetch(REGISTER_API, { method: "POST", body: formData }).catch(() => {});
 
   closeRegisterModal();
   showToast("تم إرسال طلبك بنجاح");
 }
 
-/* ── whatsapp direct ── */
-function openWaByIdx(i) {
-  const o = offersData[i];
-  if (!o) return;
-  const msg = encodeURIComponent(
+/* ══════════════════════════════════════
+   WHATSAPP CONTACT MODAL  (جديد)
+══════════════════════════════════════ */
+function openWaModal(i) {
+  waOffer = offersData[i];
+  if (!waOffer) return;
+
+  document.getElementById("waFirst").value = "";
+  document.getElementById("waLast").value  = "";
+  document.getElementById("waPhone").value = "";
+
+  document.getElementById("waOfferInfo").innerHTML = `
+    🕋 <strong>${waOffer.offer || "عرض عمرة"}</strong><br>
+    🏢 ${waOffer.agency || "—"} &nbsp;|&nbsp;
+    📅 ${formatDateArabicFull(waOffer.date)}<br>
+    💰 ${Number(waOffer.group).toLocaleString("ar-DZ")} دج &nbsp;|&nbsp;
+    ✈️ ${waOffer.airport || "—"}
+  `;
+
+  document.getElementById("waContactModal").classList.add("open");
+}
+function closeWaModal() { document.getElementById("waContactModal").classList.remove("open"); }
+
+function sendWaContact() {
+  const first = document.getElementById("waFirst").value.trim();
+  const last  = document.getElementById("waLast").value.trim();
+  const phone = document.getElementById("waPhone").value.trim();
+  if (!first || !last || !phone) { showToast("أكمل جميع الحقول", "⚠️"); return; }
+
+  const o = waOffer;
+
+  // ── رسالة واتساب ──
+  const waMsg = encodeURIComponent(
     `السلام عليكم ورحمة الله 🌿\n\n` +
     `*استفسار من موقع طريق العمرة* 🕋\n\n` +
-    `🏢 الوكالة: ${o.agency || "—"}\n` +
-    `🕋 العرض: ${o.offer || "—"}\n` +
-    `📅 التاريخ: ${formatDateArabicFull(o.date)}\n` +
-    `💰 السعر: ${o.group || "—"} دج\n` +
-    `✈️ المطار: ${o.airport || "—"}`
+    `👤 الاسم: ${first} ${last}\n` +
+    `📞 الهاتف: ${phone}\n\n` +
+    `──────────────\n` +
+    `🏢 الوكالة: ${o?.agency || "—"}\n` +
+    `🕋 العرض: ${o?.offer || "—"}\n` +
+    `📅 التاريخ: ${formatDateArabicFull(o?.date)}\n` +
+    `💰 السعر: ${o?.group || "—"} دج\n` +
+    `✈️ المطار: ${o?.airport || "—"}\n` +
+    `──────────────\n` +
+    `*المصدر: موقع طريق العمرة*`
   );
-  let agencyPhone = String(o.phone || "213674141379").replace(/\D/g, "");
-  if (!agencyPhone.startsWith("213")) agencyPhone = "213" + agencyPhone;
-  window.open(`https://wa.me/${agencyPhone}?text=${msg}`, "_blank");
+
+  const ap = agencyWaPhone(o);
+  window.open(`https://wa.me/${ap}?text=${waMsg}`, "_blank");
+
+  // ── إرسال إلى الشيت والإيميل (نفس API التسجيل) ──
+  const formData = new URLSearchParams({
+    source:      "واتساب – طريق العمرة",
+    clientName:  `${first} ${last}`,
+    clientPhone: phone,
+    agency:      o?.agency   || "",
+    offer:       o?.offer    || "",
+    date:        o?.date     || "",
+    airport:     o?.airport  || "",
+    hotel:       o?.hotel    || "",
+    duration:    o?.duration || "",
+    price:       o?.group    || "",
+    agencyPhone: ap,
+    notifyEmail: "tgtmhb99@gmail.com"
+  });
+  fetch(REGISTER_API, { method: "POST", body: formData }).catch(() => {});
+
+  closeWaModal();
+  showToast("جارٍ فتح واتساب الوكالة…", "📲");
 }
 
 /* ── share ── */
