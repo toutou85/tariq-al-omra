@@ -105,7 +105,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
   font-size:12px;font-weight:600;
   color:var(--text-muted);
   letter-spacing:.3px;
-  text-transform:none;
 }
 .field input,
 .field select{
@@ -143,9 +142,7 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
   border:1px solid var(--border);
   margin-bottom:18px;
 }
-.agency-logo-wrap{
-  width:46px;height:46px;flex-shrink:0;
-}
+.agency-logo-wrap{width:46px;height:46px;flex-shrink:0;}
 .agency-logo-wrap img{
   width:46px;height:46px;
   border-radius:8px;
@@ -214,6 +211,83 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
 }
 .price-input::placeholder{color:var(--text-hint);font-weight:400}
 
+/* ===== FEATURES ===== */
+.features-wrap{display:flex;flex-direction:column;gap:10px}
+.feature-row{
+  display:flex;align-items:center;gap:8px;
+}
+.feature-row input{
+  flex:1;
+  padding:9px 13px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-family:'Tajawal',Arial,sans-serif;
+  font-size:14px;
+  background:var(--input-bg);
+  color:var(--text);
+  transition:border-color .2s,box-shadow .2s;
+}
+.feature-row input:focus{
+  outline:none;
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px var(--focus-ring);
+}
+.feature-row input::placeholder{color:var(--text-hint)}
+.btn-remove-row{
+  width:32px;height:32px;flex-shrink:0;
+  border:1px solid #f0dada;
+  background:#fff8f8;
+  border-radius:7px;
+  color:#c0392b;
+  font-size:15px;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:.15s;
+}
+.btn-remove-row:hover{background:#fdeaea;border-color:#e8b0b0}
+.btn-add-row{
+  display:flex;align-items:center;gap:7px;
+  margin-top:4px;
+  padding:9px 14px;
+  background:rgba(184,134,11,.07);
+  border:1px dashed rgba(184,134,11,.4);
+  border-radius:8px;
+  color:var(--gold);
+  font-family:'Tajawal',Arial,sans-serif;
+  font-size:13px;font-weight:600;
+  cursor:pointer;
+  transition:.15s;
+  width:100%;
+  justify-content:center;
+}
+.btn-add-row:hover{background:rgba(184,134,11,.13);border-color:var(--gold)}
+.features-hint{font-size:12px;color:#bbb0a0;margin-top:8px}
+
+/* ===== BRANCHES ===== */
+.branches-wrap{display:flex;flex-direction:column;gap:10px}
+.branch-row{
+  display:grid;
+  grid-template-columns:1fr 1fr auto;
+  gap:8px;
+  align-items:center;
+}
+.branch-row input{
+  padding:9px 13px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font-family:'Tajawal',Arial,sans-serif;
+  font-size:14px;
+  background:var(--input-bg);
+  color:var(--text);
+  transition:border-color .2s,box-shadow .2s;
+}
+.branch-row input:focus{
+  outline:none;
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px var(--focus-ring);
+}
+.branch-row input::placeholder{color:var(--text-hint)}
+
 /* ===== SUBMIT BAR ===== */
 .submit-bar{
   position:fixed;
@@ -263,16 +337,8 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
   font-size:13px;font-weight:600;
   margin-left:auto;
 }
-.status-msg.success{
-  background:#e8f5e1;
-  color:#2e6b10;
-  border:1px solid #b8e09a;
-}
-.status-msg.error{
-  background:#fdeaea;
-  color:#9b2020;
-  border:1px solid #f5b3b3;
-}
+.status-msg.success{background:#e8f5e1;color:#2e6b10;border:1px solid #b8e09a}
+.status-msg.error{background:#fdeaea;color:#9b2020;border:1px solid #f5b3b3}
 
 /* ===== SENDING OVERLAY ===== */
 .sending-overlay{
@@ -331,6 +397,10 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
   .grid2,.grid3{grid-template-columns:1fr}
   .prices-grid{grid-template-columns:1fr 1fr}
   .submit-bar{padding:12px 16px}
+  .branch-row{grid-template-columns:1fr auto;grid-template-rows:auto auto}
+  .branch-row input:first-child{grid-column:1}
+  .branch-row input:nth-child(2){grid-column:1}
+  .branch-row .btn-remove-row{grid-row:1/3;grid-column:2;align-self:center}
 }
 </style>
 </head>
@@ -526,6 +596,53 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
     </div>
   </div>
 
+  <!-- ===== بطاقة مميزات العرض (العمود U) ===== -->
+  <div class="card">
+    <div class="card-head">
+      <i class="ti ti-star"></i>
+      <span>مميزات العرض</span>
+    </div>
+    <div class="card-body">
+      <div class="features-wrap" id="featuresWrap">
+        <div class="feature-row">
+          <input type="text" placeholder="مثال: تأشيرة مجانية" maxlength="120">
+          <button type="button" class="btn-remove-row" onclick="removeRow(this,'featuresWrap')" title="حذف">
+            <i class="ti ti-trash"></i>
+          </button>
+        </div>
+      </div>
+      <button type="button" class="btn-add-row" onclick="addFeature()">
+        <i class="ti ti-plus"></i> إضافة ميزة
+      </button>
+      <input type="hidden" name="features" id="featuresHidden">
+      <p class="features-hint">أضف مميزات العرض بشكل منفصل — ستُجمع وتُرسل تلقائياً إلى العمود U</p>
+    </div>
+  </div>
+
+  <!-- ===== بطاقة فروع الوكالة (العمود V) ===== -->
+  <div class="card">
+    <div class="card-head">
+      <i class="ti ti-map-pin"></i>
+      <span>فروع الوكالة</span>
+    </div>
+    <div class="card-body">
+      <div class="branches-wrap" id="branchesWrap">
+        <div class="branch-row">
+          <input type="text" placeholder="المدينة / الولاية" maxlength="80">
+        
+          <button type="button" class="btn-remove-row" onclick="removeRow(this,'branchesWrap')" title="حذف">
+            <i class="ti ti-trash"></i>
+          </button>
+        </div>
+      </div>
+      <button type="button" class="btn-add-row" onclick="addBranch()">
+        <i class="ti ti-plus"></i> إضافة فرع
+      </button>
+      <input type="hidden" name="branches" id="branchesHidden">
+      <p class="features-hint">أضف فروع الوكالة — ستُجمع وتُرسل تلقائياً إلى العمود V</p>
+    </div>
+  </div>
+
 </div><!-- end body -->
 
 <!-- Submit Bar -->
@@ -632,6 +749,68 @@ airlineSelect.onchange = () => {
   }
 };
 
+/* ---- إضافة ميزة ---- */
+function addFeature() {
+  const wrap = document.getElementById("featuresWrap");
+  const row = document.createElement("div");
+  row.className = "feature-row";
+  row.innerHTML = `
+    <input type="text" placeholder="مثال: وجبات على متن الطائرة" maxlength="120">
+    <button type="button" class="btn-remove-row" onclick="removeRow(this,'featuresWrap')" title="حذف">
+      <i class="ti ti-trash"></i>
+    </button>`;
+  wrap.appendChild(row);
+  row.querySelector("input").focus();
+}
+
+/* ---- إضافة فرع ---- */
+function addBranch() {
+  const wrap = document.getElementById("branchesWrap");
+  const row = document.createElement("div");
+  row.className = "branch-row";
+  row.innerHTML = `
+    <input type="text" placeholder="المدينة / الولاية" maxlength="80">
+    <input type="text" placeholder="رقم الهاتف (اختياري)" maxlength="20">
+    <button type="button" class="btn-remove-row" onclick="removeRow(this,'branchesWrap')" title="حذف">
+      <i class="ti ti-trash"></i>
+    </button>`;
+  wrap.appendChild(row);
+  row.querySelector("input").focus();
+}
+
+/* ---- حذف صف ---- */
+function removeRow(btn, wrapId) {
+  const wrap = document.getElementById(wrapId);
+  const rows = wrap.querySelectorAll(wrapId === "featuresWrap" ? ".feature-row" : ".branch-row");
+  if (rows.length === 1) {
+    // مسح المحتوى بدلاً من الحذف إذا كان آخر صف
+    const inputs = rows[0].querySelectorAll("input");
+    inputs.forEach(i => i.value = "");
+    return;
+  }
+  btn.closest(wrapId === "featuresWrap" ? ".feature-row" : ".branch-row").remove();
+}
+
+/* ---- جمع المميزات ---- */
+function collectFeatures() {
+  const rows = document.querySelectorAll("#featuresWrap .feature-row input");
+  const vals = Array.from(rows).map(i => i.value.trim()).filter(Boolean);
+  document.getElementById("featuresHidden").value = vals.join(" | ");
+}
+
+/* ---- جمع الفروع ---- */
+function collectBranches() {
+  const rows = document.querySelectorAll("#branchesWrap .branch-row");
+  const vals = Array.from(rows).map(row => {
+    const inputs = row.querySelectorAll("input");
+    const city  = inputs[0] ? inputs[0].value.trim() : "";
+    const phone = inputs[1] ? inputs[1].value.trim() : "";
+    if (!city) return null;
+    return phone ? `${city} (${phone})` : city;
+  }).filter(Boolean);
+  document.getElementById("branchesHidden").value = vals.join(" | ");
+}
+
 /* ---- مسح النموذج ---- */
 function resetForm() {
   offerForm.reset();
@@ -642,11 +821,32 @@ function resetForm() {
   airlineBadge.style.display = "none";
   phoneField.style.display = "flex";
   statusMsg.style.display = "none";
+
+  // إعادة تعيين المميزات والفروع
+  document.getElementById("featuresWrap").innerHTML = `
+    <div class="feature-row">
+      <input type="text" placeholder="مثال: تأشيرة مجانية" maxlength="120">
+      <button type="button" class="btn-remove-row" onclick="removeRow(this,'featuresWrap')" title="حذف">
+        <i class="ti ti-trash"></i>
+      </button>
+    </div>`;
+  document.getElementById("branchesWrap").innerHTML = `
+    <div class="branch-row">
+      <input type="text" placeholder="المدينة / الولاية" maxlength="80">
+      <input type="text" placeholder="رقم الهاتف (اختياري)" maxlength="20">
+      <button type="button" class="btn-remove-row" onclick="removeRow(this,'branchesWrap')" title="حذف">
+        <i class="ti ti-trash"></i>
+      </button>
+    </div>`;
 }
 
 /* ---- إرسال النموذج ---- */
 offerForm.onsubmit = e => {
   e.preventDefault();
+
+  // جمع المميزات والفروع قبل الإرسال
+  collectFeatures();
+  collectBranches();
 
   if (!airlineLogoInput.value) {
     const opt = airlineSelect.options[airlineSelect.selectedIndex];
