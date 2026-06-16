@@ -5,214 +5,577 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>صفحتي الخاصة</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-body{font-family:Tajawal,Arial;margin:0;background:#f2f2f2}
-header{background:#8b0000;color:#fff;padding:15px;text-align:center}
-.container{max-width:600px;margin:25px auto;background:#fff;padding:25px;border-radius:18px}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.field{margin-bottom:10px}
-.field label{font-size:13px;color:#555}
-.field input,.field textarea,.field select{
-  width:100%;padding:10px;border-radius:10px;border:1px solid #ccc
-}
-input[readonly],textarea[readonly],select:disabled{background:#eee}
+  :root {
+    --crimson:   #8b0000;
+    --crimson-d: #5c0000;
+    --crimson-l: #b71c1c;
+    --gold:      #c9a84c;
+    --gold-l:    #f0d080;
+    --ink:       #1a1a1a;
+    --muted:     #6b6b6b;
+    --surface:   #fdfaf5;
+    --card:      #ffffff;
+    --border:    #e8e0d0;
+    --shadow:    0 4px 24px rgba(139,0,0,.08);
+  }
 
-button{
-  width:100%;padding:12px;margin-top:10px;
-  border:none;border-radius:10px;cursor:pointer
-}
-.edit{background:#555;color:#fff}
-.save{background:#8b0000;color:#fff}
-.go{background:#00695c;color:#fff}
+  body {
+    font-family: 'Tajawal', Arial, sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    min-height: 100vh;
+  }
 
-#wait{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.6);
-  align-items:center;justify-content:center;
-}
-#waitBox{
-  background:#fff;padding:25px;border-radius:14px;
-  text-align:center
-}
+  /* ─── HEADER ─── */
+  header {
+    background: linear-gradient(135deg, var(--crimson-d) 0%, var(--crimson) 60%, var(--crimson-l) 100%);
+    padding: 28px 20px 22px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '🕋';
+    position: absolute;
+    font-size: 120px;
+    opacity: .05;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  header h1 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: .5px;
+  }
+  header p {
+    color: var(--gold-l);
+    font-size: 13px;
+    margin-top: 4px;
+    font-weight: 300;
+  }
+
+  /* ─── CONTAINER ─── */
+  .wrap {
+    max-width: 580px;
+    margin: 32px auto;
+    padding: 0 16px 40px;
+  }
+
+  /* ─── LOGIN CARD ─── */
+  .login-card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .login-card .icon { font-size: 48px; margin-bottom: 12px; }
+  .login-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .login-card p  { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+
+  /* ─── INPUTS ─── */
+  .input-wrap {
+    position: relative;
+    margin-bottom: 14px;
+  }
+  .input-wrap .prefix {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 14px;
+    pointer-events: none;
+  }
+  input[type="text"], input[type="tel"], input[type="date"],
+  textarea, select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    font-family: 'Tajawal', Arial, sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: #fff;
+    transition: border-color .2s, box-shadow .2s;
+    appearance: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--crimson);
+    box-shadow: 0 0 0 3px rgba(139,0,0,.1);
+  }
+  input[readonly], textarea[readonly], select:disabled {
+    background: #f7f4f0;
+    color: var(--ink);
+    cursor: default;
+  }
+  textarea { resize: vertical; min-height: 80px; }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px 20px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Tajawal', Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s, opacity .15s;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--crimson), var(--crimson-l));
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(139,0,0,.3);
+  }
+  .btn-primary:hover { box-shadow: 0 6px 20px rgba(139,0,0,.4); }
+  .btn-secondary {
+    background: #f0ebe3;
+    color: var(--ink);
+  }
+  .btn-secondary:hover { background: #e8e1d6; }
+  .btn-success {
+    background: linear-gradient(135deg, #00695c, #00897b);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(0,105,92,.25);
+  }
+  .btn-success:hover { box-shadow: 0 6px 20px rgba(0,105,92,.35); }
+
+  /* ─── PROFILE CARD ─── */
+  .profile-header {
+    background: linear-gradient(135deg, var(--crimson-d), var(--crimson));
+    border-radius: 20px;
+    padding: 24px;
+    color: #fff;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .avatar {
+    width: 60px;
+    height: 60px;
+    background: rgba(255,255,255,.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+    border: 2px solid var(--gold);
+  }
+  .profile-header .name { font-size: 18px; font-weight: 700; }
+  .profile-header .sub  { font-size: 13px; color: var(--gold-l); margin-top: 3px; }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(0,0,0,.04);
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--crimson);
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+  }
+
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* ─── ACTIONS BAR ─── */
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .actions .btn { flex: 1; min-width: 140px; }
+
+  /* ─── SPINNER OVERLAY ─── */
+  #overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+  }
+  #overlay.show { display: flex; }
+  .spinner-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 36px;
+    text-align: center;
+  }
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border);
+    border-top-color: var(--crimson);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner-box p { font-size: 14px; color: var(--muted); }
+
+  /* ─── TOAST ─── */
+  #toast {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 22px;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    z-index: 9999;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(0,0,0,.2);
+    animation: fadeIn .3s ease;
+  }
+  @keyframes fadeIn { from { opacity:0; transform: translateX(-50%) translateY(10px); } }
+
+  /* ─── ERROR STATE ─── */
+  .error-msg {
+    background: #fff3f3;
+    border: 1px solid #ffcdd2;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #c62828;
+    margin-bottom: 12px;
+    display: none;
+  }
+  .error-msg.show { display: block; }
+
+  @media (max-width:480px) {
+    .row2 { grid-template-columns: 1fr; }
+    .actions { flex-direction: column; }
+  }
 </style>
 </head>
-
 <body>
 
-<header><h2>👤 صفحتي الخاصة</h2></header>
+<header>
+  <h1>👤 صفحتي الخاصة</h1>
+  <p>بيانات رحلتك للعمرة</p>
+</header>
 
-<div class="container">
+<div class="wrap">
 
-<div id="loginBox">
-  <input id="phone" placeholder="أدخل رقم الهاتف">
-  <button class="save" onclick="loadUser()">🔍 متابعة</button>
-</div>
+  <!-- LOGIN -->
+  <div id="loginBox">
+    <div class="login-card">
+      <div class="icon">🔐</div>
+      <h2>تسجيل الدخول</h2>
+      <p>أدخل رقم هاتفك للوصول إلى بياناتك</p>
 
-<div id="userBox" style="display:none">
+      <div class="error-msg" id="loginError">❌ رقم الهاتف غير صحيح أو غير مسجّل</div>
 
-  <div id="welcome" style="margin-bottom:15px;font-weight:700"></div>
+      <div class="input-wrap">
+        <input type="tel" id="phone" placeholder="مثال: 0550123456" inputmode="numeric" maxlength="13">
+      </div>
 
-  <input type="hidden" id="row">
-
-  <div class="field"><label>الاسم</label><input id="name" readonly></div>
-  <div class="field"><label>اللقب</label><input id="lastname" readonly></div>
-  <div class="field"><label>الهاتف</label><input id="phone2" readonly></div>
-  <div class="field"><label>مطار الإقلاع</label><input id="airport" readonly></div>
-  <div class="field"><label>الفندق</label><input id="hotel" readonly></div>
-  <div class="field"><label>المدة</label><input id="duration" readonly></div>
-  <div class="field"><label>الغرفة</label><input id="room" readonly></div>
-  <div class="field"><label>المسار</label><input id="route" readonly></div>
-  <div class="field"><label>نوع الرحلة</label><input id="flight" readonly></div>
-  <div class="field"><label>ملاحظة</label><textarea id="note" readonly></textarea></div>
-
-  <div class="field">
-    <label>الولاية</label>
-    <select id="residence" disabled>
-      <option value="">اختر الولاية</option>
-      <option>أدرار</option><option>الشلف</option><option>الأغواط</option>
-      <option>أم البواقي</option><option>باتنة</option><option>بجاية</option>
-      <option>بسكرة</option><option>بشار</option><option>البليدة</option>
-      <option>البويرة</option><option>تمنراست</option><option>تبسة</option>
-      <option>تلمسان</option><option>تيارت</option><option>تيزي وزو</option>
-      <option>الجزائر</option><option>الجلفة</option><option>جيجل</option>
-      <option>سطيف</option><option>سعيدة</option><option>سكيكدة</option>
-      <option>سيدي بلعباس</option><option>عنابة</option><option>قالمة</option>
-      <option>قسنطينة</option><option>المدية</option><option>مستغانم</option>
-      <option>المسيلة</option><option>معسكر</option><option>ورقلة</option>
-      <option>وهران</option><option>البيض</option><option>إليزي</option>
-      <option>برج بوعريريج</option><option>بومرداس</option><option>الطارف</option>
-      <option>تندوف</option><option>تيسمسيلت</option><option>الوادي</option>
-      <option>خنشلة</option><option>سوق أهراس</option><option>تيبازة</option>
-      <option>ميلة</option><option>عين الدفلى</option><option>النعامة</option>
-      <option>عين تموشنت</option><option>غرداية</option><option>غليزان</option>
-      <option>تيميمون</option><option>برج باجي مختار</option>
-      <option>أولاد جلال</option><option>بني عباس</option>
-      <option>عين صالح</option><option>عين قزام</option>
-      <option>تقرت</option><option>جانت</option>
-      <option>المغير</option><option>المنيعة</option>
-    </select>
+      <button class="btn btn-primary" onclick="loadUser()">
+        🔍 متابعة
+      </button>
+    </div>
   </div>
 
-  <div class="field">
-    <label>تاريخ الإقلاع</label>
-    <input type="date" id="travel_date" readonly>
+  <!-- USER PROFILE -->
+  <div id="userBox" style="display:none">
+
+    <input type="hidden" id="row">
+
+    <!-- Welcome -->
+    <div class="profile-header">
+      <div class="avatar">🕌</div>
+      <div>
+        <div class="name" id="welcomeName"></div>
+        <div class="sub" id="welcomePhone"></div>
+      </div>
+    </div>
+
+    <!-- معلومات شخصية -->
+    <div class="section">
+      <div class="section-title">👤 المعلومات الشخصية</div>
+      <div class="row2">
+        <div class="field">
+          <label>الاسم</label>
+          <input type="text" id="name" readonly>
+        </div>
+        <div class="field">
+          <label>اللقب</label>
+          <input type="text" id="lastname" readonly>
+        </div>
+      </div>
+      <div class="field">
+        <label>رقم الهاتف</label>
+        <input type="text" id="phone2" readonly>
+      </div>
+      <div class="field">
+        <label>الولاية</label>
+        <select id="residence" disabled>
+          <option value="">اختر الولاية</option>
+          <option>أدرار</option><option>الشلف</option><option>الأغواط</option>
+          <option>أم البواقي</option><option>باتنة</option><option>بجاية</option>
+          <option>بسكرة</option><option>بشار</option><option>البليدة</option>
+          <option>البويرة</option><option>تمنراست</option><option>تبسة</option>
+          <option>تلمسان</option><option>تيارت</option><option>تيزي وزو</option>
+          <option>الجزائر</option><option>الجلفة</option><option>جيجل</option>
+          <option>سطيف</option><option>سعيدة</option><option>سكيكدة</option>
+          <option>سيدي بلعباس</option><option>عنابة</option><option>قالمة</option>
+          <option>قسنطينة</option><option>المدية</option><option>مستغانم</option>
+          <option>المسيلة</option><option>معسكر</option><option>ورقلة</option>
+          <option>وهران</option><option>البيض</option><option>إليزي</option>
+          <option>برج بوعريريج</option><option>بومرداس</option><option>الطارف</option>
+          <option>تندوف</option><option>تيسمسيلت</option><option>الوادي</option>
+          <option>خنشلة</option><option>سوق أهراس</option><option>تيبازة</option>
+          <option>ميلة</option><option>عين الدفلى</option><option>النعامة</option>
+          <option>عين تموشنت</option><option>غرداية</option><option>غليزان</option>
+          <option>تيميمون</option><option>برج باجي مختار</option>
+          <option>أولاد جلال</option><option>بني عباس</option>
+          <option>عين صالح</option><option>عين قزام</option>
+          <option>تقرت</option><option>جانت</option>
+          <option>المغير</option><option>المنيعة</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- تفاصيل الرحلة -->
+    <div class="section">
+      <div class="section-title">✈️ تفاصيل الرحلة</div>
+      <div class="field">
+        <label>مطار الإقلاع</label>
+        <input type="text" id="airport" readonly>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>تاريخ الإقلاع</label>
+          <input type="date" id="travel_date" readonly>
+        </div>
+        <div class="field">
+          <label>المدة</label>
+          <input type="text" id="duration" readonly>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>نوع الرحلة</label>
+          <input type="text" id="flight" readonly>
+        </div>
+        <div class="field">
+          <label>المسار</label>
+          <input type="text" id="route" readonly>
+        </div>
+      </div>
+    </div>
+
+    <!-- الإقامة -->
+    <div class="section">
+      <div class="section-title">🏨 الإقامة</div>
+      <div class="row2">
+        <div class="field">
+          <label>الفندق</label>
+          <input type="text" id="hotel" readonly>
+        </div>
+        <div class="field">
+          <label>نوع الغرفة</label>
+          <input type="text" id="room" readonly>
+        </div>
+      </div>
+    </div>
+
+    <!-- ملاحظة -->
+    <div class="section">
+      <div class="section-title">📝 ملاحظة</div>
+      <div class="field">
+        <textarea id="note" readonly placeholder="لا توجد ملاحظات"></textarea>
+      </div>
+    </div>
+
+    <!-- أزرار -->
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="enableEdit()">✏️ تعديل</button>
+      <button class="btn btn-primary" id="saveBtn" onclick="saveEdit()" style="display:none">💾 حفظ</button>
+      <button class="btn btn-success" onclick="location.href='results.html'">⭐ العروض المناسبة</button>
+    </div>
+
   </div>
-
-  <button class="edit" onclick="enableEdit()">✏️ تعديل المعلومات</button>
-  <button class="save" id="saveBtn" onclick="saveEdit()" style="display:none">
-    💾 حفظ التعديلات
-  </button>
-
-  <button class="go" onclick="location.href='results.html'">
-    ⭐ العروض المناسبة
-  </button>
-
-</div>
 </div>
 
-<div id="wait">
-  <div id="waitBox">
-    ⏳ جارٍ حفظ التعديلات…<br>
-    يرجى الانتظار
+<!-- Overlay spinner -->
+<div id="overlay">
+  <div class="spinner-box">
+    <div class="spinner"></div>
+    <p>جارٍ حفظ التعديلات…</p>
   </div>
 </div>
+
+<!-- Toast -->
+<div id="toast"></div>
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbwsZZ1jb1b-BIUviU2j2bpZ-Av7NGoB67bvAY2ZnFFM6kQ6nPcqFPZ7EWExDFGYqYTP/exec";
+const API = "https://script.google.com/macros/s/AKfycbwsZZ1jb1b-BIUviU2j2bpZ-Av7NGoB67bvAY2ZnFFM6kQ6nPcqFPZ7EWExDFGYqYTP/exec";
 
-/* ✅ توحيد رقم الهاتف (9 أرقام فقط) */
-function normalize(p){
-  p=p.replace(/\D/g,"");
-
-  if(p.startsWith("00213")) p=p.slice(5);
-  else if(p.startsWith("213")) p=p.slice(3);
-
-  if(p.startsWith("0")) p=p.slice(1);
-
-  if(p.length!==9) return null;
-  return p;
+function normalize(p) {
+  p = p.replace(/\D/g, "");
+  if (p.startsWith("00213")) p = p.slice(5);
+  else if (p.startsWith("213")) p = p.slice(3);
+  if (p.startsWith("0")) p = p.slice(1);
+  return p.length === 9 ? p : null;
 }
 
-function loadUser(){
-  const p=normalize(phone.value);
-  if(!p){ alert("❌ رقم الهاتف غير صحيح"); return; }
+function showToast(msg, ok = true) {
+  const t = document.getElementById("toast");
+  t.style.background = ok ? "#2e7d32" : "#c62828";
+  t.innerText = msg;
+  t.style.display = "block";
+  setTimeout(() => t.style.display = "none", 3000);
+}
 
-  fetch(API+"?phone="+p)
-  .then(r=>r.json())
-  .then(d=>{
-    if(!d.found){ alert("❌ لا يوجد طلب"); return; }
+function loadUser() {
+  const errBox = document.getElementById("loginError");
+  errBox.classList.remove("show");
 
-localStorage.setItem("umrah_phone", p);
-    loginBox.style.display="none";
-    userBox.style.display="block";
+  const p = normalize(document.getElementById("phone").value);
+  if (!p) {
+    errBox.classList.add("show");
+    return;
+  }
 
-    welcome.innerText="🌙 مرحبًا بك "+d.name+" "+d.lastname;
+  const btn = document.querySelector("#loginBox .btn");
+  btn.innerText = "⏳ جارٍ البحث…";
+  btn.disabled = true;
 
-    row.value=d.row;
-    name.value=d.name;
-    lastname.value=d.lastname;
-    phone2.value=d.phone;
-    airport.value=d.airport;
-    hotel.value=d.hotel;
-    duration.value=d.duration;
-    room.value=d.room;
-    route.value=d.route;
-    flight.value=d.flight;
-    note.value=d.note;
-    residence.value=d.residence;
-    travel_date.value=d.travel_date?.split("T")[0];
+  fetch(API + "?phone=" + p)
+    .then(r => r.json())
+    .then(d => {
+      btn.innerText = "🔍 متابعة";
+      btn.disabled = false;
+
+      if (!d.found) {
+        errBox.classList.add("show");
+        return;
+      }
+
+      localStorage.setItem("umrah_phone", p);
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("userBox").style.display = "block";
+
+      document.getElementById("welcomeName").innerText = "🌙 " + d.name + " " + d.lastname;
+      document.getElementById("welcomePhone").innerText = "📞 " + (d.phone || p);
+
+      document.getElementById("row").value       = d.row;
+      document.getElementById("name").value      = d.name;
+      document.getElementById("lastname").value  = d.lastname;
+      document.getElementById("phone2").value    = d.phone;
+      document.getElementById("airport").value   = d.airport;
+      document.getElementById("hotel").value     = d.hotel;
+      document.getElementById("duration").value  = d.duration;
+      document.getElementById("room").value      = d.room;
+      document.getElementById("route").value     = d.route;
+      document.getElementById("flight").value    = d.flight;
+      document.getElementById("note").value      = d.note || "";
+      document.getElementById("residence").value = d.residence;
+      document.getElementById("travel_date").value = d.travel_date?.split("T")[0] || "";
+    })
+    .catch(() => {
+      btn.innerText = "🔍 متابعة";
+      btn.disabled = false;
+      showToast("❌ خطأ في الاتصال بالخادم", false);
+    });
+}
+
+// Enter key on phone input
+document.getElementById("phone").addEventListener("keydown", e => {
+  if (e.key === "Enter") loadUser();
+});
+
+function enableEdit() {
+  document.querySelectorAll("#userBox input, textarea, select").forEach(el => {
+    if (el.id === "phone2") return; // الهاتف غير قابل للتعديل
+    el.readOnly = false;
+    el.disabled = false;
   });
+  document.getElementById("saveBtn").style.display = "flex";
 }
 
-function enableEdit(){
-  document.querySelectorAll("#userBox input,textarea,select")
-  .forEach(i=>{
-    i.readOnly=false;
-    i.disabled=false;
-  });
-  saveBtn.style.display="block";
-}
+function saveEdit() {
+  document.getElementById("overlay").classList.add("show");
 
-function saveEdit(){
-  wait.style.display="flex";
-
-  const data={
-    update:1,
-    row:row.value,
-    name:name.value,
-    lastname:lastname.value,
-    airport:airport.value,
-    hotel:hotel.value,
-    duration:duration.value,
-    room:room.value,
-    route:route.value,
-    flight:flight.value,
-    note:note.value,
-    residence:residence.value,
-    travel_date:travel_date.value
+  const data = {
+    update:       1,
+    row:          document.getElementById("row").value,
+    name:         document.getElementById("name").value,
+    lastname:     document.getElementById("lastname").value,
+    airport:      document.getElementById("airport").value,
+    hotel:        document.getElementById("hotel").value,
+    duration:     document.getElementById("duration").value,
+    room:         document.getElementById("room").value,
+    route:        document.getElementById("route").value,
+    flight:       document.getElementById("flight").value,
+    note:         document.getElementById("note").value,
+    residence:    document.getElementById("residence").value,
+    travel_date:  document.getElementById("travel_date").value
   };
 
-  fetch(API,{method:"POST",body:new URLSearchParams(data)})
-  .then(()=> {
-    wait.style.display="none";
-    alert("✅ تم تسجيل التعديلات بنجاح");
+  fetch(API, { method: "POST", body: new URLSearchParams(data) })
+    .then(() => {
+      document.getElementById("overlay").classList.remove("show");
+      showToast("✅ تم حفظ التعديلات بنجاح");
 
-    document.querySelectorAll("#userBox input,textarea,select")
-    .forEach(i=>{
-      i.readOnly=true;
-      i.disabled=true;
+      document.querySelectorAll("#userBox input, textarea, select").forEach(el => {
+        el.readOnly = true;
+        el.disabled = true;
+      });
+      document.getElementById("saveBtn").style.display = "none";
+    })
+    .catch(() => {
+      document.getElementById("overlay").classList.remove("show");
+      showToast("❌ حدث خطأ أثناء الحفظ", false);
     });
-
-    saveBtn.style.display="none";
-  })
-  .catch(()=>{
-    wait.style.display="none";
-    alert("❌ حدث خطأ");
-  });
 }
 </script>
-
 </body>
 </html>
-
