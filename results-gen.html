@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <style>
 :root {
   --navy:       #0D1B2A;
@@ -27,520 +26,121 @@
   --shadow-md:  0 8px 32px rgba(13,27,42,.18);
   --shadow-lg:  0 18px 50px rgba(13,27,42,.28);
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Tajawal', Arial, sans-serif;
-  background: var(--sand);
-  color: var(--charcoal);
-  min-height: 100vh;
-}
+body { font-family: 'Tajawal', Arial, sans-serif; background: var(--sand); color: var(--charcoal); min-height: 100vh; }
 
 .topbar {
-  position: sticky;
-  top: 0;
-  z-index: 9000;
-  height: 64px;
-  background: var(--navy);
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  gap: 14px;
-  box-shadow: 0 4px 20px rgba(13,27,42,.45);
+  position: sticky; top: 0; z-index: 9000; height: 64px;
+  background: var(--navy); display: flex; align-items: center;
+  padding: 0 20px; gap: 14px; box-shadow: 0 4px 20px rgba(13,27,42,.45);
 }
-
 .topbar::before {
-  content: '';
-  position: absolute;
-  inset: 0;
+  content: ''; position: absolute; inset: 0; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M20 20l10-10v20L20 20zm0 0L10 10v20l10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  pointer-events: none;
 }
-
-.menu-btn {
-  font-size: 22px;
-  color: var(--white);
-  cursor: pointer;
-  z-index: 1;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  transition: background .2s;
-}
+.menu-btn { font-size:22px; color:var(--white); cursor:pointer; z-index:1; width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:8px; transition:background .2s; }
 .menu-btn:hover { background: rgba(255,255,255,.12); }
-
-.topbar-logo {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
-.topbar-logo img {
-  height: 52px;
-  width: auto;
-  filter: drop-shadow(0 3px 8px rgba(0,0,0,.4));
-  transition: transform .3s;
-}
+.topbar-logo { position:absolute; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:10px; cursor:pointer; }
+.topbar-logo img { height:52px; width:auto; filter:drop-shadow(0 3px 8px rgba(0,0,0,.4)); transition:transform .3s; }
 .topbar-logo img:hover { transform: scale(1.06); }
+.visitor-badge { margin-right:auto; display:flex; align-items:center; gap:8px; background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18); backdrop-filter:blur(8px); padding:6px 14px; border-radius:999px; z-index:1; }
+.visitor-badge i { color:#7EEAF4; font-size:16px; }
+.visitor-badge span { color:var(--white); font-size:15px; font-weight:800; }
+.visitor-badge small { color:rgba(255,255,255,.7); font-size:12px; }
 
-.visitor-badge {
-  margin-right: auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,.10);
-  border: 1px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(8px);
-  padding: 6px 14px;
-  border-radius: 999px;
-  z-index: 1;
-}
-.visitor-badge i { color: #7EEAF4; font-size: 16px; }
-.visitor-badge span { color: var(--white); font-size: 15px; font-weight: 800; }
-.visitor-badge small { color: rgba(255,255,255,.7); font-size: 12px; }
+.wa-float { position:fixed; top:74px; left:16px; width:50px; height:50px; background:var(--green-wa); color:var(--white); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; z-index:8000; box-shadow:0 6px 20px rgba(37,211,102,.45); transition:transform .25s, box-shadow .25s; }
+.wa-float:hover { transform:scale(1.1); box-shadow:0 10px 28px rgba(37,211,102,.6); }
 
-.wa-float {
-  position: fixed;
-  top: 74px;
-  left: 16px;
-  width: 50px;
-  height: 50px;
-  background: var(--green-wa);
-  color: var(--white);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  z-index: 8000;
-  box-shadow: 0 6px 20px rgba(37,211,102,.45);
-  transition: transform .25s, box-shadow .25s;
-}
-.wa-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 10px 28px rgba(37,211,102,.6);
-}
+#sideMenu { position:fixed; top:0; right:-280px; width:280px; height:100%; background:var(--navy); padding-top:80px; transition:right .3s cubic-bezier(.4,0,.2,1); z-index:10000; box-shadow:-6px 0 30px rgba(0,0,0,.3); }
+#sideMenu.open { right:0; }
+#sideMenu a { display:flex; align-items:center; gap:12px; padding:16px 24px; color:var(--white); text-decoration:none; font-size:16px; font-weight:600; border-bottom:1px solid rgba(255,255,255,.08); transition:background .2s, padding-right .2s; }
+#sideMenu a:hover { background:rgba(255,255,255,.1); padding-right:32px; }
+#overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:9000; backdrop-filter:blur(2px); }
 
-#sideMenu {
-  position: fixed;
-  top: 0; right: -280px;
-  width: 280px; height: 100%;
-  background: var(--navy);
-  padding-top: 80px;
-  transition: right .3s cubic-bezier(.4,0,.2,1);
-  z-index: 10000;
-  box-shadow: -6px 0 30px rgba(0,0,0,.3);
-}
-#sideMenu.open { right: 0; }
-#sideMenu a {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 24px;
-  color: var(--white);
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 600;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  transition: background .2s, padding-right .2s;
-}
-#sideMenu a:hover {
-  background: rgba(255,255,255,.1);
-  padding-right: 32px;
-}
-#overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.5);
-  z-index: 9000;
-  backdrop-filter: blur(2px);
-}
+.hero { background:linear-gradient(160deg, var(--navy) 0%, #0A2540 45%, #073748 100%); padding:36px 20px 28px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23D4A017' fill-opacity='0.07'%3E%3Cpath d='M30 0l8.66 15H21.34L30 0zm0 60l-8.66-15h17.32L30 60zM0 30l15-8.66v17.32L0 30zm60 0l-15 8.66V21.34L60 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+.hero-label { display:inline-flex; align-items:center; gap:8px; background:rgba(14,124,134,.25); border:1px solid rgba(14,124,134,.5); color:var(--gold-light); font-size:13px; font-weight:700; padding:5px 16px; border-radius:999px; margin-bottom:14px; letter-spacing:.5px; }
+.hero h2 { font-size:clamp(22px,5vw,36px); font-weight:900; color:var(--white); line-height:1.3; position:relative; }
+.hero h2 span { color:var(--gold); }
+.hero p { color:rgba(255,255,255,.65); font-size:15px; margin-top:8px; position:relative; }
 
-.hero {
-  background: linear-gradient(160deg, var(--navy) 0%, #0A2540 45%, #073748 100%);
-  padding: 36px 20px 28px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23D4A017' fill-opacity='0.07'%3E%3Cpath d='M30 0l8.66 15H21.34L30 0zm0 60l-8.66-15h17.32L30 60zM0 30l15-8.66v17.32L0 30zm60 0l-15 8.66V21.34L60 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-.hero-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(14,124,134,.25);
-  border: 1px solid rgba(14,124,134,.5);
-  color: var(--gold-light);
-  font-size: 13px;
-  font-weight: 700;
-  padding: 5px 16px;
-  border-radius: 999px;
-  margin-bottom: 14px;
-  letter-spacing: .5px;
-}
-.hero h2 {
-  font-size: clamp(22px, 5vw, 36px);
-  font-weight: 900;
-  color: var(--white);
-  line-height: 1.3;
-  position: relative;
-}
-.hero h2 span { color: var(--gold); }
-.hero p {
-  color: rgba(255,255,255,.65);
-  font-size: 15px;
-  margin-top: 8px;
-  position: relative;
-}
+.filters-bar { background:var(--white); padding:18px 20px; box-shadow:var(--shadow-sm); position:sticky; top:64px; z-index:7000; }
+.filters-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; }
+.filter-wrap { position:relative; }
+.filter-wrap i { position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--gold); font-size:14px; pointer-events:none; }
+select { width:100%; padding:10px 34px 10px 14px; border:1.5px solid #CDD9E8; border-radius:10px; font-family:'Tajawal',Arial,sans-serif; font-size:14px; font-weight:600; color:var(--charcoal); background:var(--sand); appearance:none; cursor:pointer; transition:border-color .2s, box-shadow .2s; }
+select:focus { outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(14,124,134,.18); }
 
-.filters-bar {
-  background: var(--white);
-  padding: 18px 20px;
-  box-shadow: var(--shadow-sm);
-  position: sticky;
-  top: 64px;
-  z-index: 7000;
-}
-.filters-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-}
-.filter-wrap {
-  position: relative;
-}
-.filter-wrap i {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--gold);
-  font-size: 14px;
-  pointer-events: none;
-}
-select {
-  width: 100%;
-  padding: 10px 34px 10px 14px;
-  border: 1.5px solid #CDD9E8;
-  border-radius: 10px;
-  font-family: 'Tajawal', Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--charcoal);
-  background: var(--sand);
-  appearance: none;
-  cursor: pointer;
-  transition: border-color .2s, box-shadow .2s;
-}
-select:focus {
-  outline: none;
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(14,124,134,.18);
-}
+.content { max-width:1280px; margin:28px auto; padding:0 16px; }
+.loading-state { text-align:center; padding:80px 20px; color:var(--muted); font-size:18px; }
+.loading-state i { font-size:40px; color:var(--gold); display:block; margin-bottom:16px; animation:spin 1.2s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
 
-.content {
-  max-width: 1280px;
-  margin: 28px auto;
-  padding: 0 16px;
-}
+.airport-group { margin-bottom:44px; }
+.airport-heading { display:inline-flex; align-items:center; gap:10px; background:linear-gradient(135deg,var(--navy),var(--teal)); color:var(--white); padding:10px 22px; border-radius:999px; font-size:16px; font-weight:800; margin-bottom:20px; box-shadow:var(--shadow-sm); }
+.airport-heading::after { content:''; display:block; width:6px; height:6px; background:var(--gold); border-radius:50%; }
 
-.loading-state {
-  text-align: center;
-  padding: 80px 20px;
-  color: var(--muted);
-  font-size: 18px;
-}
-.loading-state i {
-  font-size: 40px;
-  color: var(--gold);
-  display: block;
-  margin-bottom: 16px;
-  animation: spin 1.2s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
+.airport-row { display:flex; gap:20px; overflow-x:auto; padding-bottom:12px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; }
+.airport-row::-webkit-scrollbar { height:4px; }
+.airport-row::-webkit-scrollbar-track { background:var(--sand2); border-radius:4px; }
+.airport-row::-webkit-scrollbar-thumb { background:var(--gold); border-radius:4px; }
 
-.airport-group { margin-bottom: 44px; }
+.card { scroll-snap-align:start; flex:0 0 300px; background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow-sm); overflow:hidden; display:flex; flex-direction:column; transition:transform .3s, box-shadow .3s; position:relative; border:1px solid rgba(14,124,134,.18); }
+.card:hover { transform:translateY(-5px); box-shadow:var(--shadow-md); }
+.card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--navy),var(--teal),var(--gold)); }
 
-.airport-heading {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: linear-gradient(135deg, var(--navy), var(--teal));
-  color: var(--white);
-  padding: 10px 22px;
-  border-radius: 999px;
-  font-size: 16px;
-  font-weight: 800;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-sm);
-}
-.airport-heading::after {
-  content: '';
-  display: block;
-  width: 6px;
-  height: 6px;
-  background: var(--gold);
-  border-radius: 50%;
-}
+.card-top { padding:20px 16px 14px; background:linear-gradient(145deg,#EBF4F8,#DFF0F5); border-bottom:1px solid rgba(14,124,134,.15); position:relative; }
+.offer-badge { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,var(--teal),var(--teal2)); color:var(--white); padding:4px 12px; border-radius:999px; font-size:12px; font-weight:700; margin-bottom:10px; }
+.agency-row { display:flex; align-items:center; gap:12px; justify-content:space-between; }
+.agency-info { flex:1; min-width:0; }
+.agency-name { font-size:16px; font-weight:900; color:var(--charcoal); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.agency-loc { display:inline-flex; align-items:center; gap:5px; color:var(--teal); font-size:12px; font-weight:700; margin-top:4px; background:rgba(14,124,134,.08); padding:3px 10px; border-radius:999px; }
+.agency-loc i { font-size:11px; }
+.agency-logo-wrap { width:64px; height:64px; border-radius:12px; background:var(--white); border:1.5px solid rgba(14,124,134,.25); display:flex; align-items:center; justify-content:center; padding:6px; box-shadow:var(--shadow-sm); flex-shrink:0; }
+.agency-logo-wrap img { max-width:100%; max-height:100%; object-fit:contain; }
+.agency-logo-wrap.empty::after { content:"🕌"; font-size:26px; }
 
-.airport-row {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  padding-bottom: 12px;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-.airport-row::-webkit-scrollbar { height: 4px; }
-.airport-row::-webkit-scrollbar-track { background: var(--sand2); border-radius: 4px; }
-.airport-row::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
-
-.card {
-  scroll-snap-align: start;
-  flex: 0 0 300px;
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform .3s, box-shadow .3s;
-  position: relative;
-  border: 1px solid rgba(14,124,134,.18);
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
-}
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--navy), var(--teal), var(--gold));
-}
-
-.card-top {
-  padding: 20px 16px 14px;
-  background: linear-gradient(145deg, #EBF4F8, #DFF0F5);
-  border-bottom: 1px solid rgba(14,124,134,.15);
-  position: relative;
-}
-
-.offer-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: linear-gradient(135deg, var(--teal), var(--teal2));
-  color: var(--white);
-  padding: 4px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.agency-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  justify-content: space-between;
-}
-.agency-info { flex: 1; min-width: 0; }
-.agency-name {
-  font-size: 16px;
-  font-weight: 900;
-  color: var(--charcoal);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.agency-loc {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  color: var(--teal);
-  font-size: 12px;
-  font-weight: 700;
-  margin-top: 4px;
-  background: rgba(14,124,134,.08);
-  padding: 3px 10px;
-  border-radius: 999px;
-}
-.agency-loc i { font-size: 11px; }
-
-.agency-logo-wrap {
-  width: 64px;
-  height: 64px;
-  border-radius: 12px;
-  background: var(--white);
-  border: 1.5px solid rgba(14,124,134,.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px;
-  box-shadow: var(--shadow-sm);
-  flex-shrink: 0;
-}
-.agency-logo-wrap img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-.agency-logo-wrap.empty::after {
-  content: "🕌";
-  font-size: 26px;
-}
-
-.date-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  margin: 14px 16px 0;
-  font-weight: 700;
-  font-size: 13px;
-}
-.date-badge.soon {
-  background: linear-gradient(135deg, #FFF0F0, #FFD6D6);
-  color: var(--navy);
-  border: 1.5px solid rgba(13,27,42,.2);
-}
-.date-badge.mid {
-  background: linear-gradient(135deg, #FFFBEE, #FFF0C0);
-  color: #7A5200;
-  border: 1.5px solid rgba(122,82,0,.2);
-}
-.date-badge.far {
-  background: linear-gradient(135deg, #EDFAF3, #C6F0D8);
-  color: #0B5F3C;
-  border: 1.5px solid rgba(11,95,60,.2);
-}
-.date-badge .date-icon { font-size: 20px; }
-.date-badge .date-text { flex: 1; }
-.date-badge .date-main { font-size: 14px; font-weight: 800; display: block; }
-.date-badge .date-remain { font-size: 11px; opacity: .8; display: block; margin-top: 2px; }
-.date-badge.soon .date-remain { animation: pulse 1.8s ease-in-out infinite; display: inline-block; }
+.date-badge { display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; margin:14px 16px 0; font-weight:700; font-size:13px; }
+.date-badge.soon { background:linear-gradient(135deg,#FFF0F0,#FFD6D6); color:var(--navy); border:1.5px solid rgba(13,27,42,.2); }
+.date-badge.mid  { background:linear-gradient(135deg,#FFFBEE,#FFF0C0); color:#7A5200;    border:1.5px solid rgba(122,82,0,.2); }
+.date-badge.far  { background:linear-gradient(135deg,#EDFAF3,#C6F0D8); color:#0B5F3C;   border:1.5px solid rgba(11,95,60,.2); }
+.date-badge .date-icon { font-size:20px; }
+.date-badge .date-text { flex:1; }
+.date-badge .date-main   { font-size:14px; font-weight:800; display:block; }
+.date-badge .date-remain { font-size:11px; opacity:.8; display:block; margin-top:2px; }
+.date-badge.soon .date-remain { animation:pulse 1.8s ease-in-out infinite; display:inline-block; }
 @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
 
-.card-body {
-  padding: 14px 16px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+.card-body { padding:14px 16px; flex:1; display:flex; flex-direction:column; gap:8px; }
+.info-row { display:flex; align-items:center; gap:10px; font-size:14px; color:var(--charcoal); padding:8px 12px; background:var(--sand); border-radius:10px; }
+.info-row i { color:var(--gold); font-size:15px; width:18px; text-align:center; }
+.info-row span { font-weight:700; }
+.airline-wrap { display:flex; align-items:center; gap:10px; padding:8px 12px; background:var(--sand); border-radius:10px; }
+.airline-wrap img { height:28px; max-width:70px; object-fit:contain; }
+.airline-wrap span { font-size:13px; font-weight:600; color:var(--muted); }
 
-.info-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  color: var(--charcoal);
-  padding: 8px 12px;
-  background: var(--sand);
-  border-radius: 10px;
-}
-.info-row i {
-  color: var(--gold);
-  font-size: 15px;
-  width: 18px;
-  text-align: center;
-}
-.info-row span { font-weight: 700; }
+.price-section { padding:0 16px 14px; }
+.price-row { display:flex; align-items:center; gap:10px; background:linear-gradient(135deg,var(--teal) 0%,#065960 100%); border-radius:14px; padding:14px 16px; box-shadow:0 6px 20px rgba(13,27,42,.28); }
+.price-amount { flex:1; color:var(--white); font-size:22px; font-weight:900; display:flex; align-items:baseline; gap:6px; }
+.price-amount .currency { font-size:13px; font-weight:700; color:var(--gold-light); }
+.wa-btn { width:46px; height:46px; border-radius:12px; border:none; background:var(--green-wa); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 14px rgba(37,211,102,.4); transition:transform .2s, box-shadow .2s; flex-shrink:0; }
+.wa-btn i { color:var(--white); font-size:22px; }
+.wa-btn:hover { transform:scale(1.08); box-shadow:0 6px 20px rgba(37,211,102,.6); }
+.wa-btn:active { transform:scale(.94); }
 
-.airline-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  background: var(--sand);
-  border-radius: 10px;
-}
-.airline-wrap img {
-  height: 28px;
-  max-width: 70px;
-  object-fit: contain;
-}
-.airline-wrap span { font-size: 13px; font-weight: 600; color: var(--muted); }
-
-.price-section {
-  padding: 0 16px 14px;
-}
-.price-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: linear-gradient(135deg, var(--teal) 0%, #065960 100%);
-  border-radius: 14px;
-  padding: 14px 16px;
-  box-shadow: 0 6px 20px rgba(13,27,42,.28);
-}
-.price-amount {
-  flex: 1;
-  color: var(--white);
-  font-size: 22px;
-  font-weight: 900;
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-.price-amount small {
-  font-size: 13px;
-  font-weight: 600;
-  opacity: .8;
-}
-.price-amount .currency {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--gold-light);
-  opacity: 1;
-}
-.wa-btn {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  border: none;
-  background: var(--green-wa);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(37,211,102,.4);
-  transition: transform .2s, box-shadow .2s;
-  flex-shrink: 0;
-}
-.wa-btn i { color: var(--white); font-size: 22px; }
-.wa-btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 6px 20px rgba(37,211,102,.6);
-}
-.wa-btn:active { transform: scale(.94); }
-
+/* ══════════════════════════════════════════════
+   CARD ACTIONS – الإصلاح الرئيسي
+   4 أعمدة ثابتة دائماً بدون شروط معقدة
+══════════════════════════════════════════════ */
 .card-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--sand2);
 }
 .action-btn {
   padding: 10px 4px;
   border: none;
+  border-left: 1px solid var(--sand2);
   background: transparent;
   font-family: 'Tajawal', Arial, sans-serif;
   font-size: 11px;
@@ -553,315 +153,76 @@ select:focus {
   gap: 3px;
   transition: background .2s, color .2s;
 }
+.action-btn:last-child { border-left: none; }
 .action-btn i { font-size: 15px; }
-.action-btn:not(:last-child) { border-left: 1px solid var(--sand2); }
 .action-btn:hover { background: var(--sand); }
-.action-btn.register {
-  color: var(--white);
-  background: var(--teal);
+
+/* أنواع الأزرار */
+.action-btn.register    { color:var(--white); background:var(--teal); }
+.action-btn.register:hover { background:var(--teal2); }
+.action-btn.branches-btn { color:var(--teal); }
+.action-btn.branches-btn:hover { background:#E8F6F8; }
+.action-btn.features-btn { color:var(--gold); }
+.action-btn.features-btn:hover { background:#FFF8E8; }
+/* زر معطّل عندما لا يوجد محتوى – يظهر لكن لا يُضغط */
+.action-btn.disabled-btn {
+  color: #C5D5E0;
+  cursor: default;
+  pointer-events: none;
 }
-.action-btn.register:hover { background: var(--teal2); }
-.action-btn.branches-btn {
-  color: var(--gold);
-}
-.action-btn.branches-btn:hover { background: #FFF8E8; }
 
 /* ===== MODALS ===== */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(26,17,16,.7);
-  z-index: 20000;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
-  padding: 20px;
-}
-.modal-overlay.open { display: flex; }
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(26,17,16,.7); z-index:20000; align-items:center; justify-content:center; backdrop-filter:blur(4px); padding:20px; }
+.modal-overlay.open { display:flex; }
+.modal-box { width:100%; max-width:460px; max-height:88vh; background:var(--white); border-radius:22px; overflow-y:auto; -webkit-overflow-scrolling:touch; box-shadow:var(--shadow-lg); animation:modalIn .3s cubic-bezier(.34,1.56,.64,1); }
+@keyframes modalIn { from{transform:scale(.88) translateY(20px);opacity:0} to{transform:scale(1) translateY(0);opacity:1} }
+.modal-header { background:linear-gradient(135deg,var(--navy),var(--teal)); padding:20px 22px; display:flex; align-items:center; justify-content:space-between; gap:12px; position:sticky; top:0; z-index:1; }
+.modal-title { color:var(--white); font-size:18px; font-weight:900; display:flex; align-items:center; gap:8px; }
+.modal-close { width:34px; height:34px; border:2px solid rgba(255,255,255,.35); background:transparent; color:var(--white); border-radius:50%; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s; line-height:1; }
+.modal-close:hover { background:rgba(255,255,255,.18); }
+.modal-body { padding:22px; }
 
-.modal-box {
-  width: 100%;
-  max-width: 460px;
-  max-height: 88vh;
-  background: var(--white);
-  border-radius: 22px;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  box-shadow: var(--shadow-lg);
-  animation: modalIn .3s cubic-bezier(.34,1.56,.64,1);
-}
-@keyframes modalIn {
-  from { transform: scale(.88) translateY(20px); opacity: 0; }
-  to   { transform: scale(1)   translateY(0);    opacity: 1; }
-}
-.modal-header {
-  background: linear-gradient(135deg, var(--navy), var(--teal));
-  padding: 20px 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-.modal-title {
-  color: var(--white);
-  font-size: 18px;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.modal-close {
-  width: 34px;
-  height: 34px;
-  border: 2px solid rgba(255,255,255,.35);
-  background: transparent;
-  color: var(--white);
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background .2s;
-  line-height: 1;
-}
-.modal-close:hover { background: rgba(255,255,255,.18); }
-.modal-body { padding: 22px; }
+.detail-row { display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:12px; background:var(--sand); margin-bottom:8px; font-size:14px; }
+.detail-row i { color:var(--gold); font-size:17px; width:22px; text-align:center; flex-shrink:0; margin-top:2px; }
+.detail-row .dr-label { color:var(--muted); font-size:12px; }
+.detail-row .dr-val { font-weight:800; color:var(--charcoal); }
 
-.detail-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: var(--sand);
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-.detail-row i {
-  color: var(--gold);
-  font-size: 17px;
-  width: 22px;
-  text-align: center;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.detail-row .dr-label { color: var(--muted); font-size: 12px; }
-.detail-row .dr-val { font-weight: 800; color: var(--charcoal); }
+.section-title { font-size:15px; font-weight:900; margin:16px 0 8px; padding:8px 14px; background:linear-gradient(135deg,var(--navy),var(--teal)); color:var(--white); border-radius:10px; display:flex; align-items:center; gap:8px; }
 
-.section-title {
-  font-size: 15px;
-  font-weight: 900;
-  color: var(--navy);
-  margin: 16px 0 8px;
-  padding: 8px 14px;
-  background: linear-gradient(135deg, var(--navy), var(--teal));
-  color: var(--white);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.price-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
+.price-item { background:linear-gradient(135deg,#EBF4F8,#DFF0F5); border-radius:10px; padding:10px 12px; border:1px solid rgba(14,124,134,.15); }
+.price-item .pi-label { font-size:11px; color:var(--muted); font-weight:700; }
+.price-item .pi-val   { font-size:16px; font-weight:900; color:var(--teal); margin-top:2px; }
 
-.price-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-.price-item {
-  background: linear-gradient(135deg, #EBF4F8, #DFF0F5);
-  border-radius: 10px;
-  padding: 10px 12px;
-  border: 1px solid rgba(14,124,134,.15);
-}
-.price-item .pi-label { font-size: 11px; color: var(--muted); font-weight: 700; }
-.price-item .pi-val { font-size: 16px; font-weight: 900; color: var(--teal); margin-top: 2px; }
+.features-box { background:linear-gradient(135deg,#FFFBEE,#FFF3CC); border-radius:12px; padding:14px; border:1px solid rgba(212,160,23,.25); white-space:pre-line; font-size:14px; font-weight:600; color:var(--charcoal); line-height:1.8; }
 
-.features-box {
-  background: linear-gradient(135deg, #FFFBEE, #FFF3CC);
-  border-radius: 12px;
-  padding: 14px;
-  border: 1px solid rgba(212,160,23,.25);
-  white-space: pre-line;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--charcoal);
-  line-height: 1.8;
-}
+.branch-item { display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--sand); border-radius:12px; margin-bottom:8px; border:1px solid rgba(14,124,134,.12); }
+.branch-item i { color:var(--teal); font-size:18px; flex-shrink:0; }
+.branch-item .br-text { font-size:14px; font-weight:700; color:var(--charcoal); }
 
-.branch-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  background: var(--sand);
-  border-radius: 12px;
-  margin-bottom: 8px;
-  border: 1px solid rgba(14,124,134,.12);
-}
-.branch-item i { color: var(--teal); font-size: 18px; flex-shrink: 0; }
-.branch-item .br-text { font-size: 14px; font-weight: 700; color: var(--charcoal); }
+.form-field { margin-bottom:12px; }
+.form-field label { display:block; font-size:13px; font-weight:700; color:var(--muted); margin-bottom:6px; }
+.form-field input { width:100%; padding:12px 14px; border:1.5px solid #C8DCE8; border-radius:10px; font-family:'Tajawal',Arial,sans-serif; font-size:15px; font-weight:600; color:var(--charcoal); background:var(--sand); transition:border-color .2s, box-shadow .2s; }
+.form-field input:focus { outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(14,124,134,.18); }
 
-.form-field {
-  margin-bottom: 12px;
-}
-.form-field label {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-.form-field input, .form-field textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1.5px solid #C8DCE8;
-  border-radius: 10px;
-  font-family: 'Tajawal', Arial, sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--charcoal);
-  background: var(--sand);
-  transition: border-color .2s, box-shadow .2s;
-  resize: none;
-}
-.form-field input:focus, .form-field textarea:focus {
-  outline: none;
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(14,124,134,.18);
-}
-.btn-submit {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, var(--teal), #065960);
-  color: var(--white);
-  border: none;
-  border-radius: 12px;
-  font-family: 'Tajawal', Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-  margin-top: 4px;
-  box-shadow: 0 6px 20px rgba(13,27,42,.28);
-  transition: transform .2s, box-shadow .2s;
-}
-.btn-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(13,27,42,.38);
-}
+.btn-submit { width:100%; padding:14px; background:linear-gradient(135deg,var(--teal),#065960); color:var(--white); border:none; border-radius:12px; font-family:'Tajawal',Arial,sans-serif; font-size:16px; font-weight:800; cursor:pointer; margin-top:4px; box-shadow:0 6px 20px rgba(13,27,42,.28); transition:transform .2s, box-shadow .2s; }
+.btn-submit:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(13,27,42,.38); }
 
-/* زر الواتساب الأخضر في النافذة */
-.btn-wa-submit {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #25D366, #1aad52);
-  color: var(--white);
-  border: none;
-  border-radius: 12px;
-  font-family: 'Tajawal', Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-  margin-top: 4px;
-  box-shadow: 0 6px 20px rgba(37,211,102,.35);
-  transition: transform .2s, box-shadow .2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.btn-wa-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(37,211,102,.5);
-}
+.btn-wa-submit { width:100%; padding:14px; background:linear-gradient(135deg,#25D366,#1aad52); color:var(--white); border:none; border-radius:12px; font-family:'Tajawal',Arial,sans-serif; font-size:16px; font-weight:800; cursor:pointer; margin-top:4px; box-shadow:0 6px 20px rgba(37,211,102,.35); transition:transform .2s, box-shadow .2s; display:flex; align-items:center; justify-content:center; gap:8px; }
+.btn-wa-submit:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(37,211,102,.5); }
 
-.btn-cancel {
-  width: 100%;
-  padding: 12px;
-  background: var(--sand2);
-  color: var(--muted);
-  border: none;
-  border-radius: 12px;
-  font-family: 'Tajawal', Arial, sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 8px;
-  transition: background .2s;
-}
-.btn-cancel:hover { background: #D0E4EE; }
+.btn-cancel { width:100%; padding:12px; background:var(--sand2); color:var(--muted); border:none; border-radius:12px; font-family:'Tajawal',Arial,sans-serif; font-size:15px; font-weight:700; cursor:pointer; margin-top:8px; transition:background .2s; }
+.btn-cancel:hover { background:#D0E4EE; }
 
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--muted);
-}
-.empty-state i {
-  font-size: 48px;
-  color: var(--sand2);
-  margin-bottom: 14px;
-  display: block;
-}
+.empty-state { text-align:center; padding:60px 20px; color:var(--muted); }
+.empty-state i { font-size:48px; color:var(--sand2); margin-bottom:14px; display:block; }
 
-/* بادج مميزات الوكالة في الكارد */
-.features-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: linear-gradient(135deg, #FFFBEE, #FFF3CC);
-  border: 1px solid rgba(212,160,23,.3);
-  color: #7A5200;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background .2s;
-}
-.features-tag:hover { background: #FFE99A; }
+@media(min-width:768px){ .card{flex:0 0 320px;} .modal-box{max-width:480px;} }
+@media(max-width:600px){ .hero{padding:24px 16px 20px;} .topbar-logo img{height:46px;} .card{flex:0 0 272px;} }
+@media(prefers-reduced-motion:reduce){ *{animation-duration:.01ms!important;transition-duration:.01ms!important;} }
 
-@media (min-width: 768px) {
-  .card { flex: 0 0 320px; }
-  .modal-box { max-width: 480px; }
-}
-@media (max-width: 600px) {
-  .hero { padding: 24px 16px 20px; }
-  .topbar-logo img { height: 46px; }
-  .card { flex: 0 0 272px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
-}
-
-.toast {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: #1A1110;
-  color: var(--white);
-  padding: 12px 24px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 700;
-  z-index: 99999;
-  box-shadow: var(--shadow-md);
-  transition: transform .35s cubic-bezier(.34,1.56,.64,1), opacity .35s;
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
+.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:#1A1110; color:var(--white); padding:12px 24px; border-radius:999px; font-size:14px; font-weight:700; z-index:99999; box-shadow:var(--shadow-md); transition:transform .35s cubic-bezier(.34,1.56,.64,1), opacity .35s; opacity:0; display:flex; align-items:center; gap:8px; }
+.toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 </style>
 </head>
 <body>
@@ -871,18 +232,13 @@ select:focus {
 </a>
 
 <header class="topbar">
-  <div class="menu-btn" onclick="openMenu()" aria-label="القائمة">
-    <i class="fa-solid fa-bars"></i>
-  </div>
+  <div class="menu-btn" onclick="openMenu()"><i class="fa-solid fa-bars"></i></div>
   <div class="topbar-logo" onclick="location.reload()">
     <img src="https://res.cloudinary.com/dmc36nijl/image/upload/v1769426692/ei_1769426620917-removebg-preview_yuws6p.png" alt="طريق العمرة">
   </div>
   <div class="visitor-badge">
     <i class="fa-solid fa-users"></i>
-    <div>
-      <span id="visitors">0</span>
-      <small>زائر</small>
-    </div>
+    <div><span id="visitors">0</span><small>زائر</small></div>
   </div>
 </header>
 
@@ -901,31 +257,16 @@ select:focus {
 
 <div class="filters-bar">
   <div class="filters-inner">
-    <div class="filter-wrap">
-      <i class="fa-solid fa-building"></i>
-      <select id="fAgency"><option value="">كل الوكالات</option></select>
-    </div>
-    <div class="filter-wrap">
-      <i class="fa-solid fa-location-dot"></i>
-      <select id="fState"><option value="">كل الولايات</option></select>
-    </div>
-    <div class="filter-wrap">
-      <i class="fa-regular fa-calendar"></i>
-      <select id="fDate"><option value="">كل التواريخ</option></select>
-    </div>
-    <div class="filter-wrap">
-      <i class="fa-solid fa-plane"></i>
-      <select id="fAirport"><option value="">كل المطارات</option></select>
-    </div>
+    <div class="filter-wrap"><i class="fa-solid fa-building"></i><select id="fAgency"><option value="">كل الوكالات</option></select></div>
+    <div class="filter-wrap"><i class="fa-solid fa-location-dot"></i><select id="fState"><option value="">كل الولايات</option></select></div>
+    <div class="filter-wrap"><i class="fa-regular fa-calendar"></i><select id="fDate"><option value="">كل التواريخ</option></select></div>
+    <div class="filter-wrap"><i class="fa-solid fa-plane"></i><select id="fAirport"><option value="">كل المطارات</option></select></div>
   </div>
 </div>
 
 <main class="content">
   <div id="offers">
-    <div class="loading-state">
-      <i class="fa-solid fa-spinner"></i>
-      جارٍ تحميل العروض…
-    </div>
+    <div class="loading-state"><i class="fa-solid fa-spinner"></i>جارٍ تحميل العروض…</div>
   </div>
 </main>
 
@@ -951,6 +292,17 @@ select:focus {
   </div>
 </div>
 
+<!-- FEATURES MODAL – نافذة مستقلة للمميزات -->
+<div class="modal-overlay" id="featuresModal" onclick="closeFeaturesModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header" style="background:linear-gradient(135deg,#7A5200,var(--gold));">
+      <div class="modal-title"><i class="fa-solid fa-gift"></i> مميزات العرض</div>
+      <button class="modal-close" onclick="closeFeaturesModal()">×</button>
+    </div>
+    <div class="modal-body" id="featuresContent"></div>
+  </div>
+</div>
+
 <!-- REGISTER MODAL -->
 <div class="modal-overlay" id="registerModal" onclick="closeRegisterModal()">
   <div class="modal-box" onclick="event.stopPropagation()">
@@ -959,59 +311,29 @@ select:focus {
       <button class="modal-close" onclick="closeRegisterModal()">×</button>
     </div>
     <div class="modal-body">
-      <div id="registerOfferInfo" style="margin-bottom:16px; padding:12px 14px; background:linear-gradient(135deg,#EBF4F8,#DFF0F5); border-radius:12px; font-size:13px; font-weight:700; color:var(--navy); border:1px solid rgba(14,124,134,.2);"></div>
-      <div class="form-field">
-        <label>الاسم</label>
-        <input id="cFirst" placeholder="أدخل اسمك">
-      </div>
-      <div class="form-field">
-        <label>اللقب</label>
-        <input id="cLast" placeholder="أدخل لقبك">
-      </div>
-      <div class="form-field">
-        <label>رقم الهاتف</label>
-        <input id="cPhone" placeholder="05xxxxxxxx" type="tel">
-      </div>
-      <button class="btn-submit" onclick="sendRegister()">
-        <i class="fa-solid fa-paper-plane"></i> إرسال الطلب
-      </button>
+      <div id="registerOfferInfo" style="margin-bottom:16px;padding:12px 14px;background:linear-gradient(135deg,#EBF4F8,#DFF0F5);border-radius:12px;font-size:13px;font-weight:700;color:var(--navy);border:1px solid rgba(14,124,134,.2);"></div>
+      <div class="form-field"><label>الاسم</label><input id="cFirst" placeholder="أدخل اسمك"></div>
+      <div class="form-field"><label>اللقب</label><input id="cLast" placeholder="أدخل لقبك"></div>
+      <div class="form-field"><label>رقم الهاتف</label><input id="cPhone" placeholder="05xxxxxxxx" type="tel"></div>
+      <button class="btn-submit" onclick="sendRegister()"><i class="fa-solid fa-paper-plane"></i> إرسال الطلب</button>
       <button class="btn-cancel" onclick="closeRegisterModal()">إلغاء</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════
-     WHATSAPP CONTACT MODAL  (جديد)
-     نافذة واتساب الوكالة – إدخال البيانات قبل الانتقال
-     ══════════════════════════════════════════════════════ -->
+<!-- WHATSAPP MODAL -->
 <div class="modal-overlay" id="waContactModal" onclick="closeWaModal()">
   <div class="modal-box" onclick="event.stopPropagation()">
-    <div class="modal-header" style="background: linear-gradient(135deg,#075E54,#25D366);">
-      <div class="modal-title">
-        <i class="fab fa-whatsapp"></i> تواصل مع الوكالة
-      </div>
+    <div class="modal-header" style="background:linear-gradient(135deg,#075E54,#25D366);">
+      <div class="modal-title"><i class="fab fa-whatsapp"></i> تواصل مع الوكالة</div>
       <button class="modal-close" onclick="closeWaModal()">×</button>
     </div>
     <div class="modal-body">
-      <!-- معلومات العرض -->
-      <div id="waOfferInfo" style="margin-bottom:16px; padding:12px 14px; background:linear-gradient(135deg,#EBF4F8,#DFF0F5); border-radius:12px; font-size:13px; font-weight:700; color:var(--navy); border:1px solid rgba(14,124,134,.2); line-height:1.8;"></div>
-      <!-- حقول البيانات -->
-      <div class="form-field">
-        <label>الاسم</label>
-        <input id="waFirst" placeholder="أدخل اسمك">
-      </div>
-      <div class="form-field">
-        <label>اللقب</label>
-        <input id="waLast" placeholder="أدخل لقبك">
-      </div>
-      <div class="form-field">
-        <label>رقم الهاتف</label>
-        <input id="waPhone" placeholder="05xxxxxxxx" type="tel">
-      </div>
-      <button class="btn-wa-submit" onclick="sendWaContact()">
-        <i class="fab fa-whatsapp" style="font-size:20px"></i>
-        انتقل إلى واتساب الوكالة
-      </button>
+      <div id="waOfferInfo" style="margin-bottom:16px;padding:12px 14px;background:linear-gradient(135deg,#EBF4F8,#DFF0F5);border-radius:12px;font-size:13px;font-weight:700;color:var(--navy);border:1px solid rgba(14,124,134,.2);line-height:1.8;"></div>
+      <div class="form-field"><label>الاسم</label><input id="waFirst" placeholder="أدخل اسمك"></div>
+      <div class="form-field"><label>اللقب</label><input id="waLast" placeholder="أدخل لقبك"></div>
+      <div class="form-field"><label>رقم الهاتف</label><input id="waPhone" placeholder="05xxxxxxxx" type="tel"></div>
+      <button class="btn-wa-submit" onclick="sendWaContact()"><i class="fab fa-whatsapp" style="font-size:20px"></i> انتقل إلى واتساب الوكالة</button>
       <button class="btn-cancel" onclick="closeWaModal()">إلغاء</button>
     </div>
   </div>
@@ -1031,132 +353,119 @@ const fDate    = document.getElementById("fDate");
 const fAirport = document.getElementById("fAirport");
 const offersEl = document.getElementById("offers");
 
-/* ── date helpers ── */
-function parseLocalDate(dateStr) {
-  if (!dateStr) return null;
-  const s = String(dateStr).trim();
-  const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
-  const short = s.match(/^[A-Za-z]{3}\s+([A-Za-z]{3})\s+(\d{1,2})$/);
-  if (short) return new Date(Date.UTC(2026, months[short[1]], +short[2], 12, 0, 0));
-  const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (iso)   return new Date(Date.UTC(+iso[1], +iso[2]-1, +iso[3], 12, 0, 0));
+/* ══ helpers ══ */
+function hasVal(v) {
+  return v && String(v).trim() !== "" && String(v).trim() !== "-";
+}
+function parseLocalDate(s) {
+  if (!s) return null;
+  s = String(s).trim();
+  const months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  const m1 = s.match(/^[A-Za-z]{3}\s+([A-Za-z]{3})\s+(\d{1,2})$/);
+  if (m1) return new Date(Date.UTC(2026, months[m1[1]], +m1[2], 12));
+  const m2 = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m2) return new Date(Date.UTC(+m2[1], +m2[2]-1, +m2[3], 12));
   return null;
 }
 function formatDate(d) {
   const p = parseLocalDate(d);
-  if (!p) return "-";
-  return `${p.getUTCDate()}/${p.getUTCMonth()+1}/${p.getUTCFullYear()}`;
+  return p ? `${p.getUTCDate()}/${p.getUTCMonth()+1}/${p.getUTCFullYear()}` : "-";
 }
-function formatDateArabicFull(dateStr) {
-  if (!dateStr) return "-";
+function formatDateArabicFull(s) {
+  if (!s) return "-";
   const days   = ["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
   const months = ["جانفي","فيفري","مارس","أفريل","ماي","جوان","جويلية","أوت","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
-  const d = parseLocalDate(dateStr);
+  const d = parseLocalDate(s);
   if (!d || isNaN(d)) return "-";
   return `${days[d.getUTCDay()]} ${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
-function getDateStatus(dateStr) {
-  if (!dateStr) return "far";
-  const travel = parseLocalDate(dateStr);
-  if (!travel || isNaN(travel)) return "far";
+function getDateStatus(s) {
+  const t = parseLocalDate(s);
+  if (!t || isNaN(t)) return "far";
   const today = new Date();
-  const todayUTC  = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
-  const travelUTC = Date.UTC(travel.getUTCFullYear(), travel.getUTCMonth(), travel.getUTCDate());
-  const diff = Math.round((travelUTC - todayUTC) / 86400000);
-  if (diff <= 15) return "soon";
-  if (diff <= 40) return "mid";
-  return "far";
+  const diff = Math.round((Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),t.getUTCDate()) - Date.UTC(today.getFullYear(),today.getMonth(),today.getDate())) / 86400000);
+  return diff <= 15 ? "soon" : diff <= 40 ? "mid" : "far";
 }
-function getRemainingText(dateStr) {
-  if (!dateStr) return "";
-  const travel = parseLocalDate(dateStr);
-  if (!travel || isNaN(travel)) return "";
+function getRemainingText(s) {
+  const t = parseLocalDate(s);
+  if (!t || isNaN(t)) return "";
   const today = new Date();
-  const diff = Math.round(
-    (Date.UTC(travel.getUTCFullYear(), travel.getUTCMonth(), travel.getUTCDate()) -
-     Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())) / 86400000
-  );
+  const diff = Math.round((Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),t.getUTCDate()) - Date.UTC(today.getFullYear(),today.getMonth(),today.getDate())) / 86400000);
   if (diff === 0) return "🚀 اليوم موعد الرحلة";
   if (diff === 1) return "⚠️ غدًا الانطلاق";
   if (diff > 1)  return `⏳ بعد ${diff} يوم`;
   return "⛔ تاريخ منقضي";
 }
-
-/* ── toast ── */
-function showToast(msg, icon = "✅") {
+function showToast(msg, icon="✅") {
   const t = document.getElementById("toast");
   t.innerHTML = `${icon} ${msg}`;
   t.classList.add("show");
   setTimeout(() => t.classList.remove("show"), 2800);
 }
-
-/* ── price row helper ── */
 function priceRow(label, val) {
-  if (!val || val === "" || val === "-") return "";
+  if (!hasVal(val)) return "";
   return `<div class="price-item"><div class="pi-label">${label}</div><div class="pi-val">${Number(val).toLocaleString("ar-DZ")} دج</div></div>`;
 }
-
-/* ── agency phone helper ── */
 function agencyWaPhone(o) {
-  let p = String(o?.phone || "213674141379").replace(/\D/g, "");
+  let p = String(o?.phone || "213674141379").replace(/\D/g,"");
   if (!p.startsWith("213")) p = "213" + p;
   return p;
 }
 
-/* ── fetch offers ── */
-fetch(OFFERS_API).then(r => r.json()).then(data => {
+/* ══ fetch ══ */
+fetch(OFFERS_API).then(r=>r.json()).then(data=>{
   offersData = data;
   fillFilters();
   render();
-}).catch(() => {
-  offersEl.innerHTML = `<div class="empty-state">
-    <i class="fa-solid fa-triangle-exclamation"></i>
-    <p>تعذّر تحميل العروض. تحقق من الاتصال وأعد المحاولة.</p>
-  </div>`;
+}).catch(()=>{
+  offersEl.innerHTML = `<div class="empty-state"><i class="fa-solid fa-triangle-exclamation"></i><p>تعذّر تحميل العروض.</p></div>`;
 });
 
-/* ── filters ── */
+/* ══ filters ══ */
 function fillFilters() {
-  const A = new Set(), S = new Set(), D = new Set(), P = new Set();
-  offersData.forEach(o => {
-    if (o.agency)  A.add(o.agency);
-    if (o.state)   S.add(o.state);
-    if (o.date)    D.add(formatDate(o.date));
-    if (o.airport) P.add(o.airport);
+  const A=new Set(), S=new Set(), D=new Set(), P=new Set();
+  offersData.forEach(o=>{
+    if(o.agency)  A.add(o.agency);
+    if(o.state)   S.add(o.state);
+    if(o.date)    D.add(formatDate(o.date));
+    if(o.airport) P.add(o.airport);
   });
-  A.forEach(v => fAgency.add(new Option(v, v)));
-  S.forEach(v => fState.add(new Option(v, v)));
-  D.forEach(v => fDate.add(new Option(v, v)));
-  P.forEach(v => fAirport.add(new Option(v, v)));
+  A.forEach(v=>fAgency.add(new Option(v,v)));
+  S.forEach(v=>fState.add(new Option(v,v)));
+  D.forEach(v=>fDate.add(new Option(v,v)));
+  P.forEach(v=>fAirport.add(new Option(v,v)));
 }
-[fAgency, fState, fDate, fAirport].forEach(s => s.addEventListener("change", render));
+[fAgency,fState,fDate,fAirport].forEach(s=>s.addEventListener("change",render));
 
-/* ── render ── */
+/* ══════════════════════════════════════════════════════
+   RENDER  – الإصلاح الكامل لأزرار الفروع والمميزات
+   المنطق:
+   • إذا وُجد محتوى  → زر فعّال بلونه المميز
+   • إذا لم يوجد     → زر رمادي معطّل (disabled-btn)
+   • الـ 4 أزرار موجودة دائماً في الشبكة
+══════════════════════════════════════════════════════ */
 function render() {
   offersEl.innerHTML = "";
   let list = [...offersData];
-  if (fAgency.value)  list = list.filter(o => o.agency  === fAgency.value);
-  if (fState.value)   list = list.filter(o => o.state   === fState.value);
-  if (fDate.value)    list = list.filter(o => formatDate(o.date) === fDate.value);
-  if (fAirport.value) list = list.filter(o => o.airport === fAirport.value);
+  if (fAgency.value)  list = list.filter(o=>o.agency===fAgency.value);
+  if (fState.value)   list = list.filter(o=>o.state===fState.value);
+  if (fDate.value)    list = list.filter(o=>formatDate(o.date)===fDate.value);
+  if (fAirport.value) list = list.filter(o=>o.airport===fAirport.value);
 
   if (!list.length) {
-    offersEl.innerHTML = `<div class="empty-state">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <p>لا توجد عروض تطابق الفلتر المحدد</p>
-    </div>`;
+    offersEl.innerHTML=`<div class="empty-state"><i class="fa-solid fa-magnifying-glass"></i><p>لا توجد عروض تطابق الفلتر المحدد</p></div>`;
     return;
   }
 
   const grouped = {};
-  list.forEach(o => {
+  list.forEach(o=>{
     const ap = o.airport || "غير محدد";
-    if (!grouped[ap]) grouped[ap] = [];
+    if (!grouped[ap]) grouped[ap]=[];
     grouped[ap].push(o);
   });
 
-  Object.keys(grouped).forEach(ap => {
-    grouped[ap].sort((a, b) => parseLocalDate(a.date) - parseLocalDate(b.date));
+  Object.keys(grouped).forEach(ap=>{
+    grouped[ap].sort((a,b)=>parseLocalDate(a.date)-parseLocalDate(b.date));
 
     const g = document.createElement("div");
     g.className = "airport-group";
@@ -1165,39 +474,43 @@ function render() {
     const row = document.createElement("div");
     row.className = "airport-row";
 
-    grouped[ap].forEach(o => {
+    grouped[ap].forEach(o=>{
       const idx    = offersData.indexOf(o);
       const status = getDateStatus(o.date);
       const remain = getRemainingText(o.date);
+      const hasBranches = hasVal(o.branches);
+      const hasFeatures = hasVal(o.features);
 
-      // ── حساب وجود مميزات وفروع ──
-      const hasFeatures = o.features && String(o.features).trim() !== "" && String(o.features).trim() !== "-";
-      const hasBranches = o.branches && String(o.branches).trim() !== "" && String(o.branches).trim() !== "-";
+      /* زر الفروع */
+      const branchesBtn = hasBranches
+        ? `<button class="action-btn branches-btn" onclick="openBranchesByIdx(${idx})">
+             <i class="fa-solid fa-map-marker-alt"></i> الفروع
+           </button>`
+        : `<button class="action-btn disabled-btn">
+             <i class="fa-solid fa-map-marker-alt"></i> الفروع
+           </button>`;
 
-      // ── بناء أزرار الكارد ──
-      // دائماً 4 أعمدة: تفاصيل | فروع أو مشاركة | مميزات أو مشاركة | تسجيل
-      let btn2 = hasBranches
-        ? `<button class="action-btn branches-btn" onclick="openBranchesByIdx(${idx})"><i class="fa-solid fa-map-marker-alt"></i> الفروع</button>`
-        : `<button class="action-btn" onclick="shareByIdx(${idx})"><i class="fa-solid fa-share-nodes"></i> مشاركة</button>`;
-
-      let btn3 = hasFeatures
-        ? `<button class="action-btn" style="color:var(--gold)" onclick="openFeaturesByIdx(${idx})"><i class="fa-solid fa-gift"></i> مميزات</button>`
-        : (hasBranches
-            ? `<button class="action-btn" onclick="shareByIdx(${idx})"><i class="fa-solid fa-share-nodes"></i> مشاركة</button>`
-            : `<span class="action-btn"></span>`);
+      /* زر المميزات */
+      const featuresBtn = hasFeatures
+        ? `<button class="action-btn features-btn" onclick="openFeaturesByIdx(${idx})">
+             <i class="fa-solid fa-gift"></i> مميزات
+           </button>`
+        : `<button class="action-btn disabled-btn">
+             <i class="fa-solid fa-gift"></i> مميزات
+           </button>`;
 
       const c = document.createElement("div");
       c.className = "card";
       c.innerHTML = `
         <div class="card-top">
-          <div class="offer-badge"><i class="fa-solid fa-kaaba"></i> ${o.offer || "عرض عمرة"}</div>
+          <div class="offer-badge"><i class="fa-solid fa-kaaba"></i> ${o.offer||"عرض عمرة"}</div>
           <div class="agency-row">
             <div class="agency-info">
-              <div class="agency-name">${o.agency || "—"}</div>
-              <div class="agency-loc"><i class="fa-solid fa-location-dot"></i> ${o.state || "—"}</div>
+              <div class="agency-name">${o.agency||"—"}</div>
+              <div class="agency-loc"><i class="fa-solid fa-location-dot"></i> ${o.state||"—"}</div>
             </div>
-            <div class="agency-logo-wrap ${!o.logo ? 'empty' : ''}">
-              ${o.logo ? `<img src="${o.logo}" alt="${o.agency}">` : ''}
+            <div class="agency-logo-wrap ${!o.logo?'empty':''}">
+              ${o.logo?`<img src="${o.logo}" alt="${o.agency}">`:''}
             </div>
           </div>
         </div>
@@ -1211,11 +524,11 @@ function render() {
         </div>
 
         <div class="card-body">
-          <div class="info-row"><i class="fa-solid fa-hotel"></i><span>الفندق:</span> ${o.hotel || "—"}</div>
-          <div class="info-row"><i class="fa-regular fa-clock"></i><span>المدة:</span> ${o.duration || "—"}</div>
+          <div class="info-row"><i class="fa-solid fa-hotel"></i><span>الفندق:</span> ${o.hotel||"—"}</div>
+          <div class="info-row"><i class="fa-regular fa-clock"></i><span>المدة:</span> ${o.duration||"—"}</div>
           <div class="airline-wrap">
-            ${o.airlineLogo ? `<img src="${o.airlineLogo}" alt="">` : `<i class="fa-solid fa-plane" style="color:var(--gold)"></i>`}
-            <span>${o.flight || "—"}</span>
+            ${o.airlineLogo?`<img src="${o.airlineLogo}" alt="">`:`<i class="fa-solid fa-plane" style="color:var(--gold)"></i>`}
+            <span>${o.flight||"—"}</span>
           </div>
         </div>
 
@@ -1225,7 +538,6 @@ function render() {
               ${Number(o.group).toLocaleString("ar-DZ")}
               <span class="currency">دج</span>
             </div>
-            <!-- زر واتساب يفتح النافذة بدلاً من الانتقال المباشر -->
             <button class="wa-btn" onclick="openWaModal(${idx})" title="واتساب الوكالة">
               <i class="fab fa-whatsapp"></i>
             </button>
@@ -1236,8 +548,8 @@ function render() {
           <button class="action-btn" onclick="openDetailsByIdx(${idx})">
             <i class="fa-solid fa-circle-info"></i> التفاصيل
           </button>
-          ${btn2}
-          ${btn3}
+          ${branchesBtn}
+          ${featuresBtn}
           <button class="action-btn register" onclick="openRegisterByIdx(${idx})">
             <i class="fa-solid fa-paper-plane"></i> تسجيل
           </button>
@@ -1251,50 +563,36 @@ function render() {
   });
 }
 
-/* ══════════════════════════════════════
-   DETAILS MODAL
-══════════════════════════════════════ */
+/* ══ DETAILS MODAL ══ */
 function openDetailsByIdx(i) {
   const o = offersData[i];
   if (!o) return;
-
-  const hasPrices   = [o.five, o.four, o.three, o.two].some(p => p && p !== "" && p !== "-");
-  const hasFeatures = o.features && String(o.features).trim() !== "" && String(o.features).trim() !== "-";
-  const hasBranches = o.branches && String(o.branches).trim() !== "" && String(o.branches).trim() !== "-";
-
   document.getElementById("detailsContent").innerHTML = `
-    <div class="detail-row"><i class="fa-solid fa-kaaba"></i><div><div class="dr-label">العرض</div><div class="dr-val">${o.offer || "—"}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-building"></i><div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency || "—"}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-location-dot"></i><div><div class="dr-label">الولاية</div><div class="dr-val">${o.state || "—"}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-city"></i><div><div class="dr-label">البلدية</div><div class="dr-val">${o.city || "—"}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-plane-departure"></i><div><div class="dr-label">المطار</div><div class="dr-val">${o.airport || "—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-kaaba"></i><div><div class="dr-label">العرض</div><div class="dr-val">${o.offer||"—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-building"></i><div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency||"—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-location-dot"></i><div><div class="dr-label">الولاية</div><div class="dr-val">${o.state||"—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-city"></i><div><div class="dr-label">البلدية</div><div class="dr-val">${o.city||"—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-plane-departure"></i><div><div class="dr-label">المطار</div><div class="dr-val">${o.airport||"—"}</div></div></div>
     <div class="detail-row"><i class="fa-regular fa-calendar-check"></i><div><div class="dr-label">تاريخ الانطلاق</div><div class="dr-val">${formatDateArabicFull(o.date)}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-hotel"></i><div><div class="dr-label">الفندق</div><div class="dr-val">${o.hotel || "—"}</div></div></div>
-    <div class="detail-row"><i class="fa-regular fa-clock"></i><div><div class="dr-label">المدة</div><div class="dr-val">${o.duration || "—"}</div></div></div>
-    <div class="detail-row"><i class="fa-solid fa-plane"></i><div><div class="dr-label">رقم الرحلة</div><div class="dr-val">${o.flight || "—"}</div></div></div>
-
+    <div class="detail-row"><i class="fa-solid fa-hotel"></i><div><div class="dr-label">الفندق</div><div class="dr-val">${o.hotel||"—"}</div></div></div>
+    <div class="detail-row"><i class="fa-regular fa-clock"></i><div><div class="dr-label">المدة</div><div class="dr-val">${o.duration||"—"}</div></div></div>
+    <div class="detail-row"><i class="fa-solid fa-plane"></i><div><div class="dr-label">رقم الرحلة</div><div class="dr-val">${o.flight||"—"}</div></div></div>
     <div class="section-title"><i class="fa-solid fa-tag"></i> الأسعار التفصيلية</div>
     <div class="price-grid">
-      ${priceRow("جماعية", o.group)}
-      ${priceRow("خماسية", o.five)}
-      ${priceRow("رباعية", o.four)}
-      ${priceRow("ثلاثية", o.three)}
-      ${priceRow("ثنائية", o.two)}
+      ${priceRow("جماعية",o.group)}
+      ${priceRow("خماسية",o.five)}
+      ${priceRow("رباعية",o.four)}
+      ${priceRow("ثلاثية",o.three)}
+      ${priceRow("ثنائية",o.two)}
     </div>
-
-    ${hasFeatures ? `
-    <div class="section-title"><i class="fa-solid fa-gift"></i> مميزات العرض</div>
-    <div class="features-box">${o.features}</div>
-    ` : ''}
-
-    ${hasBranches ? `
-    <div class="section-title"><i class="fa-solid fa-map-marker-alt"></i> فروع الوكالة</div>
-    ${String(o.branches).split(/[\n،,]+/).map(l => l.trim()).filter(l => l).map(br =>
-      `<div class="branch-item"><i class="fa-solid fa-location-dot"></i><div class="br-text">${br}</div></div>`
-    ).join('')}
-    ` : ''}
-
-    <button class="btn-submit" style="margin-top:16px" onclick="closeDetails(); openRegisterByIdx(${i})">
+    ${hasVal(o.features)?`<div class="section-title"><i class="fa-solid fa-gift"></i> مميزات العرض</div><div class="features-box">${o.features}</div>`:''}
+    ${hasVal(o.branches)?`
+      <div class="section-title"><i class="fa-solid fa-map-marker-alt"></i> فروع الوكالة</div>
+      ${String(o.branches).split(/[\n،,]+/).map(l=>l.trim()).filter(l=>l).map(br=>
+        `<div class="branch-item"><i class="fa-solid fa-location-dot"></i><div class="br-text">${br}</div></div>`
+      ).join('')}
+    `:''}
+    <button class="btn-submit" style="margin-top:16px" onclick="closeDetails();openRegisterByIdx(${i})">
       <i class="fa-solid fa-paper-plane"></i> سجّل الآن في هذا العرض
     </button>
   `;
@@ -1302,62 +600,51 @@ function openDetailsByIdx(i) {
 }
 function closeDetails() { document.getElementById("detailsModal").classList.remove("open"); }
 
-/* ══════════════════════════════════════
-   BRANCHES MODAL
-══════════════════════════════════════ */
+/* ══ BRANCHES MODAL ══ */
 function openBranchesByIdx(i) {
   const o = offersData[i];
   if (!o) return;
-  const raw   = String(o.branches || "").trim();
-  const lines = raw.split(/[\n،,]+/).map(l => l.trim()).filter(l => l);
-
-  let html = `<div class="detail-row" style="margin-bottom:16px"><i class="fa-solid fa-building"></i><div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency || "—"}</div></div></div>`;
-
-  if (lines.length === 0) {
+  const lines = String(o.branches||"").split(/[\n،,]+/).map(l=>l.trim()).filter(l=>l);
+  let html = `<div class="detail-row" style="margin-bottom:16px"><i class="fa-solid fa-building"></i><div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency||"—"}</div></div></div>`;
+  if (!lines.length) {
     html += `<div class="empty-state" style="padding:30px 0"><i class="fa-solid fa-map-marker-alt"></i><p>لا توجد فروع مضافة</p></div>`;
   } else {
-    lines.forEach(br => {
-      html += `<div class="branch-item"><i class="fa-solid fa-location-dot"></i><div class="br-text">${br}</div></div>`;
-    });
+    lines.forEach(br => { html += `<div class="branch-item"><i class="fa-solid fa-location-dot"></i><div class="br-text">${br}</div></div>`; });
   }
-
   document.getElementById("branchesContent").innerHTML = html;
   document.getElementById("branchesModal").classList.add("open");
 }
 function closeBranches() { document.getElementById("branchesModal").classList.remove("open"); }
 
-/* ══════════════════════════════════════
-   FEATURES MODAL  (نافذة مستقلة للمميزات)
-══════════════════════════════════════ */
+/* ══ FEATURES MODAL – نافذة مستقلة ══ */
 function openFeaturesByIdx(i) {
   const o = offersData[i];
   if (!o) return;
-  // نعيد استخدام nافذة التفاصيل لكن بمحتوى مختلف
-  document.getElementById("detailsContent").innerHTML = `
-    <div class="detail-row" style="margin-bottom:4px"><i class="fa-solid fa-building"></i><div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency || "—"}</div></div></div>
-    <div class="detail-row" style="margin-bottom:16px"><i class="fa-solid fa-kaaba"></i><div><div class="dr-label">العرض</div><div class="dr-val">${o.offer || "—"}</div></div></div>
-    <div class="section-title"><i class="fa-solid fa-gift"></i> مميزات العرض</div>
-    <div class="features-box" style="margin-top:0">${o.features || "—"}</div>
-    <button class="btn-cancel" style="margin-top:16px" onclick="closeDetails()">إغلاق</button>
+  document.getElementById("featuresContent").innerHTML = `
+    <div class="detail-row" style="margin-bottom:4px">
+      <i class="fa-solid fa-building"></i>
+      <div><div class="dr-label">الوكالة</div><div class="dr-val">${o.agency||"—"}</div></div>
+    </div>
+    <div class="detail-row" style="margin-bottom:16px">
+      <i class="fa-solid fa-kaaba"></i>
+      <div><div class="dr-label">العرض</div><div class="dr-val">${o.offer||"—"}</div></div>
+    </div>
+    <div class="features-box">${o.features||"—"}</div>
+    <button class="btn-cancel" style="margin-top:16px" onclick="closeFeaturesModal()">إغلاق</button>
   `;
-  document.getElementById("detailsModal").classList.add("open");
+  document.getElementById("featuresModal").classList.add("open");
 }
+function closeFeaturesModal() { document.getElementById("featuresModal").classList.remove("open"); }
 
-/* ══════════════════════════════════════
-   REGISTER MODAL
-══════════════════════════════════════ */
+/* ══ REGISTER MODAL ══ */
 function openRegisterByIdx(i) {
   selectedOffer = offersData[i];
-  document.getElementById("cFirst").value = "";
-  document.getElementById("cLast").value  = "";
-  document.getElementById("cPhone").value = "";
-
-  document.getElementById("registerOfferInfo").innerHTML = `
-    🕋 <strong>${selectedOffer?.offer || "عرض عمرة"}</strong> &nbsp;|&nbsp;
-    🏢 ${selectedOffer?.agency || ""} &nbsp;|&nbsp;
-    📅 ${formatDateArabicFull(selectedOffer?.date)} &nbsp;|&nbsp;
-    💰 ${Number(selectedOffer?.group).toLocaleString("ar-DZ")} دج
-  `;
+  ["cFirst","cLast","cPhone"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("registerOfferInfo").innerHTML =
+    `🕋 <strong>${selectedOffer?.offer||"عرض عمرة"}</strong> &nbsp;|&nbsp;
+     🏢 ${selectedOffer?.agency||""} &nbsp;|&nbsp;
+     📅 ${formatDateArabicFull(selectedOffer?.date)} &nbsp;|&nbsp;
+     💰 ${Number(selectedOffer?.group).toLocaleString("ar-DZ")} دج`;
   document.getElementById("registerModal").classList.add("open");
 }
 function closeRegisterModal() { document.getElementById("registerModal").classList.remove("open"); }
@@ -1366,69 +653,32 @@ function sendRegister() {
   const first = document.getElementById("cFirst").value.trim();
   const last  = document.getElementById("cLast").value.trim();
   const phone = document.getElementById("cPhone").value.trim();
-  if (!first || !last || !phone) { showToast("أكمل جميع الحقول", "⚠️"); return; }
-
+  if (!first||!last||!phone) { showToast("أكمل جميع الحقول","⚠️"); return; }
   const o = selectedOffer;
-
-  const waMsg = encodeURIComponent(
-    `السلام عليكم ورحمة الله وبركاته 🌿\n\n` +
-    `*طلب تسجيل من موقع طريق العمرة* 🕋\n\n` +
-    `👤 الاسم: ${first} ${last}\n` +
-    `📞 الهاتف: ${phone}\n\n` +
-    `──────────────\n` +
-    `🏢 الوكالة: ${o?.agency || "—"}\n` +
-    `🕋 العرض: ${o?.offer || "—"}\n` +
-    `📅 تاريخ الرحلة: ${formatDateArabicFull(o?.date)}\n` +
-    `✈️ المطار: ${o?.airport || "—"}\n` +
-    `🏨 الفندق: ${o?.hotel || "—"}\n` +
-    `⏱️ المدة: ${o?.duration || "—"}\n` +
-    `💰 السعر: ${o?.group || "—"} دج\n` +
-    `──────────────\n` +
-    `*المصدر: موقع طريق العمرة*`
+  const msg = encodeURIComponent(
+    `السلام عليكم ورحمة الله وبركاته 🌿\n\n*طلب تسجيل من موقع طريق العمرة* 🕋\n\n`+
+    `👤 الاسم: ${first} ${last}\n📞 الهاتف: ${phone}\n\n──────────────\n`+
+    `🏢 الوكالة: ${o?.agency||"—"}\n🕋 العرض: ${o?.offer||"—"}\n`+
+    `📅 تاريخ الرحلة: ${formatDateArabicFull(o?.date)}\n✈️ المطار: ${o?.airport||"—"}\n`+
+    `🏨 الفندق: ${o?.hotel||"—"}\n⏱️ المدة: ${o?.duration||"—"}\n`+
+    `💰 السعر: ${o?.group||"—"} دج\n──────────────\n*المصدر: موقع طريق العمرة*`
   );
-
   const ap = agencyWaPhone(o);
-  window.open(`https://wa.me/${ap}?text=${waMsg}`, "_blank");
-
-  const formData = new URLSearchParams({
-    source:       "موقع طريق العمرة",
-    clientName:   `${first} ${last}`,
-    clientPhone:  phone,
-    agency:       o?.agency   || "",
-    offer:        o?.offer    || "",
-    date:         o?.date     || "",
-    airport:      o?.airport  || "",
-    hotel:        o?.hotel    || "",
-    duration:     o?.duration || "",
-    price:        o?.group    || "",
-    agencyPhone:  ap,
-    notifyEmail:  "tgtmhb99@gmail.com"
-  });
-  fetch(REGISTER_API, { method: "POST", body: formData }).catch(() => {});
-
+  window.open(`https://wa.me/${ap}?text=${msg}`,"_blank");
+  fetch(REGISTER_API,{method:"POST",body:new URLSearchParams({source:"موقع طريق العمرة",clientName:`${first} ${last}`,clientPhone:phone,agency:o?.agency||"",offer:o?.offer||"",date:o?.date||"",airport:o?.airport||"",hotel:o?.hotel||"",duration:o?.duration||"",price:o?.group||"",agencyPhone:ap,notifyEmail:"tgtmhb99@gmail.com"})}).catch(()=>{});
   closeRegisterModal();
   showToast("تم إرسال طلبك بنجاح");
 }
 
-/* ══════════════════════════════════════
-   WHATSAPP CONTACT MODAL  (جديد)
-══════════════════════════════════════ */
+/* ══ WHATSAPP MODAL ══ */
 function openWaModal(i) {
   waOffer = offersData[i];
   if (!waOffer) return;
-
-  document.getElementById("waFirst").value = "";
-  document.getElementById("waLast").value  = "";
-  document.getElementById("waPhone").value = "";
-
-  document.getElementById("waOfferInfo").innerHTML = `
-    🕋 <strong>${waOffer.offer || "عرض عمرة"}</strong><br>
-    🏢 ${waOffer.agency || "—"} &nbsp;|&nbsp;
-    📅 ${formatDateArabicFull(waOffer.date)}<br>
-    💰 ${Number(waOffer.group).toLocaleString("ar-DZ")} دج &nbsp;|&nbsp;
-    ✈️ ${waOffer.airport || "—"}
-  `;
-
+  ["waFirst","waLast","waPhone"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("waOfferInfo").innerHTML =
+    `🕋 <strong>${waOffer.offer||"عرض عمرة"}</strong><br>`+
+    `🏢 ${waOffer.agency||"—"} &nbsp;|&nbsp; 📅 ${formatDateArabicFull(waOffer.date)}<br>`+
+    `💰 ${Number(waOffer.group).toLocaleString("ar-DZ")} دج &nbsp;|&nbsp; ✈️ ${waOffer.airport||"—"}`;
   document.getElementById("waContactModal").classList.add("open");
 }
 function closeWaModal() { document.getElementById("waContactModal").classList.remove("open"); }
@@ -1437,83 +687,29 @@ function sendWaContact() {
   const first = document.getElementById("waFirst").value.trim();
   const last  = document.getElementById("waLast").value.trim();
   const phone = document.getElementById("waPhone").value.trim();
-  if (!first || !last || !phone) { showToast("أكمل جميع الحقول", "⚠️"); return; }
-
+  if (!first||!last||!phone) { showToast("أكمل جميع الحقول","⚠️"); return; }
   const o = waOffer;
-
-  // ── رسالة واتساب ──
-  const waMsg = encodeURIComponent(
-    `السلام عليكم ورحمة الله 🌿\n\n` +
-    `*استفسار من موقع طريق العمرة* 🕋\n\n` +
-    `👤 الاسم: ${first} ${last}\n` +
-    `📞 الهاتف: ${phone}\n\n` +
-    `──────────────\n` +
-    `🏢 الوكالة: ${o?.agency || "—"}\n` +
-    `🕋 العرض: ${o?.offer || "—"}\n` +
-    `📅 التاريخ: ${formatDateArabicFull(o?.date)}\n` +
-    `💰 السعر: ${o?.group || "—"} دج\n` +
-    `✈️ المطار: ${o?.airport || "—"}\n` +
-    `──────────────\n` +
-    `*المصدر: موقع طريق العمرة*`
+  const msg = encodeURIComponent(
+    `السلام عليكم ورحمة الله 🌿\n\n*استفسار من موقع طريق العمرة* 🕋\n\n`+
+    `👤 الاسم: ${first} ${last}\n📞 الهاتف: ${phone}\n\n──────────────\n`+
+    `🏢 الوكالة: ${o?.agency||"—"}\n🕋 العرض: ${o?.offer||"—"}\n`+
+    `📅 التاريخ: ${formatDateArabicFull(o?.date)}\n💰 السعر: ${o?.group||"—"} دج\n`+
+    `✈️ المطار: ${o?.airport||"—"}\n──────────────\n*المصدر: موقع طريق العمرة*`
   );
-
   const ap = agencyWaPhone(o);
-  window.open(`https://wa.me/${ap}?text=${waMsg}`, "_blank");
-
-  // ── إرسال إلى الشيت والإيميل (نفس API التسجيل) ──
-  const formData = new URLSearchParams({
-    source:      "واتساب – طريق العمرة",
-    clientName:  `${first} ${last}`,
-    clientPhone: phone,
-    agency:      o?.agency   || "",
-    offer:       o?.offer    || "",
-    date:        o?.date     || "",
-    airport:     o?.airport  || "",
-    hotel:       o?.hotel    || "",
-    duration:    o?.duration || "",
-    price:       o?.group    || "",
-    agencyPhone: ap,
-    notifyEmail: "tgtmhb99@gmail.com"
-  });
-  fetch(REGISTER_API, { method: "POST", body: formData }).catch(() => {});
-
+  window.open(`https://wa.me/${ap}?text=${msg}`,"_blank");
+  fetch(REGISTER_API,{method:"POST",body:new URLSearchParams({source:"واتساب – طريق العمرة",clientName:`${first} ${last}`,clientPhone:phone,agency:o?.agency||"",offer:o?.offer||"",date:o?.date||"",airport:o?.airport||"",hotel:o?.hotel||"",duration:o?.duration||"",price:o?.group||"",agencyPhone:ap,notifyEmail:"tgtmhb99@gmail.com"})}).catch(()=>{});
   closeWaModal();
-  showToast("جارٍ فتح واتساب الوكالة…", "📲");
+  showToast("جارٍ فتح واتساب الوكالة…","📲");
 }
 
-/* ── share ── */
-function shareByIdx(i) {
-  const o = offersData[i];
-  if (!o) return;
-  const text =
-    `🕋 عرض عمرة – ${o.agency}\n` +
-    `📅 ${formatDateArabicFull(o.date)}\n` +
-    `💰 ${o.group} دج\n` +
-    `✈️ ${o.airport || ""}\n` +
-    `🌐 موقع طريق العمرة`;
-  if (navigator.share) {
-    navigator.share({ title: "عرض عمرة – طريق العمرة", text });
-  } else {
-    navigator.clipboard?.writeText(text).then(() => showToast("تم نسخ العرض"));
-  }
-}
+/* ══ menu ══ */
+function openMenu() { document.getElementById("sideMenu").classList.add("open"); document.getElementById("overlay").style.display="block"; }
+function closeMenu() { document.getElementById("sideMenu").classList.remove("open"); document.getElementById("overlay").style.display="none"; }
 
-/* ── menu ── */
-function openMenu() {
-  document.getElementById("sideMenu").classList.add("open");
-  document.getElementById("overlay").style.display = "block";
-}
-function closeMenu() {
-  document.getElementById("sideMenu").classList.remove("open");
-  document.getElementById("overlay").style.display = "none";
-}
-
-/* ── visitors ── */
-fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {  
-  cache: "no-store"  
-})  
-.then(r => r.json())  
-.then(d => document.getElementById("visitors").textContent = d.count);
+/* ══ visitors ══ */
+fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec",{cache:"no-store"})
+  .then(r=>r.json()).then(d=>document.getElementById("visitors").textContent=d.count);
 </script>
 </body>
 </html>
