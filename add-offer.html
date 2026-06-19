@@ -29,8 +29,6 @@ body{
   color:var(--text);
   min-height:100vh;
 }
-
-/* ===== HEADER ===== */
 .header{
   background:linear-gradient(135deg,var(--brown-dark) 0%,var(--brown-mid) 55%,var(--brown-light) 100%);
   padding:24px 32px 20px;
@@ -49,8 +47,6 @@ body{
 }
 .header-text h1{font-size:21px;font-weight:700;color:var(--gold-light);letter-spacing:.4px}
 .header-text p{font-size:12.5px;color:rgba(245,230,163,.55);margin-top:3px}
-
-/* ===== NAV ===== */
 nav{
   background:#2b1000;
   display:flex;gap:4px;
@@ -69,16 +65,12 @@ nav a{
 }
 nav a:hover{color:var(--gold-light);}
 nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
-
-/* ===== BODY ===== */
 .body{
   max-width:860px;
   margin:0 auto;
   padding:28px 20px 120px;
   display:grid;gap:20px;
 }
-
-/* ===== CARD ===== */
 .card{
   background:var(--card);
   border-radius:14px;
@@ -94,12 +86,8 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
 .card-head i{font-size:18px;color:var(--gold)}
 .card-head span{font-size:15px;font-weight:600;color:var(--text)}
 .card-body{padding:22px}
-
-/* ===== GRID ===== */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-
-/* ===== FIELD ===== */
 .field{display:flex;flex-direction:column;gap:6px}
 .field label{
   font-size:12px;font-weight:600;
@@ -132,8 +120,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
   background-position:left 12px center;
   padding-left:32px;
 }
-
-/* ===== AGENCY PREVIEW ===== */
 .agency-preview{
   display:flex;align-items:center;gap:14px;
   padding:14px 16px;
@@ -160,8 +146,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
 }
 .agency-info p{font-size:14px;font-weight:600;color:var(--text)}
 .agency-info span{font-size:12px;color:var(--text-muted)}
-
-/* ===== AIRLINE BADGE ===== */
 .airline-badge{
   display:none;
   align-items:center;gap:12px;
@@ -173,8 +157,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
 }
 .airline-badge img{height:32px;max-width:90px;object-fit:contain}
 .airline-badge span{font-size:13px;color:var(--text-muted);font-weight:500}
-
-/* ===== PRICES ===== */
 .prices-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -210,8 +192,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
   box-shadow:0 0 0 3px var(--focus-ring);
 }
 .price-input::placeholder{color:var(--text-hint);font-weight:400}
-
-/* ===== FEATURES ===== */
 .features-wrap{display:flex;flex-direction:column;gap:10px}
 .feature-row{
   display:flex;align-items:center;gap:8px;
@@ -262,12 +242,10 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
 }
 .btn-add-row:hover{background:rgba(184,134,11,.13);border-color:var(--gold)}
 .features-hint{font-size:12px;color:#bbb0a0;margin-top:8px}
-
-/* ===== BRANCHES ===== */
 .branches-wrap{display:flex;flex-direction:column;gap:10px}
 .branch-row{
   display:grid;
-  grid-template-columns:1fr 1fr auto;
+  grid-template-columns:1fr auto;
   gap:8px;
   align-items:center;
 }
@@ -287,8 +265,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
   box-shadow:0 0 0 3px var(--focus-ring);
 }
 .branch-row input::placeholder{color:var(--text-hint)}
-
-/* ===== SUBMIT BAR ===== */
 .submit-bar{
   position:fixed;
   bottom:0;right:0;left:0;
@@ -327,8 +303,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
   transition:.2s;
 }
 .btn-secondary:hover{background:#f4f2ee;color:var(--text)}
-
-/* ===== STATUS ===== */
 .status-msg{
   display:none;
   align-items:center;gap:8px;
@@ -339,8 +313,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
 }
 .status-msg.success{background:#e8f5e1;color:#2e6b10;border:1px solid #b8e09a}
 .status-msg.error{background:#fdeaea;color:#9b2020;border:1px solid #f5b3b3}
-
-/* ===== SENDING OVERLAY ===== */
 .sending-overlay{
   display:none;
   position:fixed;inset:0;
@@ -372,23 +344,57 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
 .zikr{font-size:15px;color:var(--gold);font-weight:700;margin-top:10px;animation:fade 1.5s infinite}
 @keyframes fade{0%,100%{opacity:1}50%{opacity:.35}}
 
-/* ===== WHATSAPP BTN ===== */
-.whatsapp-btn{
+/* ===== أزرار واتساب العائمة ===== */
+.wa-buttons{
   position:fixed;
   bottom:90px;left:20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  z-index:300;
+}
+.whatsapp-btn{
   width:50px;height:50px;
   background:#25D366;
   color:#fff;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   font-size:26px;
-  z-index:300;
   text-decoration:none;
   box-shadow:0 4px 14px rgba(37,211,102,.4);
   transition:.2s;
+  position:relative;
 }
 .whatsapp-btn:hover{transform:scale(1.08)}
+.whatsapp-btn .wa-tooltip{
+  position:absolute;
+  left:60px;
+  background:#1a1510;
+  color:#fff;
+  font-size:12px;
+  font-family:'Tajawal',Arial,sans-serif;
+  font-weight:600;
+  padding:6px 10px;
+  border-radius:7px;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s;
+}
+.whatsapp-btn:hover .wa-tooltip{opacity:1;}
+.whatsapp-btn .wa-tooltip::after{
+  content:'';
+  position:absolute;
+  right:100%;top:50%;
+  transform:translateY(-50%);
+  border:5px solid transparent;
+  border-right-color:#1a1510;
+}
+/* زر المجموعة بلون مختلف قليلاً */
+.whatsapp-btn.group-btn{
+  background:#128C7E;
+  box-shadow:0 4px 14px rgba(18,140,126,.4);
+}
 
-/* ===== RESPONSIVE ===== */
 @media(max-width:600px){
   .header{padding:18px 16px}
   nav{padding:0 12px}
@@ -401,15 +407,25 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
   .branch-row input:first-child{grid-column:1}
   .branch-row input:nth-child(2){grid-column:1}
   .branch-row .btn-remove-row{grid-row:1/3;grid-column:2;align-self:center}
+  .wa-buttons{bottom:90px;left:12px}
 }
 </style>
 </head>
 <body>
 
-<!-- WhatsApp -->
-<a href="https://wa.me/213674141379" target="_blank" class="whatsapp-btn" title="تواصل عبر واتساب">
-  <i class="ti ti-brand-whatsapp"></i>
-</a>
+<!-- أزرار واتساب العائمة -->
+<div class="wa-buttons">
+  <!-- زر الانضمام للمجموعة -->
+  <a href="https://chat.whatsapp.com/K8L1Qs60ARz3tm0WhrINpy" target="_blank" class="whatsapp-btn group-btn" title="انضم للمجموعة">
+    <i class="ti ti-users"></i>
+    <span class="wa-tooltip">انضم لمجموعتنا</span>
+  </a>
+  <!-- زر التواصل المباشر -->
+  <a href="https://wa.me/213674141379" target="_blank" class="whatsapp-btn" title="تواصل عبر واتساب">
+    <i class="ti ti-brand-whatsapp"></i>
+    <span class="wa-tooltip">تواصل معنا</span>
+  </a>
+</div>
 
 <!-- Header -->
 <div class="header">
@@ -431,14 +447,12 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
 <form id="offerForm">
 <div class="body">
 
-  <!-- بطاقة الوكالة -->
   <div class="card">
     <div class="card-head">
       <i class="ti ti-building-store"></i>
       <span>معلومات الوكالة</span>
     </div>
     <div class="card-body">
-
       <div class="agency-preview">
         <div class="agency-logo-wrap">
           <div class="agency-placeholder" id="agencyPlaceholder"><i class="ti ti-building"></i></div>
@@ -449,7 +463,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
           <span id="agencyPreviewSub">اختر من القائمة أو أضف جديدة</span>
         </div>
       </div>
-
       <div class="field" style="margin-bottom:16px">
         <label>الوكالة</label>
         <select id="agencySelect">
@@ -457,7 +470,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
           <option value="__new__">➕ إضافة وكالة جديدة</option>
         </select>
       </div>
-
       <div class="grid2">
         <div class="field">
           <label>اسم الوكالة</label>
@@ -468,7 +480,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
           <input name="phone" id="phoneInput" placeholder="05XX XXX XXX">
         </div>
       </div>
-
       <div class="grid2" style="margin-top:14px">
         <div class="field">
           <label>الولاية</label>
@@ -479,23 +490,19 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
           <input name="city" id="cityInput" placeholder="البلدية" required>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- بطاقة الرحلة -->
   <div class="card">
     <div class="card-head">
       <i class="ti ti-plane-tilt"></i>
       <span>تفاصيل الرحلة</span>
     </div>
     <div class="card-body" style="display:grid;gap:16px">
-
       <div class="field">
         <label>اسم العرض</label>
         <input name="offer" placeholder="مثال: باقة رمضان المميزة" required>
       </div>
-
       <div class="grid2">
         <div class="field">
           <label>تاريخ الرحلة</label>
@@ -506,7 +513,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
           <input name="duration" placeholder="مثال: 14 يوم" required>
         </div>
       </div>
-
       <div class="grid2">
         <div class="field">
           <label>نوع الرحلة</label>
@@ -535,7 +541,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
           </select>
         </div>
       </div>
-
       <div class="field">
         <label>شركة الطيران</label>
         <select name="airline" id="airlineSelect" required>
@@ -558,16 +563,13 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
           <span id="airlineName"></span>
         </div>
       </div>
-
       <div class="field">
         <label>اسم الفندق</label>
         <input name="hotel" placeholder="مثال: فندق النور السعودية" required>
       </div>
-
     </div>
   </div>
 
-  <!-- بطاقة الأسعار -->
   <div class="card">
     <div class="card-head">
       <i class="ti ti-currency-dollar"></i>
@@ -596,7 +598,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
     </div>
   </div>
 
-  <!-- ===== بطاقة مميزات العرض (العمود U) ===== -->
   <div class="card">
     <div class="card-head">
       <i class="ti ti-star"></i>
@@ -619,7 +620,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
     </div>
   </div>
 
-  <!-- ===== بطاقة فروع الوكالة (العمود V) ===== -->
   <div class="card">
     <div class="card-head">
       <i class="ti ti-map-pin"></i>
@@ -629,7 +629,7 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
       <div class="branches-wrap" id="branchesWrap">
         <div class="branch-row">
           <input type="text" placeholder="المدينة / الولاية" maxlength="80">
-        
+          
           <button type="button" class="btn-remove-row" onclick="removeRow(this,'branchesWrap')" title="حذف">
             <i class="ti ti-trash"></i>
           </button>
@@ -643,9 +643,8 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
     </div>
   </div>
 
-</div><!-- end body -->
+</div>
 
-<!-- Submit Bar -->
 <div class="submit-bar">
   <div class="status-msg" id="statusMsg"></div>
   <button type="button" class="btn-secondary" onclick="resetForm()">
@@ -659,7 +658,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
 
 </form>
 
-<!-- Sending Overlay -->
 <div class="sending-overlay" id="sendingOverlay">
   <div class="sending-box">
     <div class="spinner"></div>
@@ -671,7 +669,6 @@ nav a.active{color:var(--gold-light);border-bottom-color:var(--gold);}
 <script>
 const API = "https://script.google.com/macros/s/AKfycbx01FXo_YM9cf47zmxDd_HWKC8jE2CBKMqETihmygQmVHaK2EVTnKLMVepPY6EAb87waQ/exec";
 
-/* ---- عناصر ---- */
 const agencySelect      = document.getElementById("agencySelect");
 const agencyInput       = document.getElementById("agencyInput");
 const stateInput        = document.getElementById("stateInput");
@@ -694,7 +691,6 @@ const statusMsg         = document.getElementById("statusMsg");
 
 let agencies = {};
 
-/* ---- جلب الوكالات ---- */
 fetch(API)
   .then(r => r.json())
   .then(data => {
@@ -707,7 +703,6 @@ fetch(API)
   })
   .catch(() => {});
 
-/* ---- اختيار الوكالة ---- */
 agencySelect.onchange = () => {
   const v = agencySelect.value;
   if (v === "__new__") {
@@ -735,7 +730,6 @@ agencySelect.onchange = () => {
   }
 };
 
-/* ---- اختيار شركة الطيران ---- */
 airlineSelect.onchange = () => {
   const opt = airlineSelect.options[airlineSelect.selectedIndex];
   const url = opt.getAttribute("data-logo") || "";
@@ -749,7 +743,6 @@ airlineSelect.onchange = () => {
   }
 };
 
-/* ---- إضافة ميزة ---- */
 function addFeature() {
   const wrap = document.getElementById("featuresWrap");
   const row = document.createElement("div");
@@ -763,14 +756,13 @@ function addFeature() {
   row.querySelector("input").focus();
 }
 
-/* ---- إضافة فرع ---- */
 function addBranch() {
   const wrap = document.getElementById("branchesWrap");
   const row = document.createElement("div");
   row.className = "branch-row";
   row.innerHTML = `
     <input type="text" placeholder="المدينة / الولاية" maxlength="80">
-    <input type="text" placeholder="رقم الهاتف (اختياري)" maxlength="20">
+    
     <button type="button" class="btn-remove-row" onclick="removeRow(this,'branchesWrap')" title="حذف">
       <i class="ti ti-trash"></i>
     </button>`;
@@ -778,12 +770,10 @@ function addBranch() {
   row.querySelector("input").focus();
 }
 
-/* ---- حذف صف ---- */
 function removeRow(btn, wrapId) {
   const wrap = document.getElementById(wrapId);
   const rows = wrap.querySelectorAll(wrapId === "featuresWrap" ? ".feature-row" : ".branch-row");
   if (rows.length === 1) {
-    // مسح المحتوى بدلاً من الحذف إذا كان آخر صف
     const inputs = rows[0].querySelectorAll("input");
     inputs.forEach(i => i.value = "");
     return;
@@ -791,27 +781,23 @@ function removeRow(btn, wrapId) {
   btn.closest(wrapId === "featuresWrap" ? ".feature-row" : ".branch-row").remove();
 }
 
-/* ---- جمع المميزات ---- */
 function collectFeatures() {
   const rows = document.querySelectorAll("#featuresWrap .feature-row input");
   const vals = Array.from(rows).map(i => i.value.trim()).filter(Boolean);
   document.getElementById("featuresHidden").value = vals.join(" | ");
 }
 
-/* ---- جمع الفروع ---- */
 function collectBranches() {
   const rows = document.querySelectorAll("#branchesWrap .branch-row");
   const vals = Array.from(rows).map(row => {
     const inputs = row.querySelectorAll("input");
     const city  = inputs[0] ? inputs[0].value.trim() : "";
-    const phone = inputs[1] ? inputs[1].value.trim() : "";
     if (!city) return null;
-    return phone ? `${city} (${phone})` : city;
+    return city;
   }).filter(Boolean);
   document.getElementById("branchesHidden").value = vals.join(" | ");
 }
 
-/* ---- مسح النموذج ---- */
 function resetForm() {
   offerForm.reset();
   agencyLogoImg.style.display = "none";
@@ -821,8 +807,6 @@ function resetForm() {
   airlineBadge.style.display = "none";
   phoneField.style.display = "flex";
   statusMsg.style.display = "none";
-
-  // إعادة تعيين المميزات والفروع
   document.getElementById("featuresWrap").innerHTML = `
     <div class="feature-row">
       <input type="text" placeholder="مثال: تأشيرة مجانية" maxlength="120">
@@ -833,26 +817,21 @@ function resetForm() {
   document.getElementById("branchesWrap").innerHTML = `
     <div class="branch-row">
       <input type="text" placeholder="المدينة / الولاية" maxlength="80">
-      <input type="text" placeholder="رقم الهاتف (اختياري)" maxlength="20">
+      
       <button type="button" class="btn-remove-row" onclick="removeRow(this,'branchesWrap')" title="حذف">
         <i class="ti ti-trash"></i>
       </button>
     </div>`;
 }
 
-/* ---- إرسال النموذج ---- */
 offerForm.onsubmit = e => {
   e.preventDefault();
-
-  // جمع المميزات والفروع قبل الإرسال
   collectFeatures();
   collectBranches();
-
   if (!airlineLogoInput.value) {
     const opt = airlineSelect.options[airlineSelect.selectedIndex];
     airlineLogoInput.value = opt.getAttribute("data-logo") || "";
   }
-
   sendingOverlay.style.display = "flex";
   statusMsg.style.display = "none";
   let t = 5;
@@ -862,7 +841,6 @@ offerForm.onsubmit = e => {
     countdownText.textContent = `⏳ يتم الإرسال... ${t}`;
     if (t === 0) clearInterval(timer);
   }, 1000);
-
   fetch(API, { method: "POST", body: new FormData(offerForm) })
     .then(() => {
       setTimeout(() => {
