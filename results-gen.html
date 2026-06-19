@@ -1509,11 +1509,11 @@ function closeMenu() {
 }
 
 /* ── visitors ── */
-let v = Math.floor(Math.random() * 300) + 120;
-document.getElementById("visitors").textContent = v;
-setInterval(() => {
-  if (Math.random() < .3) { v++; document.getElementById("visitors").textContent = v; }
-}, 6000);
+fetch("https://script.google.com/macros/s/AKfycbzWqaWF63u80EldQZABBexMJyOdVm089qG8Uy5DlyQ1YutXusvo4ow0K09OlYvFnuug/exec", {  
+  cache: "no-store"  
+})  
+.then(r => r.json())  
+.then(d => document.getElementById("visitors").textContent = d.count);
 </script>
 </body>
 </html>
