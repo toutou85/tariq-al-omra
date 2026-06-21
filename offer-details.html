@@ -4,273 +4,920 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>تفاصيل العرض | طريق العمرة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
-body{
-  font-family:'Tajawal',sans-serif;
-  background:#f4f4f4;
-  margin:0;
+/* ══════════════════════════════════════════
+   TOKENS
+══════════════════════════════════════════ */
+:root {
+  --gold:        #C49A2A;
+  --gold-light:  #F5E199;
+  --gold-pale:   #FBF5DC;
+  --green:       #1A7A4A;
+  --green-light: #E6F5EE;
+  --red:         #C0392B;
+  --ink:         #1C1C2E;
+  --muted:       #6B6B80;
+  --border:      #E8E0CC;
+  --surface:     #FDFAF3;
+  --white:       #FFFFFF;
+  --shadow-sm:   0 2px 8px rgba(28,28,46,.07);
+  --shadow-md:   0 6px 24px rgba(28,28,46,.12);
+  --radius:      14px;
 }
 
-/* ===== TOP BAR ===== */
-.topbar{
-  background:#FFD700;
-  padding:12px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
-.menu-btn{font-size:26px;font-weight:900;cursor:pointer}
-.topbar h2{margin:0;font-size:18px}
+/* ══════════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ===== SIDEBAR ===== */
-.sidebar{
-  position:fixed;
-  top:0;
-  right:-280px;
-  width:260px;
-  height:100%;
-  background:#fff;
-  transition:.3s;
-  box-shadow:-4px 0 15px rgba(0,0,0,.3);
-  padding-top:60px;
-  z-index:2000;
-}
-.sidebar.open{right:0}
-.sidebar a{
-  padding:12px 20px;
-  display:block;
-  text-decoration:none;
-  color:#333;
-  font-weight:700;
-}
-.sidebar a:hover{background:#f2f2f2}
-.closebtn{
-  position:absolute;
-  top:10px;
-  left:15px;
-  font-size:28px;
-  cursor:pointer;
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.7;
+  padding-bottom: 160px;
 }
 
-/* ===== OVERLAY ===== */
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.4);
-  display:none;
-  z-index:1500;
-}
-.overlay.show{display:block}
-
-/* ===== CONTENT ===== */
-.container{
-  max-width:850px;
-  margin:20px auto 140px;
-  background:#fff;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 4px 12px rgba(0,0,0,.1);
-}
-.main-img{width:100%;border-radius:12px;margin-bottom:20px}
-h2{text-align:center;color:#d4af37}
-
-/* ===== AGENCY LOGO ===== */
-.agency-logo{
-  width:90px;
-  height:90px;
-  margin:10px auto;
-}
-.agency-logo img{width:100%;height:100%;object-fit:contain}
-
-ul{list-style:none;padding:0;margin:0}
-ul li{
-  padding:8px 10px;
-  border-bottom:1px solid #eee;
-  font-size:15px;
+/* ══════════════════════════════════════════
+   TOP BAR
+══════════════════════════════════════════ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  height: 58px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.3);
 }
 
-/* ===== EXTRA IMAGES ===== */
-.extra-images{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:10px;
-  margin-top:20px;
-}
-.extra-images img{
-  width:100%;
-  height:120px;
-  object-fit:cover;
-  border-radius:8px;
+.topbar-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
 }
 
-/* ===== ACTION BAR ===== */
-.action-bar{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#fff;
-  border-top:1px solid #ddd;
-  display:flex;
-  gap:10px;
-  padding:10px;
-  z-index:3000;
-}
-.action-bar button{
-  flex:1;
-  border:none;
-  padding:12px;
-  font-size:15px;
-  font-weight:900;
-  border-radius:12px;
-  cursor:pointer;
-}
-.btn-like{background:#fff;color:#e53935;border:2px solid #e53935}
-.btn-like.disabled{opacity:.5;pointer-events:none}
-.btn-share{background:linear-gradient(135deg,#0d6efd,#4dabf7);color:#fff}
-
-/* ===== FIXED BOOK BUTTON ===== */
-.fixed-btn{
-  position:fixed;
-  bottom:80px;
-  left:50%;
-  transform:translateX(-50%);
-  background:linear-gradient(135deg,#28a745,#20c997);
-  color:#fff;
-  padding:14px 35px;
-  border-radius:12px;
-  font-weight:900;
-  text-decoration:none;
-  box-shadow:0 4px 10px rgba(0,0,0,.25);
-  z-index:3500;
-  animation:pulse 2.5s infinite;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(40,167,69,.6)}
-  70%{box-shadow:0 0 0 14px rgba(40,167,69,0)}
-  100%{box-shadow:0 0 0 0 rgba(40,167,69,0)}
+.topbar-title span:first-child {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 0.5px;
 }
 
-.like-count{text-align:center;margin-top:10px;font-size:14px}
+.topbar-title span:last-child {
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+  font-weight: 400;
+}
+
+.menu-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background .2s;
+}
+.menu-btn:hover { background: rgba(255,255,255,.08); }
+.menu-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: .3s;
+}
+
+.topbar-logo {
+  width: 36px;
+  height: 36px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* ══════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════ */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 275px;
+  height: 100%;
+  background: var(--white);
+  z-index: 2000;
+  transition: right .3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -6px 0 30px rgba(0,0,0,.18);
+}
+
+.sidebar.open { right: 0; }
+
+.sidebar-header {
+  background: var(--ink);
+  padding: 20px 18px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-header-title {
+  color: var(--gold-light);
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.close-btn {
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,.12);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--white);
+  font-size: 18px;
+  transition: background .2s;
+}
+.close-btn:hover { background: rgba(255,255,255,.22); }
+
+.sidebar-nav { flex: 1; overflow-y: auto; padding: 10px 0; }
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 14.5px;
+  transition: background .15s, color .15s;
+  border-right: 3px solid transparent;
+}
+
+.sidebar-nav a:hover {
+  background: var(--gold-pale);
+  color: var(--gold);
+  border-right-color: var(--gold);
+}
+
+.sidebar-nav a .nav-icon {
+  font-size: 18px;
+  width: 26px;
+  text-align: center;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 18px;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 1500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+  backdrop-filter: blur(3px);
+}
+.overlay.show { opacity: 1; pointer-events: all; }
+
+/* ══════════════════════════════════════════
+   MAIN CONTAINER
+══════════════════════════════════════════ */
+.container {
+  max-width: 860px;
+  margin: 24px auto;
+  padding: 0 14px;
+}
+
+/* ══════════════════════════════════════════
+   HERO CARD
+══════════════════════════════════════════ */
+.hero-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 16px;
+}
+
+.hero-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+}
+
+.hero-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+
+.hero-img-wrap:hover img { transform: scale(1.03); }
+
+.hero-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 900;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+
+.hero-body {
+  padding: 20px 20px 16px;
+}
+
+.agency-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.agency-logo-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--gold-pale);
+  border: 2px solid var(--gold-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.agency-logo-wrap img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.agency-info { flex: 1; }
+.agency-label { font-size: 11px; color: var(--muted); font-weight: 500; }
+.agency-name { font-size: 16px; font-weight: 900; color: var(--ink); }
+
+.offer-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 14px;
+}
+
+.tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--gold-pale);
+  border: 1px solid var(--gold-light);
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* ══════════════════════════════════════════
+   SECTION CARD
+══════════════════════════════════════════ */
+.section-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.section-head {
+  padding: 14px 18px;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-head-icon {
+  font-size: 18px;
+}
+
+.section-head-title {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--gold-light);
+  letter-spacing: 0.3px;
+}
+
+.detail-list { padding: 6px 0; }
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+
+.detail-row:last-child { border-bottom: none; }
+.detail-row:hover { background: var(--gold-pale); }
+
+.detail-icon { font-size: 17px; flex-shrink: 0; width: 26px; text-align: center; }
+
+.detail-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.detail-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  flex: 1;
+  text-align: left;
+}
+
+/* ══════════════════════════════════════════
+   PRICES
+══════════════════════════════════════════ */
+.prices-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.price-cell {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price-cell:nth-child(odd) { border-left: none; }
+
+.price-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+.price-type {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.price-amount {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--green);
+}
+
+.price-amount span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* ══════════════════════════════════════════
+   CHILDREN PRICES
+══════════════════════════════════════════ */
+.children-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 14px;
+}
+
+.child-card {
+  background: var(--green-light);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.child-age {
+  font-size: 11px;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.child-price {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+.child-price sub {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* ══════════════════════════════════════════
+   PHOTO GALLERY
+══════════════════════════════════════════ */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  padding: 3px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+
+.gallery-grid img:hover { opacity: .85; }
+
+.gallery-grid img:first-child {
+  grid-column: span 2;
+  height: 160px;
+}
+
+/* ══════════════════════════════════════════
+   LIKE COUNT
+══════════════════════════════════════════ */
+.engagement-bar {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.like-count-display {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.like-count-num {
+  font-weight: 900;
+  color: var(--red);
+}
+
+/* ══════════════════════════════════════════
+   LOADING / ERROR
+══════════════════════════════════════════ */
+.state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  gap: 16px;
+}
+
+.loader {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.state-text { color: var(--muted); font-size: 15px; font-weight: 600; }
+
+/* ══════════════════════════════════════════
+   ACTION BAR (BOTTOM)
+══════════════════════════════════════════ */
+.action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 10px 14px;
+  display: flex;
+  gap: 10px;
+  z-index: 800;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+}
+
+.btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 12px 10px;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform .15s, opacity .15s, box-shadow .15s;
+}
+
+.btn:active { transform: scale(.97); }
+
+.btn-like {
+  background: #FFF0F0;
+  color: var(--red);
+  border: 1.5px solid #FFCDD2;
+}
+
+.btn-like.liked {
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
+}
+
+.btn-like.disabled { opacity: .5; pointer-events: none; }
+
+.btn-share {
+  background: var(--ink);
+  color: var(--white);
+  box-shadow: 0 3px 10px rgba(28,28,46,.2);
+}
+
+.btn-share:hover { box-shadow: 0 5px 18px rgba(28,28,46,.3); }
+
+/* ══════════════════════════════════════════
+   BOOK BUTTON
+══════════════════════════════════════════ */
+.book-btn-wrap {
+  position: fixed;
+  bottom: 82px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 850;
+}
+
+.book-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: linear-gradient(135deg, var(--green) 0%, #27AE60 100%);
+  color: var(--white);
+  padding: 15px 32px;
+  border-radius: 50px;
+  font-weight: 900;
+  font-size: 15px;
+  text-decoration: none;
+  box-shadow: 0 6px 22px rgba(26,122,74,.4);
+  white-space: nowrap;
+  animation: pulse-green 2.5s infinite;
+  font-family: 'Tajawal', sans-serif;
+}
+
+@keyframes pulse-green {
+  0%   { box-shadow: 0 0 0 0 rgba(26,122,74,.5); }
+  70%  { box-shadow: 0 0 0 16px rgba(26,122,74,0); }
+  100% { box-shadow: 0 0 0 0 rgba(26,122,74,0); }
+}
+
+/* ══════════════════════════════════════════
+   LIGHTBOX
+══════════════════════════════════════════ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.92);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s;
+}
+
+.lightbox.show { opacity: 1; pointer-events: all; }
+
+.lightbox img {
+  max-width: 95vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: var(--white);
+  font-size: 28px;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.12);
+  border-radius: 50%;
+  transition: background .2s;
+}
+
+.lightbox-close:hover { background: rgba(255,255,255,.25); }
+
+@media (prefers-reduced-motion: reduce) {
+  .book-btn { animation: none; }
+}
 </style>
 </head>
 
 <body>
 
-<div class="topbar">
-  <span class="menu-btn" onclick="openSidebar()">☰</span>
-  <h2>تفاصيل العرض</h2>
-</div>
+<!-- ══ TOP BAR ══ -->
+<header class="topbar">
+  <div class="menu-btn" onclick="openSidebar()" role="button" aria-label="فتح القائمة">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="topbar-title">
+    <span>طريق العمرة</span>
+    <span>تفاصيل العرض</span>
+  </div>
+  <div class="topbar-logo">🕋</div>
+</header>
 
+<!-- ══ OVERLAY ══ -->
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-<div id="mySidebar" class="sidebar">
-  <span class="closebtn" onclick="closeSidebar()">×</span>
-      <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
-    <a href="index.html">🏠 الرئيسية</a>
-    <a href="offers.html">🎁 عروض العمرة</a>
-    <a href="contact.html">📞 اتصل بنا</a>
-    <a href="about.html">❔ من نحن </a>
-    <a href="hajj-space.html"> 🕋 فضاء الحج 1447</a>
-    <a href="join.html">📩 انضم إلينا</a>
-<a href="upload.html" class="upload-button">📤🪪 تحميل جواز السفر</a>
-<a href="reviews.html">💬 آراء المعتمرين</a>
-a>
-<a href="manha.html">💶 منحة سفر </a>
-<a href="achievements.html">🏅 إنجازاتنا</a>
-<a href="space.html">🧾 تسجيلاتي</a>
+<!-- ══ SIDEBAR ══ -->
+<nav id="mySidebar" class="sidebar" aria-label="القائمة الرئيسية">
+  <div class="sidebar-header">
+    <span class="sidebar-header-title">🕋 طريق العمرة</span>
+    <div class="close-btn" onclick="closeSidebar()" role="button" aria-label="إغلاق">✕</div>
+  </div>
+  <div class="sidebar-nav">
+    <a href="index.html"><span class="nav-icon">🏠</span> الرئيسية</a>
+    <a href="offers.html"><span class="nav-icon">🎁</span> عروض العمرة</a>
+    <div class="sidebar-divider"></div>
+    <a href="hajj-space.html"><span class="nav-icon">🕋</span> فضاء الحج 1447</a>
+    <a href="reviews.html"><span class="nav-icon">💬</span> آراء المعتمرين</a>
+    <a href="achievements.html"><span class="nav-icon">🏅</span> إنجازاتنا</a>
+    <div class="sidebar-divider"></div>
+    <a href="upload.html"><span class="nav-icon">📤</span> تحميل جواز السفر</a>
+    <a href="space.html"><span class="nav-icon">🧾</span> تسجيلاتي</a>
+    <a href="join.html"><span class="nav-icon">📩</span> انضم إلينا</a>
+    <a href="manha.html"><span class="nav-icon">💶</span> منحة سفر</a>
+    <div class="sidebar-divider"></div>
+    <a href="contact.html"><span class="nav-icon">📞</span> اتصل بنا</a>
+    <a href="about.html"><span class="nav-icon">❔</span> من نحن</a>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<main class="container" id="details-container">
+  <div class="state-container">
+    <div class="loader"></div>
+    <p class="state-text">جاري تحميل التفاصيل…</p>
+  </div>
+</main>
+
+<!-- ══ BOOK BUTTON ══ -->
+<div class="book-btn-wrap">
+  <a id="fixedBookBtn" class="book-btn" href="#">
+    ✅ احجز الآن
+  </a>
 </div>
 
-<div class="container" id="details-container">
-  <p style="text-align:center">جاري تحميل التفاصيل…</p>
-</div>
 
-<!-- ACTION BAR -->
+<!-- ══ ACTION BAR ══ -->
 <div class="action-bar">
-  <button id="likeBtn" class="btn-like" onclick="likeOffer()">❤️ إعجاب</button>
-  <button class="btn-share" onclick="shareOffer()">📤 مشاركة</button>
+  <button id="likeBtn" class="btn btn-like" onclick="likeOffer()">
+    ❤️ إعجاب &nbsp;<span id="like-count-bar">0</span>
+  </button>
+  <button class="btn btn-share" onclick="shareOffer()">
+    📤 مشاركة
+  </button>
 </div>
 
-<!-- FIXED BOOK BUTTON -->
-<a id="fixedBookBtn" class="fixed-btn">🟢 احجز الآن</a>
+<!-- ══ LIGHTBOX ══ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-close">✕</div>
+  <img id="lightbox-img" src="" alt="">
+</div>
 
 <script>
-const apiURL="https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec";
-const id=new URLSearchParams(location.search).get("id");
-let currentOffer=null;
+const apiURL = "https://script.google.com/macros/s/AKfycbxQ0REua6idTYcmfcjhD4IcbHM9k25YsTlqnWkVLRjLe0VKI-4BDIAvXzb6EviLJz7E/exec";
+const id = new URLSearchParams(location.search).get("id");
+let currentOffer = null;
 
-/* ===== SIDEBAR ===== */
-const sidebar=document.getElementById("mySidebar");
-const overlay=document.getElementById("overlay");
-function openSidebar(){sidebar.classList.add("open");overlay.classList.add("show")}
-function closeSidebar(){sidebar.classList.remove("open");overlay.classList.remove("show")}
+/* ── SIDEBAR ── */
+const sidebar = document.getElementById("mySidebar");
+const overlay = document.getElementById("overlay");
+function openSidebar()  { sidebar.classList.add("open");  overlay.classList.add("show");  document.body.style.overflow="hidden"; }
+function closeSidebar() { sidebar.classList.remove("open"); overlay.classList.remove("show"); document.body.style.overflow=""; }
 
-/* ===== LOGO ===== */
-function normalize(t){
+/* ── LOGO MAP ── */
+function normalize(t) {
   return String(t).toLowerCase().replace(/[إأآ]/g,"ا").replace(/ة/g,"ه");
 }
-function getAgencyLogo(name){
-  const n=normalize(name);
-  if(n.includes("تقرت")) return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
-  if(n.includes("انسية")) return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
-  if(n.includes("سقيف")) return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
+function getAgencyLogo(name) {
+  const n = normalize(name);
+  if (n.includes("تقرت"))  return "https://i.ibb.co/2XWLPsc/1766858356356-removebg-preview.png";
+  if (n.includes("انسية")) return "https://i.ibb.co/Mk97KqGK/FB-IMG-1766861138141-removebg-preview.png";
+  if (n.includes("سقيف"))  return "https://i.ibb.co/mmrx9QG/FB-IMG-1766861105309-removebg-preview.png";
   return "";
 }
 
-/* ===== LOAD DETAILS ===== */
-fetch(apiURL).then(r=>r.json()).then(data=>{
-  currentOffer=data.find(o=>o.ID==id);
-  const c=document.getElementById("details-container");
+function fmt(v) {
+  return v ? String(v).trim() : "—";
+}
 
-  if(!currentOffer){
-    c.innerHTML="<p style='color:red'>❌ العرض غير موجود</p>";
+/* ── LOAD ── */
+fetch(apiURL).then(r => r.json()).then(data => {
+  currentOffer = data.find(o => String(o.ID) === String(id));
+  const c = document.getElementById("details-container");
+
+  if (!currentOffer) {
+    c.innerHTML = `
+      <div class="state-container">
+        <p style="font-size:48px">🔍</p>
+        <p class="state-text" style="color:var(--red)">العرض غير موجود أو تم حذفه</p>
+        <a href="offers.html" style="color:var(--gold);font-weight:900;text-decoration:none;margin-top:8px">← العودة للعروض</a>
+      </div>`;
     return;
   }
 
-  const logo=getAgencyLogo(currentOffer["الوكالة"]);
+  const logo = getAgencyLogo(currentOffer["الوكالة"]);
+  const likes = currentOffer.likes || 0;
 
-  c.innerHTML=`
-    ${logo?`<div class="agency-logo"><img src="${logo}"></div>`:""}
-    <img class="main-img" src="${currentOffer['رابط صورة الفندق']}">
-    <h2>${currentOffer['اسم العرض']}</h2>
+  /* update like bar */
+  document.getElementById("like-count-bar").textContent = likes;
 
-    <ul>
-      <li>🏢 الوكالة: ${currentOffer['الوكالة']}</li>
-      <li>🛬 المطار: ${currentOffer['المطار']}</li>
-      <li>🛫 نوع الرحلة: ${currentOffer['نوع الرحلة']}</li>
-      <li>✈️ الخطوط الجوية: ${currentOffer['الخطوط الجوية']}</li>
-      <li>📅 تاريخ الرحلة: ${currentOffer['تاريخ الرحلة']}</li>
-      <li>📆 مدة الرحلة: ${currentOffer['المدة']}</li>
-      <li>📥 الدخول والخروج: ${currentOffer['الدخول و الخروج']}</li>
-      <li>🏨 الفندق: ${currentOffer['الفندق']} (${currentOffer['عدد النجوم']})</li>
-      <li>📍 المسافة عن الحرم: ${currentOffer['المسافة عن الحرم']}</li>
-      <li>🍽️ سعر الإطعام: ${currentOffer['سعر الاطعام']}</li>
-      <li>💰 الغرفة الجماعية: ${currentOffer['السعر الغرفة الجماعية (دج)']} دج</li>
-      <li>💰 الخماسية: ${currentOffer['السعر الغرفة الخماسية (دج)']} دج</li>
-      <li>💰 الرباعية: ${currentOffer['السعر الغرفة الرباعية (دج)']} دج</li>
-      <li>💰 الثلاثية: ${currentOffer['السعر الغرفة الثلاثية (دج)']} دج</li>
-      <li>💰 الثنائية: ${currentOffer['السعر الغرفة الثنائية دج)']} دج</li>
-      <li>👶 أقل من عامين: ${currentOffer['سعر الاطفال اقل من عامين']} دج</li>
-      <li>🧒 من 2 حتى 12 سنة: ${currentOffer['سعر الاطفال الاقل من عامين الى 12 سنة']} دج</li>
-    </ul>
+  /* extra images */
+  const extras = [
+    currentOffer['رابطصورة 2'],
+    currentOffer['رابط صورة 3'],
+    currentOffer['بط صورة 4'],
+    currentOffer['رابط صورة 5'],
+    currentOffer['رابط صورة 6'],
+  ].filter(Boolean);
 
-    <div class="extra-images">
-      ${currentOffer['رابطصورة 2']?`<img src="${currentOffer['رابطصورة 2']}">`:""}
-      ${currentOffer['رابط صورة 3']?`<img src="${currentOffer['رابط صورة 3']}">`:""}
-      ${currentOffer['بط صورة 4']?`<img src="${currentOffer['بط صورة 4']}">`:""}
-      ${currentOffer['رابط صورة 5']?`<img src="${currentOffer['رابط صورة 5']}">`:""}
-      ${currentOffer['رابط صورة 6']?`<img src="${currentOffer['رابط صورة 6']}">`:""}
+  const galleryHTML = extras.length ? `
+    <div class="section-card">
+      <div class="section-head">
+        <span class="section-head-icon">🖼️</span>
+        <span class="section-head-title">معرض الصور</span>
+      </div>
+      <div class="gallery-grid">
+        ${extras.map(src => `<img src="${src}" alt="" onclick="openLightbox('${src}')" loading="lazy">`).join("")}
+      </div>
+    </div>` : "";
+
+  c.innerHTML = `
+    <!-- HERO -->
+    <div class="hero-card">
+      <div class="hero-img-wrap">
+        <img src="${fmt(currentOffer['رابط صورة الفندق'])}" alt="${fmt(currentOffer['اسم العرض'])}" loading="eager">
+        <div class="hero-badge">✨ عرض مميز</div>
+      </div>
+      <div class="hero-body">
+        <div class="agency-row">
+          <div class="agency-logo-wrap">
+            ${logo ? `<img src="${logo}" alt="${fmt(currentOffer['الوكالة'])}">` : `<span style="font-size:22px">🏢</span>`}
+          </div>
+          <div class="agency-info">
+            <div class="agency-label">الوكالة المنظِّمة</div>
+            <div class="agency-name">${fmt(currentOffer['الوكالة'])}</div>
+          </div>
+        </div>
+        <h1 class="offer-title">${fmt(currentOffer['اسم العرض'])}</h1>
+        <div class="tags-row">
+          <span class="tag">✈️ ${fmt(currentOffer['المطار'])}</span>
+          <span class="tag">📅 ${fmt(currentOffer['تاريخ الرحلة'])}</span>
+          <span class="tag">⏱️ ${fmt(currentOffer['المدة'])}</span>
+          <span class="tag">🛫 ${fmt(currentOffer['نوع الرحلة'])}</span>
+        </div>
+      </div>
     </div>
 
-    <p class="like-count">الإعجابات: <span id="like-count">${currentOffer.likes||0}</span></p>
+    <!-- FLIGHT & HOTEL -->
+    <div class="section-card">
+      <div class="section-head">
+        <span class="section-head-icon">✈️</span>
+        <span class="section-head-title">تفاصيل الرحلة والإقامة</span>
+      </div>
+      <div class="detail-list">
+        <div class="detail-row">
+          <span class="detail-icon">🛫</span>
+          <span class="detail-label">الخطوط الجوية</span>
+          <span class="detail-value">${fmt(currentOffer['الخطوط الجوية'])}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">📥</span>
+          <span class="detail-label">الدخول والخروج</span>
+          <span class="detail-value">${fmt(currentOffer['الدخول و الخروج'])}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">🏨</span>
+          <span class="detail-label">الفندق</span>
+          <span class="detail-value">${fmt(currentOffer['الفندق'])} ${currentOffer['عدد النجوم'] ? `(${currentOffer['عدد النجوم']})` : ""}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">📍</span>
+          <span class="detail-label">المسافة عن الحرم</span>
+          <span class="detail-value">${fmt(currentOffer['المسافة عن الحرم'])}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">🍽️</span>
+          <span class="detail-label">الإطعام</span>
+          <span class="detail-value">${fmt(currentOffer['سعر الاطعام'])}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROOM PRICES -->
+    <div class="section-card">
+      <div class="section-head">
+        <span class="section-head-icon">💰</span>
+        <span class="section-head-title">أسعار الغرف</span>
+      </div>
+      <div class="prices-grid">
+        ${priceCell("جماعية", currentOffer['السعر الغرفة الجماعية (دج)'])}
+        ${priceCell("خماسية", currentOffer['السعر الغرفة الخماسية (دج)'])}
+        ${priceCell("رباعية", currentOffer['السعر الغرفة الرباعية (دج)'])}
+        ${priceCell("ثلاثية", currentOffer['السعر الغرفة الثلاثية (دج)'])}
+        ${priceCell("ثنائية", currentOffer['السعر الغرفة الثنائية دج)'])}
+      </div>
+    </div>
+
+    <!-- CHILDREN PRICES -->
+    <div class="section-card">
+      <div class="section-head">
+        <span class="section-head-icon">👶</span>
+        <span class="section-head-title">أسعار الأطفال</span>
+      </div>
+      <div class="children-grid">
+        <div class="child-card">
+          <div class="child-age">أقل من عامين</div>
+          <div class="child-price">${fmt(currentOffer['سعر الاطفال اقل من عامين'])} <sub>دج</sub></div>
+        </div>
+        <div class="child-card">
+          <div class="child-age">من 2 إلى 12 سنة</div>
+          <div class="child-price">${fmt(currentOffer['سعر الاطفال الاقل من عامين الى 12 سنة'])} <sub>دج</sub></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    ${galleryHTML}
+
+    <!-- ENGAGEMENT -->
+    <div class="engagement-bar">
+      <span style="font-size:18px">❤️</span>
+      <span class="like-count-display">أعجب بهذا العرض <span class="like-count-num" id="like-count">${likes}</span> شخص</span>
+    </div>
   `;
 
-  /* ===== BOOK BUTTON LINK (إرسال البيانات) ===== */
+  /* BOOK LINK */
   document.getElementById("fixedBookBtn").href =
     "formabc.html?" +
     "agency="   + encodeURIComponent(currentOffer['الوكالة']) +
@@ -278,42 +925,82 @@ fetch(apiURL).then(r=>r.json()).then(data=>{
     "&offer="   + encodeURIComponent(currentOffer['اسم العرض']) +
     "&price="   + encodeURIComponent(currentOffer['السعر الغرفة الجماعية (دج)']) +
     "&airport=" + encodeURIComponent(currentOffer['المطار']) +
-    "&date="    + encodeURIComponent(currentOffer['تاريخ  الر حلة']);
+    "&date="    + encodeURIComponent(currentOffer['تاريخ  الر حلة'] || "");
 
-  if(localStorage.getItem("liked_"+currentOffer.ID)){
-    document.getElementById("likeBtn").classList.add("disabled");
+  if (localStorage.getItem("liked_" + currentOffer.ID)) {
+    const lb = document.getElementById("likeBtn");
+    lb.classList.add("disabled", "liked");
   }
+
+}).catch(() => {
+  document.getElementById("details-container").innerHTML = `
+    <div class="state-container">
+      <p style="font-size:48px">⚠️</p>
+      <p class="state-text" style="color:var(--red)">تعذّر تحميل البيانات. تحقق من اتصالك وأعد المحاولة.</p>
+    </div>`;
 });
 
-/* ===== LIKE ===== */
-function likeOffer(){
-  if(!currentOffer) return;
-  if(localStorage.getItem("liked_"+currentOffer.ID)) return;
-
-  fetch(apiURL+"?action=like&id="+currentOffer.ID)
-  .then(r=>r.json())
-  .then(r=>{
-    if(r.success){
-      document.getElementById("like-count").textContent=r.likes;
-      localStorage.setItem("liked_"+currentOffer.ID,"1");
-      document.getElementById("likeBtn").classList.add("disabled");
-    }
-  });
+function priceCell(label, val) {
+  const v = val ? String(val).trim() : null;
+  if (!v || v === "0" || v === "—") return "";
+  const parts = v.replace(/\s*دج\s*$/i,"").split(",");
+  const num = Number(parts[0].replace(/\s/g,"").replace(/,/g,""));
+  const display = !isNaN(num) ? num.toLocaleString("ar-DZ") : v;
+  return `<div class="price-cell">
+    <span class="price-type">غرفة ${label}</span>
+    <span class="price-amount">${display} <span>دج</span></span>
+  </div>`;
 }
 
-/* ===== SHARE ===== */
-function shareOffer(){
-  if(navigator.share){
-    navigator.share({
-      title:document.title,
-      text:"🌟 شاهد هذا العرض المميز من طريق العمرة",
-      url:location.href
+/* ── LIKE ── */
+function likeOffer() {
+  if (!currentOffer) return;
+  if (localStorage.getItem("liked_" + currentOffer.ID)) return;
+
+  fetch(apiURL + "?action=like&id=" + currentOffer.ID)
+    .then(r => r.json())
+    .then(r => {
+      if (r.success) {
+        const n = r.likes;
+        const el = document.getElementById("like-count");
+        const bar = document.getElementById("like-count-bar");
+        if (el)  el.textContent  = n;
+        if (bar) bar.textContent = n;
+        localStorage.setItem("liked_" + currentOffer.ID, "1");
+        const lb = document.getElementById("likeBtn");
+        lb.classList.add("disabled","liked");
+      }
     });
-  }else{
-    alert("المشاركة غير مدعومة");
+}
+
+/* ── SHARE ── */
+function shareOffer() {
+  const title = currentOffer ? currentOffer['اسم العرض'] : document.title;
+  if (navigator.share) {
+    navigator.share({
+      title: "طريق العمرة – " + title,
+      text: "🌟 اكتشف هذا العرض المميز على منصة طريق العمرة",
+      url: location.href
+    }).catch(() => {});
+  } else {
+    navigator.clipboard?.writeText(location.href).then(() => alert("✅ تم نسخ الرابط!")).catch(() => alert("🔗 " + location.href));
   }
 }
-</script>
 
+/* ── LIGHTBOX ── */
+function openLightbox(src) {
+  const lb = document.getElementById("lightbox");
+  document.getElementById("lightbox-img").src = src;
+  lb.classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+function closeLightbox() {
+  document.getElementById("lightbox").classList.remove("show");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeLightbox(); });
+</script>
 </body>
 </html>
+
+    
