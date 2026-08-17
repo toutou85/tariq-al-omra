@@ -917,7 +917,7 @@
     /* Visit tracker */
     window.addEventListener("load", () => {
       if (!localStorage.getItem("visitedOnce")) {
-        fetch("https://script.google.com/macros/s/AKfycbyT0Euxqsi7wvMdVwN1M56sP8r_3V8HIjqaS3i7sDy_nTad7catfjnRcYLHdZVPKf20/exec", { method: "POST" })
+        fetch("https://script.google.com/macros/s/AKfycbzg7Vawft6yyEb2gq7tbwnDq9BHSa0KhcjsbjqYGHP_mhjO4mTBp7S_O8d7vkVewzA/exec", { method: "POST" })
           .then(() => localStorage.setItem("visitedOnce","true")).catch(()=>{});
       }
     });
